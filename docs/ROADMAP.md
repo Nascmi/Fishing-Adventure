@@ -24,6 +24,7 @@ The roadmap records approved direction, not a promise of fixed dates. Polish and
 - Bundled essential fonts and artwork for reliable offline play.
 - Added versioned save migrations, validation, corrupt-save backup, and player-facing recovery messaging.
 - Stabilized the mobile fishing control so casting, hooking, and reeling keep the same thumb position.
+- Added full species journal entries with natural-history flavor, habitat, typical size, and personal catch records.
 
 ### Remaining
 

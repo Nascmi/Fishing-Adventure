@@ -32,7 +32,7 @@ When documents conflict, follow them in the order above and update the outdated 
 
 ## Current Development Status
 
-Version 0.1.0 is in Phase 1 polish. The complete Willow Pond loop now includes adjustable bite timing, a one-touch tension reeling interaction, specimen-size tiers, optional sound and haptics, local save migration and recovery messaging, and cohesive fish, rod, and pond artwork.
+Version 0.1.0 is in Phase 1 polish. The complete Willow Pond loop now includes adjustable bite timing, a one-touch tension reeling interaction, specimen-size tiers, optional sound and haptics, local save migration and recovery messaging, cohesive fish, rod, and pond artwork, and detailed journal entries for discovered species.
 
 See `CHANGELOG.md` for the current unreleased work and `ROADMAP.md` for the remaining Phase 1 priorities.
 

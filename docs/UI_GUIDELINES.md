@@ -8,6 +8,7 @@ The interface should become quiet enough for the player to focus on fishing.
 - Give each screen one obvious purpose and primary action.
 - Use consistent spacing, rounded surfaces, and restrained shadows.
 - Keep essential status visible without filling every open area.
+- Size framed fish artwork intrinsically within explicit safe-area padding so fins and tails never touch or clip against the frame edge.
 
 ## Interaction
 

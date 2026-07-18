@@ -32,6 +32,7 @@ Record player-facing changes here under an unreleased section, then move them be
 ### Fixed
 
 - Reduced collection fish artwork scale on phones so fins and tails remain comfortably inside their image frames.
+- Added explicit silhouette padding to collection and journal artwork so differently shaped fish cannot touch or clip against frame edges.
 
 - Anchored the reeling control to the hook button position and moved its HUD above the thumb.
 - Removed two detached fin-like artifacts from the Channel Catfish artwork.
