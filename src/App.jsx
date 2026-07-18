@@ -1,0 +1,11 @@
+import { useState } from 'react'
+import TopBar from './components/TopBar'
+import NavBar from './components/NavBar'
+import StatsPanel from './components/StatsPanel'
+import FishingPage from './pages/FishingPage'
+import InventoryPage from './pages/InventoryPage'
+import ShopPage from './pages/ShopPage'
+import CollectionPage from './pages/CollectionPage'
+import { futureLocations } from './data/locations'
+import { useGame } from './hooks/useGame'
+export default function App(){const [page,setPage]=useState('fishing');const [settings,setSettings]=useState(false);const {actions}=useGame();const pages={fishing:<FishingPage/>,inventory:<InventoryPage/>,shop:<ShopPage/>,collection:<CollectionPage/>};const reset=()=>{if(confirm('Reset all Fishing Adventure progress? This cannot be undone.')){actions.reset();setSettings(false);setPage('fishing')}};return <div className="app-shell"><TopBar/><div className="app-content">{pages[page]}</div><button className="settings-trigger" onClick={()=>setSettings(true)} aria-label="Open profile and settings">•••</button><NavBar page={page} setPage={setPage}/>{settings&&<div className="modal-backdrop" onClick={()=>setSettings(false)}><section className="modal" onClick={e=>e.stopPropagation()}><button className="modal-close" onClick={()=>setSettings(false)}>×</button><span className="eyebrow">Angler profile</span><h2>Journey Statistics</h2><StatsPanel/><h3>Future waters</h3><div className="locked-list">{futureLocations.map(name=><span key={name}>{name} · Locked</span>)}</div><button className="danger-button" onClick={reset}>Reset progress</button></section></div>}</div>}
