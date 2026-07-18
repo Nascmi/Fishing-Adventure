@@ -27,7 +27,9 @@ The roadmap records approved direction, not a promise of fixed dates. Polish and
 - Added full species journal entries with natural-history flavor, habitat, typical size, and personal catch records.
 - Added optional, location-specific Willow Pond nature ambience without background music or downloaded audio loops.
 
-### Remaining
+### Ongoing
+
+These quality practices continue throughout development rather than ending with Phase 1:
 
 - Continue outside playtesting of bite timing, reeling difficulty, catch rates, values, and rod progression.
 - Tune from measured sessions recorded in `BALANCE_NOTES.md`.
@@ -37,9 +39,15 @@ The roadmap records approved direction, not a promise of fixed dates. Polish and
 
 ## Phase 2 — A Wider World
 
-- Additional fishing locations
-- Location-specific fish populations
-- Introduce Rainbow Trout at Pine River and Golden Trout at Mountain Lake
+### Completed
+
+- Added Pine River as the second playable fishing location.
+- Added location switching and location-specific fish populations.
+- Introduced Rainbow Trout at Pine River.
+
+### Planned
+
+- Add Mountain Lake and introduce Golden Trout there.
 - Weather that changes atmosphere without creating pressure
 - Occasional environmental ambience such as drifting mist, floating leaves, subtle weather, and distant water ripples; no animated animals
 - Optional, non-expiring fishing goals

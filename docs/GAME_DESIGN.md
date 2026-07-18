@@ -55,7 +55,9 @@ Short gameplay sound cues and haptics remain optional feedback rather than part 
 
 ## Location Identity
 
-Fish populations should reinforce each location's habitat and give exploration a meaningful purpose. Willow Pond does not contain trout. Rainbow Trout is reserved for the planned Pine River population, while Golden Trout is reserved for Mountain Lake. Existing journal records remain part of the player's collection when populations change.
+Fish populations should reinforce each location's habitat and give exploration a meaningful purpose. Willow Pond does not contain trout. Pine River features Yellow Perch, Smallmouth Bass, Rainbow Trout, and Northern Pike. Golden Trout is reserved for the planned Mountain Lake. Existing journal records remain part of the player's collection when populations change.
+
+Locations are immediately understandable and switching water never costs currency or consumes a resource. If a location lacks the rarity selected by a rod, selection falls back to a lower available rarity within that same location.
 
 ## Growth
 

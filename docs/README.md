@@ -32,7 +32,7 @@ When documents conflict, follow them in the order above and update the outdated 
 
 ## Current Development Status
 
-Version 0.1.0 is in Phase 1 polish. The complete Willow Pond loop now includes adjustable bite timing, a one-touch tension reeling interaction, specimen-size tiers, optional sound cues, haptics, and procedural pond ambience, local save migration and recovery messaging, cohesive fish, rod, and pond artwork, and detailed journal entries for discovered species.
+Version 0.1.0 has completed its core Willow Pond polish and begun Phase 2. Pine River is now a second playable water with its own scenery and fish population, while ongoing accessibility, balance, save, and device testing continue across development.
 
 See `CHANGELOG.md` for the current unreleased work and `ROADMAP.md` for the remaining Phase 1 priorities.
 

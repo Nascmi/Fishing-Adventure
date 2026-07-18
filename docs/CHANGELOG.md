@@ -6,6 +6,8 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Added
 
+- Added Pine River as the second playable fishing location with original environment artwork and a compact location selector.
+- Added a location-specific Pine River population featuring Yellow Perch, Smallmouth Bass, Rainbow Trout, and Northern Pike.
 - Added optional, procedural Willow Pond ambience with very soft water and wind-through-reeds texture and no music.
 - Added tappable collection cards and full species journal entries with large artwork, habitat, typical size, flavor text, and personal catch records.
 - Added relaxed, standard, and quick bite-timing preferences.
@@ -36,6 +38,7 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Fixed
 
+- Kept rarity fallback selection inside the active location when that water has no fish in the rolled rarity tier.
 - Reduced collection fish artwork scale on phones so fins and tails remain comfortably inside their image frames.
 - Added explicit silhouette padding to collection and journal artwork so differently shaped fish cannot touch or clip against frame edges.
 

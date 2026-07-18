@@ -26,6 +26,8 @@ Fishing rods use the same hand-painted naturalist treatment. Each upgrade should
 
 Willow Pond establishes the environment style: hand-painted naturalism, layered atmospheric depth, soft mist, calm reflective water, and restrained golden sunrise light. Future locations should be recognizable at a glance while preserving this calm, mature character.
 
+Pine River extends that style with cooler slate-blue moving water, mossy stones, tall northern pines, and a clearer morning sky. Its open central channel preserves room for the bobber and distinguishes the river from Willow Pond's still reflective basin.
+
 ## Asset Quality Checks
 
 - Inspect each exported fish independently at its in-game size, not only on a multi-species source sheet.

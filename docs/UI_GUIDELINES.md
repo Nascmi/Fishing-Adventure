@@ -20,6 +20,7 @@ The interface should become quiet enough for the player to focus on fishing.
 - Keep a primary touch target in the same position when its function changes during a sequence. Casting, hooking, and reeling must not make the player reposition their thumb.
 - Place time-sensitive status and meters above the active thumb, even when that temporarily covers scenery. Never hide critical feedback beneath the player's hand.
 - Prefer one-thumb interactions for the core fishing loop.
+- Keep location switching compact and visible, but disable it while a cast or reeling sequence is active.
 
 ## Typography and Accessibility
 

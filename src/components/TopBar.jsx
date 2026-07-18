@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { getRod } from '../data/rods'
 import { useGame } from '../hooks/useGame'
 
-export default function TopBar() {
+export default function TopBar({ location }) {
   const { game } = useGame()
   const previousCoins = useRef(game.coins)
   const [coinChange, setCoinChange] = useState(null)
@@ -16,5 +16,5 @@ export default function TopBar() {
     return () => clearTimeout(timer)
   }, [game.coins])
 
-  return <header className="topbar"><div><span className="eyebrow">Today’s fishing spot</span><h1>Willow Pond</h1></div><div className={`wallet ${coinChange ? 'changing' : ''}`}><strong>{game.coins.toLocaleString()}</strong><span>coins</span>{coinChange && <i className={coinChange > 0 ? 'gain' : 'spent'}>{coinChange > 0 ? '+' : ''}{coinChange.toLocaleString()}</i>}</div><div className="rod-chip">{getRod(game.equippedRod).name}</div></header>
+  return <header className="topbar"><div><span className="eyebrow">Today’s fishing spot</span><h1>{location.name}</h1></div><div className={`wallet ${coinChange ? 'changing' : ''}`}><strong>{game.coins.toLocaleString()}</strong><span>coins</span>{coinChange && <i className={coinChange > 0 ? 'gain' : 'spent'}>{coinChange > 0 ? '+' : ''}{coinChange.toLocaleString()}</i>}</div><div className="rod-chip">{getRod(game.equippedRod).name}</div></header>
 }

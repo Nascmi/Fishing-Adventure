@@ -43,3 +43,10 @@ Change one variable at a time whenever practical. Do not rebalance from a single
 - Variable changed: anchored every fishing action to one control position and moved the tension display above the thumb as an overlay.
 - Result: the player can cast, hook, and reel without changing grip.
 - Next action: verify the placement on several phone heights and with system text scaling.
+
+### Pine River population — Phase 2 baseline
+
+- Population: Yellow Perch, Smallmouth Bass, Rainbow Trout, and Northern Pike.
+- Purpose: create a compact, habitat-specific river population while making Rainbow Trout a meaningful location discovery.
+- Rarity handling: when a rod rolls a tier absent from Pine River, choose from the nearest lower available tier without leaving the river population.
+- Next action: compare catch variety and Rainbow Trout discovery timing against Willow Pond sessions before expanding the population.

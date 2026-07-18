@@ -4,7 +4,7 @@ import NavBar from './components/NavBar'
 import StatsPanel from './components/StatsPanel'
 import TopBar from './components/TopBar'
 import { REACTION_OPTIONS } from './data/config'
-import { futureLocations } from './data/locations'
+import { futureLocations, getLocation } from './data/locations'
 import { useGame } from './hooks/useGame'
 import CollectionPage from './pages/CollectionPage'
 import FishingPage from './pages/FishingPage'
@@ -14,20 +14,21 @@ import { setPondAmbienceEnabled } from './services/feedbackService'
 
 export default function App() {
   const [page, setPage] = useState('fishing')
+  const [locationId, setLocationId] = useState('willow-pond')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const closeButtonRef = useRef(null)
   const { game, actions, notice, storageAvailable } = useGame()
   const pages = {
-    fishing: <FishingPage />,
+    fishing: <FishingPage locationId={locationId} onLocationChange={setLocationId}/>,
     inventory: <InventoryPage />,
     shop: <ShopPage />,
     collection: <CollectionPage />,
   }
 
   useEffect(() => {
-    setPondAmbienceEnabled(page === 'fishing' && game.settings.ambienceEnabled)
+    setPondAmbienceEnabled(page === 'fishing' && locationId === 'willow-pond' && game.settings.ambienceEnabled)
     return () => setPondAmbienceEnabled(false)
-  }, [game.settings.ambienceEnabled, page])
+  }, [game.settings.ambienceEnabled, locationId, page])
 
   useEffect(() => {
     if (!settingsOpen) return undefined
@@ -44,15 +45,16 @@ export default function App() {
     actions.reset()
     setSettingsOpen(false)
     setPage('fishing')
+    setLocationId('willow-pond')
   }
 
   const setAmbience = (enabled) => {
-    setPondAmbienceEnabled(enabled && page === 'fishing')
+    setPondAmbienceEnabled(enabled && page === 'fishing' && locationId === 'willow-pond')
     actions.setFeedbackSetting('ambienceEnabled', enabled)
   }
 
   return <div className="app-shell">
-    <TopBar/>
+    <TopBar location={getLocation(locationId)}/>
     {notice && <div className="notice" role="alert"><span>{notice}</span><button onClick={actions.dismissNotice}>Dismiss</button></div>}
     {!storageAvailable && <div className="notice warning" role="alert">Progress cannot be saved in this browser session. Check your storage or privacy settings.</div>}
     <div className="app-content">{pages[page]}</div>
@@ -77,7 +79,7 @@ export default function App() {
           <p>Sound and vibration are gentle, optional, and saved on this device.</p>
           <div className="toggle-list">
             <label><span><b>Sound cues</b><small>Soft tones for bites, catches, and coins</small></span><input type="checkbox" checked={game.settings.soundEnabled} onChange={(event) => actions.setFeedbackSetting('soundEnabled', event.target.checked)}/></label>
-            <label><span><b>Pond ambience</b><small>Very soft water and wind through reeds · no music</small></span><input type="checkbox" checked={game.settings.ambienceEnabled} onChange={(event) => setAmbience(event.target.checked)}/></label>
+            <label><span><b>Pond ambience</b><small>Very soft water and wind through reeds · Willow Pond only</small></span><input type="checkbox" checked={game.settings.ambienceEnabled} onChange={(event) => setAmbience(event.target.checked)}/></label>
             <label><span><b>Haptics</b><small>Brief vibration on supported devices</small></span><input type="checkbox" checked={game.settings.hapticsEnabled} onChange={(event) => actions.setFeedbackSetting('hapticsEnabled', event.target.checked)}/></label>
           </div>
         </div>
