@@ -10,7 +10,7 @@ A quiet morning beside the water: peaceful, natural, cozy, and mature rather tha
 - Warm earth tones and restrained golden light
 - Soft atmospheric depth and readable silhouettes
 - Natural textures used sparingly
-- Gentle movement in water, foliage, light, and wildlife
+- Gentle movement in water, foliage, light, and atmosphere
 
 ## Avoid
 
@@ -20,7 +20,7 @@ A quiet morning beside the water: peaceful, natural, cozy, and mature rather tha
 - Inconsistent placeholder styles
 - Excessive visual rewards or particle effects
 
-Willow Pond fish use cohesive hand-painted naturalist illustrations with recognizable silhouettes and species markings. New fish should match their restrained detail, side-profile presentation, warm natural palette, and soft diffuse lighting.
+Fish use cohesive hand-painted naturalist illustrations with recognizable silhouettes and species markings. New fish should match their restrained detail, side-profile presentation, warm natural palette, and soft diffuse lighting.
 
 Fishing rods use the same hand-painted naturalist treatment. Each upgrade should communicate better materials and craftsmanship without exaggerated fantasy effects.
 

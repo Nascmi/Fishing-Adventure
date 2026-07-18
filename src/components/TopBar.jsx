@@ -16,5 +16,5 @@ export default function TopBar() {
     return () => clearTimeout(timer)
   }, [game.coins])
 
-  return <header className="topbar"><div><span className="eyebrow">Willow Pond</span><h1>Fishing Adventure</h1></div><div className={`wallet ${coinChange ? 'changing' : ''}`}><strong>{game.coins.toLocaleString()}</strong><span>coins</span>{coinChange && <i className={coinChange > 0 ? 'gain' : 'spent'}>{coinChange > 0 ? '+' : ''}{coinChange.toLocaleString()}</i>}</div><div className="rod-chip">{getRod(game.equippedRod).name}</div></header>
+  return <header className="topbar"><div><span className="eyebrow">Today’s fishing spot</span><h1>Willow Pond</h1></div><div className={`wallet ${coinChange ? 'changing' : ''}`}><strong>{game.coins.toLocaleString()}</strong><span>coins</span>{coinChange && <i className={coinChange > 0 ? 'gain' : 'spent'}>{coinChange > 0 ? '+' : ''}{coinChange.toLocaleString()}</i>}</div><div className="rod-chip">{getRod(game.equippedRod).name}</div></header>
 }

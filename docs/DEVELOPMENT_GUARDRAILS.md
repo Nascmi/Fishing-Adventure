@@ -12,6 +12,7 @@ These rules protect Fishing Adventure from feature creep, manipulation, and unne
 6. **Stay offline-first.** Accounts, authentication, cloud services, and backends require a specifically approved need.
 7. **Keep interfaces quiet.** Each screen needs one clear purpose. Add controls and counters only when they help the player.
 8. **Use calm feedback.** Animation, sound, and haptics should communicate events without creating constant noise.
+9. **No looping background music.** Silence is part of the fishing experience. If environmental ambience is added, it must be subtle, location-specific, optional, and free of short obvious repetition.
 
 ## Engineering Rules
 

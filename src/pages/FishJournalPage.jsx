@@ -9,7 +9,7 @@ export default function FishJournalPage({ fish, record, onBack }) {
 
     <article className="journal-entry">
       <header className="journal-hero">
-        <span className="eyebrow">Willow Pond journal entry</span>
+        <span className="eyebrow">Angler’s journal entry</span>
         <FishArtwork fishId={fish.id} name={fish.name} className="journal-fish-art"/>
       </header>
 

@@ -15,12 +15,16 @@ Record player-facing changes here under an unreleased section, then move them be
 - Added optional offline sound cues and device haptics.
 - Added animated coin changes and personal-best catch feedback.
 - Added weighted regular, good, trophy, and amazing specimen sizes.
-- Added twelve species-specific hand-painted Willow Pond fish illustrations.
+- Added twelve species-specific hand-painted fish illustrations.
 - Added four hand-painted rod illustrations with clear material progression.
 - Added the finished Willow Pond sunrise environment.
 
 ### Changed
 
+- Moved Rainbow Trout from Willow Pond to the planned Pine River population and Golden Trout to Mountain Lake.
+- Made collection and species journal labels location-neutral in preparation for future waters.
+- Replaced question marks on undiscovered collection entries with dark silhouettes of their hidden species.
+- Moved the Willow Pond location identity into the top banner, removed the large scenery card, and warmed the primary Cast Line button.
 - Made the relaxed bite window the accessible default.
 - Replaced prototype text symbols with consistent lightweight interface icons.
 - Replaced generic fish symbols across catches, inventory, and collection with species artwork.

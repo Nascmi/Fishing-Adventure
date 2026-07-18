@@ -47,6 +47,16 @@ The target distribution is 68% regular, 22% good, 8% trophy, and 2% amazing. Lar
 
 Discovered species open into full journal entries with large artwork, concise natural-history flavor, habitat, typical size, and the player's largest and total catches. The journal should make discovery feel personal and deepen appreciation for familiar fish without becoming an encyclopedia.
 
+## Audio Direction
+
+Fishing Adventure does not use looping background music. Quiet is an intentional part of waiting beside the water. Optional environmental ambience may be considered when it reflects the current location—such as gentle water, wind through reeds, or distant natural sounds—but it must remain very soft, avoid noticeable repetition, and have a separate player control.
+
+Short gameplay sound cues and haptics remain optional feedback rather than part of the ambient soundscape.
+
+## Location Identity
+
+Fish populations should reinforce each location's habitat and give exploration a meaningful purpose. Willow Pond does not contain trout. Rainbow Trout is reserved for the planned Pine River population, while Golden Trout is reserved for Mountain Lake. Existing journal records remain part of the player's collection when populations change.
+
 ## Growth
 
 New locations, weather, sound, boats, lures, aquariums, cabins, photography, and legendary quests are possible extensions. They are not approved merely because they appear here; each must pass the feature approval test and enter the roadmap before implementation.

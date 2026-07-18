@@ -57,9 +57,9 @@ const journalEntries = {
     journal: 'Northern Pike wait motionless among weeds before accelerating after their prey. Their long shape, pale spots, and watchful eyes belong to a true ambush predator.',
   },
   'golden-trout': {
-    habitat: 'The coolest, clearest spring-fed reaches of Willow Pond',
+    habitat: 'Cold, clear high-country lakes and mountain streams',
     typicalSize: '0.5–3 lb',
-    journal: 'Golden Trout are creatures of cold, clear mountain water, making this visitor to Willow Pond especially mysterious. Its brilliant colors are rarely forgotten.',
+    journal: 'Golden Trout are creatures of cold, clear mountain water. Finding one among alpine reflections is a rare encounter whose brilliant colors are not easily forgotten.',
   },
   'old-whiskers': {
     habitat: 'The deepest, oldest hollow beneath the willow roots',

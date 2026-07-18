@@ -31,7 +31,7 @@ The roadmap records approved direction, not a promise of fixed dates. Polish and
 - Continue outside playtesting of bite timing, reeling difficulty, catch rates, values, and rod progression.
 - Tune from measured sessions recorded in `BALANCE_NOTES.md`.
 - Complete the accessibility pass, including reduced-motion, screen-reader, contrast, and system text-size checks.
-- Decide whether subtle ambient music improves the calm experience enough to justify its download and repetition cost.
+- Evaluate optional Willow Pond nature ambience without music, obvious loops, or excessive download cost.
 - Test save migration and recovery with representative older and damaged saves before release.
 - Complete device and browser testing across common portrait phone sizes.
 
@@ -39,7 +39,9 @@ The roadmap records approved direction, not a promise of fixed dates. Polish and
 
 - Additional fishing locations
 - Location-specific fish populations
+- Introduce Rainbow Trout at Pine River and Golden Trout at Mountain Lake
 - Weather that changes atmosphere without creating pressure
+- Occasional environmental ambience such as drifting mist, floating leaves, subtle weather, and distant water ripples; no animated animals
 - Optional, non-expiring fishing goals
 - Meaningful achievements
 

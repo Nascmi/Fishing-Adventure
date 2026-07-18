@@ -68,7 +68,7 @@
 @keyframes catch-shimmer{from{transform:translateX(-45%)}to{transform:translateX(45%)}}
 @media(prefers-reduced-motion:reduce){.wallet.changing,.wallet>i,.catch-card:after{animation:none!important}}
 
-/* Species-specific Willow Pond artwork. */
+/* Species-specific fish artwork. */
 .fish-artwork{display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,#dce9df,#bad4ca);color:#285d57;border-radius:12px}
 .fish-artwork img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 5px 4px #17373628);user-select:none}
 .catch-fish-art{width:92px;height:66px;flex:0 0 auto;padding:3px 5px}
@@ -81,7 +81,7 @@
 .collection-card-hit:focus-visible{outline:3px solid #d7a847;outline-offset:3px}
 .collection-open{display:flex;justify-content:flex-end;gap:5px;margin-top:12px;color:var(--pine);font-size:.67rem;font-weight:700}
 .hidden-art{background:linear-gradient(145deg,#d6ddd6,#c6d0c8);border:1px dashed #94a79f;color:#71827b}
-.hidden-art span{font:2rem var(--display)}
+.hidden-art img{filter:brightness(0) opacity(.58);transform:scale(.92)}
 .catch-card.size-amazing .fish-artwork{background:linear-gradient(145deg,#f1dfad,#dfc56e)}
 @media(max-width:430px){.catch-fish-art{width:78px;height:60px}.inventory-fish-art{width:74px;height:58px}.collection-fish-art{height:104px;padding:20px 34px}}
 
@@ -119,6 +119,8 @@
 .water:after{background:repeating-linear-gradient(174deg,transparent 0 18px,#ffffff0d 19px 20px)}
 .scene-copy{background:#fff9e9df;border:1px solid #fff9;box-shadow:0 12px 32px #102e2d35}
 @media(max-width:430px){.lake{background-position:61% center}}
+
+.primary-button{background:#245c45;box-shadow:0 5px 0 #143d2f}
 
 /* Keep the primary fishing control under the player's thumb across state changes. */
 .action-card.reeling-active{max-width:580px}
