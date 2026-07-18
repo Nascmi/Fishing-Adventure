@@ -1,2 +1,7 @@
 import { useGame } from '../hooks/useGame'
-export default function StatsPanel(){const {game}=useGame(),s=game.stats;return <section className="panel stats"><div><b>{s.totalCaught}</b><span>Fish caught</span></div><div><b>{s.totalCasts}</b><span>Total casts</span></div><div><b>{s.escaped}</b><span>Escaped</span></div><div><b>{s.totalCoinsEarned}</b><span>Coins earned</span></div><div><b>{s.largestFish?`${s.largestFish.weight} lb`:'—'}</b><span>Largest catch</span></div><div><b>{s.rarestFish?.name||'—'}</b><span>Rarest catch</span></div></section>}
+
+export default function StatsPanel() {
+  const { game } = useGame()
+  const stats = game.stats
+  return <section className="panel stats" aria-label="Fishing statistics"><div><b>{stats.totalCaught}</b><span>Fish caught</span></div><div><b>{stats.totalCasts}</b><span>Total casts</span></div><div><b>{stats.escaped}</b><span>Escaped</span></div><div><b>{stats.totalCoinsEarned}</b><span>Coins earned</span></div><div><b>{stats.largestFish ? `${stats.largestFish.weight} lb` : '—'}</b><span>Largest catch</span></div><div><b>{stats.rarestFish?.name || '—'}</b><span>Rarest catch</span></div></section>
+}
