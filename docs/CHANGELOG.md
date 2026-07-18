@@ -6,6 +6,7 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Added
 
+- Added optional, procedural Willow Pond ambience with very soft water and wind-through-reeds texture and no music.
 - Added tappable collection cards and full species journal entries with large artwork, habitat, typical size, flavor text, and personal catch records.
 - Added relaxed, standard, and quick bite-timing preferences.
 - Added visible warnings for corrupted saves and unavailable browser storage.
@@ -47,5 +48,6 @@ Record player-facing changes here under an unreleased section, then move them be
 - Added versioned save migration and stricter validation for catches, collection records, and statistics.
 - Migrated saves to version 3 for persistent sound and haptic preferences.
 - Migrated saves to version 4 to classify existing inventory catches by size.
+- Migrated saves to version 5 for the separate pond-ambience preference, disabled by default.
 
 Use concise categories when useful: Added, Changed, Fixed, and Removed. Internal implementation details belong in commit or pull-request history rather than this file.

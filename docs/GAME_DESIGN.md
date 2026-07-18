@@ -49,7 +49,7 @@ Discovered species open into full journal entries with large artwork, concise na
 
 ## Audio Direction
 
-Fishing Adventure does not use looping background music. Quiet is an intentional part of waiting beside the water. Optional environmental ambience may be considered when it reflects the current location—such as gentle water, wind through reeds, or distant natural sounds—but it must remain very soft, avoid noticeable repetition, and have a separate player control.
+Fishing Adventure does not use looping background music. Quiet is an intentional part of waiting beside the water. Willow Pond offers optional procedural ambience built from very soft water movement and wind through reeds. It is disabled by default, avoids downloaded audio loops, plays only at the fishing location, and has a separate player control.
 
 Short gameplay sound cues and haptics remain optional feedback rather than part of the ambient soundscape.
 

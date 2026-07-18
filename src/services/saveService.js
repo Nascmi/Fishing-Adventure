@@ -5,7 +5,7 @@ import { classifyStoredCatch, getWeightTier } from '../utils/valueCalculator'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 4
+const CURRENT_VERSION = 5
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
 
 export const newGame = () => ({
@@ -15,7 +15,7 @@ export const newGame = () => ({
   ownedRods: ['old'],
   equippedRod: 'old',
   collection: {},
-  settings: { reactionWindow: 'relaxed', soundEnabled: true, hapticsEnabled: true },
+  settings: { reactionWindow: 'relaxed', soundEnabled: true, hapticsEnabled: true, ambienceEnabled: false },
   stats: {
     totalCaught: 0,
     totalCoinsEarned: 0,
@@ -42,6 +42,10 @@ function migrateSave(raw) {
     migrated.version = 3
   }
   if (migrated.version < 4) migrated.version = 4
+  if (migrated.version < 5) {
+    migrated.settings = { ambienceEnabled: false, ...(migrated.settings || {}) }
+    migrated.version = 5
+  }
   return migrated
 }
 
@@ -114,6 +118,7 @@ export function validateSave(input) {
       reactionWindow,
       soundEnabled: raw.settings?.soundEnabled !== false,
       hapticsEnabled: raw.settings?.hapticsEnabled !== false,
+      ambienceEnabled: raw.settings?.ambienceEnabled === true,
     },
     stats: {
       ...base.stats,

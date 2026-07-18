@@ -1,6 +1,6 @@
 # Save System
 
-The current save schema is version 4.
+The current save schema is version 5.
 
 ## Current Save Data
 
@@ -9,7 +9,7 @@ The current save schema is version 4.
 - Discovered-fish records
 - Owned and equipped rods
 - Fishing and economy statistics
-- Bite timing, sound, and device-haptic preferences
+- Bite timing, sound-cue, pond-ambience, and device-haptic preferences
 
 Inventory catches include their generated specimen-size class. Older catches are classified from their saved weight during migration.
 
@@ -18,6 +18,7 @@ Inventory catches include their generated specimen-size class. Older catches are
 - Version 2 added the bite timing preference.
 - Version 3 added sound and device-haptic preferences.
 - Version 4 added the specimen-size class to saved catches and derives it from weight for older inventory.
+- Version 5 added the separate pond-ambience preference, disabled by default.
 
 ## Rules
 

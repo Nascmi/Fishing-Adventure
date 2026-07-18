@@ -25,13 +25,13 @@ The roadmap records approved direction, not a promise of fixed dates. Polish and
 - Added versioned save migrations, validation, corrupt-save backup, and player-facing recovery messaging.
 - Stabilized the mobile fishing control so casting, hooking, and reeling keep the same thumb position.
 - Added full species journal entries with natural-history flavor, habitat, typical size, and personal catch records.
+- Added optional, location-specific Willow Pond nature ambience without background music or downloaded audio loops.
 
 ### Remaining
 
 - Continue outside playtesting of bite timing, reeling difficulty, catch rates, values, and rod progression.
 - Tune from measured sessions recorded in `BALANCE_NOTES.md`.
 - Complete the accessibility pass, including reduced-motion, screen-reader, contrast, and system text-size checks.
-- Evaluate optional Willow Pond nature ambience without music, obvious loops, or excessive download cost.
 - Test save migration and recovery with representative older and damaged saves before release.
 - Complete device and browser testing across common portrait phone sizes.
 
