@@ -1,10 +1,11 @@
 import { GAME_CONFIG } from '../data/config'
 import { fish } from '../data/fish'
 import { rods } from '../data/rods'
+import { classifyStoredCatch, getWeightTier } from '../utils/valueCalculator'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 2
+const CURRENT_VERSION = 4
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
 
 export const newGame = () => ({
@@ -14,7 +15,7 @@ export const newGame = () => ({
   ownedRods: ['old'],
   equippedRod: 'old',
   collection: {},
-  settings: { reactionWindow: 'relaxed' },
+  settings: { reactionWindow: 'relaxed', soundEnabled: true, hapticsEnabled: true },
   stats: {
     totalCaught: 0,
     totalCoinsEarned: 0,
@@ -32,6 +33,15 @@ function migrateSave(raw) {
     migrated.settings = { reactionWindow: 'relaxed', ...(migrated.settings || {}) }
     migrated.version = 2
   }
+  if (migrated.version < 3) {
+    migrated.settings = {
+      soundEnabled: true,
+      hapticsEnabled: true,
+      ...(migrated.settings || {}),
+    }
+    migrated.version = 3
+  }
+  if (migrated.version < 4) migrated.version = 4
   return migrated
 }
 
@@ -69,7 +79,12 @@ export function validateSave(input) {
           item.value >= 0
         if (valid) seenCatchIds.add(item.catchId)
         return valid
-      })
+      }).map((item) => ({
+        ...item,
+        sizeTier: item.sizeTier
+          ? getWeightTier(item.sizeTier).id
+          : classifyStoredCatch(item),
+      }))
     : []
   const collection = Object.fromEntries(
     Object.entries(raw.collection && typeof raw.collection === 'object' ? raw.collection : {})
@@ -95,7 +110,11 @@ export function validateSave(input) {
     ownedRods,
     equippedRod: ownedRods.includes(raw.equippedRod) ? raw.equippedRod : 'old',
     collection,
-    settings: { reactionWindow },
+    settings: {
+      reactionWindow,
+      soundEnabled: raw.settings?.soundEnabled !== false,
+      hapticsEnabled: raw.settings?.hapticsEnabled !== false,
+    },
     stats: {
       ...base.stats,
       ...stats,

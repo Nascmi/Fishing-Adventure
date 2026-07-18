@@ -103,6 +103,11 @@ export function GameProvider({ children }) {
           ...current,
           settings: { ...current.settings, reactionWindow },
         })),
+      setFeedbackSetting: (setting, enabled) =>
+        setGame((current) => ({
+          ...current,
+          settings: { ...current.settings, [setting]: Boolean(enabled) },
+        })),
       dismissNotice: () => setNotice(null),
       reset: () => {
         clearGame()

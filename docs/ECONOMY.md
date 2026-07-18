@@ -12,6 +12,7 @@ The economy turns each catch into visible progress without turning fishing into 
 - Early progress should arrive quickly; later goals may take longer without becoming repetitive.
 - Prices, value formulas, and probability tables belong in data or configuration files.
 - Real-money purchases must never sell gameplay power.
+- A catch's actual weight affects its sale value, so specimen-size frequency must be tuned alongside species rarity rather than treated as a purely cosmetic system.
 
 ## Tuning
 

@@ -1,7 +1,50 @@
-import { RARITY } from '../data/fish'
+import { GAME_CONFIG } from '../data/config'
+import { fish as fishData, RARITY } from '../data/fish'
+
+function selectWeightTier() {
+  let roll = Math.random() * 100
+  for (const tier of GAME_CONFIG.catchWeights) {
+    roll -= tier.chance
+    if (roll <= 0) return tier
+  }
+  return GAME_CONFIG.catchWeights[0]
+}
+
+export function classifyWeight(fish, weight) {
+  const percentOfMaximum = weight / fish.maxWeight
+  return [...GAME_CONFIG.catchWeights]
+    .reverse()
+    .find((tier) => percentOfMaximum >= tier.minPercent)?.id || 'ordinary'
+}
+
+export function getWeightTier(tierId) {
+  return GAME_CONFIG.catchWeights.find((tier) => tier.id === tierId) || GAME_CONFIG.catchWeights[0]
+}
+
 export function makeCatch(fish) {
-  const weight = Math.round((fish.minWeight + Math.random()*(fish.maxWeight-fish.minWeight))*100)/100
+  const tier = selectWeightTier()
+  const lowerBound = Math.max(fish.minWeight, fish.maxWeight * tier.minPercent)
+  const upperBound = Math.max(lowerBound, fish.maxWeight * tier.maxPercent)
+  const weight = Math.round((lowerBound + Math.random() * (upperBound - lowerBound)) * 100) / 100
   const sizeRatio = weight / fish.minWeight
-  const value = Math.max(1, Math.round(fish.baseValue * (0.55 + sizeRatio*.45) * RARITY[fish.rarity]))
-  return {catchId:`${Date.now()}-${Math.random().toString(36).slice(2,8)}`,fishId:fish.id,name:fish.name,rarity:fish.rarity,weight,value,caughtAt:new Date().toISOString()}
+  const value = Math.max(
+    1,
+    Math.round(fish.baseValue * (0.55 + sizeRatio * 0.45) * RARITY[fish.rarity]),
+  )
+
+  return {
+    catchId: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    fishId: fish.id,
+    name: fish.name,
+    rarity: fish.rarity,
+    weight,
+    sizeTier: tier.id,
+    value,
+    caughtAt: new Date().toISOString(),
+  }
+}
+
+export function classifyStoredCatch(catchItem) {
+  const fish = fishData.find((item) => item.id === catchItem.fishId)
+  return fish ? classifyWeight(fish, catchItem.weight) : 'ordinary'
 }

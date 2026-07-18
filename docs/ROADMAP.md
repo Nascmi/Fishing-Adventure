@@ -14,12 +14,25 @@ The roadmap records approved direction, not a promise of fixed dates. Polish and
 
 ## Phase 1 Polish
 
-- Playtest timing, catch rates, values, and rod progression
-- Improve accessibility, including bite timing options
-- Add production-quality icons and fish artwork
-- Bundle fonts and essential assets for reliable offline play
-- Add calm sound, music, and optional haptics
-- Strengthen save recovery and migration behavior
+### Completed
+
+- Added relaxed, standard, and quick bite timing options.
+- Added the short, one-touch tension reeling interaction and rod line-control progression.
+- Added optional synthesized sound cues and device haptics.
+- Added specimen-size tiers and a distribution weighted toward ordinary catches.
+- Replaced placeholder fish, rod, and Willow Pond visuals with cohesive production artwork.
+- Bundled essential fonts and artwork for reliable offline play.
+- Added versioned save migrations, validation, corrupt-save backup, and player-facing recovery messaging.
+- Stabilized the mobile fishing control so casting, hooking, and reeling keep the same thumb position.
+
+### Remaining
+
+- Continue outside playtesting of bite timing, reeling difficulty, catch rates, values, and rod progression.
+- Tune from measured sessions recorded in `BALANCE_NOTES.md`.
+- Complete the accessibility pass, including reduced-motion, screen-reader, contrast, and system text-size checks.
+- Decide whether subtle ambient music improves the calm experience enough to justify its download and repetition cost.
+- Test save migration and recovery with representative older and damaged saves before release.
+- Complete device and browser testing across common portrait phone sizes.
 
 ## Phase 2 — A Wider World
 

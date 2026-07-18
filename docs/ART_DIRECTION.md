@@ -20,4 +20,16 @@ A quiet morning beside the water: peaceful, natural, cozy, and mature rather tha
 - Inconsistent placeholder styles
 - Excessive visual rewards or particle effects
 
-Fish and equipment should eventually use original production artwork. CSS scenery and abstract symbols are acceptable prototype placeholders, but they should not define the final asset style.
+Willow Pond fish use cohesive hand-painted naturalist illustrations with recognizable silhouettes and species markings. New fish should match their restrained detail, side-profile presentation, warm natural palette, and soft diffuse lighting.
+
+Fishing rods use the same hand-painted naturalist treatment. Each upgrade should communicate better materials and craftsmanship without exaggerated fantasy effects.
+
+Willow Pond establishes the environment style: hand-painted naturalism, layered atmospheric depth, soft mist, calm reflective water, and restrained golden sunrise light. Future locations should be recognizable at a glance while preserving this calm, mature character.
+
+## Asset Quality Checks
+
+- Inspect each exported fish independently at its in-game size, not only on a multi-species source sheet.
+- Reject neighboring fins, tails, shadows, color fragments, or other source-sheet artifacts around the silhouette.
+- Preserve transparent backgrounds and enough clear padding for responsive cards.
+- Verify distinctive anatomy and markings against the intended species before integration.
+- Check legendary variants as complete standalone illustrations rather than recolored fragments.

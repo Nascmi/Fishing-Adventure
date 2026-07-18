@@ -21,3 +21,81 @@
 .segmented-control b,.segmented-control span{display:block}
 .segmented-control b{font-size:.74rem}.segmented-control span{margin-top:3px;font-size:.58rem}
 @media(max-width:430px){.topbar{gap:10px}.rod-chip{display:none}.wallet{padding:8px 10px}.notice{margin:8px 12px 0}.scene-copy{max-width:calc(100% - 84px)}.segmented-control{grid-template-columns:1fr}.segmented-control button{min-height:54px}}
+
+/* Calm one-button reeling game. */
+.lake.reeling .bobber{animation:bite .42s ease-in-out infinite}
+.lake.reeling .ripples{animation-duration:.9s}
+.status.reeling .status-dot{background:#d7a847;box-shadow:0 0 0 6px #d7a8472b}
+.action-card.reeling-active{max-width:620px}
+.reeling-game{padding:2px 0 1px;user-select:none;-webkit-user-select:none}
+.reeling-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.reeling-heading h3{margin:3px 0 0;font:1.35rem/1 var(--display)}
+.tension-label{padding:6px 9px;border-radius:20px;background:#dcebe1;color:#2c655b;font-size:.67rem;font-weight:700;transition:background .2s,color .2s}
+.tension-label.danger{background:#f5ddd3;color:#9a4936}
+.tension-track{position:relative;height:25px;margin:4px 8px 18px;border-radius:20px;background:linear-gradient(90deg,#8fb4b1 0 22%,#d5e5b9 22% 84%,#df8b6d 84%);box-shadow:inset 0 2px 5px #17373626}
+.tension-track .safe-zone{position:absolute;left:22%;right:16%;top:4px;bottom:4px;border:1px solid #fff9;border-radius:12px}
+.tension-track>i{position:absolute;top:50%;width:17px;height:31px;border:3px solid #fff;border-radius:9px;background:#173f3d;box-shadow:0 3px 8px #17373644;transform:translate(-50%,-50%);transition:left .045s linear}
+.catch-progress{margin-bottom:14px;font-size:.7rem;color:#526c66}
+.catch-progress>span{font-weight:600}.catch-progress>b{float:right;color:#264f4a}
+.catch-progress>div{position:relative;clear:both;height:13px;margin-top:7px;border-radius:10px;background:#dce4d9;overflow:visible}
+.catch-progress>div>i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,#5e9588,#d0aa50);transition:width .045s linear}
+.fish-progress-marker{position:absolute;top:50%;display:grid;place-items:center;color:#245b55;transform:translate(-50%,-50%);transition:left .045s linear}
+.reel-control{width:100%;min-height:66px;border:0;border-radius:15px;background:#285f59;color:#fff;box-shadow:0 5px 0 #133d39;touch-action:none;cursor:pointer}
+.reel-control span,.reel-control small{display:block}.reel-control span{font-weight:800}.reel-control small{margin-top:2px;opacity:.75;font-size:.66rem}
+.reel-control:active{transform:translateY(3px);background:#1e514c;box-shadow:0 2px 0 #133d39}
+@media(prefers-reduced-motion:reduce){.tension-track>i,.catch-progress>div>i{transition:none}.lake.reeling .bobber,.lake.reeling .ripples{animation:none}}
+
+/* Optional sensory feedback and economy confirmation. */
+.wallet{position:relative}
+.wallet.changing{animation:coin-bump .38s ease-out}
+.wallet>i{position:absolute;right:4px;top:calc(100% + 7px);padding:4px 7px;border-radius:12px;background:#f7e6aa;color:#5c4511;font-size:.67rem;font-style:normal;font-weight:800;box-shadow:0 4px 12px #102e2d35;animation:coin-float 1.1s ease-out forwards;white-space:nowrap}
+.wallet>i.spent{background:#e8d8cb;color:#744735}
+.toggle-list{display:grid;gap:8px}
+.toggle-list label{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:58px;padding:9px 11px;border:1px solid #d6dfd5;border-radius:12px;background:#fffdf8;cursor:pointer}
+.toggle-list b,.toggle-list small{display:block}.toggle-list b{font-size:.76rem}.toggle-list small{margin-top:3px;color:#6b7d77;font-size:.62rem}
+.toggle-list input{appearance:none;width:46px;height:26px;flex:0 0 auto;border-radius:20px;background:#b6c2bc;position:relative;transition:background .2s}
+.toggle-list input:before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;border-radius:50%;background:#fff;box-shadow:0 2px 5px #17373633;transition:transform .2s}
+.toggle-list input:checked{background:#39786e}.toggle-list input:checked:before{transform:translateX(20px)}
+.toggle-list input:focus-visible{outline:3px solid #e6b655;outline-offset:2px}
+.catch-card.rare,.catch-card.epic,.catch-card.legendary{position:relative;overflow:hidden}
+.catch-card.epic{border-color:#b998cd;background:#eee5f3}.catch-card.legendary{border-color:#d4ad4d;background:#f8edc9;box-shadow:0 8px 24px #ad772a2b}
+.catch-card.epic:after,.catch-card.legendary:after{content:"";position:absolute;inset:-80% -30%;background:linear-gradient(110deg,transparent 42%,#fff9 50%,transparent 58%);animation:catch-shimmer 1.2s ease-out}
+.catch-card.size-trophy{box-shadow:0 8px 22px #426d5d26;border-color:#88aa91}
+.catch-card.size-amazing{background:#f8edc9;border-color:#d4ad4d;box-shadow:0 9px 26px #ad772a38}
+.catch-card.size-amazing .fish-mark{background:#ead18b;color:#72551b}
+@keyframes coin-bump{50%{transform:scale(1.06)}}
+@keyframes coin-float{to{opacity:0;transform:translateY(-15px)}}
+@keyframes catch-shimmer{from{transform:translateX(-45%)}to{transform:translateX(45%)}}
+@media(prefers-reduced-motion:reduce){.wallet.changing,.wallet>i,.catch-card:after{animation:none!important}}
+
+/* Species-specific Willow Pond artwork. */
+.fish-artwork{display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,#dce9df,#bad4ca);color:#285d57;border-radius:12px}
+.fish-artwork img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 5px 4px #17373628);user-select:none}
+.catch-fish-art{width:92px;height:66px;flex:0 0 auto;padding:3px 5px}
+.inventory-fish-art{width:86px;height:64px;flex:0 0 auto;padding:3px 5px}
+.collection-fish-art{height:96px;margin-bottom:12px;padding:4px 7px;background:linear-gradient(160deg,#dce9df,#b9d5cb)}
+.hidden-art{background:linear-gradient(145deg,#d6ddd6,#c6d0c8);border:1px dashed #94a79f;color:#71827b}
+.hidden-art span{font:2rem var(--display)}
+.catch-card.size-amazing .fish-artwork{background:linear-gradient(145deg,#f1dfad,#dfc56e)}
+@media(max-width:430px){.catch-fish-art{width:78px;height:60px}.inventory-fish-art{width:74px;height:58px}}
+
+/* Species-matched equipment artwork. */
+.rod-art{height:150px;align-items:center;padding:5px;background:linear-gradient(145deg,#e5ecdf,#c5dbd1)}
+.rod-art img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 7px 5px #17373630);user-select:none}
+
+/* Willow Pond environment art with live fishing overlays. */
+.lake{background-image:linear-gradient(180deg,#1737360d,#17373612),url('../assets/locations/willow-pond.webp');background-size:cover;background-position:58% center;background-repeat:no-repeat}
+.water{height:44%;background:linear-gradient(180deg,#537e7908,#173f4338)}
+.water:after{background:repeating-linear-gradient(174deg,transparent 0 18px,#ffffff0d 19px 20px)}
+.scene-copy{background:#fff9e9df;border:1px solid #fff9;box-shadow:0 12px 32px #102e2d35}
+@media(max-width:430px){.lake{background-position:61% center}}
+
+/* Keep the primary fishing control under the player's thumb across state changes. */
+.action-card.reeling-active{max-width:580px}
+.reeling-game{display:flex;flex-direction:column;padding:0}
+.reel-control{order:-1;height:52px;min-height:52px;margin:0}
+.reeling-game{position:relative}
+.reeling-hud{position:absolute;z-index:7;left:-1px;right:-1px;bottom:calc(100% + 62px);padding:14px 15px 12px;border:1px solid #d2ded4;border-radius:17px;background:#fbf9f1f2;box-shadow:0 14px 34px #102e2d42;backdrop-filter:blur(8px);animation:hud-appear .22s ease-out}
+.reeling-hud .catch-progress{margin-bottom:0}
+@keyframes hud-appear{from{opacity:0;transform:translateY(7px)}}
+@media(prefers-reduced-motion:reduce){.reeling-hud{animation:none}}

@@ -1,4 +1,10 @@
 export const RARITY = { common: 1, uncommon: 1.25, rare: 1.7, epic: 2.4, legendary: 4 }
+const artwork = import.meta.glob('../assets/fish/*.webp', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+
 export const fish = [
   ['bluegill','Bluegill','common',0.25,2,6,'A familiar pond fish found close to shore.'],
   ['sunfish','Sunfish','common',0.2,1.5,7,'A bright, lively fish that favors warm shallows.'],
@@ -12,4 +18,15 @@ export const fish = [
   ['northern-pike','Northern Pike','epic',4,30,28,'A swift predator with an unmistakable silhouette.'],
   ['golden-trout','Golden Trout','epic',0.5,6,55,'A radiant and exceptionally elusive trout.'],
   ['old-whiskers','Legendary Old Whiskers','legendary',20,70,90,'The ancient monarch of Willow Pond.']
-].map(([id,name,rarity,minWeight,maxWeight,baseValue,description]) => ({id,name,rarity,minWeight,maxWeight,baseValue,description}))
+].map(([id,name,rarity,minWeight,maxWeight,baseValue,description]) => ({
+  id,
+  name,
+  rarity,
+  minWeight,
+  maxWeight,
+  baseValue,
+  description,
+  image: artwork[`../assets/fish/${id}.webp`],
+}))
+
+export const getFish = (id) => fish.find((item) => item.id === id)

@@ -1,5 +1,7 @@
 # Save System
 
+The current save schema is version 4.
+
 ## Current Save Data
 
 - Coin balance
@@ -7,8 +9,15 @@
 - Discovered-fish records
 - Owned and equipped rods
 - Fishing and economy statistics
+- Bite timing, sound, and device-haptic preferences
 
-Player settings should join the saved data when settings are introduced.
+Inventory catches include their generated specimen-size class. Older catches are classified from their saved weight during migration.
+
+## Migration History
+
+- Version 2 added the bite timing preference.
+- Version 3 added sound and device-haptic preferences.
+- Version 4 added the specimen-size class to saved catches and derives it from weight for older inventory.
 
 ## Rules
 
@@ -22,4 +31,4 @@ Player settings should join the saved data when settings are introduced.
 - If recovery requires a new game, explain what happened instead of silently discarding progress.
 - Test loading an older save before releasing a schema change.
 
-The current implementation safely returns to a valid new-game state when data cannot be read. Backup, migration, and player-facing recovery messaging are Phase 1 polish work.
+The current implementation validates and migrates readable saves. When stored data cannot be read, it preserves a recoverable backup when practical, returns to a valid new-game state, and tells the player what happened. Representative older and damaged saves still require release testing.

@@ -16,6 +16,9 @@ The interface should become quiet enough for the player to focus on fishing.
 - Never rely on color alone to communicate rarity or status.
 - Keep bite feedback noticeable without making it startling.
 - Respect reduced-motion preferences.
+- Keep a primary touch target in the same position when its function changes during a sequence. Casting, hooking, and reeling must not make the player reposition their thumb.
+- Place time-sensitive status and meters above the active thumb, even when that temporarily covers scenery. Never hide critical feedback beneath the player's hand.
+- Prefer one-thumb interactions for the core fishing loop.
 
 ## Typography and Accessibility
 
@@ -27,3 +30,5 @@ The interface should become quiet enough for the player to focus on fishing.
 ## Motion
 
 Use gentle animation to explain casting, waiting, biting, catching, selling, and progression. Avoid constant decorative motion that competes for attention.
+
+Gameplay motion must not shift the primary control or cause layout reflow. Temporary fishing feedback should overlay the pond rather than push the control downward.
