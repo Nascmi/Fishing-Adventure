@@ -6,6 +6,7 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Added
 
+- Added tappable collection cards and full species journal entries with large artwork, habitat, typical size, flavor text, and personal catch records.
 - Added relaxed, standard, and quick bite-timing preferences.
 - Added visible warnings for corrupted saves and unavailable browser storage.
 - Added a one-button reeling mini-game with line tension and catch progress.
@@ -29,6 +30,8 @@ Record player-facing changes here under an unreleased section, then move them be
 - Improved dialog keyboard behavior, screen-reader status announcements, and touch targets.
 
 ### Fixed
+
+- Reduced collection fish artwork scale on phones so fins and tails remain comfortably inside their image frames.
 
 - Anchored the reeling control to the hook button position and moved its HUD above the thumb.
 - Removed two detached fin-like artifacts from the Channel Catfish artwork.

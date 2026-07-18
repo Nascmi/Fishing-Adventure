@@ -43,6 +43,10 @@ Fish size is separate from species rarity. The generator selects a size class be
 
 The target distribution is 68% regular, 22% good, 8% trophy, and 2% amazing. Large specimens should feel notable even when the species itself is common.
 
+## Fishing Journal
+
+Discovered species open into full journal entries with large artwork, concise natural-history flavor, habitat, typical size, and the player's largest and total catches. The journal should make discovery feel personal and deepen appreciation for familiar fish without becoming an encyclopedia.
+
 ## Growth
 
 New locations, weather, sound, boats, lures, aquariums, cabins, photography, and legendary quests are possible extensions. They are not approved merely because they appear here; each must pass the feature approval test and enter the roadmap before implementation.
