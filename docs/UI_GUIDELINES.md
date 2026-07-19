@@ -21,6 +21,7 @@ The interface should become quiet enough for the player to focus on fishing.
 - Place time-sensitive status and meters above the active thumb, even when that temporarily covers scenery. Never hide critical feedback beneath the player's hand.
 - Prefer one-thumb interactions for the core fishing loop.
 - Keep destination selection on the dedicated Fishing Trips page so the active fishing scene stays calm and focused.
+- Offer catch sharing only after an Amazing catch, never as a persistent fishing-screen control or social prompt.
 
 ## Typography and Accessibility
 

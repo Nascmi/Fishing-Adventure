@@ -17,7 +17,7 @@ The economy turns each catch into visible progress without turning fishing into 
 - Rod ownership and equipment progression restart with a location-appropriate starter rod at each new water.
 - Rod upgrades within a location are purchased in sequence, even when the player already has enough shared coins for a later rod.
 - Backyard Pond is always free. Other locations are recurring coin sinks framed as three-day charter trips rather than per-cast fees.
-- Charter prices begin at 300 coins for Pine River, 800 for Great Lake, and 1,600 for Gulf Coast; tune these against measured trip earnings.
+- Charter prices begin at 300 coins for Pine River, 800 for Great Lake, 1,600 for Gulf Coast, and 4,000 for Open Gulf; tune these against measured trip earnings.
 
 ## Tuning
 

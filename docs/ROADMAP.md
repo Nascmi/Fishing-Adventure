@@ -50,19 +50,18 @@ These quality practices continue throughout development rather than ending with 
 - Added Great Lake scenery, spinning-rod progression, retrieved-lure presentation, and a location-specific population culminating in Great Lakes Muskellunge.
 - Added Gulf Coast as the fourth playable location, grounded in Alabama and Mississippi inshore fisheries.
 - Added salt-marsh scenery, popping-cork presentation, inshore rod progression, and eight Gulf species culminating in Cobia.
+- Added Open Gulf as the fifth playable location and the culmination of the current fishing journey.
+- Added blue-water scenery, offshore jig presentation, offshore rod progression, and eight Gulf species culminating in Yellowfin Tuna.
 - Added a four-phase living day cycle with gentle species activity shifts.
 - Established Backyard Pond as the free home water and three-day paid charters for destination fishing.
 - Added Fishing Trips as a dedicated navigation destination for booking and continuing charters.
+- Added permanent Angling Keepsakes for discovery, exploration, collection, and memorable catches without currency or power rewards.
+- Added optional native image sharing for Amazing catches with an offline download fallback.
 
-### Planned
+## Phase 3 — Deeper Atmosphere & Personalization
 
 - Weather that changes atmosphere without creating pressure and builds on the living day cycle
 - Occasional environmental ambience such as drifting mist, floating leaves, subtle weather, and distant water ripples; no animated animals
-- Optional, non-expiring fishing goals
-- Meaningful achievements
-
-## Phase 3 — Deeper Personalization
-
 - Boats and lures
 - Aquarium
 - Cabin and cosmetic customization

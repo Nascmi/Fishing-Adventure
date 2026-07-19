@@ -10,6 +10,9 @@ const preferredPhases = {
   'atlantic-croaker': ['evening', 'night'], 'sand-seatrout': ['evening', 'night'], sheepshead: ['midday'],
   'southern-flounder': ['evening', 'night'], 'spotted-seatrout': ['morning', 'evening'], 'black-drum': ['morning', 'evening'],
   'red-drum': ['morning', 'evening'], cobia: ['midday'],
+  'vermilion-snapper': ['morning', 'evening'], 'spanish-mackerel': ['morning', 'midday'], 'gray-triggerfish': ['midday'],
+  'red-snapper': ['morning', 'evening'], 'king-mackerel': ['morning', 'midday'], 'greater-amberjack': ['midday', 'evening'],
+  'mahi-mahi': ['midday'], 'yellowfin-tuna': ['morning', 'midday'],
 }
 export const randomDelay = (min,max) => Math.round(min + Math.random() * (max-min))
 const weightedPick = (pool, weights) => {

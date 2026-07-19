@@ -18,6 +18,16 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Added
 
+- Added Open Gulf as the fifth playable location and the blue-water culmination of the current journey.
+- Added Vermilion Snapper, Spanish Mackerel, Gray Triggerfish, Red Snapper, King Mackerel, Greater Amberjack, Mahi-Mahi, and Yellowfin Tuna.
+- Added original Open Gulf environment art, eight naturalist fish illustrations, four offshore rods, and a deep-jig presentation.
+- Added the hidden Gold on the Horizon keepsake for landing a morning Yellowfin Tuna.
+- Migrated saves to version 11 so existing players receive the Worn Offshore Rod without losing progress.
+- Added an optional Share button for Amazing catches that creates a polished local catch image and opens the native share sheet when supported.
+- Added a private offline fallback that downloads the catch image when native file sharing is unavailable.
+- Added Angling Keepsakes inside Collection with permanent milestones for first catches, exploration, complete journals, day phases, preferred-time fishing, full charters, exceptional specimens, and legendary encounters.
+- Added five hidden story keepsakes tied to Old Whiskers, Chinook Salmon, Red Drum, Cobia, and Great Lakes Muskellunge.
+- Migrated saves to version 10 with bounded achievement progress and retroactive unlocks wherever existing records provide evidence.
 - Added a living four-phase day cycle with morning, midday, evening, and night periods lasting fifteen minutes each.
 - Added species activity periods that gently improve catch opportunities and appear in discovered journal entries.
 - Added persistent three-day fishing charters for Pine River, Great Lake, and Gulf Coast while keeping Backyard Pond free.
@@ -45,6 +55,7 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Changed
 
+- Removed the planned optional fishing-goals system because Angling Keepsakes and existing journal, specimen, trip, and personal-record systems already provide pressure-free long-term direction.
 - Reworked Pine River around native and iconic Pacific Northwest river fish; Yellow Perch, Smallmouth Bass, and invasive Northern Pike remain collectible elsewhere but no longer appear there.
 - Made rod ownership, equipment, and shop inventory location-specific while keeping coins and all other progress shared.
 - Required rod upgrades to be purchased in sequence within each location.

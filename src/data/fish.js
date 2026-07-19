@@ -136,6 +136,46 @@ const journalEntries = {
     typicalSize: '20–60 lb',
     journal: 'Cobia are powerful coastal travelers that appear around channel markers, rays, and nearshore structure as Gulf waters warm. Their long dark shape can turn a quiet cast into an unforgettable fight.',
   },
+  'vermilion-snapper': {
+    habitat: 'Offshore reefs, ledges, and hard bottom in deep Gulf water',
+    typicalSize: '1–4 lb',
+    journal: 'Vermilion Snapper gather above reefs and ledges in the open Gulf. Their rose-red sides, yellow lines, and forked tail distinguish them from the heavier Red Snapper below.',
+  },
+  'spanish-mackerel': {
+    habitat: 'Open coastal water, current lines, and schools of baitfish',
+    typicalSize: '1–8 lb',
+    journal: 'Spanish Mackerel race through warm Gulf water in flashing schools. Their gold-spotted sides and sharp speed reward an angler who notices bait gathering near the surface.',
+  },
+  'gray-triggerfish': {
+    habitat: 'Offshore reefs, wrecks, and platforms',
+    typicalSize: '1–6 lb',
+    journal: 'Gray Triggerfish use powerful teeth to feed around reefs and platforms. The locking first spine behind the head gives this compact, determined fish its memorable name.',
+  },
+  'red-snapper': {
+    habitat: 'Natural reefs, artificial reefs, wrecks, and offshore structure',
+    typicalSize: '3–20 lb',
+    journal: 'Red Snapper are a defining reef fish of the northern Gulf. They gather around structure in deep water, where their brilliant red color seems almost too bright for the blue below.',
+  },
+  'king-mackerel': {
+    habitat: 'Open Gulf water near reefs, passes, and roaming baitfish',
+    typicalSize: '10–40 lb',
+    journal: 'King Mackerel are long, swift predators built for open water. Often called kingfish, they follow schools of bait and can take line in a sudden, unforgettable rush.',
+  },
+  'greater-amberjack': {
+    habitat: 'Deep reefs, wrecks, rigs, and offshore structure',
+    typicalSize: '20–80 lb',
+    journal: 'Greater Amberjack patrol deep structure with immense strength held in reserve. Once hooked, they drive toward the reef and test every part of an offshore angler’s tackle.',
+  },
+  'mahi-mahi': {
+    habitat: 'Warm blue water near floating weed lines and drifting structure',
+    typicalSize: '8–40 lb',
+    journal: 'Mahi-Mahi travel through warm blue water beneath weed lines and floating debris. Few fish match their electric color or their habit of leaping into the sunlight during a fight.',
+  },
+  'yellowfin-tuna': {
+    habitat: 'Deep blue water, current edges, and offshore feeding grounds',
+    typicalSize: '40–150 lb',
+    journal: 'Yellowfin Tuna are tireless travelers of the open Gulf. Their metallic blue back, golden stripe, and long yellow finlets announce a fish capable of a powerful, sustained run.',
+  },
   'golden-trout': {
     habitat: 'Cold, clear high-country lakes and mountain streams',
     typicalSize: '0.5–3 lb',
@@ -175,6 +215,14 @@ export const fish = [
   ['black-drum','Black Drum','rare',5,80,33,'A heavy bay-bottom fish with sensitive chin barbels.'],
   ['red-drum','Red Drum','epic',3,50,52,'The copper-backed icon of Gulf Coast fishing.'],
   ['cobia','Cobia','legendary',20,100,92,'A mighty seasonal traveler of bays and nearshore water.'],
+  ['vermilion-snapper','Vermilion Snapper','common',0.5,6,15,'A rose-red reef fish of the open Gulf.'],
+  ['spanish-mackerel','Spanish Mackerel','common',1,12,17,'A swift, gold-spotted hunter of open coastal water.'],
+  ['gray-triggerfish','Gray Triggerfish','uncommon',1,10,23,'A compact reef fish with a locking dorsal spine.'],
+  ['red-snapper','Red Snapper','rare',2,30,38,'The brilliant red icon of Gulf reef fishing.'],
+  ['king-mackerel','King Mackerel','rare',8,60,48,'A long, powerful predator built for sudden speed.'],
+  ['greater-amberjack','Greater Amberjack','epic',20,100,72,'A tremendously strong fish of deep offshore structure.'],
+  ['mahi-mahi','Mahi-Mahi','epic',8,60,78,'An electric-blue traveler of warm Gulf currents.'],
+  ['yellowfin-tuna','Yellowfin Tuna','legendary',30,180,120,'A tireless blue-water giant marked by fins of gold.'],
   ['golden-trout','Golden Trout','epic',0.5,6,55,'A radiant and exceptionally elusive trout.'],
   ['old-whiskers','Legendary Old Whiskers','legendary',20,70,90,'The ancient monarch of Backyard Pond.']
 ].map(([id,name,rarity,minWeight,maxWeight,baseValue,description]) => ({

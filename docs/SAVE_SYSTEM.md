@@ -1,6 +1,6 @@
 # Save System
 
-The current save schema is version 9.
+The current save schema is version 11.
 
 ## Current Save Data
 
@@ -11,6 +11,7 @@ The current save schema is version 9.
 - Fishing and economy statistics
 - Bite timing, sound-cue, pond-ambience, and device-haptic preferences
 - Home-water day-cycle progress and the active charter's destination, elapsed time, and remaining time
+- Angling Keepsake unlock dates and bounded progress records for locations, day phases, preferred-time catches, and completed trips
 
 Inventory catches include their generated specimen-size class. Older catches are classified from their saved weight during migration.
 
@@ -24,6 +25,8 @@ Inventory catches include their generated specimen-size class. Older catches are
 - Version 7 added Great Lake's starter spinning rod without altering existing location gear.
 - Version 8 added Gulf Coast's starter inshore rod without altering existing location gear.
 - Version 9 added the living day cycle and persistent destination charters.
+- Version 10 added permanent Angling Keepsakes and reconstructs provable milestones from existing statistics, catches, and journal records.
+- Version 11 added Open Gulf's starter offshore rod without altering existing gear, catches, trips, or keepsakes.
 
 ## Rules
 

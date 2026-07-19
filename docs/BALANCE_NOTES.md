@@ -61,4 +61,6 @@ Change one variable at a time whenever practical. Do not rebalance from a single
 - Pine River family: Worn Fly Rod, Fiberglass Fly Rod, Graphite Fly Rod, and Master Fly Rod.
 - Great Lake family: Worn Lake Rod, Fiberglass Lake Rod, Graphite Lake Rod, and Master Lake Rod.
 - Gulf Coast family: Worn Inshore Rod, Fiberglass Inshore Rod, Graphite Inshore Rod, and Master Inshore Rod.
+- Open Gulf family: Worn Offshore Rod, Fiberglass Offshore Rod, Graphite Offshore Rod, and Master Offshore Rod.
+- Charter baseline: Open Gulf costs 4,000 coins for three complete days; compare its earnings and affordability against Gulf Coast before final release tuning.
 - Next action: compare how quickly existing players and new players progress through Pine River before assigning location-specific prices.

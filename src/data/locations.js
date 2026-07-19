@@ -45,7 +45,17 @@ export const locations = [
     fishIds: ['atlantic-croaker', 'sand-seatrout', 'sheepshead', 'southern-flounder', 'spotted-seatrout', 'black-drum', 'red-drum', 'cobia'],
     image: artwork['../assets/locations/gulf-coast-deep.png'],
   },
+  {
+    id: 'open-gulf',
+    name: 'Open Gulf',
+    description: 'A blue-water charter beyond the coast, where reefs, rigs, and powerful fish wait.',
+    waterLabel: 'Gulf',
+    fishingStyle: 'jig',
+    tripCost: 4000,
+    fishIds: ['vermilion-snapper', 'spanish-mackerel', 'gray-triggerfish', 'red-snapper', 'king-mackerel', 'greater-amberjack', 'mahi-mahi', 'yellowfin-tuna'],
+    image: artwork['../assets/locations/open-gulf.png'],
+  },
 ]
 
-export const futureLocations = ['Deep Sea']
+export const futureLocations = []
 export const getLocation = (id) => locations.find((location) => location.id === id) || locations[0]

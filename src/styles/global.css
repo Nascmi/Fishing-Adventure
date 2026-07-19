@@ -119,6 +119,7 @@
 .lake.location-pine-river{background-position:50% center}
 .lake.location-great-lake{background-position:50% center}
 .lake.location-gulf-coast{background-position:50% center}
+.lake.location-open-gulf{background-position:50% center}
 .location-switcher{position:absolute;z-index:4;top:14px;left:14px;display:flex;max-width:calc(100% - 28px);gap:4px;padding:4px;overflow-x:auto;background:#f8f5e9d9;border:1px solid #ffffffaa;border-radius:14px;backdrop-filter:blur(9px);box-shadow:0 8px 24px #102e2d24;scrollbar-width:none}
 .location-switcher::-webkit-scrollbar{display:none}
 .location-switcher button{min-height:38px;padding:0 13px;border:0;border-radius:10px;background:transparent;color:#49645d;font-size:.7rem;font-weight:700;cursor:pointer}
@@ -128,7 +129,7 @@
 .water{height:44%;background:linear-gradient(180deg,#537e7908,#173f4338)}
 .water:after{background:repeating-linear-gradient(174deg,transparent 0 18px,#ffffff0d 19px 20px)}
 .scene-copy{background:#fff9e9df;border:1px solid #fff9;box-shadow:0 12px 32px #102e2d35}
-@media(max-width:430px){.lake{background-position:61% center}.lake.location-pine-river,.lake.location-great-lake,.lake.location-gulf-coast{background-position:50% center}.location-switcher{top:12px;left:12px;max-width:calc(100% - 24px)}.location-switcher button{padding:0 10px;font-size:.66rem;white-space:nowrap}}
+@media(max-width:430px){.lake{background-position:61% center}.lake.location-pine-river,.lake.location-great-lake,.lake.location-gulf-coast,.lake.location-open-gulf{background-position:50% center}.location-switcher{top:12px;left:12px;max-width:calc(100% - 24px)}.location-switcher button{padding:0 10px;font-size:.66rem;white-space:nowrap}}
 
 .primary-button{background:#245c45;box-shadow:0 5px 0 #143d2f}
 
@@ -157,6 +158,9 @@
 .strike-marker.cork:before,.strike-marker.cork:after{content:"";position:absolute;left:3px;width:4px;height:4px;border-radius:50%;background:#3e4c48}
 .strike-marker.cork:before{top:-6px}.strike-marker.cork:after{bottom:-6px}
 .strike-marker.cork i{left:4px;top:-12px;width:2px;height:13px;background:#30433e}
+.strike-marker.jig{width:9px;height:22px;border-radius:45% 45% 60% 60%;background:linear-gradient(90deg,#b9c9c9,#f1d66b 52%,#6e8f91);box-shadow:0 2px 3px #102e2d99;transform:rotate(8deg)}
+.strike-marker.jig:after{content:"";position:absolute;left:2px;bottom:-7px;width:7px;height:8px;border-right:1px solid #263f3b;border-bottom:1px solid #263f3b;border-radius:0 0 7px 0;transform:rotate(25deg)}
+.strike-marker.jig i{left:4px;top:-9px;width:1px;height:11px;background:#d9e1d8}
 .ready .strike-marker{opacity:0;transform:translate(-45vw,-180px)}
 .casting .strike-marker{animation:cast .65s ease-out}
 .waiting .strike-marker{animation:float 2s ease-in-out infinite}
@@ -194,3 +198,13 @@
 .trip-progress{position:relative;height:25px;margin:0 0 10px;overflow:hidden;background:#dce6dc;border-radius:8px}.trip-progress i{position:absolute;inset:0 auto 0 0;background:#8db4a4}.trip-progress span{position:relative;z-index:1;display:grid;place-items:center;height:100%;font-size:.62rem;font-weight:700;color:#173736}
 .trip-card button{width:100%;min-height:48px;border:0;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;background:#245c45;color:white;font-weight:700}.trip-card button:disabled{background:#dfe6dc;color:#74837e}
 @media(max-width:540px){.day-cycle{top:12px}.trips-page{padding:24px 12px}.trips-grid{grid-template-columns:1fr}.trip-art{height:125px}.nav button{font-size:.56rem}}
+
+/* Angling Keepsakes share Collection without adding navigation pressure. */
+.collection-tabs{max-width:1020px;margin:0 auto 22px;display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:5px;background:#dfe8de;border-radius:14px}.collection-tabs button{min-height:42px;border:0;border-radius:10px;background:transparent;color:#58716a;font-size:.75rem;font-weight:700}.collection-tabs button.active{background:#fffdf6;color:#245c45;box-shadow:0 3px 10px #17373618}
+.keepsake-heading{align-items:center}.keepsake-count{width:65px;height:65px;display:grid;place-items:center;color:#765d25;background:#f2dfaa;border:1px solid #dfc67c;border-radius:50%}.keepsake-count svg{grid-area:1/1}.keepsake-count b{grid-area:1/1;margin-top:4px;font-size:.66rem;background:#f8edce;border-radius:10px;padding:1px 4px}
+.keepsake-grid{max-width:1020px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:12px}.keepsake-card{display:flex;gap:14px;min-height:155px;padding:16px;background:#fffdf6;border:1px solid #dbe1d5;border-radius:18px;box-shadow:0 7px 18px #315f5510}.keepsake-card.locked{opacity:.67;background:#ecefe8}.keepsake-medallion{flex:0 0 58px;width:58px;height:58px;display:grid;place-items:center;color:#80652d;background:radial-gradient(circle at 35% 30%,#f7e8bb,#d7b45b);border:2px solid #fff1c7;border-radius:50%;box-shadow:0 4px 10px #6b55252a}.keepsake-card.locked .keepsake-medallion{color:#77827d;background:#d5dcd5;border-color:#e8ece7}.keepsake-card span{font-size:.59rem;color:#75827d;text-transform:uppercase;letter-spacing:.08em;font-weight:700}.keepsake-card h3{margin:4px 0;font:1.08rem 'DM Serif Display'}.keepsake-card p{margin:0;color:#61736e;font-size:.73rem;line-height:1.42}.keepsake-card blockquote{margin:10px 0 0;padding-left:9px;border-left:2px solid #d7b45b;color:#735f3c;font:italic .72rem/1.4 'DM Serif Display'}
+@media(max-width:540px){.collection-tabs{margin-bottom:18px}.keepsake-grid{grid-template-columns:1fr}.keepsake-card{min-height:140px;padding:14px}.keepsake-medallion{flex-basis:50px;width:50px;height:50px}}
+
+/* Amazing catches can become optional, shareable story cards. */
+.amazing-share{display:flex;align-items:center;gap:10px;margin:-5px 0 14px}.amazing-share button{min-height:42px;display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid #caa449;border-radius:11px;padding:0 14px;background:#fff3ce;color:#72551b;font-weight:700}.amazing-share button:disabled{opacity:.58}.amazing-share span{font-size:.67rem;color:#61736e}
+@media(max-width:430px){.amazing-share{align-items:stretch;flex-direction:column;gap:5px}.amazing-share span{text-align:center}}

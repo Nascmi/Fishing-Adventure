@@ -2,10 +2,12 @@ import { GAME_CONFIG } from '../data/config'
 import { fish } from '../data/fish'
 import { getRodsForLocation, getStarterRod, rodLocationIds } from '../data/rods'
 import { classifyStoredCatch, getWeightTier } from '../utils/valueCalculator'
+import { achievements as achievementDefinitions, unlockAchievements } from '../data/achievements'
+import { locations } from '../data/locations'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 9
+const CURRENT_VERSION = 11
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
 
 export const newGame = () => ({
@@ -20,6 +22,15 @@ export const newGame = () => ({
   ),
   collection: {},
   dayCycle: { homeElapsedMs: 0, activeTrip: null },
+  achievements: {},
+  achievementProgress: {
+    locationsFished: ['willow-pond'],
+    locationsCaught: [],
+    phasesCaught: [],
+    peakMoments: [],
+    completedTrips: [],
+    amazingLegendaryCaught: false,
+  },
   settings: { reactionWindow: 'relaxed', soundEnabled: true, hapticsEnabled: true, ambienceEnabled: false },
   stats: {
     totalCaught: 0,
@@ -89,6 +100,21 @@ function migrateSave(raw) {
   if (migrated.version < 9) {
     migrated.dayCycle = { homeElapsedMs: 0, activeTrip: null }
     migrated.version = 9
+  }
+  if (migrated.version < 10) {
+    migrated.achievements = migrated.achievements || {}
+    migrated.achievementProgress = migrated.achievementProgress || {}
+    migrated.version = 10
+  }
+  if (migrated.version < 11) {
+    migrated.gearByLocation = {
+      ...migrated.gearByLocation,
+      'open-gulf': {
+        ownedRods: ['offshore-starter'],
+        equippedRod: 'offshore-starter',
+      },
+    }
+    migrated.version = 11
   }
   return migrated
 }
@@ -168,7 +194,20 @@ export function validateSave(input) {
       }]),
   )
 
-  return {
+  const locationIds = new Set(locations.map((location) => location.id))
+  const phases = new Set(GAME_CONFIG.dayCycle.phases.map((phase) => phase.id))
+  const discoveredLocations = locations.filter((location) => location.fishIds.some((id) => collection[id])).map((location) => location.id)
+  const progress = raw.achievementProgress && typeof raw.achievementProgress === 'object' ? raw.achievementProgress : {}
+  const validList = (value, valid) => Array.isArray(value) ? [...new Set(value.filter((item) => valid.has(item)))] : []
+  const peakMoments = Array.isArray(progress.peakMoments)
+    ? progress.peakMoments.filter((entry) => entry && validFish.has(entry.fishId) && phases.has(entry.phase)).map((entry) => ({ fishId: entry.fishId, phase: entry.phase }))
+    : []
+  const validAchievementIds = new Set(achievementDefinitions.map((achievement) => achievement.id))
+  const achievementRecords = Object.fromEntries(Object.entries(raw.achievements && typeof raw.achievements === 'object' ? raw.achievements : {})
+    .filter(([id, record]) => validAchievementIds.has(id) && record && Number.isFinite(record.unlockedAt) && record.unlockedAt > 0)
+    .map(([id, record]) => [id, { unlockedAt: record.unlockedAt }]))
+
+  const validated = {
     ...base,
     version: CURRENT_VERSION,
     coins: Math.floor(validNumber(raw.coins, base.coins)),
@@ -178,6 +217,15 @@ export function validateSave(input) {
     dayCycle: {
       homeElapsedMs: validNumber(raw.dayCycle?.homeElapsedMs, 0),
       activeTrip: activeTrip?.remainingMs > 0 ? activeTrip : null,
+    },
+    achievements: achievementRecords,
+    achievementProgress: {
+      locationsFished: [...new Set(['willow-pond', ...discoveredLocations, ...validList(progress.locationsFished, locationIds)])],
+      locationsCaught: [...new Set([...discoveredLocations, ...validList(progress.locationsCaught, locationIds)])],
+      phasesCaught: validList(progress.phasesCaught, phases),
+      peakMoments,
+      completedTrips: validList(progress.completedTrips, locationIds).filter((id) => id !== 'willow-pond'),
+      amazingLegendaryCaught: progress.amazingLegendaryCaught === true || inventory.some((item) => item.rarity === 'legendary' && item.sizeTier === 'amazing'),
     },
     settings: {
       reactionWindow,
@@ -194,6 +242,7 @@ export function validateSave(input) {
       escaped: Math.floor(validNumber(stats.escaped, 0)),
     },
   }
+  return unlockAchievements(validated).state
 }
 
 export function loadGame() {

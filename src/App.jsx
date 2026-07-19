@@ -86,7 +86,7 @@ export default function App() {
           </div>
         </div>
 
-        <h3>Future waters</h3>
+        {futureLocations.length > 0 && <h3>Future waters</h3>}
         <div className="locked-list">{futureLocations.map((name) => <span key={name}>{name} · Locked</span>)}</div>
         <button className="danger-button" onClick={reset}>Reset progress</button>
       </section>

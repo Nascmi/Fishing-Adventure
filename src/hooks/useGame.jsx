@@ -1,8 +1,10 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { clearGame, loadGame, newGame, rarityRank, saveGame } from '../services/saveService'
 import { getRod } from '../data/rods'
 import { GAME_CONFIG } from '../data/config'
 import { getLocation } from '../data/locations'
+import { achievements as achievementDefinitions, unlockAchievements } from '../data/achievements'
+import { getPreferredPhases } from '../utils/fishingEngine'
 
 const GameContext = createContext(null)
 
@@ -11,24 +13,33 @@ export function GameProvider({ children }) {
   const [game, setGame] = useState(initial.game)
   const [notice, setNotice] = useState(initial.notice)
   const [storageAvailable, setStorageAvailable] = useState(true)
+  const knownAchievements = useRef(new Set(Object.keys(initial.game.achievements)))
 
   useEffect(() => {
     setStorageAvailable(saveGame(game))
   }, [game])
 
+  useEffect(() => {
+    const newIds = Object.keys(game.achievements).filter((id) => !knownAchievements.current.has(id))
+    if (!newIds.length) return
+    newIds.forEach((id) => knownAchievements.current.add(id))
+    const names = newIds.map((id) => achievementDefinitions.find((item) => item.id === id)?.name).filter(Boolean)
+    setNotice(names.length === 1 ? `Angling Keepsake earned: ${names[0]}` : `${names.length} Angling Keepsakes earned.`)
+  }, [game.achievements])
+
   const actions = useMemo(
     () => ({
       recordCast: () =>
-        setGame((current) => ({
+        setGame((current) => unlockAchievements({
           ...current,
           stats: { ...current.stats, totalCasts: current.stats.totalCasts + 1 },
-        })),
+        }).state),
       recordEscape: () =>
         setGame((current) => ({
           ...current,
           stats: { ...current.stats, escaped: current.stats.escaped + 1 },
         })),
-      addCatch: (item) =>
+      addCatch: (item, locationId, phase) =>
         setGame((current) => {
           const previous = current.collection[item.fishId] || { count: 0, largestWeight: 0 }
           const largest =
@@ -40,7 +51,8 @@ export function GameProvider({ children }) {
             rarityRank(item.rarity) > rarityRank(current.stats.rarestFish.rarity)
               ? item
               : current.stats.rarestFish
-          return {
+          const isPeak = getPreferredPhases(item.fishId).includes(phase)
+          const next = {
             ...current,
             inventory: [item, ...current.inventory],
             collection: {
@@ -56,13 +68,23 @@ export function GameProvider({ children }) {
               largestFish: largest,
               rarestFish: rarest,
             },
+            achievementProgress: {
+              ...current.achievementProgress,
+              locationsCaught: [...new Set([...current.achievementProgress.locationsCaught, locationId])],
+              phasesCaught: [...new Set([...current.achievementProgress.phasesCaught, phase])],
+              peakMoments: isPeak && !current.achievementProgress.peakMoments.some((entry) => entry.fishId === item.fishId && entry.phase === phase)
+                ? [...current.achievementProgress.peakMoments, { fishId: item.fishId, phase }]
+                : current.achievementProgress.peakMoments,
+              amazingLegendaryCaught: current.achievementProgress.amazingLegendaryCaught || (item.rarity === 'legendary' && item.sizeTier === 'amazing'),
+            },
           }
+          return unlockAchievements(next).state
         }),
       sell: (id) =>
         setGame((current) => {
           const item = current.inventory.find((catchItem) => catchItem.catchId === id)
           if (!item) return current
-          return {
+          const next = {
             ...current,
             coins: current.coins + item.value,
             inventory: current.inventory.filter((catchItem) => catchItem.catchId !== id),
@@ -125,7 +147,12 @@ export function GameProvider({ children }) {
               ...current.dayCycle,
               activeTrip: { locationId, elapsedMs: 0, remainingMs: duration },
             },
+            achievementProgress: {
+              ...current.achievementProgress,
+              locationsFished: [...new Set([...current.achievementProgress.locationsFished, locationId])],
+            },
           }
+          return unlockAchievements(next).state
         }),
       tickDayCycle: (locationId, deltaMs) =>
         setGame((current) => {
@@ -137,13 +164,18 @@ export function GameProvider({ children }) {
           const trip = current.dayCycle.activeTrip
           if (trip?.locationId !== locationId) return current
           const remainingMs = Math.max(0, trip.remainingMs - delta)
-          return {
+          const next = {
             ...current,
             dayCycle: {
               ...current.dayCycle,
               activeTrip: remainingMs ? { ...trip, elapsedMs: trip.elapsedMs + delta, remainingMs } : null,
             },
+            achievementProgress: remainingMs ? current.achievementProgress : {
+              ...current.achievementProgress,
+              completedTrips: [...new Set([...current.achievementProgress.completedTrips, trip.locationId])],
+            },
           }
+          return remainingMs ? next : unlockAchievements(next).state
         }),
       skipDayPhase: (locationId) =>
         setGame((current) => {
@@ -158,13 +190,18 @@ export function GameProvider({ children }) {
           if (trip?.locationId !== locationId) return current
           const used = Math.min(advance, trip.remainingMs)
           const remainingMs = trip.remainingMs - used
-          return {
+          const next = {
             ...current,
             dayCycle: {
               ...current.dayCycle,
               activeTrip: remainingMs ? { ...trip, elapsedMs: trip.elapsedMs + used, remainingMs } : null,
             },
+            achievementProgress: remainingMs ? current.achievementProgress : {
+              ...current.achievementProgress,
+              completedTrips: [...new Set([...current.achievementProgress.completedTrips, trip.locationId])],
+            },
           }
+          return remainingMs ? next : unlockAchievements(next).state
         }),
       endTrip: () => setGame((current) => ({ ...current, dayCycle: { ...current.dayCycle, activeTrip: null } })),
       setReactionWindow: (reactionWindow) =>
@@ -180,6 +217,7 @@ export function GameProvider({ children }) {
       dismissNotice: () => setNotice(null),
       reset: () => {
         clearGame()
+        knownAchievements.current.clear()
         setNotice(null)
         setGame(newGame())
       },

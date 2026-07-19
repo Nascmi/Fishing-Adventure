@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import FishArtwork from '../components/FishArtwork'
+import Icon from '../components/Icon'
 import RarityBadge from '../components/RarityBadge'
 import ReelingGame from '../components/ReelingGame'
 import { GAME_CONFIG } from '../data/config'
 import { getLocation } from '../data/locations'
+import { getFish } from '../data/fish'
 import { getRod } from '../data/rods'
 import { useGame } from '../hooks/useGame'
 import { giveFeedback } from '../services/feedbackService'
 import { randomDelay, selectFish } from '../utils/fishingEngine'
 import { getWeightTier, makeCatch } from '../utils/valueCalculator'
+import { createCatchShareImage } from '../utils/catchShareImage'
 
 const getCyclePosition = (elapsedMs) => {
   const { phaseMs, phases } = GAME_CONFIG.dayCycle
@@ -28,8 +31,8 @@ const shortTime = (ms) => {
 
 const getStatusCopy = (location) => ({
   ready: `The ${location.waterLabel} is calm. Cast when you’re ready.`,
-  casting: location.fishingStyle === 'fly' ? 'The fly line rolls softly over the current…' : location.fishingStyle === 'spinning' ? 'The lure sails toward open water…' : location.fishingStyle === 'cork' ? 'The popping cork lands beyond the oyster reef…' : `A smooth cast across the ${location.waterLabel}…`,
-  waiting: location.fishingStyle === 'fly' ? 'Watch the drift. Something may rise.' : location.fishingStyle === 'spinning' ? 'Work the lure slowly. Watch the line.' : location.fishingStyle === 'cork' ? 'Pop the cork gently. Watch the tide.' : 'Watch the bobber. Something may be near.',
+  casting: location.fishingStyle === 'fly' ? 'The fly line rolls softly over the current…' : location.fishingStyle === 'spinning' ? 'The lure sails toward open water…' : location.fishingStyle === 'cork' ? 'The popping cork lands beyond the oyster reef…' : location.fishingStyle === 'jig' ? 'The heavy jig drops into blue water…' : `A smooth cast across the ${location.waterLabel}…`,
+  waiting: location.fishingStyle === 'fly' ? 'Watch the drift. Something may rise.' : location.fishingStyle === 'spinning' ? 'Work the lure slowly. Watch the line.' : location.fishingStyle === 'cork' ? 'Pop the cork gently. Watch the tide.' : location.fishingStyle === 'jig' ? 'Work the jig through the offshore current. Watch the line.' : 'Watch the bobber. Something may be near.',
   biting: 'A bite! Reel in now!',
   reeling: 'Hold to reel. Release when tight.',
   escaped: 'The fish slipped away.',
@@ -44,6 +47,8 @@ export default function FishingPage({ locationId, onLocationChange }) {
   const [fishingState, setFishingState] = useState('ready')
   const [recentCatch, setRecentCatch] = useState(null)
   const [hookedCatch, setHookedCatch] = useState(null)
+  const [shareImage, setShareImage] = useState(null)
+  const [shareStatus, setShareStatus] = useState('')
   const timers = useRef(new Set())
   const stateRef = useRef(fishingState)
 
@@ -71,6 +76,17 @@ export default function FishingPage({ locationId, onLocationChange }) {
   const hasLocationAccess = location.id === 'willow-pond' || activeTrip?.locationId === location.id
   const elapsedMs = location.id === 'willow-pond' ? game.dayCycle.homeElapsedMs : activeTrip?.elapsedMs || 0
   const cycle = getCyclePosition(elapsedMs)
+
+  useEffect(() => {
+    let cancelled = false
+    setShareImage(null)
+    setShareStatus('')
+    if (recentCatch?.sizeTier !== 'amazing') return () => { cancelled = true }
+    createCatchShareImage(recentCatch, getFish(recentCatch.fishId), location, recentCatch.phaseLabel)
+      .then((blob) => { if (!cancelled) setShareImage(blob) })
+      .catch(() => { if (!cancelled) setShareStatus('Share image unavailable') })
+    return () => { cancelled = true }
+  }, [location, recentCatch])
 
   useEffect(() => {
     if (!hasLocationAccess) {
@@ -128,15 +144,16 @@ export default function FishingPage({ locationId, onLocationChange }) {
   const landFish = useCallback(() => {
     if (!hookedCatch || stateRef.current !== 'reeling') return
     const previousBest = game.collection[hookedCatch.fish.id]?.largestWeight || 0
-    actions.addCatch(hookedCatch.catchItem)
+    actions.addCatch(hookedCatch.catchItem, location.id, cycle.phase.id)
     giveFeedback('catch', game.settings)
     setRecentCatch({
       ...hookedCatch.catchItem,
       isPersonalBest: hookedCatch.catchItem.weight > previousBest,
+      phaseLabel: cycle.phase.label,
     })
     changeState('caught')
     finishAfterPause()
-  }, [actions, changeState, finishAfterPause, game.collection, game.settings, hookedCatch])
+  }, [actions, changeState, cycle.phase.id, finishAfterPause, game.collection, game.settings, hookedCatch, location.id])
 
   const loseFish = useCallback(() => {
     if (stateRef.current !== 'reeling') return
@@ -145,6 +162,32 @@ export default function FishingPage({ locationId, onLocationChange }) {
     changeState('escaped')
     finishAfterPause()
   }, [actions, changeState, finishAfterPause, game.settings])
+
+  const shareCatch = async () => {
+    if (!shareImage || !recentCatch) return
+    const safeName = recentCatch.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+    const filename = `fishing-adventure-${safeName}.png`
+    const file = typeof File === 'function' ? new File([shareImage], filename, { type: 'image/png' }) : null
+    const shareData = file ? { files: [file], title: `Amazing ${recentCatch.name} catch`, text: `I caught an amazing ${recentCatch.weight} lb ${recentCatch.name} at ${location.name} in Fishing Adventure!` } : null
+    try {
+      if (shareData && navigator.share && navigator.canShare?.(shareData)) {
+        await navigator.share(shareData)
+        setShareStatus('Catch shared')
+        return
+      }
+      const url = URL.createObjectURL(shareImage)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = filename
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      setTimeout(() => URL.revokeObjectURL(url), 1000)
+      setShareStatus('Catch image downloaded')
+    } catch (error) {
+      if (error.name !== 'AbortError') setShareStatus('Could not share this catch')
+    }
+  }
 
   const isLineOut = fishingState === 'casting' || fishingState === 'waiting'
   const isResult = fishingState === 'caught' || fishingState === 'escaped'
@@ -170,6 +213,7 @@ export default function FishingPage({ locationId, onLocationChange }) {
         ? <ReelingGame catchItem={hookedCatch.catchItem} fish={hookedCatch.fish} rod={equippedRod} onCatch={landFish} onEscape={loseFish}/>
         : <>
           {recentCatch && <article className={`catch-card ${recentCatch.rarity} size-${recentCatch.sizeTier}`}><FishArtwork fishId={recentCatch.fishId} name={recentCatch.name} className="catch-fish-art"/><div><span>{catchLabel}</span><h3>{recentCatch.name}</h3><RarityBadge rarity={recentCatch.rarity}/></div><div className="catch-numbers"><b>{recentCatch.weight} lb</b><span>{recentCatch.value} coins</span></div></article>}
+          {recentCatch?.sizeTier === 'amazing' && <div className="amazing-share"><button type="button" disabled={!shareImage} onClick={shareCatch}><Icon name="share" size={18}/>{shareImage ? 'Share amazing catch' : 'Preparing catch image…'}</button>{shareStatus && <span role="status">{shareStatus}</span>}</div>}
           <button className={`primary-button ${fishingState === 'biting' ? 'urgent' : ''}`} disabled={isLineOut || isResult} onClick={fishingState === 'biting' ? reel : cast}>{fishingState === 'biting' ? 'Hook Fish!' : isLineOut ? 'Line is out…' : 'Cast Line'}</button>
         </>}
     </section>
