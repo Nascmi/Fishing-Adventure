@@ -84,19 +84,32 @@ export function GameProvider({ children }) {
             },
           }
         }),
-      buyRod: (id) =>
+      buyRod: (id, locationId) =>
         setGame((current) => {
-          const rod = getRod(id)
-          if (current.ownedRods.includes(id) || current.coins < rod.price) return current
+          const rod = getRod(id, locationId)
+          const gear = current.gearByLocation[locationId]
+          if (!gear || rod.id !== id || rod.locationId !== locationId || gear.ownedRods.includes(id) || current.coins < rod.price) return current
+          if (rod.previousId && !gear.ownedRods.includes(rod.previousId)) return current
           return {
             ...current,
             coins: current.coins - rod.price,
-            ownedRods: [...current.ownedRods, id],
+            gearByLocation: {
+              ...current.gearByLocation,
+              [locationId]: { ...gear, ownedRods: [...gear.ownedRods, id] },
+            },
           }
         }),
-      equipRod: (id) =>
+      equipRod: (id, locationId) =>
         setGame((current) =>
-          current.ownedRods.includes(id) ? { ...current, equippedRod: id } : current,
+          current.gearByLocation[locationId]?.ownedRods.includes(id)
+            ? {
+                ...current,
+                gearByLocation: {
+                  ...current.gearByLocation,
+                  [locationId]: { ...current.gearByLocation[locationId], equippedRod: id },
+                },
+              }
+            : current,
         ),
       setReactionWindow: (reactionWindow) =>
         setGame((current) => ({

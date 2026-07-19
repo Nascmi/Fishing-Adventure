@@ -44,6 +44,8 @@ These quality practices continue throughout development rather than ending with 
 - Added Pine River as the second playable fishing location.
 - Added location switching and location-specific fish populations.
 - Introduced Rainbow Trout at Pine River.
+- Refined Pine River into a Pacific Northwest fishery with Mountain Whitefish, Coastal Cutthroat Trout, Steelhead, and Chinook Salmon.
+- Added location-specific rod progression, Pine River fly rods, and a dry-fly fishing presentation while keeping coins shared.
 
 ### Planned
 

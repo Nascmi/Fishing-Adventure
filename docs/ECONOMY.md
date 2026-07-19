@@ -13,6 +13,9 @@ The economy turns each catch into visible progress without turning fishing into 
 - Prices, value formulas, and probability tables belong in data or configuration files.
 - Real-money purchases must never sell gameplay power.
 - A catch's actual weight affects its sale value, so specimen-size frequency must be tuned alongside species rarity rather than treated as a purely cosmetic system.
+- Coins, inventory, and collection progress remain global across locations.
+- Rod ownership and equipment progression restart with a location-appropriate starter rod at each new water.
+- Rod upgrades within a location are purchased in sequence, even when the player already has enough shared coins for a later rod.
 
 ## Tuning
 

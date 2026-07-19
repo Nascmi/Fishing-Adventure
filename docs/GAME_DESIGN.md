@@ -55,9 +55,11 @@ Short gameplay sound cues and haptics remain optional feedback rather than part 
 
 ## Location Identity
 
-Fish populations should reinforce each location's habitat and give exploration a meaningful purpose. Willow Pond does not contain trout. Pine River features Yellow Perch, Smallmouth Bass, Rainbow Trout, and Northern Pike. Golden Trout is reserved for the planned Mountain Lake. Existing journal records remain part of the player's collection when populations change.
+Fish populations should reinforce each location's habitat and give exploration a meaningful purpose. Willow Pond does not contain trout. Pine River represents a cold Pacific Northwest river and features Mountain Whitefish, Coastal Cutthroat Trout, Rainbow Trout, Steelhead, and Chinook Salmon. Steelhead is presented as the migratory form of Rainbow Trout rather than a separate biological species. Golden Trout is reserved for the planned Mountain Lake. Existing journal records remain part of the player's collection when populations change.
 
 Locations are immediately understandable and switching water never costs currency or consumes a resource. If a location lacks the rarity selected by a rod, selection falls back to a lower available rarity within that same location.
+
+Rod progression is local to each fishing location while coins remain shared across the full journey. Every new water provides an appropriate starter rod and its own equipment family. Upgrades must be purchased in sequence, preventing a large saved coin balance from skipping the equipment path entirely while still rewarding earlier play. Willow Pond uses conventional fishing rods and a bobber; Pine River uses fly rods, a drifting dry fly, and location-specific river language without changing the one-touch core interaction.
 
 ## Growth
 

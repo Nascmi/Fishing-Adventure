@@ -51,6 +51,26 @@ const journalEntries = {
     typicalSize: '0.8–5 lb',
     journal: 'Rainbow Trout carry a soft rose-colored band along their sides. In clear water they seem to flash silver, green, and violet all at once.',
   },
+  'mountain-whitefish': {
+    habitat: 'Cold, clear rivers with gravel beds and steady current',
+    typicalSize: '1–3 lb',
+    journal: 'Mountain Whitefish gather near the riverbed where they feed on drifting insects. Their quiet silver shape is easy to overlook, but it belongs naturally among the cold currents of the Northwest.',
+  },
+  'coastal-cutthroat': {
+    habitat: 'Cool forest streams, shaded pools, and woody cover',
+    typicalSize: '0.5–3 lb',
+    journal: 'Coastal Cutthroat Trout thrive in shaded streams beneath the forests of the Pacific Northwest. The bright slash beneath the jaw reveals a fish otherwise perfectly suited to disappearing among stones and reflections.',
+  },
+  steelhead: {
+    habitat: 'Fast rivers connected to the Pacific Ocean',
+    typicalSize: '6–12 lb',
+    journal: 'Steelhead are Rainbow Trout shaped by an extraordinary journey to the ocean and home again. Their silver sides carry the strength of open water back into the river current.',
+  },
+  'chinook-salmon': {
+    habitat: 'Large coastal rivers and deep, powerful runs',
+    typicalSize: '10–30 lb',
+    journal: 'Chinook Salmon return from the Pacific to the rivers where their lives began. Known as king salmon, they are the largest Pacific salmon and one of the Northwest’s most remarkable travelers.',
+  },
   'northern-pike': {
     habitat: 'Vegetated shallows and weed edges near open water',
     typicalSize: '4–18 lb',
@@ -73,11 +93,15 @@ export const fish = [
   ['sunfish','Sunfish','common',0.2,1.5,7,'A bright, lively fish that favors warm shallows.'],
   ['crappie','Crappie','common',0.4,2.5,8,'A speckled schooling fish found around cover.'],
   ['perch','Yellow Perch','common',0.3,3,9,'A striped hunter with golden sides.'],
+  ['mountain-whitefish','Mountain Whitefish','common',0.5,5,11,'A silver river native that feeds beneath the current.'],
   ['largemouth-bass','Largemouth Bass','uncommon',1,12,13,'A powerful ambush predator of weedy water.'],
   ['smallmouth-bass','Smallmouth Bass','uncommon',1,8,15,'A spirited fighter that prefers clear water.'],
   ['catfish','Channel Catfish','uncommon',2,25,11,'A whiskered bottom dweller most active at dusk.'],
+  ['coastal-cutthroat','Coastal Cutthroat Trout','uncommon',0.5,6,18,'A forest-stream trout marked by a vivid red throat.'],
   ['carp','Common Carp','rare',3,35,10,'A wary, heavy fish with burnished scales.'],
   ['rainbow-trout','Rainbow Trout','rare',0.8,10,23,'A beautiful fish with a shimmering rose stripe.'],
+  ['steelhead','Steelhead','epic',5,30,42,'A sea-run Rainbow Trout returning to its home river.'],
+  ['chinook-salmon','Chinook Salmon','legendary',10,60,78,'The mighty king salmon of Pacific coastal rivers.'],
   ['northern-pike','Northern Pike','epic',4,30,28,'A swift predator with an unmistakable silhouette.'],
   ['golden-trout','Golden Trout','epic',0.5,6,55,'A radiant and exceptionally elusive trout.'],
   ['old-whiskers','Legendary Old Whiskers','legendary',20,70,90,'The ancient monarch of Willow Pond.']

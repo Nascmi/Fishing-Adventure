@@ -21,7 +21,7 @@ export default function App() {
   const pages = {
     fishing: <FishingPage locationId={locationId} onLocationChange={setLocationId}/>,
     inventory: <InventoryPage />,
-    shop: <ShopPage />,
+    shop: <ShopPage location={getLocation(locationId)} />,
     collection: <CollectionPage />,
   }
 

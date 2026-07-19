@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import FishArtwork from '../components/FishArtwork'
+import Icon from '../components/Icon'
 import RarityBadge from '../components/RarityBadge'
 import ReelingGame from '../components/ReelingGame'
 import { GAME_CONFIG } from '../data/config'
@@ -12,8 +13,8 @@ import { getWeightTier, makeCatch } from '../utils/valueCalculator'
 
 const getStatusCopy = (location) => ({
   ready: `The ${location.waterLabel} is calm. Cast when you’re ready.`,
-  casting: `A smooth cast across the ${location.waterLabel}…`,
-  waiting: 'Watch the bobber. Something may be near.',
+  casting: location.fishingStyle === 'fly' ? 'The fly line rolls softly over the current…' : `A smooth cast across the ${location.waterLabel}…`,
+  waiting: location.fishingStyle === 'fly' ? 'Watch the drift. Something may rise.' : 'Watch the bobber. Something may be near.',
   biting: 'A bite! Reel in now!',
   reeling: 'Hold to reel. Release when tight.',
   escaped: 'The fish slipped away.',
@@ -23,6 +24,8 @@ const getStatusCopy = (location) => ({
 export default function FishingPage({ locationId, onLocationChange }) {
   const { game, actions } = useGame()
   const location = getLocation(locationId)
+  const gear = game.gearByLocation[location.id]
+  const equippedRod = getRod(gear.equippedRod, location.id)
   const [fishingState, setFishingState] = useState('ready')
   const [recentCatch, setRecentCatch] = useState(null)
   const [hookedCatch, setHookedCatch] = useState(null)
@@ -91,7 +94,7 @@ export default function FishingPage({ locationId, onLocationChange }) {
     if (stateRef.current !== 'biting') return
     clearTimers()
     giveFeedback('hook', game.settings)
-    const selectedFish = selectFish(getRod(game.equippedRod).chances, location.fishIds)
+    const selectedFish = selectFish(equippedRod.chances, location.fishIds)
     setHookedCatch({ fish: selectedFish, catchItem: makeCatch(selectedFish) })
     changeState('reeling')
   }
@@ -128,15 +131,15 @@ export default function FishingPage({ locationId, onLocationChange }) {
   return <main className="fishing-page">
     <section className={`lake ${fishingState} location-${location.id}`} style={{ '--location-art': `url("${location.image}")` }} aria-label={`${location.name}: ${location.description}`}>
       <div className="location-switcher" aria-label="Fishing location">
-        {locations.map((item) => <button key={item.id} className={item.id === location.id ? 'active' : ''} disabled={fishingState !== 'ready'} onClick={() => chooseLocation(item.id)} aria-pressed={item.id === location.id}>{item.name}</button>)}
+        {locations.map((item) => <button key={item.id} className={item.id === location.id ? 'active' : ''} disabled={fishingState !== 'ready'} onClick={() => chooseLocation(item.id)} aria-pressed={item.id === location.id}><Icon name={item.fishingStyle === 'fly' ? 'fly-fishing' : 'fishing'} size={15}/>{item.name}</button>)}
       </div>
-      <div className="water"><div className="bobber"><i/></div><div className="ripples"/></div>
+      <div className="water"><div className={`strike-marker ${location.fishingStyle}`}><i/></div><div className="ripples"/></div>
     </section>
 
     <section className={`action-card ${fishingState === 'reeling' ? 'reeling-active' : ''}`}>
       <div className={`status ${fishingState}`} role="status" aria-live="assertive" aria-atomic="true"><span className="status-dot"/><div><b>{statusTitle}</b><p>{statusCopy[fishingState]}</p></div></div>
       {fishingState === 'reeling' && hookedCatch
-        ? <ReelingGame catchItem={hookedCatch.catchItem} fish={hookedCatch.fish} rod={getRod(game.equippedRod)} onCatch={landFish} onEscape={loseFish}/>
+        ? <ReelingGame catchItem={hookedCatch.catchItem} fish={hookedCatch.fish} rod={equippedRod} onCatch={landFish} onEscape={loseFish}/>
         : <>
           {recentCatch && <article className={`catch-card ${recentCatch.rarity} size-${recentCatch.sizeTier}`}><FishArtwork fishId={recentCatch.fishId} name={recentCatch.name} className="catch-fish-art"/><div><span>{catchLabel}</span><h3>{recentCatch.name}</h3><RarityBadge rarity={recentCatch.rarity}/></div><div className="catch-numbers"><b>{recentCatch.weight} lb</b><span>{recentCatch.value} coins</span></div></article>}
           <button className={`primary-button ${fishingState === 'biting' ? 'urgent' : ''}`} disabled={isLineOut || isResult} onClick={fishingState === 'biting' ? reel : cast}>{fishingState === 'biting' ? 'Hook Fish!' : isLineOut ? 'Line is out…' : 'Cast Line'}</button>

@@ -1,19 +1,23 @@
 import { GAME_CONFIG } from '../data/config'
 import { fish } from '../data/fish'
-import { rods } from '../data/rods'
+import { getRodsForLocation, getStarterRod, rodLocationIds } from '../data/rods'
 import { classifyStoredCatch, getWeightTier } from '../utils/valueCalculator'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 5
+const CURRENT_VERSION = 6
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
 
 export const newGame = () => ({
   version: CURRENT_VERSION,
   coins: GAME_CONFIG.startingCoins,
   inventory: [],
-  ownedRods: ['old'],
-  equippedRod: 'old',
+  gearByLocation: Object.fromEntries(
+    rodLocationIds.map((locationId) => {
+      const starterId = getStarterRod(locationId).id
+      return [locationId, { ownedRods: [starterId], equippedRod: starterId }]
+    }),
+  ),
   collection: {},
   settings: { reactionWindow: 'relaxed', soundEnabled: true, hapticsEnabled: true, ambienceEnabled: false },
   stats: {
@@ -46,6 +50,21 @@ function migrateSave(raw) {
     migrated.settings = { ambienceEnabled: false, ...(migrated.settings || {}) }
     migrated.version = 5
   }
+  if (migrated.version < 6) {
+    migrated.gearByLocation = {
+      'willow-pond': {
+        ownedRods: migrated.ownedRods,
+        equippedRod: migrated.equippedRod,
+      },
+      'pine-river': {
+        ownedRods: ['worn-fly'],
+        equippedRod: 'worn-fly',
+      },
+    }
+    delete migrated.ownedRods
+    delete migrated.equippedRod
+    migrated.version = 6
+  }
   return migrated
 }
 
@@ -58,11 +77,20 @@ export function validateSave(input) {
   if (!raw || typeof raw !== 'object') return base
 
   const validFish = new Set(fish.map((item) => item.id))
-  const validRods = new Set(rods.map((rod) => rod.id))
-  const ownedRods = Array.isArray(raw.ownedRods)
-    ? [...new Set(raw.ownedRods.filter((id) => validRods.has(id)))]
-    : [...base.ownedRods]
-  if (!ownedRods.includes('old')) ownedRods.unshift('old')
+  const gearByLocation = Object.fromEntries(rodLocationIds.map((locationId) => {
+    const locationRods = getRodsForLocation(locationId)
+    const validRods = new Set(locationRods.map((rod) => rod.id))
+    const starterId = locationRods[0].id
+    const rawGear = raw.gearByLocation?.[locationId]
+    const ownedRods = Array.isArray(rawGear?.ownedRods)
+      ? [...new Set(rawGear.ownedRods.filter((id) => validRods.has(id)))]
+      : [starterId]
+    if (!ownedRods.includes(starterId)) ownedRods.unshift(starterId)
+    const equippedRod = ownedRods.includes(rawGear?.equippedRod)
+      ? rawGear.equippedRod
+      : starterId
+    return [locationId, { ownedRods, equippedRod }]
+  }))
 
   const reactionWindow = Object.hasOwn(GAME_CONFIG.reactionWindows, raw.settings?.reactionWindow)
     ? raw.settings.reactionWindow
@@ -111,8 +139,7 @@ export function validateSave(input) {
     version: CURRENT_VERSION,
     coins: Math.floor(validNumber(raw.coins, base.coins)),
     inventory,
-    ownedRods,
-    equippedRod: ownedRods.includes(raw.equippedRod) ? raw.equippedRod : 'old',
+    gearByLocation,
     collection,
     settings: {
       reactionWindow,

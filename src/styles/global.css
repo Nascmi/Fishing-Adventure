@@ -138,3 +138,22 @@
 .reeling-hud .catch-progress{margin-bottom:0}
 @keyframes hud-appear{from{opacity:0;transform:translateY(7px)}}
 @media(prefers-reduced-motion:reduce){.reeling-hud{animation:none}}
+
+/* Location-specific strike indicators and river fly presentation. */
+.strike-marker{position:absolute;z-index:2;left:62%;top:25%;width:13px;height:25px;border-radius:50% 50% 45% 45%;background:linear-gradient(#e76545 0 48%,#f5ebd7 49%);transition:all .65s}
+.strike-marker i{position:absolute;left:6px;top:-10px;width:2px;height:13px;background:#173736}
+.strike-marker.fly{width:19px;height:7px;border-radius:70% 35% 60% 35%;background:#c88642;box-shadow:0 1px 2px #102e2d88}
+.strike-marker.fly:before,.strike-marker.fly:after{content:"";position:absolute;top:-5px;width:9px;height:7px;border:1px solid #e7ddbd;border-radius:80% 15%;background:#eee6cbcc}
+.strike-marker.fly:before{left:2px;transform:rotate(-24deg)}
+.strike-marker.fly:after{right:1px;transform:scaleX(-1) rotate(-24deg)}
+.strike-marker.fly i{left:-5px;top:3px;width:7px;height:1px;background:#5c3e2c}
+.ready .strike-marker{opacity:0;transform:translate(-45vw,-180px)}
+.casting .strike-marker{animation:cast .65s ease-out}
+.waiting .strike-marker{animation:float 2s ease-in-out infinite}
+.biting .strike-marker{animation:bite .23s infinite}
+.reeling .strike-marker{animation:bite .42s ease-in-out infinite}
+.caught .strike-marker,.escaped .strike-marker{opacity:.35}
+.location-pine-river .water:before{content:"";position:absolute;z-index:1;left:20%;top:7%;width:43%;height:48px;border-top:1px solid #eee5ce80;border-radius:50%;opacity:0;transform:rotate(5deg);transition:opacity .35s}
+.location-pine-river.casting .water:before,.location-pine-river.waiting .water:before,.location-pine-river.biting .water:before,.location-pine-river.reeling .water:before{opacity:.75}
+.location-switcher button{display:flex;align-items:center;gap:6px}
+@media(prefers-reduced-motion:reduce){.lake.reeling .strike-marker{animation:none}}

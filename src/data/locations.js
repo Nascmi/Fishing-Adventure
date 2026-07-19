@@ -10,6 +10,7 @@ export const locations = [
     name: 'Willow Pond',
     description: 'A quiet, reed-fringed pond beneath the willows.',
     waterLabel: 'pond',
+    fishingStyle: 'bobber',
     fishIds: ['bluegill', 'sunfish', 'crappie', 'perch', 'largemouth-bass', 'smallmouth-bass', 'catfish', 'carp', 'northern-pike', 'old-whiskers'],
     image: artwork['../assets/locations/willow-pond.webp'],
   },
@@ -18,7 +19,8 @@ export const locations = [
     name: 'Pine River',
     description: 'Cool current winds between mossy stones and tall pines.',
     waterLabel: 'river',
-    fishIds: ['perch', 'smallmouth-bass', 'rainbow-trout', 'northern-pike'],
+    fishingStyle: 'fly',
+    fishIds: ['mountain-whitefish', 'coastal-cutthroat', 'rainbow-trout', 'steelhead', 'chinook-salmon'],
     image: artwork['../assets/locations/pine-river.webp'],
   },
 ]

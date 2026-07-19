@@ -7,7 +7,10 @@ Record player-facing changes here under an unreleased section, then move them be
 ### Added
 
 - Added Pine River as the second playable fishing location with original environment artwork and a compact location selector.
-- Added a location-specific Pine River population featuring Yellow Perch, Smallmouth Bass, Rainbow Trout, and Northern Pike.
+- Added a location-specific Pine River population featuring Mountain Whitefish, Coastal Cutthroat Trout, Rainbow Trout, Steelhead, and Chinook Salmon.
+- Added four naturalist fish illustrations and complete journal entries for Pine River's new species.
+- Added a four-step Pine River fly-rod family with original transparent equipment artwork.
+- Added a dry-fly strike indicator, subtle leader presentation, river-specific status language, and fly-fishing location icon.
 - Added optional, procedural Willow Pond ambience with very soft water and wind-through-reeds texture and no music.
 - Added tappable collection cards and full species journal entries with large artwork, habitat, typical size, flavor text, and personal catch records.
 - Added relaxed, standard, and quick bite-timing preferences.
@@ -24,6 +27,9 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Changed
 
+- Reworked Pine River around native and iconic Pacific Northwest river fish; Yellow Perch, Smallmouth Bass, and invasive Northern Pike remain collectible elsewhere but no longer appear there.
+- Made rod ownership, equipment, and shop inventory location-specific while keeping coins and all other progress shared.
+- Required rod upgrades to be purchased in sequence within each location.
 - Moved Rainbow Trout from Willow Pond to the planned Pine River population and Golden Trout to Mountain Lake.
 - Made collection and species journal labels location-neutral in preparation for future waters.
 - Replaced question marks on undiscovered collection entries with dark silhouettes of their hidden species.
@@ -52,5 +58,6 @@ Record player-facing changes here under an unreleased section, then move them be
 - Migrated saves to version 3 for persistent sound and haptic preferences.
 - Migrated saves to version 4 to classify existing inventory catches by size.
 - Migrated saves to version 5 for the separate pond-ambience preference, disabled by default.
+- Migrated saves to version 6 for location-specific rod ownership while preserving existing Willow Pond equipment.
 
 Use concise categories when useful: Added, Changed, Fixed, and Removed. Internal implementation details belong in commit or pull-request history rather than this file.

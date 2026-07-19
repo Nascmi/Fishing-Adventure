@@ -1,13 +1,13 @@
 # Save System
 
-The current save schema is version 5.
+The current save schema is version 6.
 
 ## Current Save Data
 
 - Coin balance
 - Inventory catches
 - Discovered-fish records
-- Owned and equipped rods
+- Owned and equipped rods for each fishing location
 - Fishing and economy statistics
 - Bite timing, sound-cue, pond-ambience, and device-haptic preferences
 
@@ -19,6 +19,7 @@ Inventory catches include their generated specimen-size class. Older catches are
 - Version 3 added sound and device-haptic preferences.
 - Version 4 added the specimen-size class to saved catches and derives it from weight for older inventory.
 - Version 5 added the separate pond-ambience preference, disabled by default.
+- Version 6 moved global rod ownership into location-specific gear records while preserving every existing Willow Pond rod and adding Pine River's starter fly rod.
 
 ## Rules
 

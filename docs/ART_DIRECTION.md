@@ -22,11 +22,11 @@ A quiet morning beside the water: peaceful, natural, cozy, and mature rather tha
 
 Fish use cohesive hand-painted naturalist illustrations with recognizable silhouettes and species markings. New fish should match their restrained detail, side-profile presentation, warm natural palette, and soft diffuse lighting.
 
-Fishing rods use the same hand-painted naturalist treatment. Each upgrade should communicate better materials and craftsmanship without exaggerated fantasy effects.
+Fishing rods use the same hand-painted naturalist treatment. Each location has an equipment family appropriate to its fishing style, and each upgrade should communicate better materials and craftsmanship without exaggerated fantasy effects. Pine River's fly rods progress from weathered traditional tackle through warm fiberglass and modern graphite to understated heirloom craftsmanship.
 
 Willow Pond establishes the environment style: hand-painted naturalism, layered atmospheric depth, soft mist, calm reflective water, and restrained golden sunrise light. Future locations should be recognizable at a glance while preserving this calm, mature character.
 
-Pine River extends that style with cooler slate-blue moving water, mossy stones, tall northern pines, and a clearer morning sky. Its open central channel preserves room for the bobber and distinguishes the river from Willow Pond's still reflective basin.
+Pine River extends that style with cooler slate-blue moving water, mossy stones, tall northern pines, and a clearer morning sky. Its open central channel preserves room for a drifting dry fly and subtle curved leader, distinguishing the river from Willow Pond's still reflective basin and bobber fishing.
 
 ## Asset Quality Checks
 

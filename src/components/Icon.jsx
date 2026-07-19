@@ -1,5 +1,6 @@
 const paths = {
   fishing: <><path d="M5 5v14"/><path d="M5 6c8-3 13 1 13 7"/><path d="M18 13v3"/><circle cx="18" cy="18" r="2"/></>,
+  'fly-fishing': <><path d="M4 19 15 5"/><path d="M14 5c5 1 6 5 5 8"/><path d="M19 13c-3-2-6-1-7 2 2 2 5 2 7 0"/><path d="m12 15-2 2m2-2-1-3"/></>,
   inventory: <><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M8 8a4 4 0 0 1 8 0"/></>,
   shop: <><path d="m12 3 8 5-8 5-8-5 8-5Z"/><path d="m4 12 8 5 8-5"/><path d="m4 16 8 5 8-5"/></>,
   collection: <><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 4v16M4 9h16"/></>,
