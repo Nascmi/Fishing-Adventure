@@ -8,10 +8,10 @@ export const locations = [
   {
     id: 'willow-pond',
     name: 'Willow Pond',
-    description: 'A quiet, reed-fringed pond beneath the willows.',
+    description: 'An old Upper Midwest farm pond, quiet beneath the willows.',
     waterLabel: 'pond',
     fishingStyle: 'bobber',
-    fishIds: ['bluegill', 'sunfish', 'crappie', 'perch', 'largemouth-bass', 'smallmouth-bass', 'catfish', 'carp', 'northern-pike', 'old-whiskers'],
+    fishIds: ['bluegill', 'sunfish', 'crappie', 'largemouth-bass', 'catfish', 'old-whiskers'],
     image: artwork['../assets/locations/willow-pond.webp'],
   },
   {
@@ -23,7 +23,16 @@ export const locations = [
     fishIds: ['mountain-whitefish', 'coastal-cutthroat', 'rainbow-trout', 'steelhead', 'chinook-salmon'],
     image: artwork['../assets/locations/pine-river.webp'],
   },
+  {
+    id: 'great-lake',
+    name: 'Great Lake',
+    description: 'Cold blue water opens beyond a rocky Upper Midwest shore.',
+    waterLabel: 'lake',
+    fishingStyle: 'spinning',
+    fishIds: ['perch', 'rock-bass', 'smallmouth-bass', 'walleye', 'lake-trout', 'northern-pike', 'great-lakes-muskellunge'],
+    image: artwork['../assets/locations/great-lake.webp'],
+  },
 ]
 
-export const futureLocations = ['Mountain Lake', 'Coastal Bay', 'Deep Sea']
+export const futureLocations = ['Coastal Bay', 'Deep Sea']
 export const getLocation = (id) => locations.find((location) => location.id === id) || locations[0]

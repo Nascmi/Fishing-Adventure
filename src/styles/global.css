@@ -117,6 +117,7 @@
 .lake{background-image:linear-gradient(180deg,#1737360d,#17373612),url('../assets/locations/willow-pond.webp');background-size:cover;background-position:58% center;background-repeat:no-repeat}
 .lake{background-image:linear-gradient(180deg,#1737360d,#17373612),var(--location-art);transition:background-image .2s ease}
 .lake.location-pine-river{background-position:50% center}
+.lake.location-great-lake{background-position:50% center}
 .location-switcher{position:absolute;z-index:4;top:14px;left:14px;display:flex;gap:4px;padding:4px;background:#f8f5e9d9;border:1px solid #ffffffaa;border-radius:14px;backdrop-filter:blur(9px);box-shadow:0 8px 24px #102e2d24}
 .location-switcher button{min-height:38px;padding:0 13px;border:0;border-radius:10px;background:transparent;color:#49645d;font-size:.7rem;font-weight:700;cursor:pointer}
 .location-switcher button.active{background:#245c45;color:white;box-shadow:0 3px 9px #1737362c}
@@ -125,7 +126,7 @@
 .water{height:44%;background:linear-gradient(180deg,#537e7908,#173f4338)}
 .water:after{background:repeating-linear-gradient(174deg,transparent 0 18px,#ffffff0d 19px 20px)}
 .scene-copy{background:#fff9e9df;border:1px solid #fff9;box-shadow:0 12px 32px #102e2d35}
-@media(max-width:430px){.lake{background-position:61% center}.lake.location-pine-river{background-position:50% center}.location-switcher{top:12px;left:12px}.location-switcher button{padding:0 10px;font-size:.66rem}}
+@media(max-width:430px){.lake{background-position:61% center}.lake.location-pine-river,.lake.location-great-lake{background-position:50% center}.location-switcher{top:12px;left:12px}.location-switcher button{padding:0 10px;font-size:.66rem}}
 
 .primary-button{background:#245c45;box-shadow:0 5px 0 #143d2f}
 
@@ -147,6 +148,9 @@
 .strike-marker.fly:before{left:2px;transform:rotate(-24deg)}
 .strike-marker.fly:after{right:1px;transform:scaleX(-1) rotate(-24deg)}
 .strike-marker.fly i{left:-5px;top:3px;width:7px;height:1px;background:#5c3e2c}
+.strike-marker.spinning{width:18px;height:6px;border-radius:70% 25% 65% 25%;background:linear-gradient(90deg,#d7ddd5,#8b9b97);box-shadow:0 1px 3px #102e2d99;transform:rotate(-12deg)}
+.strike-marker.spinning:after{content:"";position:absolute;right:-5px;top:1px;width:6px;height:6px;border-right:1px solid #263f3b;border-bottom:1px solid #263f3b;transform:rotate(45deg)}
+.strike-marker.spinning i{left:-8px;top:3px;width:9px;height:1px;background:#d9e1d8}
 .ready .strike-marker{opacity:0;transform:translate(-45vw,-180px)}
 .casting .strike-marker{animation:cast .65s ease-out}
 .waiting .strike-marker{animation:float 2s ease-in-out infinite}

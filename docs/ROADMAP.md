@@ -46,10 +46,11 @@ These quality practices continue throughout development rather than ending with 
 - Introduced Rainbow Trout at Pine River.
 - Refined Pine River into a Pacific Northwest fishery with Mountain Whitefish, Coastal Cutthroat Trout, Steelhead, and Chinook Salmon.
 - Added location-specific rod progression, Pine River fly rods, and a dry-fly fishing presentation while keeping coins shared.
+- Replaced the planned Mountain Lake with Great Lake, an Upper Midwestern Great Lakes fishery.
+- Added Great Lake scenery, spinning-rod progression, retrieved-lure presentation, and a location-specific population culminating in Great Lakes Muskellunge.
 
 ### Planned
 
-- Add Mountain Lake and introduce Golden Trout there.
 - Weather that changes atmosphere without creating pressure
 - Occasional environmental ambience such as drifting mist, floating leaves, subtle weather, and distant water ripples; no animated animals
 - Optional, non-expiring fishing goals

@@ -12,19 +12,24 @@ const journalEntries = {
     journal: 'Bluegill are curious fish that often gather around fallen trees and lily pads. Many anglers catch their very first fish on a Bluegill.',
   },
   sunfish: {
-    habitat: 'Sunny shallows with weeds, reeds, and quiet cover',
+    habitat: 'Vegetated shallows, docks, and quiet shoreline cover',
     typicalSize: '0.2–0.75 lb',
-    journal: 'Bright as a small piece of summer, Sunfish patrol warm shorelines in search of insects and tiny prey. Their bold colors make even a modest catch memorable.',
+    journal: 'Pumpkinseed patrol warm, weedy shorelines in search of insects and small crustaceans. Their orange breast and blue facial lines make even a modest catch memorable.',
   },
   crappie: {
     habitat: 'Brush piles, submerged branches, and shaded cover',
     typicalSize: '0.5–1.5 lb',
-    journal: 'Crappie travel in loose schools and gather wherever the pond offers shelter. Finding one near submerged cover often means more are waiting nearby.',
+    journal: 'Black Crappie travel in loose schools and gather wherever a larger pond offers shelter. Finding one near submerged cover often means more are waiting nearby.',
   },
   perch: {
     habitat: 'Weed edges, open shallows, and firm lake bottoms',
     typicalSize: '0.3–1.5 lb',
     journal: 'Yellow Perch move together in lively schools. Their golden sides and dark bars disappear surprisingly well among reeds, shadows, and wavering sunlight.',
+  },
+  'rock-bass': {
+    habitat: 'Rocky shorelines, reefs, docks, and shaded structure',
+    typicalSize: '0.3–1.5 lb',
+    journal: 'Rock Bass hold close to stone and shadow along the lake shore. Their red eyes and sturdy shape suit the broken rock where they wait for insects, crayfish, and small fish.',
   },
   'largemouth-bass': {
     habitat: 'Weed beds, logs, docks, and sheltered shoreline cover',
@@ -35,6 +40,16 @@ const journalEntries = {
     habitat: 'Clear water near rocks, gravel, and firm structure',
     typicalSize: '1–4 lb',
     journal: 'Smallmouth Bass favor clear water and rocky places. Pound for pound, few pond fish fight with more determination once they feel the line.',
+  },
+  walleye: {
+    habitat: 'Rocky reefs, drop-offs, and dim open water',
+    typicalSize: '1–8 lb',
+    journal: 'Walleye use their light-sensitive eyes to hunt where daylight fades. Across the Great Lakes, their gold flanks and white-tipped tail are signs of one of the Midwest’s defining fisheries.',
+  },
+  'lake-trout': {
+    habitat: 'Cold, deep, well-oxygenated offshore water',
+    typicalSize: '4–20 lb',
+    journal: 'Lake Trout are native predators of the Great Lakes’ deep cold water. Slow-growing and powerful, they move along reefs and steep underwater slopes far below the bright surface.',
   },
   catfish: {
     habitat: 'Deep holes, shaded banks, and quiet bottom structure',
@@ -76,6 +91,11 @@ const journalEntries = {
     typicalSize: '4–18 lb',
     journal: 'Northern Pike wait motionless among weeds before accelerating after their prey. Their long shape, pale spots, and watchful eyes belong to a true ambush predator.',
   },
+  'great-lakes-muskellunge': {
+    habitat: 'Large bays, connecting waters, reefs, and weed edges',
+    typicalSize: '15–40 lb',
+    journal: 'Great Lakes Muskellunge are immense, elusive predators built for short bursts of speed. An encounter with one is rare enough to become the story an angler tells for years.',
+  },
   'golden-trout': {
     habitat: 'Cold, clear high-country lakes and mountain streams',
     typicalSize: '0.5–3 lb',
@@ -90,12 +110,15 @@ const journalEntries = {
 
 export const fish = [
   ['bluegill','Bluegill','common',0.25,2,6,'A familiar pond fish found close to shore.'],
-  ['sunfish','Sunfish','common',0.2,1.5,7,'A bright, lively fish that favors warm shallows.'],
-  ['crappie','Crappie','common',0.4,2.5,8,'A speckled schooling fish found around cover.'],
+  ['sunfish','Pumpkinseed','common',0.2,1.5,7,'A bright Midwestern sunfish that favors warm shallows.'],
+  ['crappie','Black Crappie','common',0.4,2.5,8,'A speckled schooling fish found around cover.'],
   ['perch','Yellow Perch','common',0.3,3,9,'A striped hunter with golden sides.'],
+  ['rock-bass','Rock Bass','common',0.3,3,10,'A red-eyed shoreline fish at home among rocks.'],
   ['mountain-whitefish','Mountain Whitefish','common',0.5,5,11,'A silver river native that feeds beneath the current.'],
   ['largemouth-bass','Largemouth Bass','uncommon',1,12,13,'A powerful ambush predator of weedy water.'],
   ['smallmouth-bass','Smallmouth Bass','uncommon',1,8,15,'A spirited fighter that prefers clear water.'],
+  ['walleye','Walleye','rare',1,18,26,'A gold-sided hunter adapted to dim lake water.'],
+  ['lake-trout','Lake Trout','epic',4,40,48,'A powerful native of the Great Lakes’ cold depths.'],
   ['catfish','Channel Catfish','uncommon',2,25,11,'A whiskered bottom dweller most active at dusk.'],
   ['coastal-cutthroat','Coastal Cutthroat Trout','uncommon',0.5,6,18,'A forest-stream trout marked by a vivid red throat.'],
   ['carp','Common Carp','rare',3,35,10,'A wary, heavy fish with burnished scales.'],
@@ -103,6 +126,7 @@ export const fish = [
   ['steelhead','Steelhead','epic',5,30,42,'A sea-run Rainbow Trout returning to its home river.'],
   ['chinook-salmon','Chinook Salmon','legendary',10,60,78,'The mighty king salmon of Pacific coastal rivers.'],
   ['northern-pike','Northern Pike','epic',4,30,28,'A swift predator with an unmistakable silhouette.'],
+  ['great-lakes-muskellunge','Great Lakes Muskellunge','legendary',10,58,88,'The elusive apex predator of sprawling northern waters.'],
   ['golden-trout','Golden Trout','epic',0.5,6,55,'A radiant and exceptionally elusive trout.'],
   ['old-whiskers','Legendary Old Whiskers','legendary',20,70,90,'The ancient monarch of Willow Pond.']
 ].map(([id,name,rarity,minWeight,maxWeight,baseValue,description]) => ({

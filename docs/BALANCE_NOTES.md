@@ -59,4 +59,5 @@ Change one variable at a time whenever practical. Do not rebalance from a single
 - Shared progress: coins, inventory, collection records, and statistics carry between locations; rod ownership and equipped rods do not.
 - Sequence rule: the preceding rod must be owned before the next upgrade can be purchased, even when the player can afford a later tier.
 - Pine River family: Worn Fly Rod, Fiberglass Fly Rod, Graphite Fly Rod, and Master Fly Rod.
+- Great Lake family: Worn Lake Rod, Fiberglass Lake Rod, Graphite Lake Rod, and Master Lake Rod.
 - Next action: compare how quickly existing players and new players progress through Pine River before assigning location-specific prices.

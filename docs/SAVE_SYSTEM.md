@@ -1,6 +1,6 @@
 # Save System
 
-The current save schema is version 6.
+The current save schema is version 7.
 
 ## Current Save Data
 
@@ -20,6 +20,7 @@ Inventory catches include their generated specimen-size class. Older catches are
 - Version 4 added the specimen-size class to saved catches and derives it from weight for older inventory.
 - Version 5 added the separate pond-ambience preference, disabled by default.
 - Version 6 moved global rod ownership into location-specific gear records while preserving every existing Willow Pond rod and adding Pine River's starter fly rod.
+- Version 7 added Great Lake's starter spinning rod without altering existing location gear.
 
 ## Rules
 

@@ -1,5 +1,12 @@
 # Changelog
 
+- Added Great Lake as the third playable location, replacing the planned Mountain Lake with a fictional Great Lakes-connected Upper Midwestern coastal bay.
+- Added Yellow Perch, Rock Bass, Smallmouth Bass, Walleye, Lake Trout, Northern Pike, and Great Lakes Muskellunge as its fisheries-backed population.
+- Added original Great Lake environment art, four new fish illustrations, a four-step spinning-rod family, and a retrieved-lure presentation.
+- Migrated saves to version 7 so existing players receive Great Lake's starter rod without losing gear or catches.
+- Established Willow Pond as a rural Upper Midwestern farm pond and aligned its core population with official pond-management guidance: Bluegill, Pumpkinseed, Black Crappie, Largemouth Bass, and Channel Catfish.
+- Removed Yellow Perch, Smallmouth Bass, and Common Carp from Willow Pond while preserving them as collectible species for better-matched future waters.
+
 Record player-facing changes here under an unreleased section, then move them beneath a version and date when released.
 
 ## Unreleased

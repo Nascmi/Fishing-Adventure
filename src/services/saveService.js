@@ -5,7 +5,7 @@ import { classifyStoredCatch, getWeightTier } from '../utils/valueCalculator'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 6
+const CURRENT_VERSION = 7
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
 
 export const newGame = () => ({
@@ -64,6 +64,16 @@ function migrateSave(raw) {
     delete migrated.ownedRods
     delete migrated.equippedRod
     migrated.version = 6
+  }
+  if (migrated.version < 7) {
+    migrated.gearByLocation = {
+      ...migrated.gearByLocation,
+      'great-lake': {
+        ownedRods: ['lake-starter'],
+        equippedRod: 'lake-starter',
+      },
+    }
+    migrated.version = 7
   }
   return migrated
 }

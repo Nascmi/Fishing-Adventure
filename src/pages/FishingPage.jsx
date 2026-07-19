@@ -13,8 +13,8 @@ import { getWeightTier, makeCatch } from '../utils/valueCalculator'
 
 const getStatusCopy = (location) => ({
   ready: `The ${location.waterLabel} is calm. Cast when you’re ready.`,
-  casting: location.fishingStyle === 'fly' ? 'The fly line rolls softly over the current…' : `A smooth cast across the ${location.waterLabel}…`,
-  waiting: location.fishingStyle === 'fly' ? 'Watch the drift. Something may rise.' : 'Watch the bobber. Something may be near.',
+  casting: location.fishingStyle === 'fly' ? 'The fly line rolls softly over the current…' : location.fishingStyle === 'spinning' ? 'The lure sails toward open water…' : `A smooth cast across the ${location.waterLabel}…`,
+  waiting: location.fishingStyle === 'fly' ? 'Watch the drift. Something may rise.' : location.fishingStyle === 'spinning' ? 'Work the lure slowly. Watch the line.' : 'Watch the bobber. Something may be near.',
   biting: 'A bite! Reel in now!',
   reeling: 'Hold to reel. Release when tight.',
   escaped: 'The fish slipped away.',
