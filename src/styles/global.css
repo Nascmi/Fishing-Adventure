@@ -113,12 +113,14 @@
 .rod-art{height:150px;align-items:center;padding:5px;background:linear-gradient(145deg,#e5ecdf,#c5dbd1)}
 .rod-art img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 7px 5px #17373630);user-select:none}
 
-/* Willow Pond environment art with live fishing overlays. */
+/* Backyard Pond environment art with live fishing overlays. */
 .lake{background-image:linear-gradient(180deg,#1737360d,#17373612),url('../assets/locations/willow-pond.webp');background-size:cover;background-position:58% center;background-repeat:no-repeat}
 .lake{background-image:linear-gradient(180deg,#1737360d,#17373612),var(--location-art);transition:background-image .2s ease}
 .lake.location-pine-river{background-position:50% center}
 .lake.location-great-lake{background-position:50% center}
-.location-switcher{position:absolute;z-index:4;top:14px;left:14px;display:flex;gap:4px;padding:4px;background:#f8f5e9d9;border:1px solid #ffffffaa;border-radius:14px;backdrop-filter:blur(9px);box-shadow:0 8px 24px #102e2d24}
+.lake.location-gulf-coast{background-position:50% center}
+.location-switcher{position:absolute;z-index:4;top:14px;left:14px;display:flex;max-width:calc(100% - 28px);gap:4px;padding:4px;overflow-x:auto;background:#f8f5e9d9;border:1px solid #ffffffaa;border-radius:14px;backdrop-filter:blur(9px);box-shadow:0 8px 24px #102e2d24;scrollbar-width:none}
+.location-switcher::-webkit-scrollbar{display:none}
 .location-switcher button{min-height:38px;padding:0 13px;border:0;border-radius:10px;background:transparent;color:#49645d;font-size:.7rem;font-weight:700;cursor:pointer}
 .location-switcher button.active{background:#245c45;color:white;box-shadow:0 3px 9px #1737362c}
 .location-switcher button:disabled{cursor:default;opacity:.62}
@@ -126,7 +128,7 @@
 .water{height:44%;background:linear-gradient(180deg,#537e7908,#173f4338)}
 .water:after{background:repeating-linear-gradient(174deg,transparent 0 18px,#ffffff0d 19px 20px)}
 .scene-copy{background:#fff9e9df;border:1px solid #fff9;box-shadow:0 12px 32px #102e2d35}
-@media(max-width:430px){.lake{background-position:61% center}.lake.location-pine-river,.lake.location-great-lake{background-position:50% center}.location-switcher{top:12px;left:12px}.location-switcher button{padding:0 10px;font-size:.66rem}}
+@media(max-width:430px){.lake{background-position:61% center}.lake.location-pine-river,.lake.location-great-lake,.lake.location-gulf-coast{background-position:50% center}.location-switcher{top:12px;left:12px;max-width:calc(100% - 24px)}.location-switcher button{padding:0 10px;font-size:.66rem;white-space:nowrap}}
 
 .primary-button{background:#245c45;box-shadow:0 5px 0 #143d2f}
 
@@ -151,6 +153,10 @@
 .strike-marker.spinning{width:18px;height:6px;border-radius:70% 25% 65% 25%;background:linear-gradient(90deg,#d7ddd5,#8b9b97);box-shadow:0 1px 3px #102e2d99;transform:rotate(-12deg)}
 .strike-marker.spinning:after{content:"";position:absolute;right:-5px;top:1px;width:6px;height:6px;border-right:1px solid #263f3b;border-bottom:1px solid #263f3b;transform:rotate(45deg)}
 .strike-marker.spinning i{left:-8px;top:3px;width:9px;height:1px;background:#d9e1d8}
+.strike-marker.cork{width:10px;height:28px;border-radius:45% 45% 38% 38%;background:linear-gradient(#ff7849 0 31%,#f3eddc 32% 62%,#d9dd55 63%);box-shadow:0 2px 3px #102e2d77}
+.strike-marker.cork:before,.strike-marker.cork:after{content:"";position:absolute;left:3px;width:4px;height:4px;border-radius:50%;background:#3e4c48}
+.strike-marker.cork:before{top:-6px}.strike-marker.cork:after{bottom:-6px}
+.strike-marker.cork i{left:4px;top:-12px;width:2px;height:13px;background:#30433e}
 .ready .strike-marker{opacity:0;transform:translate(-45vw,-180px)}
 .casting .strike-marker{animation:cast .65s ease-out}
 .waiting .strike-marker{animation:float 2s ease-in-out infinite}
@@ -161,3 +167,30 @@
 .location-pine-river.casting .water:before,.location-pine-river.waiting .water:before,.location-pine-river.biting .water:before,.location-pine-river.reeling .water:before{opacity:.75}
 .location-switcher button{display:flex;align-items:center;gap:6px}
 @media(prefers-reduced-motion:reduce){.lake.reeling .strike-marker{animation:none}}
+
+/* A calm four-phase day cycle and destination charter presentation. */
+.lake:before{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;transition:background 1.2s ease}
+.lake.phase-morning:before{background:linear-gradient(180deg,#ffd99416,#fff0c60a)}
+.lake.phase-midday:before{background:linear-gradient(180deg,#f5fbff08,#fff8d800)}
+.lake.phase-evening:before{background:linear-gradient(180deg,#ef8a461f,#713d5617)}
+.lake.phase-night:before{background:linear-gradient(180deg,#071b3a8f,#10233e99);mix-blend-mode:multiply}
+.location-switcher,.day-cycle,.trip-booking{z-index:5}
+.day-cycle{position:absolute;top:68px;left:14px;display:grid;grid-template-columns:auto auto;gap:2px 14px;align-items:center;padding:9px 10px 9px 12px;color:#173736;background:#fff9e9df;border:1px solid #ffffffaa;border-radius:13px;backdrop-filter:blur(9px);box-shadow:0 8px 24px #102e2d24}
+.day-cycle div{display:flex;flex-direction:column}.day-cycle span{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;opacity:.72}.day-cycle b{font-size:.78rem}.day-cycle small{grid-column:1;font-size:.62rem;color:#58716a}.day-cycle button{grid-column:2;grid-row:1/3;min-height:34px;border:0;border-radius:9px;padding:0 10px;background:#245c45;color:white;font-size:.65rem;font-weight:700}.day-cycle button:disabled{opacity:.5}
+.trip-booking{position:absolute;left:50%;bottom:48%;width:min(430px,calc(100% - 28px));transform:translate(-50%,50%);padding:19px;background:#fbf9f1f2;border:1px solid #fff;border-radius:18px;box-shadow:0 18px 48px #102e2d55;backdrop-filter:blur(12px)}
+.trip-booking h3{margin:4px 0;font:1.45rem 'DM Serif Display'}.trip-booking p{margin:8px 0;color:#536d66;font-size:.76rem;line-height:1.45}.trip-booking .trip-warning{color:#9a543e}.trip-booking>div{display:flex;gap:8px;margin-top:14px}.trip-booking button{min-height:42px;border:0;border-radius:11px;padding:0 14px;font-weight:700}.trip-cancel{background:#e7ece4;color:#365d55}.trip-confirm{flex:1;background:#245c45;color:white}.trip-confirm:disabled{background:#8a9994}
+@media(max-width:540px){.day-cycle{top:65px;left:12px}.trip-booking{bottom:45%}}
+
+/* Fishing Trips owns destination selection; five navigation items share the bar. */
+.nav button{width:min(20%,150px)}
+.day-cycle{top:14px}
+.trips-grid{max-width:1020px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:14px}
+.trip-card{overflow:hidden;background:#fffdf6;border:1px solid #dbe1d5;border-radius:20px;box-shadow:0 8px 24px #294a4112}
+.trip-card.active-trip{border:2px solid #4b8073}
+.trip-art{height:138px;background-size:cover;background-position:center;display:flex;align-items:end;padding:13px;color:white}
+.trip-art span{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;text-shadow:0 1px 5px #102e2d}
+.trip-card-body{padding:16px}.trip-card h3{margin:0;font:1.35rem 'DM Serif Display'}.trip-card p{min-height:40px;margin:6px 0 14px;color:#61736e;font-size:.76rem;line-height:1.45}
+.trip-details{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid #e2e5dc;font-size:.7rem}.trip-details span{color:#6b7c76}
+.trip-progress{position:relative;height:25px;margin:0 0 10px;overflow:hidden;background:#dce6dc;border-radius:8px}.trip-progress i{position:absolute;inset:0 auto 0 0;background:#8db4a4}.trip-progress span{position:relative;z-index:1;display:grid;place-items:center;height:100%;font-size:.62rem;font-weight:700;color:#173736}
+.trip-card button{width:100%;min-height:48px;border:0;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;background:#245c45;color:white;font-weight:700}.trip-card button:disabled{background:#dfe6dc;color:#74837e}
+@media(max-width:540px){.day-cycle{top:12px}.trips-page{padding:24px 12px}.trips-grid{grid-template-columns:1fr}.trip-art{height:125px}.nav button{font-size:.56rem}}

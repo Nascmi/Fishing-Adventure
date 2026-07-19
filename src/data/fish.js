@@ -96,6 +96,46 @@ const journalEntries = {
     typicalSize: '15–40 lb',
     journal: 'Great Lakes Muskellunge are immense, elusive predators built for short bursts of speed. An encounter with one is rare enough to become the story an angler tells for years.',
   },
+  'atlantic-croaker': {
+    habitat: 'Sandy bay bottoms, marsh edges, and oyster beds',
+    typicalSize: '0.5–2 lb',
+    journal: 'Atlantic Croaker search soft coastal bottoms with small chin barbels. Their name comes from the resonant sound they make by vibrating muscles against the swim bladder.',
+  },
+  'sand-seatrout': {
+    habitat: 'Open bays, channels, and sandy or muddy bottoms',
+    typicalSize: '0.5–2 lb',
+    journal: 'Sand Seatrout, locally called White Trout, move through Mississippi Sound and Mobile Bay in loose schools. Unlike their spotted relatives, their silver sides carry no dark body spots.',
+  },
+  sheepshead: {
+    habitat: 'Oyster reefs, pilings, jetties, and other hard structure',
+    typicalSize: '1–8 lb',
+    journal: 'Sheepshead use strong, humanlike front teeth and crushing molars to pry barnacles, crabs, and shellfish from pilings and oyster reefs. Their black bars make them unmistakable.',
+  },
+  'southern-flounder': {
+    habitat: 'Sandy and muddy bay bottoms near channels and marsh drains',
+    typicalSize: '1–5 lb',
+    journal: 'Southern Flounder settle onto the bottom with both eyes on the upper side of the head. Their shifting mottled color hides an ambush hunter almost perfectly against sand and mud.',
+  },
+  'spotted-seatrout': {
+    habitat: 'Seagrass, oyster reefs, tidal creeks, and open bays',
+    typicalSize: '1–5 lb',
+    journal: 'Spotted Seatrout—often called Speckled Trout along the Gulf—hunt shrimp and small fish across grass beds and oyster reefs. Dark spots continue onto their fins and tail.',
+  },
+  'black-drum': {
+    habitat: 'Oyster reefs, bay channels, and unvegetated bottoms',
+    typicalSize: '5–40 lb',
+    journal: 'Black Drum root across the bay floor with sensitive chin barbels, feeding heavily on crabs and shellfish. The bold bars of young fish fade as adults grow broad, dark, and immensely powerful.',
+  },
+  'red-drum': {
+    habitat: 'Marsh edges, grass flats, oyster reefs, and bay passes',
+    typicalSize: '3–30 lb',
+    journal: 'Red Drum are the copper-backed icons of the Gulf Coast. Young redfish patrol bays and marshes before mature fish move toward passes and nearshore water, carrying a black tail spot like a false eye.',
+  },
+  cobia: {
+    habitat: 'Bay mouths, channels, buoys, and nearshore structure',
+    typicalSize: '20–60 lb',
+    journal: 'Cobia are powerful coastal travelers that appear around channel markers, rays, and nearshore structure as Gulf waters warm. Their long dark shape can turn a quiet cast into an unforgettable fight.',
+  },
   'golden-trout': {
     habitat: 'Cold, clear high-country lakes and mountain streams',
     typicalSize: '0.5–3 lb',
@@ -104,7 +144,7 @@ const journalEntries = {
   'old-whiskers': {
     habitat: 'The deepest, oldest hollow beneath the willow roots',
     typicalSize: '20–70 lb',
-    journal: 'Old Whiskers was already a pond legend when today’s oldest anglers were children. Some say the great catfish knows every root, stone, and forgotten hook in Willow Pond.',
+    journal: 'Old Whiskers was already a pond legend when today’s oldest anglers were children. Some say the great catfish knows every root, stone, and forgotten hook in Backyard Pond.',
   },
 }
 
@@ -127,8 +167,16 @@ export const fish = [
   ['chinook-salmon','Chinook Salmon','legendary',10,60,78,'The mighty king salmon of Pacific coastal rivers.'],
   ['northern-pike','Northern Pike','epic',4,30,28,'A swift predator with an unmistakable silhouette.'],
   ['great-lakes-muskellunge','Great Lakes Muskellunge','legendary',10,58,88,'The elusive apex predator of sprawling northern waters.'],
+  ['atlantic-croaker','Atlantic Croaker','common',0.25,5,11,'A familiar bay fish named for its resonant call.'],
+  ['sand-seatrout','Sand Seatrout','common',0.4,6,12,'The silvery White Trout of Gulf bays and channels.'],
+  ['sheepshead','Sheepshead','uncommon',1,20,17,'A striped shellfish specialist of reefs and pilings.'],
+  ['southern-flounder','Southern Flounder','uncommon',1,12,19,'A flat-bodied ambush hunter hidden on the bay floor.'],
+  ['spotted-seatrout','Spotted Seatrout','rare',1,12,27,'A speckled Gulf gamefish of grass and oyster reef.'],
+  ['black-drum','Black Drum','rare',5,80,33,'A heavy bay-bottom fish with sensitive chin barbels.'],
+  ['red-drum','Red Drum','epic',3,50,52,'The copper-backed icon of Gulf Coast fishing.'],
+  ['cobia','Cobia','legendary',20,100,92,'A mighty seasonal traveler of bays and nearshore water.'],
   ['golden-trout','Golden Trout','epic',0.5,6,55,'A radiant and exceptionally elusive trout.'],
-  ['old-whiskers','Legendary Old Whiskers','legendary',20,70,90,'The ancient monarch of Willow Pond.']
+  ['old-whiskers','Legendary Old Whiskers','legendary',20,70,90,'The ancient monarch of Backyard Pond.']
 ].map(([id,name,rarity,minWeight,maxWeight,baseValue,description]) => ({
   id,
   name,

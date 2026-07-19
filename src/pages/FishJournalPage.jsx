@@ -1,5 +1,6 @@
 import FishArtwork from '../components/FishArtwork'
 import RarityBadge from '../components/RarityBadge'
+import { getPreferredPhases } from '../utils/fishingEngine'
 
 export default function FishJournalPage({ fish, record, onBack }) {
   return <main className="journal-page">
@@ -21,6 +22,7 @@ export default function FishJournalPage({ fish, record, onBack }) {
         <dl className="journal-facts">
           <div><dt>Habitat</dt><dd>{fish.habitat}</dd></div>
           <div><dt>Typical size</dt><dd>{fish.typicalSize}</dd></div>
+          <div><dt>Most active</dt><dd>{getPreferredPhases(fish.id).map((phase) => phase[0].toUpperCase() + phase.slice(1)).join(' · ')}</dd></div>
         </dl>
 
         <section className="journal-records" aria-labelledby="personal-records-title">

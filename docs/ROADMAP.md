@@ -4,7 +4,7 @@ The roadmap records approved direction, not a promise of fixed dates. Polish and
 
 ## Phase 1 — Playable Foundation
 
-- Fishing loop at Willow Pond
+- Fishing loop at Backyard Pond
 - Inventory and fish selling
 - Rod shop and equipment progression
 - Fish collection
@@ -20,12 +20,12 @@ The roadmap records approved direction, not a promise of fixed dates. Polish and
 - Added the short, one-touch tension reeling interaction and rod line-control progression.
 - Added optional synthesized sound cues and device haptics.
 - Added specimen-size tiers and a distribution weighted toward ordinary catches.
-- Replaced placeholder fish, rod, and Willow Pond visuals with cohesive production artwork.
+- Replaced placeholder fish, rod, and Backyard Pond visuals with cohesive production artwork.
 - Bundled essential fonts and artwork for reliable offline play.
 - Added versioned save migrations, validation, corrupt-save backup, and player-facing recovery messaging.
 - Stabilized the mobile fishing control so casting, hooking, and reeling keep the same thumb position.
 - Added full species journal entries with natural-history flavor, habitat, typical size, and personal catch records.
-- Added optional, location-specific Willow Pond nature ambience without background music or downloaded audio loops.
+- Added optional, location-specific Backyard Pond nature ambience without background music or downloaded audio loops.
 
 ### Ongoing
 
@@ -48,10 +48,15 @@ These quality practices continue throughout development rather than ending with 
 - Added location-specific rod progression, Pine River fly rods, and a dry-fly fishing presentation while keeping coins shared.
 - Replaced the planned Mountain Lake with Great Lake, an Upper Midwestern Great Lakes fishery.
 - Added Great Lake scenery, spinning-rod progression, retrieved-lure presentation, and a location-specific population culminating in Great Lakes Muskellunge.
+- Added Gulf Coast as the fourth playable location, grounded in Alabama and Mississippi inshore fisheries.
+- Added salt-marsh scenery, popping-cork presentation, inshore rod progression, and eight Gulf species culminating in Cobia.
+- Added a four-phase living day cycle with gentle species activity shifts.
+- Established Backyard Pond as the free home water and three-day paid charters for destination fishing.
+- Added Fishing Trips as a dedicated navigation destination for booking and continuing charters.
 
 ### Planned
 
-- Weather that changes atmosphere without creating pressure
+- Weather that changes atmosphere without creating pressure and builds on the living day cycle
 - Occasional environmental ambience such as drifting mist, floating leaves, subtle weather, and distant water ripples; no animated animals
 - Optional, non-expiring fishing goals
 - Meaningful achievements

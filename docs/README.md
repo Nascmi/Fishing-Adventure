@@ -32,7 +32,7 @@ When documents conflict, follow them in the order above and update the outdated 
 
 ## Current Development Status
 
-Version 0.1.0 has completed its core Willow Pond polish and begun Phase 2. Pine River and Great Lake expand the journey to three playable waters, each with its own scenery, fish population, fishing presentation, and equipment family, while ongoing accessibility, balance, save, and device testing continue across development.
+Version 0.1.0 has completed its core Backyard Pond polish and begun Phase 2. Pine River, Great Lake, and Gulf Coast expand the journey to four playable waters, each with its own scenery, fish population, fishing presentation, and equipment family, while ongoing accessibility, balance, save, and device testing continue across development.
 
 See `CHANGELOG.md` for the current unreleased work and `ROADMAP.md` for the remaining Phase 1 priorities.
 

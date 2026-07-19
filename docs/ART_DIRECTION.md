@@ -22,13 +22,15 @@ A quiet morning beside the water: peaceful, natural, cozy, and mature rather tha
 
 Fish use cohesive hand-painted naturalist illustrations with recognizable silhouettes and species markings. New fish should match their restrained detail, side-profile presentation, warm natural palette, and soft diffuse lighting.
 
-Fishing rods use the same hand-painted naturalist treatment. Each location has an equipment family appropriate to its fishing style, and each upgrade should communicate better materials and craftsmanship without exaggerated fantasy effects. Pine River's fly rods progress from weathered traditional tackle through warm fiberglass and modern graphite to understated heirloom craftsmanship. Great Lake's spinning rods follow the same material progression with reels and stronger open-water proportions.
+Fishing rods use the same hand-painted naturalist treatment. Each location has an equipment family appropriate to its fishing style, and each upgrade should communicate better materials and craftsmanship without exaggerated fantasy effects. Pine River's fly rods progress from weathered traditional tackle through warm fiberglass and modern graphite to understated heirloom craftsmanship. Great Lake's spinning rods follow the same material progression with reels and stronger open-water proportions. Gulf Coast's saltwater spinning rods add sealed reels and corrosion-resistant fittings without becoming flashy or modernistic.
 
-Willow Pond establishes the environment style: hand-painted naturalism, layered atmospheric depth, soft mist, calm reflective water, and restrained golden sunrise light. Future locations should be recognizable at a glance while preserving this calm, mature character.
+Backyard Pond establishes the environment style: hand-painted naturalism, layered atmospheric depth, soft mist, calm reflective water, and restrained golden sunrise light. Future locations should be recognizable at a glance while preserving this calm, mature character.
 
-Pine River extends that style with cooler slate-blue moving water, mossy stones, tall northern pines, and a clearer morning sky. Its open central channel preserves room for a drifting dry fly and subtle curved leader, distinguishing the river from Willow Pond's still reflective basin and bobber fishing.
+Pine River extends that style with cooler slate-blue moving water, mossy stones, tall northern pines, and a clearer morning sky. Its open central channel preserves room for a drifting dry fly and subtle curved leader, distinguishing the river from Backyard Pond's still reflective basin and bobber fishing.
 
 Great Lake opens the composition into a broad horizon with cold blue water, granite shoreline, wind-shaped pines, and distant forested islands. Its scale, silver morning light, and retrieved spoon distinguish it from the enclosed pond and moving river.
+
+Gulf Coast shifts to humid peach-gold sunrise over muted blue-green brackish water. Oyster-shell banks, golden marsh grass, weathered pilings, and distant barrier islands identify Alabama and Mississippi without tropical-resort imagery. The tall popping cork creates a distinct focal point against calm tidal water.
 
 ## Asset Quality Checks
 

@@ -5,6 +5,7 @@ const items = [
   ['inventory', 'Inventory'],
   ['shop', 'Rod Shop'],
   ['collection', 'Collection'],
+  ['trips', 'Trips'],
 ]
 
 export default function NavBar({ page, setPage }) {

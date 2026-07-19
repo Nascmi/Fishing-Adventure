@@ -9,6 +9,16 @@ export const GAME_CONFIG = {
     quick: 1300,
   },
   resetDelayMs: 1500,
+  dayCycle: {
+    phaseMs: 15 * 60 * 1000,
+    tripDays: 3,
+    phases: [
+      { id: 'morning', label: 'Morning', time: '6 AM' },
+      { id: 'midday', label: 'Midday', time: 'Noon' },
+      { id: 'evening', label: 'Evening', time: '6 PM' },
+      { id: 'night', label: 'Night', time: 'Midnight' },
+    ],
+  },
   reeling: {
     startingTension: 34,
     startingProgress: 12,

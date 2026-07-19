@@ -30,7 +30,7 @@ Change one variable at a time whenever practical. Do not rebalance from a single
 
 ### Specimen weights — Phase 1 polish
 
-- Test conditions: early Willow Pond play, with crappie as the clearest example.
+- Test conditions: early Backyard Pond play, with crappie as the clearest example.
 - Observation: uniformly generated weights made ordinary catches feel too close to unusually large real-world fish.
 - Variable changed: split every species' weight range into regular, good, trophy, and amazing classes.
 - Current baseline: 68% at 0–50% of maximum weight, 22% at 51–75%, 8% at 76–90%, and 2% at 91–100%.
@@ -55,9 +55,10 @@ Change one variable at a time whenever practical. Do not rebalance from a single
 
 ### Location-specific rods — Phase 2 baseline
 
-- Progression: every location starts with its own free basic rod; Willow Pond and Pine River currently share the 0, 250, 1,500, and 7,500 coin price curve.
+- Progression: every location starts with its own free basic rod; Backyard Pond and Pine River currently share the 0, 250, 1,500, and 7,500 coin price curve.
 - Shared progress: coins, inventory, collection records, and statistics carry between locations; rod ownership and equipped rods do not.
 - Sequence rule: the preceding rod must be owned before the next upgrade can be purchased, even when the player can afford a later tier.
 - Pine River family: Worn Fly Rod, Fiberglass Fly Rod, Graphite Fly Rod, and Master Fly Rod.
 - Great Lake family: Worn Lake Rod, Fiberglass Lake Rod, Graphite Lake Rod, and Master Lake Rod.
+- Gulf Coast family: Worn Inshore Rod, Fiberglass Inshore Rod, Graphite Inshore Rod, and Master Inshore Rod.
 - Next action: compare how quickly existing players and new players progress through Pine River before assigning location-specific prices.

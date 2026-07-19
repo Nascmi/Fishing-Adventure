@@ -1,4 +1,4 @@
-const artwork = import.meta.glob('../assets/locations/*.webp', {
+const artwork = import.meta.glob('../assets/locations/*.{webp,png}', {
   eager: true,
   query: '?url',
   import: 'default',
@@ -7,10 +7,11 @@ const artwork = import.meta.glob('../assets/locations/*.webp', {
 export const locations = [
   {
     id: 'willow-pond',
-    name: 'Willow Pond',
+    name: 'Backyard Pond',
     description: 'An old Upper Midwest farm pond, quiet beneath the willows.',
     waterLabel: 'pond',
     fishingStyle: 'bobber',
+    tripCost: 0,
     fishIds: ['bluegill', 'sunfish', 'crappie', 'largemouth-bass', 'catfish', 'old-whiskers'],
     image: artwork['../assets/locations/willow-pond.webp'],
   },
@@ -20,6 +21,7 @@ export const locations = [
     description: 'Cool current winds between mossy stones and tall pines.',
     waterLabel: 'river',
     fishingStyle: 'fly',
+    tripCost: 300,
     fishIds: ['mountain-whitefish', 'coastal-cutthroat', 'rainbow-trout', 'steelhead', 'chinook-salmon'],
     image: artwork['../assets/locations/pine-river.webp'],
   },
@@ -29,10 +31,21 @@ export const locations = [
     description: 'Cold blue water opens beyond a rocky Upper Midwest shore.',
     waterLabel: 'lake',
     fishingStyle: 'spinning',
+    tripCost: 800,
     fishIds: ['perch', 'rock-bass', 'smallmouth-bass', 'walleye', 'lake-trout', 'northern-pike', 'great-lakes-muskellunge'],
     image: artwork['../assets/locations/great-lake.webp'],
   },
+  {
+    id: 'gulf-coast',
+    name: 'Gulf Coast',
+    description: 'Warm tide moves through an Alabama–Mississippi coastal marsh.',
+    waterLabel: 'bay',
+    fishingStyle: 'cork',
+    tripCost: 1600,
+    fishIds: ['atlantic-croaker', 'sand-seatrout', 'sheepshead', 'southern-flounder', 'spotted-seatrout', 'black-drum', 'red-drum', 'cobia'],
+    image: artwork['../assets/locations/gulf-coast-deep.png'],
+  },
 ]
 
-export const futureLocations = ['Coastal Bay', 'Deep Sea']
+export const futureLocations = ['Deep Sea']
 export const getLocation = (id) => locations.find((location) => location.id === id) || locations[0]

@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { clearGame, loadGame, newGame, rarityRank, saveGame } from '../services/saveService'
 import { getRod } from '../data/rods'
+import { GAME_CONFIG } from '../data/config'
+import { getLocation } from '../data/locations'
 
 const GameContext = createContext(null)
 
@@ -111,6 +113,60 @@ export function GameProvider({ children }) {
               }
             : current,
         ),
+      bookTrip: (locationId) =>
+        setGame((current) => {
+          const location = getLocation(locationId)
+          if (!location.tripCost || current.coins < location.tripCost) return current
+          const duration = GAME_CONFIG.dayCycle.phaseMs * GAME_CONFIG.dayCycle.phases.length * GAME_CONFIG.dayCycle.tripDays
+          return {
+            ...current,
+            coins: current.coins - location.tripCost,
+            dayCycle: {
+              ...current.dayCycle,
+              activeTrip: { locationId, elapsedMs: 0, remainingMs: duration },
+            },
+          }
+        }),
+      tickDayCycle: (locationId, deltaMs) =>
+        setGame((current) => {
+          const delta = Math.max(0, Math.min(deltaMs, 60000))
+          if (!delta) return current
+          if (locationId === 'willow-pond') {
+            return { ...current, dayCycle: { ...current.dayCycle, homeElapsedMs: current.dayCycle.homeElapsedMs + delta } }
+          }
+          const trip = current.dayCycle.activeTrip
+          if (trip?.locationId !== locationId) return current
+          const remainingMs = Math.max(0, trip.remainingMs - delta)
+          return {
+            ...current,
+            dayCycle: {
+              ...current.dayCycle,
+              activeTrip: remainingMs ? { ...trip, elapsedMs: trip.elapsedMs + delta, remainingMs } : null,
+            },
+          }
+        }),
+      skipDayPhase: (locationId) =>
+        setGame((current) => {
+          const phaseMs = GAME_CONFIG.dayCycle.phaseMs
+          const elapsed = locationId === 'willow-pond' ? current.dayCycle.homeElapsedMs : current.dayCycle.activeTrip?.elapsedMs
+          if (!Number.isFinite(elapsed)) return current
+          const advance = phaseMs - (elapsed % phaseMs || 0)
+          if (locationId === 'willow-pond') {
+            return { ...current, dayCycle: { ...current.dayCycle, homeElapsedMs: elapsed + advance } }
+          }
+          const trip = current.dayCycle.activeTrip
+          if (trip?.locationId !== locationId) return current
+          const used = Math.min(advance, trip.remainingMs)
+          const remainingMs = trip.remainingMs - used
+          return {
+            ...current,
+            dayCycle: {
+              ...current.dayCycle,
+              activeTrip: remainingMs ? { ...trip, elapsedMs: trip.elapsedMs + used, remainingMs } : null,
+            },
+          }
+        }),
+      endTrip: () => setGame((current) => ({ ...current, dayCycle: { ...current.dayCycle, activeTrip: null } })),
       setReactionWindow: (reactionWindow) =>
         setGame((current) => ({
           ...current,

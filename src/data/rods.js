@@ -30,6 +30,12 @@ const rodFamilies = {
     ['lake-graphite', 'Graphite Lake Rod', 'Light, precise tackle for deep and distant strikes.'],
     ['lake-master', 'Master Lake Rod', 'Heirloom lake tackle with power held in reserve.'],
   ],
+  'gulf-coast': [
+    ['inshore-starter', 'Worn Inshore Rod', 'Salt-worn tackle ready for the marsh edge.'],
+    ['inshore-fiberglass', 'Fiberglass Inshore Rod', 'Sturdy glass for oyster reefs and tidal current.'],
+    ['inshore-graphite', 'Graphite Inshore Rod', 'Light, sealed tackle for precise coastal casts.'],
+    ['inshore-master', 'Master Inshore Rod', 'Exceptional saltwater tackle with quiet reserve.'],
+  ],
 }
 
 export const rods = Object.entries(rodFamilies).flatMap(([locationId, family]) =>

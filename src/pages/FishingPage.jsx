@@ -1,20 +1,35 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import FishArtwork from '../components/FishArtwork'
-import Icon from '../components/Icon'
 import RarityBadge from '../components/RarityBadge'
 import ReelingGame from '../components/ReelingGame'
 import { GAME_CONFIG } from '../data/config'
-import { getLocation, locations } from '../data/locations'
+import { getLocation } from '../data/locations'
 import { getRod } from '../data/rods'
 import { useGame } from '../hooks/useGame'
 import { giveFeedback } from '../services/feedbackService'
 import { randomDelay, selectFish } from '../utils/fishingEngine'
 import { getWeightTier, makeCatch } from '../utils/valueCalculator'
 
+const getCyclePosition = (elapsedMs) => {
+  const { phaseMs, phases } = GAME_CONFIG.dayCycle
+  const phaseIndex = Math.floor(elapsedMs / phaseMs) % phases.length
+  return {
+    phase: phases[phaseIndex],
+    phaseIndex,
+    day: Math.floor(elapsedMs / (phaseMs * phases.length)) + 1,
+    phaseRemainingMs: phaseMs - (elapsedMs % phaseMs),
+  }
+}
+
+const shortTime = (ms) => {
+  const minutes = Math.max(0, Math.ceil(ms / 60000))
+  return minutes >= 60 ? `${Math.floor(minutes / 60)}h ${minutes % 60}m` : `${minutes}m`
+}
+
 const getStatusCopy = (location) => ({
   ready: `The ${location.waterLabel} is calm. Cast when you’re ready.`,
-  casting: location.fishingStyle === 'fly' ? 'The fly line rolls softly over the current…' : location.fishingStyle === 'spinning' ? 'The lure sails toward open water…' : `A smooth cast across the ${location.waterLabel}…`,
-  waiting: location.fishingStyle === 'fly' ? 'Watch the drift. Something may rise.' : location.fishingStyle === 'spinning' ? 'Work the lure slowly. Watch the line.' : 'Watch the bobber. Something may be near.',
+  casting: location.fishingStyle === 'fly' ? 'The fly line rolls softly over the current…' : location.fishingStyle === 'spinning' ? 'The lure sails toward open water…' : location.fishingStyle === 'cork' ? 'The popping cork lands beyond the oyster reef…' : `A smooth cast across the ${location.waterLabel}…`,
+  waiting: location.fishingStyle === 'fly' ? 'Watch the drift. Something may rise.' : location.fishingStyle === 'spinning' ? 'Work the lure slowly. Watch the line.' : location.fishingStyle === 'cork' ? 'Pop the cork gently. Watch the tide.' : 'Watch the bobber. Something may be near.',
   biting: 'A bite! Reel in now!',
   reeling: 'Hold to reel. Release when tight.',
   escaped: 'The fish slipped away.',
@@ -52,17 +67,28 @@ export default function FishingPage({ locationId, onLocationChange }) {
 
   useEffect(() => clearTimers, [clearTimers])
 
+  const activeTrip = game.dayCycle.activeTrip
+  const hasLocationAccess = location.id === 'willow-pond' || activeTrip?.locationId === location.id
+  const elapsedMs = location.id === 'willow-pond' ? game.dayCycle.homeElapsedMs : activeTrip?.elapsedMs || 0
+  const cycle = getCyclePosition(elapsedMs)
+
+  useEffect(() => {
+    if (!hasLocationAccess) {
+      onLocationChange('willow-pond')
+      return undefined
+    }
+    let previous = performance.now()
+    const interval = setInterval(() => {
+      const now = performance.now()
+      actions.tickDayCycle(location.id, now - previous)
+      previous = now
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [actions, hasLocationAccess, location.id, onLocationChange])
+
   const finishAfterPause = useCallback(() => {
     later(() => changeState('ready'), GAME_CONFIG.resetDelayMs)
   }, [changeState, later])
-
-  const chooseLocation = (nextLocationId) => {
-    if (stateRef.current !== 'ready' || nextLocationId === location.id) return
-    clearTimers()
-    setRecentCatch(null)
-    setHookedCatch(null)
-    onLocationChange(nextLocationId)
-  }
 
   const cast = () => {
     if (stateRef.current !== 'ready') return
@@ -94,7 +120,7 @@ export default function FishingPage({ locationId, onLocationChange }) {
     if (stateRef.current !== 'biting') return
     clearTimers()
     giveFeedback('hook', game.settings)
-    const selectedFish = selectFish(equippedRod.chances, location.fishIds)
+    const selectedFish = selectFish(equippedRod.chances, location.fishIds, cycle.phase.id)
     setHookedCatch({ fish: selectedFish, catchItem: makeCatch(selectedFish) })
     changeState('reeling')
   }
@@ -129,9 +155,11 @@ export default function FishingPage({ locationId, onLocationChange }) {
     : ''
 
   return <main className="fishing-page">
-    <section className={`lake ${fishingState} location-${location.id}`} style={{ '--location-art': `url("${location.image}")` }} aria-label={`${location.name}: ${location.description}`}>
-      <div className="location-switcher" aria-label="Fishing location">
-        {locations.map((item) => <button key={item.id} className={item.id === location.id ? 'active' : ''} disabled={fishingState !== 'ready'} onClick={() => chooseLocation(item.id)} aria-pressed={item.id === location.id}><Icon name={item.fishingStyle === 'fly' ? 'fly-fishing' : 'fishing'} size={15}/>{item.name}</button>)}
+    <section className={`lake ${fishingState} location-${location.id} phase-${cycle.phase.id}`} style={{ '--location-art': `url("${location.image}")` }} aria-label={`${location.name}: ${location.description}`}>
+      <div className={`day-cycle phase-${cycle.phase.id}`}>
+        <div><span>{location.id === 'willow-pond' ? 'Home waters' : `Trip · Day ${cycle.day} of ${GAME_CONFIG.dayCycle.tripDays}`}</span><b>{cycle.phase.label} · {cycle.phase.time}</b></div>
+        <small>{location.id === 'willow-pond' ? `${shortTime(cycle.phaseRemainingMs)} until ${GAME_CONFIG.dayCycle.phases[(cycle.phaseIndex + 1) % 4].label.toLowerCase()}` : `${shortTime(activeTrip?.remainingMs || 0)} left`}</small>
+        <button type="button" disabled={fishingState !== 'ready'} onClick={() => actions.skipDayPhase(location.id)}>Skip ahead</button>
       </div>
       <div className="water"><div className={`strike-marker ${location.fishingStyle}`}><i/></div><div className="ripples"/></div>
     </section>

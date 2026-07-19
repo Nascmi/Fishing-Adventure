@@ -1,14 +1,40 @@
 import { fish } from '../data/fish'
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
-export const randomDelay = (min,max) => Math.round(min + Math.random() * (max-min))
-export function selectFish(chances, allowedIds) {
-  let roll = Math.random()*100, rarity = 'common'
-  for (const [level, chance] of Object.entries(chances)) { roll -= chance; if (roll <= 0) { rarity=level; break } }
-  const eligible = fish.filter((item) => allowedIds.includes(item.id))
-  let pool = eligible.filter((item) => item.rarity === rarity)
-  for (let index = rarityOrder.indexOf(rarity) - 1; !pool.length && index >= 0; index -= 1) {
-    pool = eligible.filter((item) => item.rarity === rarityOrder[index])
-  }
-  if (!pool.length) pool = eligible
-  return pool[Math.floor(Math.random() * pool.length)] || fish[0]
+const preferredPhases = {
+  bluegill: ['morning', 'evening'], sunfish: ['midday'], crappie: ['morning', 'evening'],
+  'largemouth-bass': ['morning', 'evening'], catfish: ['evening', 'night'], 'old-whiskers': ['night'],
+  'mountain-whitefish': ['morning'], 'coastal-cutthroat': ['morning', 'evening'], 'rainbow-trout': ['morning'],
+  steelhead: ['morning', 'evening'], 'chinook-salmon': ['morning'], perch: ['morning', 'midday'],
+  'rock-bass': ['evening'], 'smallmouth-bass': ['morning', 'evening'], walleye: ['evening', 'night'],
+  'lake-trout': ['morning', 'night'], 'northern-pike': ['morning', 'midday'], 'great-lakes-muskellunge': ['evening'],
+  'atlantic-croaker': ['evening', 'night'], 'sand-seatrout': ['evening', 'night'], sheepshead: ['midday'],
+  'southern-flounder': ['evening', 'night'], 'spotted-seatrout': ['morning', 'evening'], 'black-drum': ['morning', 'evening'],
+  'red-drum': ['morning', 'evening'], cobia: ['midday'],
 }
+export const randomDelay = (min,max) => Math.round(min + Math.random() * (max-min))
+const weightedPick = (pool, weights) => {
+  let roll = Math.random() * weights.reduce((sum, weight) => sum + weight, 0)
+  for (let index = 0; index < pool.length; index += 1) {
+    roll -= weights[index]
+    if (roll <= 0) return pool[index]
+  }
+  return pool[pool.length - 1]
+}
+export function selectFish(chances, allowedIds, phase = 'morning') {
+  const eligible = fish.filter((item) => allowedIds.includes(item.id))
+  const rarityWeights = Object.fromEntries(rarityOrder.map((rarity) => [rarity, 0]))
+  for (const [rarity, chance] of Object.entries(chances)) {
+    let index = rarityOrder.indexOf(rarity)
+    while (index >= 0 && !eligible.some((item) => item.rarity === rarityOrder[index])) index -= 1
+    if (index >= 0) rarityWeights[rarityOrder[index]] += chance
+  }
+  const rarityCounts = Object.fromEntries(rarityOrder.map((rarity) => [rarity, eligible.filter((item) => item.rarity === rarity).length]))
+  const weights = eligible.map((item) => {
+    const baseline = rarityWeights[item.rarity] / Math.max(1, rarityCounts[item.rarity])
+    return baseline * (preferredPhases[item.id]?.includes(phase) ? 2.25 : 1)
+  })
+  return weightedPick(eligible, weights) || fish[0]
+}
+
+export const getFishActivity = (fishId, phase) => preferredPhases[fishId]?.includes(phase) ? 'Peak' : 'Possible'
+export const getPreferredPhases = (fishId) => preferredPhases[fishId] || ['morning', 'midday', 'evening', 'night']

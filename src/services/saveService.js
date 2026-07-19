@@ -5,7 +5,7 @@ import { classifyStoredCatch, getWeightTier } from '../utils/valueCalculator'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 7
+const CURRENT_VERSION = 9
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
 
 export const newGame = () => ({
@@ -19,6 +19,7 @@ export const newGame = () => ({
     }),
   ),
   collection: {},
+  dayCycle: { homeElapsedMs: 0, activeTrip: null },
   settings: { reactionWindow: 'relaxed', soundEnabled: true, hapticsEnabled: true, ambienceEnabled: false },
   stats: {
     totalCaught: 0,
@@ -75,6 +76,20 @@ function migrateSave(raw) {
     }
     migrated.version = 7
   }
+  if (migrated.version < 8) {
+    migrated.gearByLocation = {
+      ...migrated.gearByLocation,
+      'gulf-coast': {
+        ownedRods: ['inshore-starter'],
+        equippedRod: 'inshore-starter',
+      },
+    }
+    migrated.version = 8
+  }
+  if (migrated.version < 9) {
+    migrated.dayCycle = { homeElapsedMs: 0, activeTrip: null }
+    migrated.version = 9
+  }
   return migrated
 }
 
@@ -107,6 +122,15 @@ export function validateSave(input) {
     : base.settings.reactionWindow
 
   const stats = raw.stats && typeof raw.stats === 'object' ? raw.stats : {}
+  const tripDuration = GAME_CONFIG.dayCycle.phaseMs * GAME_CONFIG.dayCycle.phases.length * GAME_CONFIG.dayCycle.tripDays
+  const rawTrip = raw.dayCycle?.activeTrip
+  const activeTrip = rawTrip && rodLocationIds.includes(rawTrip.locationId) && rawTrip.locationId !== 'willow-pond'
+    ? {
+        locationId: rawTrip.locationId,
+        elapsedMs: Math.min(validNumber(rawTrip.elapsedMs, 0), tripDuration),
+        remainingMs: Math.min(validNumber(rawTrip.remainingMs, tripDuration), tripDuration),
+      }
+    : null
   const seenCatchIds = new Set()
   const inventory = Array.isArray(raw.inventory)
     ? raw.inventory.filter((item) => {
@@ -151,6 +175,10 @@ export function validateSave(input) {
     inventory,
     gearByLocation,
     collection,
+    dayCycle: {
+      homeElapsedMs: validNumber(raw.dayCycle?.homeElapsedMs, 0),
+      activeTrip: activeTrip?.remainingMs > 0 ? activeTrip : null,
+    },
     settings: {
       reactionWindow,
       soundEnabled: raw.settings?.soundEnabled !== false,

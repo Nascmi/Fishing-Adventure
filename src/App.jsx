@@ -10,6 +10,7 @@ import CollectionPage from './pages/CollectionPage'
 import FishingPage from './pages/FishingPage'
 import InventoryPage from './pages/InventoryPage'
 import ShopPage from './pages/ShopPage'
+import TripsPage from './pages/TripsPage'
 import { setPondAmbienceEnabled } from './services/feedbackService'
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
     inventory: <InventoryPage />,
     shop: <ShopPage location={getLocation(locationId)} />,
     collection: <CollectionPage />,
+    trips: <TripsPage currentLocationId={locationId} onChooseLocation={setLocationId} onGoFishing={() => setPage('fishing')}/>,
   }
 
   useEffect(() => {
@@ -79,7 +81,7 @@ export default function App() {
           <p>Sound and vibration are gentle, optional, and saved on this device.</p>
           <div className="toggle-list">
             <label><span><b>Sound cues</b><small>Soft tones for bites, catches, and coins</small></span><input type="checkbox" checked={game.settings.soundEnabled} onChange={(event) => actions.setFeedbackSetting('soundEnabled', event.target.checked)}/></label>
-            <label><span><b>Pond ambience</b><small>Very soft water and wind through reeds · Willow Pond only</small></span><input type="checkbox" checked={game.settings.ambienceEnabled} onChange={(event) => setAmbience(event.target.checked)}/></label>
+            <label><span><b>Pond ambience</b><small>Very soft water and wind through reeds · Backyard Pond only</small></span><input type="checkbox" checked={game.settings.ambienceEnabled} onChange={(event) => setAmbience(event.target.checked)}/></label>
             <label><span><b>Haptics</b><small>Brief vibration on supported devices</small></span><input type="checkbox" checked={game.settings.hapticsEnabled} onChange={(event) => actions.setFeedbackSetting('hapticsEnabled', event.target.checked)}/></label>
           </div>
         </div>
