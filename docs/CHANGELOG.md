@@ -18,6 +18,11 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Added
 
+- Added cabin trophy preservation for Trophy and Amazing catches, including remembered best candidates, a configurable 100-coin first mount, and free heavier upgrades.
+- Migrated saves to version 14, preserving eligible catches still held in inventory while validating bounded specimen records.
+- Added Passing Rain as a saved three-to-five-minute atmospheric event after roughly three to four in-game days of active fishing, with no gameplay effects or rewards.
+- Added cool rain shading, fine rainfall, mist, water ripples, reduced-motion handling, optional procedural rain, and occasional distant thunder across current fishing locations.
+- Migrated saves to version 13 with a bounded weather countdown and active-shower duration that pause outside the fishing screen.
 - Added Open Gulf as the fifth playable location and the blue-water culmination of the current journey.
 - Added Vermilion Snapper, Spanish Mackerel, Gray Triggerfish, Red Snapper, King Mackerel, Greater Amberjack, Mahi-Mahi, and Yellowfin Tuna.
 - Added original Open Gulf environment art, eight naturalist fish illustrations, four offshore rods, and a deep-jig presentation.

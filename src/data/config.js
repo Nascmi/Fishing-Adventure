@@ -1,5 +1,6 @@
 export const GAME_CONFIG = {
   startingCoins: 50,
+  trophyPreservationCost: 100,
   castingMs: 650,
   waitMinMs: 2500,
   waitMaxMs: 10000,
@@ -9,6 +10,12 @@ export const GAME_CONFIG = {
     quick: 1300,
   },
   resetDelayMs: 1500,
+  weather: {
+    minRainIntervalMs: 3 * 4 * 15 * 60 * 1000,
+    maxRainIntervalMs: 4 * 4 * 15 * 60 * 1000,
+    minRainDurationMs: 3 * 60 * 1000,
+    maxRainDurationMs: 5 * 60 * 1000,
+  },
   dayCycle: {
     phaseMs: 15 * 60 * 1000,
     tripDays: 3,

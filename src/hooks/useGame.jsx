@@ -7,6 +7,26 @@ import { achievements as achievementDefinitions, unlockAchievements } from '../d
 import { getPreferredPhases } from '../utils/fishingEngine'
 
 const GameContext = createContext(null)
+const randomBetween = (minimum, maximum) => Math.round(minimum + Math.random() * (maximum - minimum))
+
+const advanceWeather = (weather, delta) => {
+  if (weather.rainRemainingMs > 0) {
+    const rainRemainingMs = Math.max(0, weather.rainRemainingMs - delta)
+    return rainRemainingMs
+      ? { ...weather, rainRemainingMs }
+      : {
+          nextRainMs: randomBetween(GAME_CONFIG.weather.minRainIntervalMs, GAME_CONFIG.weather.maxRainIntervalMs),
+          rainRemainingMs: 0,
+        }
+  }
+
+  const nextRainMs = weather.nextRainMs - delta
+  if (nextRainMs > 0) return { ...weather, nextRainMs }
+  return {
+    nextRainMs: 0,
+    rainRemainingMs: randomBetween(GAME_CONFIG.weather.minRainDurationMs, GAME_CONFIG.weather.maxRainDurationMs),
+  }
+}
 
 export function GameProvider({ children }) {
   const [initial] = useState(loadGame)
@@ -52,6 +72,9 @@ export function GameProvider({ children }) {
               ? item
               : current.stats.rarestFish
           const isPeak = getPreferredPhases(item.fishId).includes(phase)
+          const previousSpecimen = current.cabin.specimens[item.fishId]
+          const isEligibleSpecimen = ['trophy', 'amazing'].includes(item.sizeTier)
+          const isBetterSpecimen = isEligibleSpecimen && (!previousSpecimen || item.weight > previousSpecimen.weight)
           const next = {
             ...current,
             inventory: [item, ...current.inventory],
@@ -77,6 +100,13 @@ export function GameProvider({ children }) {
                 : current.achievementProgress.peakMoments,
               amazingLegendaryCaught: current.achievementProgress.amazingLegendaryCaught || (item.rarity === 'legendary' && item.sizeTier === 'amazing'),
             },
+            cabin: isBetterSpecimen ? {
+              ...current.cabin,
+              specimens: {
+                ...current.cabin.specimens,
+                [item.fishId]: { fishId: item.fishId, weight: item.weight, sizeTier: item.sizeTier, locationId, phase, caughtAt: item.caughtAt, mounted: previousSpecimen?.mounted || null },
+              },
+            } : current.cabin,
           }
           return unlockAchievements(next).state
         }),
@@ -159,14 +189,16 @@ export function GameProvider({ children }) {
         setGame((current) => {
           const delta = Math.max(0, Math.min(deltaMs, 60000))
           if (!delta) return current
+          const weather = advanceWeather(current.weather, delta)
           if (locationId === 'willow-pond') {
-            return { ...current, dayCycle: { ...current.dayCycle, homeElapsedMs: current.dayCycle.homeElapsedMs + delta } }
+            return { ...current, weather, dayCycle: { ...current.dayCycle, homeElapsedMs: current.dayCycle.homeElapsedMs + delta } }
           }
           const trip = current.dayCycle.activeTrip
-          if (trip?.locationId !== locationId) return current
+          if (trip?.locationId !== locationId) return { ...current, weather }
           const remainingMs = Math.max(0, trip.remainingMs - delta)
           const next = {
             ...current,
+            weather,
             dayCycle: {
               ...current.dayCycle,
               activeTrip: remainingMs ? { ...trip, elapsedMs: trip.elapsedMs + delta, remainingMs } : null,
@@ -220,6 +252,20 @@ export function GameProvider({ children }) {
           ...current,
           cabin: { ...current.cabin, [slot]: value },
         })),
+      preserveSpecimen: (fishId) =>
+        setGame((current) => {
+          const specimen = current.cabin.specimens[fishId]
+          if (!specimen) return current
+          const isUpgrade = Boolean(specimen.mounted)
+          if (isUpgrade && specimen.weight <= specimen.mounted.weight) return current
+          if (!isUpgrade && current.coins < GAME_CONFIG.trophyPreservationCost) return current
+          const mounted = { weight: specimen.weight, sizeTier: specimen.sizeTier, locationId: specimen.locationId, phase: specimen.phase, caughtAt: specimen.caughtAt, preservedAt: Date.now() }
+          return {
+            ...current,
+            coins: isUpgrade ? current.coins : current.coins - GAME_CONFIG.trophyPreservationCost,
+            cabin: { ...current.cabin, featuredFishId: fishId, specimens: { ...current.cabin.specimens, [fishId]: { ...specimen, mounted } } },
+          }
+        }),
       dismissNotice: () => setNotice(null),
       reset: () => {
         clearGame()

@@ -12,7 +12,7 @@ import FishingPage from './pages/FishingPage'
 import InventoryPage from './pages/InventoryPage'
 import ShopPage from './pages/ShopPage'
 import TripsPage from './pages/TripsPage'
-import { setPondAmbienceEnabled } from './services/feedbackService'
+import { setPondAmbienceEnabled, setRainAmbienceEnabled } from './services/feedbackService'
 
 export default function App() {
   const [page, setPage] = useState('fishing')
@@ -20,6 +20,7 @@ export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const closeButtonRef = useRef(null)
   const { game, actions, notice, storageAvailable } = useGame()
+  const rainActive = game.weather.rainRemainingMs > 0
   const pages = {
     fishing: <FishingPage locationId={locationId} onLocationChange={setLocationId} onOpenCabin={() => setPage('cabin')}/>,
     cabin: <CabinPage onGoFishing={() => { setLocationId('willow-pond'); setPage('fishing') }}/>,
@@ -31,8 +32,12 @@ export default function App() {
 
   useEffect(() => {
     setPondAmbienceEnabled(page === 'fishing' && locationId === 'willow-pond' && game.settings.ambienceEnabled)
-    return () => setPondAmbienceEnabled(false)
-  }, [game.settings.ambienceEnabled, locationId, page])
+    setRainAmbienceEnabled(page === 'fishing' && rainActive && game.settings.ambienceEnabled)
+    return () => {
+      setPondAmbienceEnabled(false)
+      setRainAmbienceEnabled(false)
+    }
+  }, [game.settings.ambienceEnabled, locationId, page, rainActive])
 
   useEffect(() => {
     if (!settingsOpen) return undefined
@@ -54,6 +59,7 @@ export default function App() {
 
   const setAmbience = (enabled) => {
     setPondAmbienceEnabled(enabled && page === 'fishing' && locationId === 'willow-pond')
+    setRainAmbienceEnabled(enabled && page === 'fishing' && rainActive)
     actions.setFeedbackSetting('ambienceEnabled', enabled)
   }
 
@@ -83,7 +89,7 @@ export default function App() {
           <p>Sound and vibration are gentle, optional, and saved on this device.</p>
           <div className="toggle-list">
             <label><span><b>Sound cues</b><small>Soft tones for bites, catches, and coins</small></span><input type="checkbox" checked={game.settings.soundEnabled} onChange={(event) => actions.setFeedbackSetting('soundEnabled', event.target.checked)}/></label>
-            <label><span><b>Pond ambience</b><small>Very soft water and wind through reeds · Backyard Pond only</small></span><input type="checkbox" checked={game.settings.ambienceEnabled} onChange={(event) => setAmbience(event.target.checked)}/></label>
+            <label><span><b>Nature ambience</b><small>Soft pond sounds and passing rain when available</small></span><input type="checkbox" checked={game.settings.ambienceEnabled} onChange={(event) => setAmbience(event.target.checked)}/></label>
             <label><span><b>Haptics</b><small>Brief vibration on supported devices</small></span><input type="checkbox" checked={game.settings.hapticsEnabled} onChange={(event) => actions.setFeedbackSetting('hapticsEnabled', event.target.checked)}/></label>
           </div>
         </div>

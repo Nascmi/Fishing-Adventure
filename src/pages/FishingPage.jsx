@@ -196,9 +196,12 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
   const catchLabel = recentCatch
     ? `${getWeightTier(recentCatch.sizeTier).label}${recentCatch.isPersonalBest ? ' · Personal best' : ''}`
     : ''
+  const isRaining = game.weather.rainRemainingMs > 0
+  const rainEnding = isRaining && game.weather.rainRemainingMs <= 15000
 
   return <main className="fishing-page">
-    <section className={`lake ${fishingState} location-${location.id} phase-${cycle.phase.id}`} style={{ '--location-art': `url("${location.image}")` }} aria-label={`${location.name}: ${location.description}`}>
+    <section className={`lake ${fishingState} location-${location.id} phase-${cycle.phase.id}${isRaining ? ` weather-rain${rainEnding ? ' rain-ending' : ''}` : ''}`} style={{ '--location-art': `url("${location.image}")` }} aria-label={`${location.name}: ${location.description}${isRaining ? ' A gentle rain is passing through.' : ''}`}>
+      {isRaining && <div className="weather-rainfall" aria-hidden="true"><i/><i/></div>}
       <div className={`day-cycle phase-${cycle.phase.id}`}>
         <div><span>{location.id === 'willow-pond' ? 'Home waters' : `Trip · Day ${cycle.day} of ${GAME_CONFIG.dayCycle.tripDays}`}</span><b>{cycle.phase.label} · {cycle.phase.time}</b></div>
         <small>{location.id === 'willow-pond' ? `${shortTime(cycle.phaseRemainingMs)} until ${GAME_CONFIG.dayCycle.phases[(cycle.phaseIndex + 1) % 4].label.toLowerCase()}` : `${shortTime(activeTrip?.remainingMs || 0)} left`}</small>

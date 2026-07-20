@@ -1,6 +1,6 @@
 # Save System
 
-The current save schema is version 11.
+The current save schema is version 14.
 
 ## Current Save Data
 
@@ -12,6 +12,7 @@ The current save schema is version 11.
 - Bite timing, sound-cue, pond-ambience, and device-haptic preferences
 - Home-water day-cycle progress and the active charter's destination, elapsed time, and remaining time
 - Angling Keepsake unlock dates and bounded progress records for locations, day phases, preferred-time catches, and completed trips
+- One bounded Trophy or Amazing candidate per species, including its current preserved-mount snapshot
 
 Inventory catches include their generated specimen-size class. Older catches are classified from their saved weight during migration.
 
@@ -27,6 +28,9 @@ Inventory catches include their generated specimen-size class. Older catches are
 - Version 9 added the living day cycle and persistent destination charters.
 - Version 10 added permanent Angling Keepsakes and reconstructs provable milestones from existing statistics, catches, and journal records.
 - Version 11 added Open Gulf's starter offshore rod without altering existing gear, catches, trips, or keepsakes.
+- Version 12 added starter-cabin display choices.
+- Version 13 added the bounded Passing Rain schedule.
+- Version 14 added preserved specimens and reconstructs eligible candidates from Trophy and Amazing catches still in inventory.
 
 ## Rules
 

@@ -7,11 +7,17 @@ import { locations } from '../data/locations'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 12
+const CURRENT_VERSION = 14
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
 const defaultCabin = () => ({
   featuredFishId: null,
   souvenirLocationId: 'willow-pond',
+  specimens: {},
+})
+const randomBetween = (minimum, maximum) => Math.round(minimum + Math.random() * (maximum - minimum))
+const defaultWeather = () => ({
+  nextRainMs: randomBetween(GAME_CONFIG.weather.minRainIntervalMs, GAME_CONFIG.weather.maxRainIntervalMs),
+  rainRemainingMs: 0,
 })
 
 export const newGame = () => ({
@@ -26,6 +32,7 @@ export const newGame = () => ({
   ),
   collection: {},
   cabin: defaultCabin(),
+  weather: defaultWeather(),
   dayCycle: { homeElapsedMs: 0, activeTrip: null },
   achievements: {},
   achievementProgress: {
@@ -125,6 +132,14 @@ function migrateSave(raw) {
     migrated.cabin = defaultCabin()
     migrated.version = 12
   }
+  if (migrated.version < 13) {
+    migrated.weather = defaultWeather()
+    migrated.version = 13
+  }
+  if (migrated.version < 14) {
+    migrated.cabin = { ...defaultCabin(), ...(migrated.cabin || {}), featuredFishId: null, specimens: {} }
+    migrated.version = 14
+  }
   return migrated
 }
 
@@ -217,9 +232,48 @@ export function validateSave(input) {
     .map(([id, record]) => [id, { unlockedAt: record.unlockedAt }]))
   const rawCabin = raw.cabin && typeof raw.cabin === 'object' ? raw.cabin : {}
   const visitedLocationIds = new Set(['willow-pond', ...validList(progress.locationsFished, locationIds)])
+  const eligibleInventory = inventory.filter((item) => ['trophy', 'amazing'].includes(item.sizeTier))
+  const rawSpecimens = rawCabin.specimens && typeof rawCabin.specimens === 'object' ? rawCabin.specimens : {}
+  const specimens = {}
+  fish.forEach((fishItem) => {
+    const rawRecord = rawSpecimens[fishItem.id]
+    const inventoryBest = eligibleInventory.filter((item) => item.fishId === fishItem.id).sort((a, b) => b.weight - a.weight)[0]
+    const validCandidate = rawRecord && Number.isFinite(rawRecord.weight) && rawRecord.weight > 0 && ['trophy', 'amazing'].includes(rawRecord.sizeTier)
+    const candidate = validCandidate ? rawRecord : inventoryBest
+    if (!candidate) return
+    const mounted = rawRecord?.mounted && Number.isFinite(rawRecord.mounted.weight) && rawRecord.mounted.weight > 0 && ['trophy', 'amazing'].includes(rawRecord.mounted.sizeTier)
+      ? {
+          weight: rawRecord.mounted.weight,
+          sizeTier: rawRecord.mounted.sizeTier,
+          locationId: locationIds.has(rawRecord.mounted.locationId) ? rawRecord.mounted.locationId : 'willow-pond',
+          phase: phases.has(rawRecord.mounted.phase) ? rawRecord.mounted.phase : 'morning',
+          caughtAt: typeof rawRecord.mounted.caughtAt === 'string' ? rawRecord.mounted.caughtAt : null,
+          preservedAt: Number.isFinite(rawRecord.mounted.preservedAt) ? rawRecord.mounted.preservedAt : Date.now(),
+        }
+      : null
+    const best = inventoryBest && inventoryBest.weight > candidate.weight ? inventoryBest : candidate
+    specimens[fishItem.id] = {
+      fishId: fishItem.id,
+      weight: best.weight,
+      sizeTier: best.sizeTier,
+      locationId: locationIds.has(best.locationId) ? best.locationId : 'willow-pond',
+      phase: phases.has(best.phase) ? best.phase : 'morning',
+      caughtAt: typeof best.caughtAt === 'string' ? best.caughtAt : null,
+      mounted,
+    }
+  })
   const cabin = {
-    featuredFishId: validFish.has(rawCabin.featuredFishId) && collection[rawCabin.featuredFishId] ? rawCabin.featuredFishId : null,
+    featuredFishId: validFish.has(rawCabin.featuredFishId) && specimens[rawCabin.featuredFishId]?.mounted ? rawCabin.featuredFishId : null,
     souvenirLocationId: visitedLocationIds.has(rawCabin.souvenirLocationId) ? rawCabin.souvenirLocationId : base.cabin.souvenirLocationId,
+    specimens,
+  }
+  const rawWeather = raw.weather && typeof raw.weather === 'object' ? raw.weather : {}
+  const rainRemainingMs = Math.min(validNumber(rawWeather.rainRemainingMs, 0), GAME_CONFIG.weather.maxRainDurationMs)
+  const weather = {
+    nextRainMs: rainRemainingMs
+      ? 0
+      : Math.min(validNumber(rawWeather.nextRainMs, base.weather.nextRainMs), GAME_CONFIG.weather.maxRainIntervalMs),
+    rainRemainingMs,
   }
 
   const validated = {
@@ -230,6 +284,7 @@ export function validateSave(input) {
     gearByLocation,
     collection,
     cabin,
+    weather,
     dayCycle: {
       homeElapsedMs: validNumber(raw.dayCycle?.homeElapsedMs, 0),
       activeTrip: activeTrip?.remainingMs > 0 ? activeTrip : null,

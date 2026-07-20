@@ -59,6 +59,10 @@ The Angler's Lodge is the central earned cabin unlock. Catching a legendary fish
 
 Future Workshop, Lakeside Cottage, and Coastal Shack styles may specialize in equipment, domestic customization and location paintings, or nautical and boat décor. These cabins expand expression without replacing the Angler's Lodge as the earned culmination of the current journey. A Master Angler's Lodge remains only a future possibility if the game grows to roughly ten or more locations.
 
+## Passing Rain
+
+A saved weather schedule introduces a gentle three-to-five-minute shower after roughly three to four in-game days of active fishing. Passing Rain darkens and cools the existing location art, adds restrained rainfall, mist, and ripples, and can play optional procedural rain with occasional distant thunder. It has no forecast, reward, exclusive catch, achievement, or effect on any gameplay calculation. The countdown advances only on the fishing screen, pauses while away, ignores manual phase skipping, and retains a static reduced-motion treatment when animation is disabled.
+
 ## Angling Keepsakes
 
 Angling Keepsakes share the Collection screen with the Fish Journal and commemorate meaningful stories from ordinary play. They are permanent, offline, non-expiring, and award no coins or gameplay power. Visible keepsakes clearly explain their requirements; a small number of hidden keepsakes preserve legendary discoveries. Unlock feedback is calm and never interrupts casting or reeling. Progress records remain bounded to unique locations, phases, species, and completed-trip destinations rather than accumulating endless counters.

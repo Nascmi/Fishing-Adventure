@@ -7,9 +7,9 @@ This is a parking lot, not an approved roadmap. An idea moves to `ROADMAP.md` on
 - New lakes
 - Legendary quests
 - Aquarium
-- Cabins
 - Pets
 - Photography mode
 - Seasonal fish that do not rely on fear of missing out
+- Occasional environmental ambience such as drifting mist, floating leaves, and distant water ripples
 
 For each idea promoted to the roadmap, document which vision pillar it strengthens and its simplest useful version.
