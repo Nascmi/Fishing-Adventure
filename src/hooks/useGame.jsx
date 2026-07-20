@@ -98,6 +98,9 @@ export function GameProvider({ children }) {
               peakMoments: isPeak && !current.achievementProgress.peakMoments.some((entry) => entry.fishId === item.fishId && entry.phase === phase)
                 ? [...current.achievementProgress.peakMoments, { fishId: item.fishId, phase }]
                 : current.achievementProgress.peakMoments,
+              legendaryLocations: item.rarity === 'legendary'
+                ? [...new Set([...current.achievementProgress.legendaryLocations, locationId])]
+                : current.achievementProgress.legendaryLocations,
               amazingLegendaryCaught: current.achievementProgress.amazingLegendaryCaught || (item.rarity === 'legendary' && item.sizeTier === 'amazing'),
             },
             cabin: isBetterSpecimen ? {
@@ -252,6 +255,19 @@ export function GameProvider({ children }) {
           ...current,
           cabin: { ...current.cabin, [slot]: value },
         })),
+      setLodgeDisplay: (index, fishId) =>
+        setGame((current) => {
+          if (current.achievementProgress.legendaryLocations.length < 4 || index < 0 || index > 2) return current
+          const nextDisplays = [...current.cabin.lodgeFeaturedFishIds]
+          nextDisplays[index] = fishId || null
+          return { ...current, cabin: { ...current.cabin, lodgeFeaturedFishIds: nextDisplays } }
+        }),
+      setCabinStyle: (styleId) =>
+        setGame((current) => {
+          if (styleId === 'angler-lodge' && current.achievementProgress.legendaryLocations.length < 4) return current
+          if (!['starter', 'angler-lodge'].includes(styleId)) return current
+          return { ...current, cabin: { ...current.cabin, styleId } }
+        }),
       preserveSpecimen: (fishId) =>
         setGame((current) => {
           const specimen = current.cabin.specimens[fishId]

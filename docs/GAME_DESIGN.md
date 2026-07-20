@@ -101,4 +101,4 @@ Rod progression is local to each fishing location while coins remain shared acro
 
 ## Growth
 
-New locations, weather, sound, boats, lures, aquariums, cabins, photography, and legendary quests are possible extensions. They are not approved merely because they appear here; each must pass the feature approval test and enter the roadmap before implementation.
+Boats and lures are approved as the foundation of Phase 4, with their detailed designs still to be established. New locations, aquariums, photography, legendary quests, and other extensions are not approved merely because they appear here; each must pass the feature approval test and enter the roadmap before implementation.

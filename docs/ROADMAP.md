@@ -69,14 +69,24 @@ Phase 3 deepens atmosphere and gives players a peaceful sense of ownership throu
 - Added a cool rain treatment, fine rainfall, mist, water ripples, reduced-motion handling, optional procedural rain, and occasional distant thunder.
 - Migrated saves to version 13 with a bounded, persistent weather schedule that pauses outside active fishing.
 - Added trophy preservation that remembers the best eligible specimen per species, charges 100 coins for a first mount, and offers heavier upgrades for free.
+- Added the gameplay-earned Angler's Lodge with three preserved-fish displays and an automatic Angling Keepsake cabinet.
 
 ### Planned
 
-- Boats and lures
-- The gameplay-earned Angler's Lodge, unlocked by legendary catches at four distinct locations and specializing in multiple fish displays and an Angling Keepsake cabinet
 - Specialized future cabin styles with purpose-built slots: equipment in the Workshop Cabin, furniture and location paintings in the Lakeside Cottage, and nautical or boat décor in the Coastal Shack
 - Fixed-slot cabin customization designed for simple mobile controls, reliable visual composition, and future cosmetic themes
 - A balanced mix of included, earned, and optional purchased cosmetics with permanent ownership, clear prices, and no artificial scarcity
+
+## Phase 4 — On the Water
+
+Phase 4 expands the fishing itself through deliberate choices about where and how to cast. New systems must preserve the one-touch core interaction, use clear tradeoffs instead of hidden optimization, and make existing locations worth seeing from a fresh perspective.
+
+### Planned
+
+- Boats that open authored fishing areas within suitable existing locations rather than adding a driving or fuel-management game
+- Reusable lure families with readable strengths tied to water, structure, or fish behavior; no consumable-bait grind or crowded inventory
+- Location-specific boat and lure presentation that retains the calm cast, wait, hook, and reel rhythm
+- A progression model that adds new opportunities without making shore fishing, starter tackle, or familiar species obsolete
 
 ## Version 1.0
 

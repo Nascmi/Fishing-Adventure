@@ -18,6 +18,9 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Added
 
+- Added the earned Angler's Lodge, permanently unlocked by catching legendary fish at four distinct locations.
+- Added three preserved-specimen displays, an automatic Angling Keepsake cabinet, cabin switching, and purpose-built lodge artwork.
+- Migrated saves to version 15 with bounded legendary-location progress, retroactive journal evidence, and validated lodge display choices.
 - Added cabin trophy preservation for Trophy and Amazing catches, including remembered best candidates, a configurable 100-coin first mount, and free heavier upgrades.
 - Migrated saves to version 14, preserving eligible catches still held in inventory while validating bounded specimen records.
 - Added Passing Rain as a saved three-to-five-minute atmospheric event after roughly three to four in-game days of active fishing, with no gameplay effects or rewards.

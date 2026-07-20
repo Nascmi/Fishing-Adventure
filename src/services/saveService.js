@@ -7,10 +7,12 @@ import { locations } from '../data/locations'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 14
+const CURRENT_VERSION = 15
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
 const defaultCabin = () => ({
+  styleId: 'starter',
   featuredFishId: null,
+  lodgeFeaturedFishIds: [null, null, null],
   souvenirLocationId: 'willow-pond',
   specimens: {},
 })
@@ -41,6 +43,7 @@ export const newGame = () => ({
     phasesCaught: [],
     peakMoments: [],
     completedTrips: [],
+    legendaryLocations: [],
     amazingLegendaryCaught: false,
   },
   settings: { reactionWindow: 'relaxed', soundEnabled: true, hapticsEnabled: true, ambienceEnabled: false },
@@ -140,6 +143,11 @@ function migrateSave(raw) {
     migrated.cabin = { ...defaultCabin(), ...(migrated.cabin || {}), featuredFishId: null, specimens: {} }
     migrated.version = 14
   }
+  if (migrated.version < 15) {
+    migrated.cabin = { ...defaultCabin(), ...(migrated.cabin || {}) }
+    migrated.achievementProgress = { ...(migrated.achievementProgress || {}), legendaryLocations: [] }
+    migrated.version = 15
+  }
   return migrated
 }
 
@@ -232,6 +240,10 @@ export function validateSave(input) {
     .map(([id, record]) => [id, { unlockedAt: record.unlockedAt }]))
   const rawCabin = raw.cabin && typeof raw.cabin === 'object' ? raw.cabin : {}
   const visitedLocationIds = new Set(['willow-pond', ...validList(progress.locationsFished, locationIds)])
+  const provenLegendaryLocations = locations
+    .filter((location) => location.fishIds.some((fishId) => collection[fishId] && fish.find((item) => item.id === fishId)?.rarity === 'legendary'))
+    .map((location) => location.id)
+  const legendaryLocations = [...new Set([...provenLegendaryLocations, ...validList(progress.legendaryLocations, locationIds)])]
   const eligibleInventory = inventory.filter((item) => ['trophy', 'amazing'].includes(item.sizeTier))
   const rawSpecimens = rawCabin.specimens && typeof rawCabin.specimens === 'object' ? rawCabin.specimens : {}
   const specimens = {}
@@ -263,7 +275,11 @@ export function validateSave(input) {
     }
   })
   const cabin = {
+    styleId: rawCabin.styleId === 'angler-lodge' && legendaryLocations.length >= 4 ? 'angler-lodge' : 'starter',
     featuredFishId: validFish.has(rawCabin.featuredFishId) && specimens[rawCabin.featuredFishId]?.mounted ? rawCabin.featuredFishId : null,
+    lodgeFeaturedFishIds: Array.isArray(rawCabin.lodgeFeaturedFishIds)
+      ? [...rawCabin.lodgeFeaturedFishIds.slice(0, 3), null, null, null].slice(0, 3).map((id) => validFish.has(id) && specimens[id]?.mounted ? id : null)
+      : base.cabin.lodgeFeaturedFishIds,
     souvenirLocationId: visitedLocationIds.has(rawCabin.souvenirLocationId) ? rawCabin.souvenirLocationId : base.cabin.souvenirLocationId,
     specimens,
   }
@@ -296,6 +312,7 @@ export function validateSave(input) {
       phasesCaught: validList(progress.phasesCaught, phases),
       peakMoments,
       completedTrips: validList(progress.completedTrips, locationIds).filter((id) => id !== 'willow-pond'),
+      legendaryLocations,
       amazingLegendaryCaught: progress.amazingLegendaryCaught === true || inventory.some((item) => item.rarity === 'legendary' && item.sizeTier === 'amazing'),
     },
     settings: {
