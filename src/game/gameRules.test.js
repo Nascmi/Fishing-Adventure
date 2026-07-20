@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { GAME_CONFIG } from '../data/config'
 import { newGame } from '../services/saveService'
-import { chooseCabinStyle, equipOwnedRod, preserveCabinSpecimen, purchaseCoinStoreItem, purchaseRod, skipTimePhase, startTrip, tickGameTime } from './gameRules'
+import { chooseCabinDecor, chooseCabinStyle, equipOwnedRod, preserveCabinSpecimen, purchaseCoinStoreItem, purchaseRod, skipTimePhase, startTrip, tickGameTime } from './gameRules'
 
 const withCoins = (coins) => ({ ...newGame(), coins })
 
@@ -54,6 +54,24 @@ describe('Trading Post purchases and cabin selection', () => {
     expect(chooseCabinStyle(purchased, 'riverstone-cabin').cabin.styleId).toBe('riverstone-cabin')
     const lodgeReady = { ...state, achievementProgress: { ...state.achievementProgress, legendaryLocations: ['willow-pond', 'pine-river', 'great-lake', 'gulf-coast'] } }
     expect(chooseCabinStyle(lodgeReady, 'angler-lodge').cabin.styleId).toBe('angler-lodge')
+  })
+
+  it('purchases decor permanently and equips it only on a compatible hook', () => {
+    const state = purchaseCoinStoreItem(withCoins(10000), 'trading-post.rug-deep-water')
+    expect(state.coins).toBe(2500)
+    expect(state.coinStore.ownedItemIds).toContain('trading-post.rug-deep-water')
+    const equipped = chooseCabinDecor(state, 'riverstone-cabin', 'braided-rug', 'trading-post.rug-deep-water')
+    expect(equipped.cabin.decorByCabin['riverstone-cabin']['braided-rug']).toBe('trading-post.rug-deep-water')
+    expect(chooseCabinDecor(state, 'riverstone-cabin', 'hearth-frame', 'trading-post.rug-deep-water')).toBe(state)
+  })
+
+  it('supports included decor, clearing a hook, and independent cabin setups', () => {
+    const state = newGame()
+    const riverstone = chooseCabinDecor(state, 'riverstone-cabin', 'hearth-frame', 'frame-walnut')
+    const captain = chooseCabinDecor(riverstone, 'captains-retreat', 'captains-frame', 'frame-aged-brass')
+    expect(captain.cabin.decorByCabin['riverstone-cabin']['hearth-frame']).toBe('frame-walnut')
+    expect(captain.cabin.decorByCabin['captains-retreat']['captains-frame']).toBe('frame-aged-brass')
+    expect(chooseCabinDecor(captain, 'riverstone-cabin', 'hearth-frame', null).cabin.decorByCabin['riverstone-cabin']['hearth-frame']).toBeNull()
   })
 })
 

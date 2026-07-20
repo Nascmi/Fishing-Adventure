@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import Icon from '../components/Icon'
-import { coinStoreItems, plannedCoinStoreItems } from '../data/coinStoreCatalog'
+import { coinStoreItems } from '../data/coinStoreCatalog'
 import { getCabinDefinition } from '../data/cabinCatalog'
 import { getRodsForLocation } from '../data/rods'
 import { useGame } from '../hooks/useGame'
 import { giveFeedback } from '../services/feedbackService'
+import '../styles/shop.css'
 import riverstoneCabin from '../assets/locations/riverstone-cabin.jpg'
 import cedarHideaway from '../assets/locations/cedar-hideaway.jpg'
 import captainsRetreat from '../assets/locations/captains-retreat.jpg'
@@ -71,20 +72,13 @@ export default function ShopPage({ location }) {
         const cabinDefinition = item.cabinId ? getCabinDefinition(item.cabinId) : null
         const customizationHooks = cabinDefinition?.customizationHooks?.length || cabinDefinition?.slots.reduce((total, slot) => total + slot.capacity, 0) || 0
         return <article className={`trading-post-card tier-${item.tier} ${owned ? 'owned' : ''}`} key={item.id}>
-          <div className={`trading-post-art category-${item.category}`}>{artwork ? <img src={artwork} alt="" draggable="false"/> : <Icon name={item.category === 'prestige' ? 'crown-fish' : 'shop'} size={34}/>}</div>
+          <div className={`trading-post-art category-${item.category} ${item.artwork ? 'decor-preview' : ''}`}>{artwork || item.artwork ? <img src={artwork || item.artwork} alt={`${item.name} preview`} draggable="false"/> : <Icon name={item.category === 'prestige' ? 'crown-fish' : 'shop'} size={34}/>}</div>
           <div className="trading-post-copy"><span>{categoryNames[item.category]}</span><h3>{item.name}</h3><p>{item.description || `An optional ${categoryNames[item.category].toLowerCase()} for personalizing your cabin.`}</p></div>
           {cabinDefinition && <div className="cabin-hook-count"><Icon name="collection" size={17}/><span><strong>{customizationHooks}</strong> customization hooks</span></div>}
           <div className="trading-post-price"><span>{item.tier}</span><strong>{item.price.toLocaleString()} coins</strong></div>
           <button type="button" disabled={owned || !affordable} onClick={() => buyTradingPostItem(item)}>{owned ? 'Owned' : affordable ? `Buy · ${item.price.toLocaleString()}` : `Need ${(item.price - game.coins).toLocaleString()} more`}</button>
         </article>
       })}</div>
-      <div className="shop-section-heading planned-decor-heading"><span className="eyebrow">On the workbench</span><h3>Planned Decor</h3><p>These pieces are coming with the cabin placement controls. Preview them now; no coins can be spent on them yet.</p></div>
-      <div className="trading-post-grid planned-decor-grid">{plannedCoinStoreItems.map((item) => <article className={`trading-post-card planned tier-${item.tier}`} key={item.id}>
-        <div className={`trading-post-art category-${item.category}`}><Icon name={item.category === 'prestige' ? 'crown-fish' : 'shop'} size={34}/></div>
-        <div className="trading-post-copy"><span>{categoryNames[item.category]}</span><h3>{item.name}</h3><p>An upcoming {categoryNames[item.category].toLowerCase()} for compatible customization hooks.</p></div>
-        <div className="trading-post-price"><span>Planned price</span><strong>{item.price.toLocaleString()} coins</strong></div>
-        <button type="button" disabled>Customization coming soon</button>
-      </article>)}</div>
     </>}
   </main>
 }

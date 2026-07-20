@@ -32,13 +32,44 @@ const drawMedallion = (context, x, y, radius, material) => {
   context.stroke()
 }
 
-export async function createCabinShareImage({ background, cabinName, fishDisplays, souvenir, keepsakes, isLodge }) {
+export async function createCabinShareImage({ background, cabinName, fishDisplays, souvenir, keepsakes, isLodge, decor = [] }) {
   const canvas = document.createElement('canvas')
   canvas.width = 1200
   canvas.height = 800
   const context = canvas.getContext('2d')
   const backgroundImage = await loadImage(background)
   context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height)
+
+  for (const { hook, item } of decor) {
+    const { x, y, width, height } = hook.bounds
+    const left = x * 12
+    const top = y * 8
+    const drawWidth = width * 12
+    const drawHeight = height * 8
+    const gradient = context.createLinearGradient(left, top, left + drawWidth, top + drawHeight)
+    gradient.addColorStop(0, item.colors?.[0] || '#496d67')
+    gradient.addColorStop(1, item.colors?.[1] || '#d5bd79')
+    context.save()
+    context.globalAlpha = hook.type === 'finish' ? .22 : .92
+    context.fillStyle = gradient
+    if (hook.type === 'rug') {
+      context.beginPath()
+      context.ellipse(left + drawWidth / 2, top + drawHeight / 2, drawWidth / 2, drawHeight / 2, 0, 0, Math.PI * 2)
+      context.fill()
+    } else {
+      context.fillRect(left, top, drawWidth, drawHeight)
+      if (hook.type === 'frame') {
+        context.strokeStyle = item.colors?.[1] || '#d5bd79'
+        context.lineWidth = 8
+        context.strokeRect(left, top, drawWidth, drawHeight)
+      }
+    }
+    if (item.artwork) {
+      const artwork = await loadImage(item.artwork)
+      drawContained(context, artwork, left + 8, top + 8, drawWidth - 16, drawHeight - 16)
+    }
+    context.restore()
+  }
 
   const fishSlots = isLodge
     ? [{ x: 314, y: 118, width: 122, height: 190 }, { x: 518, y: 82, width: 160, height: 228 }, { x: 770, y: 120, width: 110, height: 185 }]

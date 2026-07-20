@@ -1,6 +1,6 @@
 # Save System
 
-The current save schema is version 17.
+The current save schema is version 18.
 
 ## Current Save Data
 
@@ -15,7 +15,8 @@ The current save schema is version 17.
 - One bounded Trophy or Amazing candidate per species, including its current preserved-mount snapshot
 - The bounded set of locations where a legendary fish has been caught, cabin style, and three Angler's Lodge display choices
 - Bounded ownership sets for earned location paintings, Master Angler frames, upgraded souvenirs, Amazing photographs, legendary miniatures, and equipment plaques
-- Validated permanent ownership of earned-coin Trading Post purchases, including the equipped coin-purchased cabin style
+- Validated permanent ownership of earned-coin Trading Post purchases, including the equipped coin-purchased cabin style and decor
+- Independent, validated decor selections for every authored hook in each customizable cabin
 
 Inventory catches include their generated specimen-size class. Older catches are classified from their saved weight during migration.
 
@@ -37,6 +38,7 @@ Inventory catches include their generated specimen-size class. Older catches are
 - Version 15 added permanent Angler's Lodge unlock progress, reconstructs provable locations from legendary journal entries, and validates three specimen display slots.
 - Version 16 added permanent painting, Master Angler frame, upgraded souvenir, Amazing photograph, legendary miniature, and equipment-plaque ownership with retroactive reconstruction from existing records.
 - Version 17 added permanent Trading Post ownership and validates that a coin-purchased cabin can be equipped only while its catalog item is owned.
+- Version 18 added per-cabin hook selections and validates decor ownership and hook compatibility.
 
 ## Rules
 

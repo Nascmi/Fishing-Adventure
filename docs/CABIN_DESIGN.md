@@ -93,9 +93,9 @@ The Trading Post offers three permanent cabin styles purchased only with coins e
 - **Cedar Hideaway — 50,000 coins:** four authored hooks for its three visible gallery frames and forest rug.
 - **Captain's Retreat — 75,000 coins:** seven authored hooks for the central frame, four trophy shelves, navy rug, and mahogany finish.
 
-The shop discloses each cabin's hook count before purchase. The room artwork and permanent cabin ownership are live. The full hook-placement controls remain a later implementation step; until then, the cabin page preserves the existing specimen and travel-souvenir controls rather than accepting payment for decor that cannot be displayed.
+The shop discloses each cabin's hook count before purchase. Each hook has a fixed authored position and accepts only compatible items. Selections are saved independently per cabin, appear in cabin share images, and can always be returned to the room default.
 
-Twelve planned rugs, frames, finishes, small cabin objects, and the 100,000 Coin Club plaque appear in the Trading Post as disabled previews. Their stable IDs and target coin prices are planning commitments, not purchasable inventory. They may become active only when their compatible authored hooks, ownership behavior, save migration, and share-card presentation work end to end.
+Twelve rugs, frames, finishes, small cabin objects, and the 100,000 Coin Club plaque are permanent earned-coin purchases. Included rugs, frames, and finishes and accomplishment-earned paintings, photographs, souvenirs, miniatures, and plaques appear beside purchased choices wherever a compatible hook exists.
 
 Location paintings are earned records of exploration or completion. Cabin styles may provide different frames and wall arrangements, but purchasing a cabin must not purchase the underlying exploration accomplishment.
 

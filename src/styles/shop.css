@@ -1,0 +1,26 @@
+/* Real merchandise previews use their native square composition instead of the
+   shallow placeholder banner crop. Cards then size from their full contents. */
+.trading-post-card {
+  min-height: 0;
+  height: 100%;
+}
+
+.trading-post-art.decor-preview {
+  height: auto;
+  aspect-ratio: 1;
+  margin: -14px -14px 13px;
+  border: 0;
+  background: #e8e2d3;
+}
+
+.trading-post-art.decor-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 540px) {
+  .trading-post-art.decor-preview {
+    margin: -11px -11px 11px;
+  }
+}

@@ -1,5 +1,7 @@
 import { unlockAchievements } from '../data/achievements'
 import { getCoinStoreItem } from '../data/coinStoreCatalog'
+import { getCabinDefinition } from '../data/cabinCatalog'
+import { getOwnedCabinDecor } from '../data/cabinDecor'
 import { GAME_CONFIG } from '../data/config'
 import { getLocation } from '../data/locations'
 import { unlockLocationCosmetics } from '../data/locationPaintings'
@@ -139,6 +141,18 @@ export const chooseCabinStyle = (state, styleId) => {
   const storeCabinOwned = state.coinStore.ownedItemIds.some((id) => getCoinStoreItem(id)?.cabinId === styleId)
   if (!['starter', 'angler-lodge'].includes(styleId) && !storeCabinOwned) return state
   return { ...state, cabin: { ...state.cabin, styleId } }
+}
+
+export const chooseCabinDecor = (state, cabinId, hookId, decorId) => {
+  const cabin = getCabinDefinition(cabinId)
+  const hook = cabin?.customizationHooks?.find((item) => item.id === hookId)
+  if (!hook) return state
+  if (decorId === null) {
+    return { ...state, cabin: { ...state.cabin, decorByCabin: { ...state.cabin.decorByCabin, [cabinId]: { ...state.cabin.decorByCabin[cabinId], [hookId]: null } } } }
+  }
+  const decor = getOwnedCabinDecor(state).find((item) => item.id === decorId)
+  if (!decor || decor.hookType !== hook.type) return state
+  return { ...state, cabin: { ...state.cabin, decorByCabin: { ...state.cabin.decorByCabin, [cabinId]: { ...state.cabin.decorByCabin[cabinId], [hookId]: decorId } } } }
 }
 
 export const preserveCabinSpecimen = (state, fishId, now = Date.now()) => {

@@ -3,7 +3,7 @@ import { clearGame, loadGame, newGame, rarityRank, saveGame } from '../services/
 import { achievements as achievementDefinitions, unlockAchievements } from '../data/achievements'
 import { getPreferredPhases } from '../utils/fishingEngine'
 import { unlockLocationCosmetics } from '../data/locationPaintings'
-import { chooseCabinStyle, endActiveTrip, equipOwnedRod, preserveCabinSpecimen, purchaseCoinStoreItem, purchaseRod, skipTimePhase, startTrip, tickGameTime } from '../game/gameRules'
+import { chooseCabinDecor, chooseCabinStyle, endActiveTrip, equipOwnedRod, preserveCabinSpecimen, purchaseCoinStoreItem, purchaseRod, skipTimePhase, startTrip, tickGameTime } from '../game/gameRules'
 
 const GameContext = createContext(null)
 export function GameProvider({ children }) {
@@ -150,6 +150,7 @@ export function GameProvider({ children }) {
           return { ...current, cabin: { ...current.cabin, lodgeFeaturedFishIds: nextDisplays } }
         }),
       setCabinStyle: (styleId) => setGame((current) => chooseCabinStyle(current, styleId)),
+      setCabinDecor: (cabinId, hookId, decorId) => setGame((current) => chooseCabinDecor(current, cabinId, hookId, decorId)),
       preserveSpecimen: (fishId) => setGame((current) => preserveCabinSpecimen(current, fishId)),
       dismissNotice: () => setNotice(null),
       reset: () => {

@@ -1,4 +1,7 @@
-// Deferred products have stable IDs and authored art, but cannot be purchased yet.
+const hook = (id, name, type, bounds) => ({ id, name, type, bounds })
+
+// Bounds are percentages of each authored cabin scene. They intentionally belong
+// to the room, not the decor item, so every compatible choice sits naturally.
 export const cabinCatalog = [
   {
     id: 'starter', name: 'Starter Cabin', artworkKey: 'cabin.webp',
@@ -16,21 +19,38 @@ export const cabinCatalog = [
     id: 'riverstone-cabin', name: 'Riverstone Cabin', artworkKey: 'riverstone-cabin.jpg',
     description: 'A comfortable riverside cabin with a fieldstone hearth and handmade shelves.',
     acquisition: { type: 'coin-store', productId: 'trading-post.cabin-riverstone' },
-    customizationHooks: ['hearth-frame', 'river-shelf', 'braided-rug'],
+    customizationHooks: [
+      hook('hearth-frame', 'Hearth frame', 'frame', { x: 45, y: 14, width: 13, height: 18 }),
+      hook('river-shelf', 'River shelf', 'display', { x: 68, y: 24, width: 15, height: 12 }),
+      hook('braided-rug', 'Hearth rug', 'rug', { x: 32, y: 75, width: 38, height: 17 }),
+    ],
     slots: [{ id: 'featured-specimen', type: 'specimen', capacity: 1 }, { id: 'travel-souvenir', type: 'souvenir', capacity: 1 }],
   },
   {
     id: 'cedar-hideaway', name: 'Cedar Hideaway', artworkKey: 'cedar-hideaway.jpg',
     description: 'A warm cedar retreat surrounded by quiet pine woods.',
     acquisition: { type: 'coin-store', productId: 'trading-post.cabin-cedar-hideaway' },
-    customizationHooks: ['left-gallery-frame', 'hearth-gallery-frame', 'right-gallery-frame', 'forest-rug'],
+    customizationHooks: [
+      hook('left-gallery-frame', 'Left gallery frame', 'frame', { x: 25, y: 17, width: 11, height: 17 }),
+      hook('hearth-gallery-frame', 'Hearth gallery frame', 'frame', { x: 46, y: 14, width: 12, height: 18 }),
+      hook('right-gallery-frame', 'Right gallery frame', 'frame', { x: 70, y: 18, width: 11, height: 16 }),
+      hook('forest-rug', 'Forest rug', 'rug', { x: 29, y: 76, width: 43, height: 17 }),
+    ],
     slots: [{ id: 'featured-specimen', type: 'specimen', capacity: 1 }, { id: 'travel-souvenir', type: 'souvenir', capacity: 1 }],
   },
   {
     id: 'captains-retreat', name: "Captain's Retreat", artworkKey: 'captains-retreat.jpg',
     description: 'A mahogany-and-brass lake retreat for an angler with stories to spare.',
     acquisition: { type: 'coin-store', productId: 'trading-post.cabin-captains-retreat' },
-    customizationHooks: ['captains-frame', 'left-upper-shelf', 'left-lower-shelf', 'right-upper-shelf', 'right-lower-shelf', 'navy-rug', 'mahogany-finish'],
+    customizationHooks: [
+      hook('captains-frame', "Captain's frame", 'frame', { x: 45, y: 13, width: 13, height: 19 }),
+      hook('left-upper-shelf', 'Left upper shelf', 'display', { x: 17, y: 18, width: 13, height: 10 }),
+      hook('left-lower-shelf', 'Left lower shelf', 'display', { x: 18, y: 34, width: 14, height: 10 }),
+      hook('right-upper-shelf', 'Right upper shelf', 'display', { x: 69, y: 18, width: 13, height: 10 }),
+      hook('right-lower-shelf', 'Right lower shelf', 'display', { x: 69, y: 34, width: 14, height: 10 }),
+      hook('navy-rug', 'Navy rug', 'rug', { x: 30, y: 77, width: 42, height: 16 }),
+      hook('mahogany-finish', 'Timber finish', 'finish', { x: 3, y: 4, width: 94, height: 92 }),
+    ],
     slots: [{ id: 'featured-specimen', type: 'specimen', capacity: 1 }, { id: 'travel-souvenir', type: 'souvenir', capacity: 1 }],
   },
   {

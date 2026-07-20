@@ -6,10 +6,12 @@ import { achievements as achievementDefinitions, unlockAchievements } from '../d
 import { locations } from '../data/locations'
 import { unlockLocationCosmetics } from '../data/locationPaintings'
 import { coinStoreItems } from '../data/coinStoreCatalog'
+import { cabinCatalog } from '../data/cabinCatalog'
+import { getCabinDecor, isDecorOwned } from '../data/cabinDecor'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 17
+const CURRENT_VERSION = 18
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
 const defaultCabin = () => ({
   styleId: 'starter',
@@ -17,6 +19,7 @@ const defaultCabin = () => ({
   lodgeFeaturedFishIds: [null, null, null],
   souvenirLocationId: 'willow-pond',
   specimens: {},
+  decorByCabin: {},
 })
 const randomBetween = (minimum, maximum) => Math.round(minimum + Math.random() * (maximum - minimum))
 const defaultWeather = () => ({
@@ -165,6 +168,10 @@ function migrateSave(raw) {
     migrated.coinStore = { ownedItemIds: [] }
     migrated.version = 17
   }
+  if (migrated.version < 18) {
+    migrated.cabin = { ...defaultCabin(), ...(migrated.cabin || {}), decorByCabin: {} }
+    migrated.version = 18
+  }
   return migrated
 }
 
@@ -265,6 +272,12 @@ export function validateSave(input) {
     .filter((location) => location.fishIds.some((fishId) => collection[fishId] && fish.find((item) => item.id === fishId)?.rarity === 'legendary'))
     .map((location) => location.id)
   const legendaryLocations = [...new Set([...provenLegendaryLocations, ...validList(progress.legendaryLocations, locationIds)])]
+  const paintingsEarned = validList(progress.paintingsEarned, locationIds)
+  const masterFramesEarned = validList(progress.masterFramesEarned, locationIds)
+  const upgradedSouvenirs = validList(progress.upgradedSouvenirs, locationIds)
+  const equipmentPlaques = validList(progress.equipmentPlaques, locationIds)
+  const amazingPhotos = validList(progress.amazingPhotos, validFish)
+  const legendaryMiniatures = validList(progress.legendaryMiniatures, validFish)
   const eligibleInventory = inventory.filter((item) => ['trophy', 'amazing'].includes(item.sizeTier))
   const rawSpecimens = rawCabin.specimens && typeof rawCabin.specimens === 'object' ? rawCabin.specimens : {}
   const specimens = {}
@@ -299,6 +312,21 @@ export function validateSave(input) {
   const validCabinStyle = rawCabin.styleId === 'starter'
     || (rawCabin.styleId === 'angler-lodge' && legendaryLocations.length >= 4)
     || ownedCabinIds.has(rawCabin.styleId)
+  const decorState = {
+    ...base,
+    coinStore: { ownedItemIds },
+    achievementProgress: { ...base.achievementProgress, paintingsEarned, upgradedSouvenirs, equipmentPlaques, amazingPhotos, legendaryMiniatures },
+  }
+  const availableDecor = new Map(getCabinDecor(decorState).filter((item) => isDecorOwned(decorState, item)).map((item) => [item.id, item]))
+  const rawDecorByCabin = rawCabin.decorByCabin && typeof rawCabin.decorByCabin === 'object' ? rawCabin.decorByCabin : {}
+  const decorByCabin = Object.fromEntries(cabinCatalog.filter((definition) => definition.customizationHooks).map((definition) => {
+    const rawSelections = rawDecorByCabin[definition.id] && typeof rawDecorByCabin[definition.id] === 'object' ? rawDecorByCabin[definition.id] : {}
+    const selections = Object.fromEntries(definition.customizationHooks.map((hook) => {
+      const decor = availableDecor.get(rawSelections[hook.id])
+      return [hook.id, decor?.hookType === hook.type ? decor.id : null]
+    }))
+    return [definition.id, selections]
+  }))
   const cabin = {
     styleId: validCabinStyle ? rawCabin.styleId : 'starter',
     featuredFishId: validFish.has(rawCabin.featuredFishId) && specimens[rawCabin.featuredFishId]?.mounted ? rawCabin.featuredFishId : null,
@@ -307,6 +335,7 @@ export function validateSave(input) {
       : base.cabin.lodgeFeaturedFishIds,
     souvenirLocationId: visitedLocationIds.has(rawCabin.souvenirLocationId) ? rawCabin.souvenirLocationId : base.cabin.souvenirLocationId,
     specimens,
+    decorByCabin,
   }
   const rawWeather = raw.weather && typeof raw.weather === 'object' ? raw.weather : {}
   const rainRemainingMs = Math.min(validNumber(rawWeather.rainRemainingMs, 0), GAME_CONFIG.weather.maxRainDurationMs)
@@ -339,12 +368,12 @@ export function validateSave(input) {
       peakMoments,
       completedTrips: validList(progress.completedTrips, locationIds).filter((id) => id !== 'willow-pond'),
       legendaryLocations,
-      paintingsEarned: validList(progress.paintingsEarned, locationIds),
-      masterFramesEarned: validList(progress.masterFramesEarned, locationIds),
-      upgradedSouvenirs: validList(progress.upgradedSouvenirs, locationIds),
-      equipmentPlaques: validList(progress.equipmentPlaques, locationIds),
-      amazingPhotos: validList(progress.amazingPhotos, validFish),
-      legendaryMiniatures: validList(progress.legendaryMiniatures, validFish),
+      paintingsEarned,
+      masterFramesEarned,
+      upgradedSouvenirs,
+      equipmentPlaques,
+      amazingPhotos,
+      legendaryMiniatures,
       amazingLegendaryCaught: progress.amazingLegendaryCaught === true || inventory.some((item) => item.rarity === 'legendary' && item.sizeTier === 'amazing'),
     },
     settings: {

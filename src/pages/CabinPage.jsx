@@ -9,6 +9,7 @@ import { locations } from '../data/locations'
 import { locationPaintings } from '../data/locationPaintings'
 import { cabinCatalog, getCabinDefinition, includedCabinCosmetics } from '../data/cabinCatalog'
 import { getCoinStoreItem } from '../data/coinStoreCatalog'
+import { getOwnedCabinDecor } from '../data/cabinDecor'
 import { useGame } from '../hooks/useGame'
 import { createCabinShareImage } from '../utils/cabinShareImage'
 import cabinImage from '../assets/locations/cabin.webp'
@@ -65,6 +66,12 @@ export default function CabinPage({ onGoFishing }) {
   const legendaryFish = fish.filter((item) => item.rarity === 'legendary')
   const amazingPhotoFish = fish.filter((item) => game.achievementProgress.amazingPhotos.includes(item.id))
   const earnedCabinCollectibles = game.achievementProgress.upgradedSouvenirs.length + game.achievementProgress.equipmentPlaques.length + game.achievementProgress.amazingPhotos.length + game.achievementProgress.legendaryMiniatures.length
+  const ownedDecor = getOwnedCabinDecor(game)
+  const activeDecorSelections = cabin.decorByCabin[activeCabin.id] || {}
+  const selectedDecor = (activeCabin.customizationHooks || []).map((hook) => {
+    const item = ownedDecor.find((entry) => entry.id === activeDecorSelections[hook.id])
+    return item ? { hook, item } : null
+  }).filter(Boolean)
 
   useEffect(() => {
     let cancelled = false
@@ -79,9 +86,10 @@ export default function CabinPage({ onGoFishing }) {
       souvenir: !isLodge && souvenir ? souvenirArtwork[souvenir.id] : null,
       keepsakes: earnedKeepsakes.map((achievement) => getKeepsakeDesign(achievement.id)),
       isLodge,
+      decor: selectedDecor,
     }).then((blob) => { if (!cancelled) setShareImage(blob) }).catch(() => { if (!cancelled) setShareStatus('Share image unavailable') })
     return () => { cancelled = true }
-  }, [activeCabin.name, activeCabinImage, cabin.featuredFishId, cabin.lodgeFeaturedFishIds, cabin.specimens, earnedKeepsakeKey, isLodge, souvenir])
+  }, [activeCabin.name, activeCabinImage, cabin.featuredFishId, cabin.lodgeFeaturedFishIds, cabin.specimens, cabin.decorByCabin, earnedKeepsakeKey, isLodge, souvenir])
 
   const shareCabin = async () => {
     if (!shareImage) return
@@ -131,6 +139,7 @@ export default function CabinPage({ onGoFishing }) {
 
     {!isLodge ? <>
       <section className={`cabin-scene cabin-${activeCabin.id}`} style={{ '--cabin-art': `url("${activeCabinImage}")` }} aria-label={activeCabin.description}>
+        {selectedDecor.map(({ hook, item }) => <div className={`cabin-decor-overlay decor-${hook.type}`} style={{ '--decor-x': `${hook.bounds.x}%`, '--decor-y': `${hook.bounds.y}%`, '--decor-width': `${hook.bounds.width}%`, '--decor-height': `${hook.bounds.height}%`, '--decor-a': item.colors?.[0], '--decor-b': item.colors?.[1] }} title={`${hook.name}: ${item.name}`} key={hook.id}>{item.artwork && <img src={item.artwork} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }}/>}<span>{hook.type === 'display' && !item.artwork ? item.name : ''}</span></div>)}
         <div className="cabin-featured" aria-label={featuredFish ? `Preserved catch: ${featuredFish.name}` : 'Empty preserved catch mount'}>
           {featuredFish ? <div className={`cabin-mount size-${featuredSpecimen.sizeTier}`}><FishArtwork fishId={featuredFish.id} name={featuredFish.name} className="cabin-fish-art"/></div> : <span>Ready for<br/>a preserved catch</span>}
         </div>
@@ -163,6 +172,14 @@ export default function CabinPage({ onGoFishing }) {
       </> : cabin.lodgeFeaturedFishIds.map((fishId, index) => <label key={index}>Mount {index + 1}<select value={fishId || ''} onChange={(event) => actions.setLodgeDisplay(index, event.target.value || null)}><option value="">Empty mount</option>{preservedFish.map(({ fish: item, record }) => <option value={item.id} disabled={cabin.lodgeFeaturedFishIds.includes(item.id) && fishId !== item.id} key={item.id}>{item.name} · {record.mounted.weight} lb</option>)}</select></label>)}
     </section>
 
+    {!!activeCabin.customizationHooks?.length && <section className="cabin-customizer decor-customizer" aria-labelledby="decor-customizer-title">
+      <div><span className="eyebrow">Authored placement</span><h3 id="decor-customizer-title">Cabin decor</h3><p>{activeCabin.customizationHooks.length} fixed hooks keep every choice aligned with this room. Included, earned, and Trading Post pieces appear only where they fit.</p></div>
+      {activeCabin.customizationHooks.map((hook) => {
+        const compatible = ownedDecor.filter((item) => item.hookType === hook.type)
+        return <label key={hook.id}>{hook.name}<select value={activeDecorSelections[hook.id] || ''} onChange={(event) => actions.setCabinDecor(activeCabin.id, hook.id, event.target.value || null)}><option value="">Use cabin default</option>{compatible.map((item) => <option value={item.id} key={item.id}>{item.name} · {item.source === 'included' ? 'Included' : item.source === 'earned' ? 'Earned' : 'Trading Post'}</option>)}</select></label>
+      })}
+    </section>}
+
     <section className="painting-gallery" aria-labelledby="painting-gallery-title">
       <div><span className="eyebrow">Earned cabin cosmetics</span><h3 id="painting-gallery-title">Location paintings</h3><p>Complete each water's story to earn its painting. Catch a Trophy or Amazing specimen of every local species to earn the permanent Master Angler frame.</p></div>
       <div className="painting-grid">{locationPaintings.map((painting) => {
@@ -189,7 +206,7 @@ export default function CabinPage({ onGoFishing }) {
 
         <section><h4>Location-mastery equipment plaques</h4><p>Own every rod in a location's equipment family to earn its plaque.</p><div className="plaque-grid">{locations.map((location) => { const earned = game.achievementProgress.equipmentPlaques.includes(location.id); return <article className={earned ? 'earned' : 'locked'} key={location.id}><Icon name="fishing" size={25}/><div><span>{earned ? 'Equipment family complete' : 'Still outfitting'}</span><strong>{location.name}</strong></div></article> })}</div></section>
 
-        <section><h4>Included style collection</h4><p>These foundational rugs, frames, and timber finishes are included for future cabins with compatible authored slots.</p><div className="included-style-groups">{Object.entries(includedCabinCosmetics).map(([group, options]) => <div key={group}><span>{group}</span>{options.map((option) => <article key={option.id}><i style={{ background: `linear-gradient(135deg,${option.colors.join(',')})` }}/><strong>{option.name}</strong></article>)}</div>)}</div></section>
+        <section><h4>Included style collection</h4><p>These foundational rugs, frames, and timber finishes are always available in cabins with compatible authored hooks.</p><div className="included-style-groups">{Object.entries(includedCabinCosmetics).map(([group, options]) => <div key={group}><span>{group}</span>{options.map((option) => <article key={option.id}><i style={{ background: `linear-gradient(135deg,${option.colors.join(',')})` }}/><strong>{option.name}</strong></article>)}</div>)}</div></section>
       </div>
     </details>
 

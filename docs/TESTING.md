@@ -20,7 +20,7 @@ npm run build
 - Specimen-size boundaries, deterministic catch generation, and catch values
 - Rod prerequisites, equipment ownership, and exact coin deductions
 - Charter booking, completion, paintings, and keepsake evaluation
-- Trading Post ownership, duplicate rejection, and cabin eligibility
+- Trading Post ownership, duplicate rejection, cabin eligibility, and compatible per-cabin decor selections
 - Trophy preservation costs and free heavier upgrades
 - Keepsakes, location paintings, Master Angler frames, photographs, miniatures, and equipment plaques
 

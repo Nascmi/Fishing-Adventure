@@ -4,6 +4,12 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 
 ## Unreleased
 
+- Completed the Riverstone, Cedar Hideaway, and Captain's Retreat customization hooks with fixed authored placement and compatible-item filtering.
+- Activated twelve permanent earned-coin decor purchases and added included and accomplishment-earned choices to compatible cabin hooks.
+- Migrated saves to version 18 with validated per-cabin decor selections and added selected decor to cabin share images.
+- Added individual Trading Post preview artwork for all twelve purchasable decor pieces.
+- Gave decor previews a full square image stage and content-sized cards so merchandise and purchase controls are no longer cropped.
+
 ### Added
 
 - Added a Vitest regression suite covering save migration and recovery, deterministic fishing and values, purchases, charters, cabin ownership, trophy preservation, keepsakes, and earned cabin cosmetics.
