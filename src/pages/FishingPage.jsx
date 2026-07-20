@@ -39,7 +39,7 @@ const getStatusCopy = (location) => ({
   caught: `A fine catch from ${location.name}.`,
 })
 
-export default function FishingPage({ locationId, onLocationChange }) {
+export default function FishingPage({ locationId, onLocationChange, onOpenCabin }) {
   const { game, actions } = useGame()
   const location = getLocation(locationId)
   const gear = game.gearByLocation[location.id]
@@ -204,6 +204,7 @@ export default function FishingPage({ locationId, onLocationChange }) {
         <small>{location.id === 'willow-pond' ? `${shortTime(cycle.phaseRemainingMs)} until ${GAME_CONFIG.dayCycle.phases[(cycle.phaseIndex + 1) % 4].label.toLowerCase()}` : `${shortTime(activeTrip?.remainingMs || 0)} left`}</small>
         <button type="button" disabled={fishingState !== 'ready'} onClick={() => actions.skipDayPhase(location.id)}>Skip ahead</button>
       </div>
+      {location.id === 'willow-pond' && fishingState === 'ready' && <button type="button" className="cabin-entry" onClick={onOpenCabin}>Return to cabin</button>}
       <div className="water"><div className={`strike-marker ${location.fishingStyle}`}><i/></div><div className="ripples"/></div>
     </section>
 

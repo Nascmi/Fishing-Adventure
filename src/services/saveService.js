@@ -7,8 +7,12 @@ import { locations } from '../data/locations'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 11
+const CURRENT_VERSION = 12
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
+const defaultCabin = () => ({
+  featuredFishId: null,
+  souvenirLocationId: 'willow-pond',
+})
 
 export const newGame = () => ({
   version: CURRENT_VERSION,
@@ -21,6 +25,7 @@ export const newGame = () => ({
     }),
   ),
   collection: {},
+  cabin: defaultCabin(),
   dayCycle: { homeElapsedMs: 0, activeTrip: null },
   achievements: {},
   achievementProgress: {
@@ -116,6 +121,10 @@ function migrateSave(raw) {
     }
     migrated.version = 11
   }
+  if (migrated.version < 12) {
+    migrated.cabin = defaultCabin()
+    migrated.version = 12
+  }
   return migrated
 }
 
@@ -206,6 +215,12 @@ export function validateSave(input) {
   const achievementRecords = Object.fromEntries(Object.entries(raw.achievements && typeof raw.achievements === 'object' ? raw.achievements : {})
     .filter(([id, record]) => validAchievementIds.has(id) && record && Number.isFinite(record.unlockedAt) && record.unlockedAt > 0)
     .map(([id, record]) => [id, { unlockedAt: record.unlockedAt }]))
+  const rawCabin = raw.cabin && typeof raw.cabin === 'object' ? raw.cabin : {}
+  const visitedLocationIds = new Set(['willow-pond', ...validList(progress.locationsFished, locationIds)])
+  const cabin = {
+    featuredFishId: validFish.has(rawCabin.featuredFishId) && collection[rawCabin.featuredFishId] ? rawCabin.featuredFishId : null,
+    souvenirLocationId: visitedLocationIds.has(rawCabin.souvenirLocationId) ? rawCabin.souvenirLocationId : base.cabin.souvenirLocationId,
+  }
 
   const validated = {
     ...base,
@@ -214,6 +229,7 @@ export function validateSave(input) {
     inventory,
     gearByLocation,
     collection,
+    cabin,
     dayCycle: {
       homeElapsedMs: validNumber(raw.dayCycle?.homeElapsedMs, 0),
       activeTrip: activeTrip?.remainingMs > 0 ? activeTrip : null,

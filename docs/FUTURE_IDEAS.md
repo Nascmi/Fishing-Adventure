@@ -10,6 +10,6 @@ This is a parking lot, not an approved roadmap. An idea moves to `ROADMAP.md` on
 - Cabins
 - Pets
 - Photography mode
-- Aquarium
+- Seasonal fish that do not rely on fear of missing out
 
 For each idea promoted to the roadmap, document which vision pillar it strengthens and its simplest useful version.

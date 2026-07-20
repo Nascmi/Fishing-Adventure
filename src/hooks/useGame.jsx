@@ -215,6 +215,11 @@ export function GameProvider({ children }) {
           ...current,
           settings: { ...current.settings, [setting]: Boolean(enabled) },
         })),
+      setCabinChoice: (slot, value) =>
+        setGame((current) => ({
+          ...current,
+          cabin: { ...current.cabin, [slot]: value },
+        })),
       dismissNotice: () => setNotice(null),
       reset: () => {
         clearGame()

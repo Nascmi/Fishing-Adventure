@@ -18,9 +18,10 @@ The economy turns each catch into visible progress without turning fishing into 
 - Rod upgrades within a location are purchased in sequence, even when the player already has enough shared coins for a later rod.
 - Backyard Pond is always free. Other locations are recurring coin sinks framed as three-day charter trips rather than per-cast fees.
 - Charter prices begin at 300 coins for Pine River, 800 for Great Lake, 1,600 for Gulf Coast, and 4,000 for Open Gulf; tune these against measured trip earnings.
+- Preserving the first Trophy or Amazing specimen of a species for cabin display has a starting cost of 100 coins. The game remembers eligible candidates before payment, and upgrading an existing mount to a heavier specimen of the same species is free.
 
 ## Tuning
 
-Evaluate the economy through playtesting rather than intuition alone. Track time to each rod, average value per catch, value per minute, rarity frequency, and the share of income supplied by each rarity.
+Evaluate the economy through playtesting rather than intuition alone. Track time to each rod, average value per catch, value per minute, rarity frequency, the share of income supplied by each rarity, trophy-preservation adoption, and whether the 100-coin fee feels meaningful without discouraging display use.
 
 Change one variable at a time and record the result in `BALANCE_NOTES.md`.

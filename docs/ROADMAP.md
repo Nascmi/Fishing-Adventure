@@ -60,12 +60,17 @@ These quality practices continue throughout development rather than ending with 
 
 ## Phase 3 — Deeper Atmosphere & Personalization
 
+Phase 3 gives players a peaceful sense of ownership through optional self-expression. Customization should create lasting reasons to return and provide a foundation for clearly priced cosmetic purchases, while earned accomplishments remain meaningful and spending never affects fishing power or progression.
+
 - Weather that changes atmosphere without creating pressure and builds on the living day cycle
 - Occasional environmental ambience such as drifting mist, floating leaves, subtle weather, and distant water ripples; no animated animals
 - Boats and lures
-
-- Cabin and cosmetic customization
-- Seasonal fish that do not rely on fear of missing out
+- A complete, humble starter cabin with one preserved Trophy or Amazing display and one earned travel-souvenir slot
+- Trophy preservation that remembers the best eligible specimen per species, begins at a configurable 100-coin fee, and allows free upgrades to heavier catches
+- The gameplay-earned Angler's Lodge, unlocked by legendary catches at four distinct locations and specializing in multiple fish displays and an Angling Keepsake cabinet
+- Specialized future cabin styles with purpose-built slots: equipment in the Workshop Cabin, furniture and location paintings in the Lakeside Cottage, and nautical or boat décor in the Coastal Shack
+- Fixed-slot cabin customization designed for simple mobile controls, reliable visual composition, and future cosmetic themes
+- A balanced mix of included, earned, and optional purchased cosmetics with permanent ownership, clear prices, and no artificial scarcity
 
 ## Version 1.0
 

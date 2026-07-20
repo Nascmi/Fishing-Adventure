@@ -47,6 +47,18 @@ The target distribution is 68% regular, 22% good, 8% trophy, and 2% amazing. Lar
 
 Discovered species open into full journal entries with large artwork, concise natural-history flavor, habitat, typical size, and the player's largest and total catches. The journal should make discovery feel personal and deepen appreciation for familiar fish without becoming an encyclopedia.
 
+## Trophy Preservation
+
+Trophy and Amazing specimens can become permanent cabin displays. The game automatically retains the best eligible candidate for each species independently of inventory, including its weight, tier, location, day phase, and catch time. Players may later preserve a candidate for a configurable starting fee of 100 coins, avoiding an immediate pay-or-lose decision after a catch. A heavier eligible specimen of the same species may replace an existing mount for free. Amazing specimens use a distinct, more prestigious display treatment while remaining records of play rather than sources of power.
+
+## Cabin Progression
+
+Cabins are specialized authored spaces rather than linear room upgrades. The humble starter cabin supports one preserved fish and one travel souvenir. Other painted details remain fixed so the room looks cohesive and complete.
+
+The Angler's Lodge is the central earned cabin unlock. Catching a legendary fish at four distinct locations opens its multiple fish displays and Angling Keepsake cabinet. The requirement represents mastery of most current waters while leaving the player one location of choice. A bounded set of legendary-catch location IDs preserves this progress regardless of inventory or sales.
+
+Future Workshop, Lakeside Cottage, and Coastal Shack styles may specialize in equipment, domestic customization and location paintings, or nautical and boat décor. These cabins expand expression without replacing the Angler's Lodge as the earned culmination of the current journey. A Master Angler's Lodge remains only a future possibility if the game grows to roughly ten or more locations.
+
 ## Angling Keepsakes
 
 Angling Keepsakes share the Collection screen with the Fish Journal and commemorate meaningful stories from ordinary play. They are permanent, offline, non-expiring, and award no coins or gameplay power. Visible keepsakes clearly explain their requirements; a small number of hidden keepsakes preserve legendary discoveries. Unlock feedback is calm and never interrupts casting or reeling. Progress records remain bounded to unique locations, phases, species, and completed-trip destinations rather than accumulating endless counters.

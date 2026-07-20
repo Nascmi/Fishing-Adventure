@@ -7,6 +7,7 @@ import { REACTION_OPTIONS } from './data/config'
 import { futureLocations, getLocation } from './data/locations'
 import { useGame } from './hooks/useGame'
 import CollectionPage from './pages/CollectionPage'
+import CabinPage from './pages/CabinPage'
 import FishingPage from './pages/FishingPage'
 import InventoryPage from './pages/InventoryPage'
 import ShopPage from './pages/ShopPage'
@@ -20,7 +21,8 @@ export default function App() {
   const closeButtonRef = useRef(null)
   const { game, actions, notice, storageAvailable } = useGame()
   const pages = {
-    fishing: <FishingPage locationId={locationId} onLocationChange={setLocationId}/>,
+    fishing: <FishingPage locationId={locationId} onLocationChange={setLocationId} onOpenCabin={() => setPage('cabin')}/>,
+    cabin: <CabinPage onGoFishing={() => { setLocationId('willow-pond'); setPage('fishing') }}/>,
     inventory: <InventoryPage />,
     shop: <ShopPage location={getLocation(locationId)} />,
     collection: <CollectionPage />,
