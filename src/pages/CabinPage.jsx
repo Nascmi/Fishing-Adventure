@@ -1,7 +1,9 @@
 import FishArtwork from '../components/FishArtwork'
 import Icon from '../components/Icon'
 import { GAME_CONFIG } from '../data/config'
+import { achievements } from '../data/achievements'
 import { fish, getFish } from '../data/fish'
+import { getKeepsakeDesign } from '../data/keepsakes'
 import { locations } from '../data/locations'
 import { useGame } from '../hooks/useGame'
 import cabinImage from '../assets/locations/cabin.webp'
@@ -32,7 +34,7 @@ export default function CabinPage({ onGoFishing }) {
   const featuredFish = getFish(cabin.featuredFishId)
   const featuredSpecimen = cabin.specimens[cabin.featuredFishId]?.mounted
   const souvenir = locations.find((location) => location.id === cabin.souvenirLocationId)
-  const earnedKeepsakes = Object.keys(game.achievements)
+  const earnedKeepsakes = achievements.filter((achievement) => game.achievements[achievement.id])
 
   const displaySpecimen = (fishId) => {
     if (!isLodge) return actions.setCabinChoice('featuredFishId', fishId)
@@ -73,7 +75,7 @@ export default function CabinPage({ onGoFishing }) {
             {mountedFish && <FishArtwork fishId={mountedFish.id} name={mountedFish.name} className="lodge-fish-art"/>}
           </div>
         })}
-        <div className="lodge-keepsakes" aria-label={`${earnedKeepsakes.length} Angling Keepsakes displayed`}>{earnedKeepsakes.slice(0, 20).map((id) => <span key={id}><Icon name="keepsake" size={18}/></span>)}</div>
+        <div className="lodge-keepsakes" aria-label={`${earnedKeepsakes.length} Angling Keepsakes displayed`}>{earnedKeepsakes.slice(0, 20).map((achievement) => { const design = getKeepsakeDesign(achievement.id); return <span className={`material-${design.material}`} title={achievement.name} key={achievement.id}><Icon name={design.icon} size={18}/></span> })}</div>
       </section>
       <section className="lodge-story"><article><span>Legendary waters</span><strong>{legendaryCount} explored</strong><small>The lodge remains yours permanently.</small></article><article><span>Preserved displays</span><strong>{cabin.lodgeFeaturedFishIds.filter(Boolean).length} of 3 filled</strong><small>Choose any preserved Trophy or Amazing specimens.</small></article><article><span>Keepsake cabinet</span><strong>{earnedKeepsakes.length} earned</strong><small>Your Angling Keepsakes appear automatically.</small></article></section>
     </>}

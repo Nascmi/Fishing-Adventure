@@ -67,6 +67,8 @@ A saved weather schedule introduces a gentle three-to-five-minute shower after r
 
 Angling Keepsakes share the Collection screen with the Fish Journal and commemorate meaningful stories from ordinary play. They are permanent, offline, non-expiring, and award no coins or gameplay power. Visible keepsakes clearly explain their requirements; a small number of hidden keepsakes preserve legendary discoveries. Unlock feedback is calm and never interrupts casting or reeling. Progress records remain bounded to unique locations, phases, species, and completed-trip destinations rather than accumulating endless counters.
 
+Every keepsake has a distinct symbolic motif and belongs to a shared material family: bronze for beginnings, silver for exploration, colored enamel for time and place, gold for mastery, and dark metal with restrained accents for hidden legendary stories. Locked hidden keepsakes conceal their motif until earned. These designs appear consistently in the Collection and the Angler's Lodge cabinet.
+
 Fishing Adventure does not use a separate tutorial quest or optional-goals system. Keepsakes provide broad lifetime milestones, while journal completion, preferred activity periods, personal records, Amazing specimens, legendary encounters, and destination trips create natural player-directed reasons to return. A dedicated goals layer would duplicate those systems, add interface pressure, and risk turning peaceful fishing into a checklist. If future playtesting reveals a genuine need for more direction, consider only a simple player-chosen journal pin with no reward, deadline, or generated task.
 
 ## Catch Sharing

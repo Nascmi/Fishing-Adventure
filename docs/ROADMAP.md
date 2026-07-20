@@ -70,6 +70,7 @@ Phase 3 deepens atmosphere and gives players a peaceful sense of ownership throu
 - Migrated saves to version 13 with a bounded, persistent weather schedule that pauses outside active fishing.
 - Added trophy preservation that remembers the best eligible specimen per species, charges 100 coins for a first mount, and offers heavier upgrades for free.
 - Added the gameplay-earned Angler's Lodge with three preserved-fish displays and an automatic Angling Keepsake cabinet.
+- Prepared authored artwork, fixed-slot contracts, and deferred storefront IDs for the Workshop Cabin, Lakeside Cottage, and Coastal Shack.
 
 ### Planned
 

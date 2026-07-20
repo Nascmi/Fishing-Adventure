@@ -1,4 +1,9 @@
-const artwork = import.meta.glob('../assets/locations/*.{webp,png}', {
+const artwork = import.meta.glob([
+  '../assets/locations/*.{webp,png}',
+  '!../assets/locations/workshop-cabin.png',
+  '!../assets/locations/lakeside-cottage.png',
+  '!../assets/locations/coastal-shack.png',
+], {
   eager: true,
   query: '?url',
   import: 'default',

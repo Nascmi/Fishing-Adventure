@@ -1,0 +1,28 @@
+export const keepsakeDesigns = {
+  'first-cast': { icon: 'cast-ripple', material: 'bronze', motif: 'A line touching water for the first time' },
+  'first-story': { icon: 'fish-ripple', material: 'bronze', motif: 'A first fish above two quiet ripples' },
+  'fine-specimen': { icon: 'measured-fish', material: 'gold', motif: 'An exceptional fish beside a measuring mark' },
+  'familiar-waters': { icon: 'pond-reeds', material: 'enamel', motif: 'Home-water reeds and a sheltered pond' },
+  'gone-fishing': { icon: 'travel-case', material: 'bronze', motif: 'A packed travel case and fishing tag' },
+  'four-waters': { icon: 'five-waves', material: 'silver', motif: 'Five waters joined by a horizon' },
+  'three-days': { icon: 'three-suns', material: 'silver', motif: 'Three complete days beneath one line' },
+  'well-traveled': { icon: 'compass-fish', material: 'silver', motif: 'A fish crossing a compass rose' },
+  'around-clock': { icon: 'day-clock', material: 'enamel', motif: 'Four periods arranged around a clock' },
+  'early-riser': { icon: 'sunrise-water', material: 'enamel', motif: 'The first sun lifting over still water' },
+  'evening-rise': { icon: 'sunset-rise', material: 'copper', motif: 'A rising fish beneath the last sun' },
+  'under-stars': { icon: 'moon-fish', material: 'enamel', motif: 'A fish beneath a crescent and stars' },
+  'right-time': { icon: 'clock-compass', material: 'silver', motif: 'A clock hand aligned with a compass point' },
+  'field-notes': { icon: 'field-journal', material: 'bronze', motif: 'An open field journal and pencil' },
+  'local-naturalist': { icon: 'leaf-fish', material: 'silver', motif: 'A fish sheltered by a local leaf' },
+  'traveling-naturalist': { icon: 'globe-fish', material: 'gold', motif: 'A fish crossing a world of waters' },
+  'legendary-encounter': { icon: 'crown-fish', material: 'gold', motif: 'A legendary fish beneath a small crown' },
+  'one-for-stories': { icon: 'star-fish', material: 'gold', motif: 'An extraordinary fish framed by a story star' },
+  'old-pond-knows': { icon: 'whiskers-moon', material: 'legend', motif: 'Old whiskers beneath a pond moon' },
+  'king-river': { icon: 'salmon-sun', material: 'legend', motif: 'The river king meeting the morning sun' },
+  'copper-sunset': { icon: 'drum-sunset', material: 'legend-copper', motif: 'Copper scales holding the setting sun' },
+  'shadow-channel': { icon: 'channel-shadow', material: 'legend', motif: 'A long shadow beneath a bright channel' },
+  'gold-horizon': { icon: 'tuna-horizon', material: 'legend-gold', motif: 'A golden fin crossing the first horizon' },
+  'ten-thousand-casts': { icon: 'muskie-mark', material: 'legend', motif: 'A long muskellunge and a single patient cast' },
+}
+
+export const getKeepsakeDesign = (id) => keepsakeDesigns[id] || { icon: 'keepsake', material: 'bronze', motif: 'An angling story worth keeping' }

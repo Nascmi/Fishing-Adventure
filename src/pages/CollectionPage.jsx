@@ -5,6 +5,7 @@ import { fish } from '../data/fish'
 import { useGame } from '../hooks/useGame'
 import FishJournalPage from './FishJournalPage'
 import { achievements } from '../data/achievements'
+import { getKeepsakeDesign } from '../data/keepsakes'
 import Icon from '../components/Icon'
 
 export default function CollectionPage() {
@@ -33,8 +34,9 @@ export default function CollectionPage() {
       <div className="keepsake-grid">{achievements.map((achievement) => {
         const record = game.achievements[achievement.id]
         const hidden = achievement.hidden && !record
+        const design = getKeepsakeDesign(achievement.id)
         return <article className={`keepsake-card ${record ? 'earned' : 'locked'}`} key={achievement.id}>
-          <div className="keepsake-medallion"><Icon name="keepsake" size={31}/></div>
+          <div className={`keepsake-medallion material-${record ? design.material : 'locked'}`} role="img" aria-label={hidden ? 'Undiscovered keepsake design' : design.motif}><Icon name={hidden ? 'keepsake' : design.icon} size={31}/></div>
           <div><span>{record ? `Earned ${new Date(record.unlockedAt).toLocaleDateString()}` : 'Not yet earned'}</span><h3>{hidden ? 'Hidden Keepsake' : achievement.name}</h3><p>{hidden ? 'Some fishing stories reveal themselves in their own time.' : record && achievement.unlockedDescription ? achievement.unlockedDescription : achievement.description}</p>{record && <blockquote>{achievement.flavor}</blockquote>}</div>
         </article>
       })}</div>

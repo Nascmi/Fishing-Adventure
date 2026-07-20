@@ -18,6 +18,8 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Added
 
+- Added unique symbolic designs and bronze, silver, enamel, gold, copper, and dark-legend materials for all 24 Angling Keepsakes in both the Collection and lodge cabinet.
+- Prepared production artwork and dormant catalog definitions for the Workshop Cabin, Lakeside Cottage, and Coastal Shack without exposing unavailable purchases.
 - Added the earned Angler's Lodge, permanently unlocked by catching legendary fish at four distinct locations.
 - Added three preserved-specimen displays, an automatic Angling Keepsake cabinet, cabin switching, and purpose-built lodge artwork.
 - Migrated saves to version 15 with bounded legendary-location progress, retroactive journal evidence, and validated lodge display choices.

@@ -75,13 +75,15 @@ The Angler's Lodge specializes in accomplishments:
 
 It is earned through play and must not be purchasable as a shortcut. This keeps the game's central story and most meaningful cabin unlock independent of cosmetic spending.
 
-## Specialized Future Cabins
+## Prepared Cabin Catalog
 
-Future cabins provide different kinds of expression rather than repairing limitations in the starter cabin:
+Three optional cabins have production-ready environment art, stable catalog IDs, and authored display contracts. They remain unavailable in the playable interface until a real platform storefront and purchase-restoration flow exist.
 
-- **Workshop Cabin:** rods, reels, lures, and tackle displays.
-- **Lakeside Cottage:** furniture, rugs, lighting, and paintings of discovered locations.
-- **Coastal Shack:** Gulf souvenirs, nautical décor, and boat-related displays.
+- **Workshop Cabin (`cabin.workshop`):** a five-rod rack, workbench tackle display, and glass-front tackle cabinet.
+- **Lakeside Cottage (`cabin.lakeside_cottage`):** two location paintings, one rug treatment, and one travel display.
+- **Coastal Shack (`cabin.coastal_shack`):** a Gulf souvenir shelf, nautical shadowbox, model-boat table, and dock-keepsake rail.
+
+These identifiers are preparatory only. No price, ownership entitlement, purchase button, or store availability should be shown until the app has a supported storefront. Platform-specific product configuration may map to these stable IDs later.
 
 Location paintings are earned records of exploration or completion. Cabin styles may provide different frames and wall arrangements, but purchasing a cabin must not purchase the underlying exploration accomplishment.
 
