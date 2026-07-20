@@ -1,6 +1,6 @@
 # Save System
 
-The current save schema is version 15.
+The current save schema is version 16.
 
 ## Current Save Data
 
@@ -14,6 +14,7 @@ The current save schema is version 15.
 - Angling Keepsake unlock dates and bounded progress records for locations, day phases, preferred-time catches, and completed trips
 - One bounded Trophy or Amazing candidate per species, including its current preserved-mount snapshot
 - The bounded set of locations where a legendary fish has been caught, cabin style, and three Angler's Lodge display choices
+- Bounded ownership sets for earned location paintings, Master Angler frames, upgraded souvenirs, Amazing photographs, legendary miniatures, and equipment plaques
 
 Inventory catches include their generated specimen-size class. Older catches are classified from their saved weight during migration.
 
@@ -33,6 +34,7 @@ Inventory catches include their generated specimen-size class. Older catches are
 - Version 13 added the bounded Passing Rain schedule.
 - Version 14 added preserved specimens and reconstructs eligible candidates from Trophy and Amazing catches still in inventory.
 - Version 15 added permanent Angler's Lodge unlock progress, reconstructs provable locations from legendary journal entries, and validates three specimen display slots.
+- Version 16 added permanent painting, Master Angler frame, upgraded souvenir, Amazing photograph, legendary miniature, and equipment-plaque ownership with retroactive reconstruction from existing records.
 
 ## Rules
 

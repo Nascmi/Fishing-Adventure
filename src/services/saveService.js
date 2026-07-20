@@ -4,10 +4,11 @@ import { getRodsForLocation, getStarterRod, rodLocationIds } from '../data/rods'
 import { classifyStoredCatch, getWeightTier } from '../utils/valueCalculator'
 import { achievements as achievementDefinitions, unlockAchievements } from '../data/achievements'
 import { locations } from '../data/locations'
+import { unlockLocationCosmetics } from '../data/locationPaintings'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 15
+const CURRENT_VERSION = 16
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
 const defaultCabin = () => ({
   styleId: 'starter',
@@ -44,6 +45,12 @@ export const newGame = () => ({
     peakMoments: [],
     completedTrips: [],
     legendaryLocations: [],
+    paintingsEarned: [],
+    masterFramesEarned: [],
+    upgradedSouvenirs: [],
+    equipmentPlaques: [],
+    amazingPhotos: [],
+    legendaryMiniatures: [],
     amazingLegendaryCaught: false,
   },
   settings: { reactionWindow: 'relaxed', soundEnabled: true, hapticsEnabled: true, ambienceEnabled: false },
@@ -147,6 +154,10 @@ function migrateSave(raw) {
     migrated.cabin = { ...defaultCabin(), ...(migrated.cabin || {}) }
     migrated.achievementProgress = { ...(migrated.achievementProgress || {}), legendaryLocations: [] }
     migrated.version = 15
+  }
+  if (migrated.version < 16) {
+    migrated.achievementProgress = { ...(migrated.achievementProgress || {}), paintingsEarned: [], masterFramesEarned: [], upgradedSouvenirs: [], equipmentPlaques: [], amazingPhotos: [], legendaryMiniatures: [] }
+    migrated.version = 16
   }
   return migrated
 }
@@ -313,6 +324,12 @@ export function validateSave(input) {
       peakMoments,
       completedTrips: validList(progress.completedTrips, locationIds).filter((id) => id !== 'willow-pond'),
       legendaryLocations,
+      paintingsEarned: validList(progress.paintingsEarned, locationIds),
+      masterFramesEarned: validList(progress.masterFramesEarned, locationIds),
+      upgradedSouvenirs: validList(progress.upgradedSouvenirs, locationIds),
+      equipmentPlaques: validList(progress.equipmentPlaques, locationIds),
+      amazingPhotos: validList(progress.amazingPhotos, validFish),
+      legendaryMiniatures: validList(progress.legendaryMiniatures, validFish),
       amazingLegendaryCaught: progress.amazingLegendaryCaught === true || inventory.some((item) => item.rarity === 'legendary' && item.sizeTier === 'amazing'),
     },
     settings: {
@@ -330,7 +347,7 @@ export function validateSave(input) {
       escaped: Math.floor(validNumber(stats.escaped, 0)),
     },
   }
-  return unlockAchievements(validated).state
+  return unlockAchievements(unlockLocationCosmetics(validated)).state
 }
 
 export function loadGame() {

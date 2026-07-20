@@ -71,6 +71,7 @@ Phase 3 deepens atmosphere and gives players a peaceful sense of ownership throu
 - Added trophy preservation that remembers the best eligible specimen per species, charges 100 coins for a first mount, and offers heavier upgrades for free.
 - Added the gameplay-earned Angler's Lodge with three preserved-fish displays and an automatic Angling Keepsake cabinet.
 - Prepared authored artwork, fixed-slot contracts, and deferred storefront IDs for the Workshop Cabin, Lakeside Cottage, and Coastal Shack.
+- Added five earned location paintings and permanent Master Angler frames for Trophy-or-better mastery of every species in a location.
 
 ### Planned
 

@@ -22,6 +22,9 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Added
 
+- Added permanent earned location paintings for full Backyard Pond discovery and completed destination charters, plus gold Master Angler frames for Trophy-or-better catches of every local species.
+- Added upgraded travel souvenirs for completed location journals, Amazing-catch photographs, legendary fish miniatures, full-equipment-family plaques, and nine included rug, frame, and timber-finish options.
+- Migrated saves to version 16 with bounded painting and Master Angler frame ownership, including retroactive unlocks from existing records.
 - Added quiet collection-card recognition: a gold frame at ten catches and a Master Catch seal for Trophy-sized records.
 - Added locally generated cabin share cards with native mobile sharing and an image-download fallback for the Starter Cabin and Angler's Lodge.
 - Added unique symbolic designs and bronze, silver, enamel, gold, copper, and dark-legend materials for all 24 Angling Keepsakes in both the Collection and lodge cabinet.

@@ -5,6 +5,7 @@ import { GAME_CONFIG } from '../data/config'
 import { getLocation } from '../data/locations'
 import { achievements as achievementDefinitions, unlockAchievements } from '../data/achievements'
 import { getPreferredPhases } from '../utils/fishingEngine'
+import { unlockLocationCosmetics } from '../data/locationPaintings'
 
 const GameContext = createContext(null)
 const randomBetween = (minimum, maximum) => Math.round(minimum + Math.random() * (maximum - minimum))
@@ -111,7 +112,7 @@ export function GameProvider({ children }) {
               },
             } : current.cabin,
           }
-          return unlockAchievements(next).state
+          return unlockAchievements(unlockLocationCosmetics(next)).state
         }),
       sell: (id) =>
         setGame((current) => {
@@ -148,14 +149,14 @@ export function GameProvider({ children }) {
           const gear = current.gearByLocation[locationId]
           if (!gear || rod.id !== id || rod.locationId !== locationId || gear.ownedRods.includes(id) || current.coins < rod.price) return current
           if (rod.previousId && !gear.ownedRods.includes(rod.previousId)) return current
-          return {
+          return unlockLocationCosmetics({
             ...current,
             coins: current.coins - rod.price,
             gearByLocation: {
               ...current.gearByLocation,
               [locationId]: { ...gear, ownedRods: [...gear.ownedRods, id] },
             },
-          }
+          })
         }),
       equipRod: (id, locationId) =>
         setGame((current) =>
@@ -211,7 +212,7 @@ export function GameProvider({ children }) {
               completedTrips: [...new Set([...current.achievementProgress.completedTrips, trip.locationId])],
             },
           }
-          return remainingMs ? next : unlockAchievements(next).state
+          return remainingMs ? next : unlockAchievements(unlockLocationCosmetics(next)).state
         }),
       skipDayPhase: (locationId) =>
         setGame((current) => {
@@ -237,7 +238,7 @@ export function GameProvider({ children }) {
               completedTrips: [...new Set([...current.achievementProgress.completedTrips, trip.locationId])],
             },
           }
-          return remainingMs ? next : unlockAchievements(next).state
+          return remainingMs ? next : unlockAchievements(unlockLocationCosmetics(next)).state
         }),
       endTrip: () => setGame((current) => ({ ...current, dayCycle: { ...current.dayCycle, activeTrip: null } })),
       setReactionWindow: (reactionWindow) =>

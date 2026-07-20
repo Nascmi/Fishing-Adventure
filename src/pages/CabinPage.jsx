@@ -6,6 +6,8 @@ import { achievements } from '../data/achievements'
 import { fish, getFish } from '../data/fish'
 import { getKeepsakeDesign } from '../data/keepsakes'
 import { locations } from '../data/locations'
+import { locationPaintings } from '../data/locationPaintings'
+import { includedCabinCosmetics } from '../data/cabinCatalog'
 import { useGame } from '../hooks/useGame'
 import { createCabinShareImage } from '../utils/cabinShareImage'
 import cabinImage from '../assets/locations/cabin.webp'
@@ -40,6 +42,9 @@ export default function CabinPage({ onGoFishing }) {
   const earnedKeepsakeKey = earnedKeepsakes.map((achievement) => achievement.id).join('|')
   const [shareImage, setShareImage] = useState(null)
   const [shareStatus, setShareStatus] = useState('')
+  const legendaryFish = fish.filter((item) => item.rarity === 'legendary')
+  const amazingPhotoFish = fish.filter((item) => game.achievementProgress.amazingPhotos.includes(item.id))
+  const earnedCabinCollectibles = game.achievementProgress.upgradedSouvenirs.length + game.achievementProgress.equipmentPlaques.length + game.achievementProgress.amazingPhotos.length + game.achievementProgress.legendaryMiniatures.length
 
   useEffect(() => {
     let cancelled = false
@@ -136,6 +141,36 @@ export default function CabinPage({ onGoFishing }) {
         <label>Travel souvenir<select value={cabin.souvenirLocationId} onChange={(event) => actions.setCabinChoice('souvenirLocationId', event.target.value)}>{visitedLocations.map((location) => <option value={location.id} key={location.id}>{location.name}</option>)}</select></label>
       </> : cabin.lodgeFeaturedFishIds.map((fishId, index) => <label key={index}>Mount {index + 1}<select value={fishId || ''} onChange={(event) => actions.setLodgeDisplay(index, event.target.value || null)}><option value="">Empty mount</option>{preservedFish.map(({ fish: item, record }) => <option value={item.id} disabled={cabin.lodgeFeaturedFishIds.includes(item.id) && fishId !== item.id} key={item.id}>{item.name} · {record.mounted.weight} lb</option>)}</select></label>)}
     </section>
+
+    <section className="painting-gallery" aria-labelledby="painting-gallery-title">
+      <div><span className="eyebrow">Earned cabin cosmetics</span><h3 id="painting-gallery-title">Location paintings</h3><p>Complete each water's story to earn its painting. Catch a Trophy or Amazing specimen of every local species to earn the permanent Master Angler frame.</p></div>
+      <div className="painting-grid">{locationPaintings.map((painting) => {
+        const earned = game.achievementProgress.paintingsEarned.includes(painting.locationId)
+        const mastered = game.achievementProgress.masterFramesEarned.includes(painting.locationId)
+        return <article className={`painting-card ${earned ? 'earned' : 'locked'} ${mastered ? 'mastered' : ''}`} key={painting.id}>
+          <div className="painting-frame"><img src={painting.artwork} alt={earned ? `${painting.name}, an earned landscape` : ''}/>{mastered && <span><Icon name="crown-fish" size={16}/>Master Angler</span>}</div>
+          <div><span>{mastered ? 'Master Angler frame' : earned ? 'Painting earned' : 'Not yet earned'}</span><h4>{earned ? painting.name : 'Unfinished journey'}</h4><p>{painting.description}</p></div>
+        </article>
+      })}</div>
+    </section>
+
+    <details className="cabin-collection">
+      <summary><span><small>Earned and included details</small><strong>Cabin Collection</strong></span><b>{earnedCabinCollectibles} earned</b></summary>
+      <div className="cabin-collection-body">
+        <section><h4>Upgraded travel souvenirs</h4><p>Complete a location's full species journal to earn its finished souvenir.</p><div className="souvenir-collection-grid">{locations.map((location) => {
+          const earned = game.achievementProgress.upgradedSouvenirs.includes(location.id)
+          return <article className={earned ? 'earned' : 'locked'} key={location.id}><div>{earned && <img src={souvenirArtwork[location.id]} alt=""/>}</div><span>{earned ? 'Journal complete' : 'Undiscovered'}</span><strong>{earned ? `${location.name} keepsake` : 'Unfinished souvenir'}</strong></article>
+        })}</div></section>
+
+        <section><h4>Amazing-catch photographs</h4><p>Every species with a recorded Amazing specimen earns a permanent cabin photograph.</p>{amazingPhotoFish.length ? <div className="photo-collection-grid">{amazingPhotoFish.map((item) => { const specimen = cabin.specimens[item.id]; const location = locations.find((entry) => entry.id === specimen.locationId); return <article key={item.id} style={{ '--photo-art': `url("${location?.image}")` }}><FishArtwork fishId={item.id} name={item.name} className="photo-fish"/><span>Amazing · {specimen.weight} lb</span><strong>{item.name}</strong><small>{location?.name}</small></article> })}</div> : <div className="cabin-collection-empty">Your first Amazing specimen will develop into a photograph here.</div>}</section>
+
+        <section><h4>Legendary fish miniatures</h4><p>Discover a legendary species to earn its small handcrafted display figure.</p><div className="miniature-grid">{legendaryFish.map((item) => { const earned = game.achievementProgress.legendaryMiniatures.includes(item.id); return <article className={earned ? 'earned' : 'locked'} key={item.id}><FishArtwork fishId={item.id} name={earned ? item.name : undefined} hidden={!earned} className="miniature-fish"/><strong>{earned ? item.name : 'Unknown legend'}</strong></article> })}</div></section>
+
+        <section><h4>Location-mastery equipment plaques</h4><p>Own every rod in a location's equipment family to earn its plaque.</p><div className="plaque-grid">{locations.map((location) => { const earned = game.achievementProgress.equipmentPlaques.includes(location.id); return <article className={earned ? 'earned' : 'locked'} key={location.id}><Icon name="fishing" size={25}/><div><span>{earned ? 'Equipment family complete' : 'Still outfitting'}</span><strong>{location.name}</strong></div></article> })}</div></section>
+
+        <section><h4>Included style collection</h4><p>These foundational rugs, frames, and timber finishes are included for future cabins with compatible authored slots.</p><div className="included-style-groups">{Object.entries(includedCabinCosmetics).map(([group, options]) => <div key={group}><span>{group}</span>{options.map((option) => <article key={option.id}><i style={{ background: `linear-gradient(135deg,${option.colors.join(',')})` }}/><strong>{option.name}</strong></article>)}</div>)}</div></section>
+      </div>
+    </details>
 
     <section className="specimen-workshop" aria-labelledby="specimen-title">
       <div><span className="eyebrow">Trophy preservation</span><h3 id="specimen-title">Exceptional catches</h3><p>The best Trophy or Amazing catch of each species is remembered here, even after it is sold.</p></div>

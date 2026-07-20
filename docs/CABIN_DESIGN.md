@@ -87,6 +87,18 @@ These identifiers are preparatory only. No price, ownership entitlement, purchas
 
 Location paintings are earned records of exploration or completion. Cabin styles may provide different frames and wall arrangements, but purchasing a cabin must not purchase the underlying exploration accomplishment.
 
+Backyard Pond's painting is earned by discovering every local species. Each destination painting is earned by completing a full three-day charter there. Catching a Trophy or Amazing specimen of every species in a location permanently upgrades that location's painting to a gold **Master Angler frame**. Later population changes never revoke an earned painting or frame.
+
+The broader Cabin Collection recognizes existing play without adding currencies or generated tasks:
+
+- completing a location's full species journal earns its upgraded travel souvenir;
+- every recorded Amazing specimen earns a local catch photograph;
+- discovering a legendary species earns its handcrafted miniature;
+- owning a location's complete rod family earns its equipment plaque; and
+- three rugs, three display-frame treatments, and three timber finishes are included for compatible authored slots.
+
+All earned artifacts remain permanent. Included style options provide variety without making any cabin look deliberately unfinished.
+
 A **Master Angler's Lodge** is a reserved future possibility if the game expands to roughly ten or more locations. Its name, requirements, and features are not approved until the expanded game has enough meaningful legendary encounters to support it.
 
 ## Why Specialization

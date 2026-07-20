@@ -46,3 +46,21 @@ export const cabinCatalog = [
 ]
 
 export const getCabinDefinition = (id) => cabinCatalog.find((cabin) => cabin.id === id)
+
+export const includedCabinCosmetics = {
+  rugs: [
+    { id: 'rug-braided-earth', name: 'Braided Earth', colors: ['#765238', '#b58a5b', '#4d6a57'] },
+    { id: 'rug-river-blue', name: 'River Blue', colors: ['#496d76', '#9bb5ae', '#d8c99d'] },
+    { id: 'rug-pine-needle', name: 'Pine Needle', colors: ['#355847', '#74866a', '#bd9b63'] },
+  ],
+  frames: [
+    { id: 'frame-walnut', name: 'Dark Walnut', colors: ['#4a2f20', '#8b6040'] },
+    { id: 'frame-aged-brass', name: 'Aged Brass', colors: ['#806327', '#d1af59'] },
+    { id: 'frame-weathered-pine', name: 'Weathered Pine', colors: ['#8b7354', '#c4aa7a'] },
+  ],
+  finishes: [
+    { id: 'finish-natural', name: 'Natural Timber', colors: ['#765438', '#a98159'] },
+    { id: 'finish-honey', name: 'Honey Pine', colors: ['#9b6c32', '#d0a15a'] },
+    { id: 'finish-smoke', name: 'Smoked Oak', colors: ['#3f3932', '#75695c'] },
+  ],
+}
