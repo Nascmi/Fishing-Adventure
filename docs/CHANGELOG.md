@@ -18,13 +18,14 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Fixed
 
+- Moved cabin Share and Go Fishing actions into a full-width mobile row so they no longer collide with the floating settings button.
 - Prevented wide fish illustrations from overflowing and being clipped inside mobile Fish Journal cards.
 
 ### Added
 
 - Defined the dormant $4.99 Lifetime Charter License, preserving first-charter progression while waiving repeat fees at completed destinations.
 - Added an earned-coin Trading Post alongside the Rod Shop with three permanent cabin purchases and no gameplay power.
-- Added the 25,000-coin Riverstone Cabin, 60,000-coin Cedar Hideaway, and 125,000-coin Captain's Retreat with original interiors and share-card support.
+- Added the 25,000-coin Riverstone Cabin, 50,000-coin Cedar Hideaway, and 75,000-coin Captain's Retreat with original interiors and share-card support.
 - Added authored customization-hook counts to every purchasable cabin listing: three for Riverstone, four for Cedar Hideaway, and seven for Captain's Retreat.
 - Restored twelve planned decor items to the Trading Post as clearly disabled previews until cabin placement controls are implemented.
 - Migrated saves to version 17 with validated permanent Trading Post ownership and equipped-cabin recovery.

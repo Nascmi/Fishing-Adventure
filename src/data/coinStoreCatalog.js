@@ -1,8 +1,8 @@
 // Permanent earned-coin goods sold by the in-game Trading Post.
 export const coinStoreItems = [
   { id: 'trading-post.cabin-riverstone', name: 'Riverstone Cabin', category: 'cabin', price: 25000, tier: 'fine', cabinId: 'riverstone-cabin', description: 'A comfortable riverside cabin with a fieldstone hearth and handmade shelves.' },
-  { id: 'trading-post.cabin-cedar-hideaway', name: 'Cedar Hideaway', category: 'cabin', price: 60000, tier: 'prestige', cabinId: 'cedar-hideaway', description: 'A warm cedar retreat surrounded by quiet pine woods.' },
-  { id: 'trading-post.cabin-captains-retreat', name: "Captain's Retreat", category: 'cabin', price: 125000, tier: 'legacy', cabinId: 'captains-retreat', description: 'A mahogany-and-brass lake retreat for an angler with stories to spare.' },
+  { id: 'trading-post.cabin-cedar-hideaway', name: 'Cedar Hideaway', category: 'cabin', price: 50000, tier: 'prestige', cabinId: 'cedar-hideaway', description: 'A warm cedar retreat surrounded by quiet pine woods.' },
+  { id: 'trading-post.cabin-captains-retreat', name: "Captain's Retreat", category: 'cabin', price: 75000, tier: 'prestige', cabinId: 'captains-retreat', description: 'A mahogany-and-brass lake retreat for an angler with stories to spare.' },
 ]
 
 // These items retain stable IDs and target prices, but stay out of the shop
