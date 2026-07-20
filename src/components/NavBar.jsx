@@ -3,7 +3,7 @@ import Icon from './Icon'
 const items = [
   ['fishing', 'Fishing'],
   ['inventory', 'Inventory'],
-  ['shop', 'Rod Shop'],
+  ['shop', 'Shop'],
   ['collection', 'Collection'],
   ['trips', 'Trips'],
 ]

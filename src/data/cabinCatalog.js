@@ -13,6 +13,27 @@ export const cabinCatalog = [
     slots: [{ id: 'specimen-mounts', type: 'specimen', capacity: 3 }, { id: 'keepsake-cabinet', type: 'keepsake', capacity: 20, automatic: true }],
   },
   {
+    id: 'riverstone-cabin', name: 'Riverstone Cabin', artworkKey: 'riverstone-cabin.jpg',
+    description: 'A comfortable riverside cabin with a fieldstone hearth and handmade shelves.',
+    acquisition: { type: 'coin-store', productId: 'trading-post.cabin-riverstone' },
+    customizationHooks: ['hearth-frame', 'river-shelf', 'braided-rug'],
+    slots: [{ id: 'featured-specimen', type: 'specimen', capacity: 1 }, { id: 'travel-souvenir', type: 'souvenir', capacity: 1 }],
+  },
+  {
+    id: 'cedar-hideaway', name: 'Cedar Hideaway', artworkKey: 'cedar-hideaway.jpg',
+    description: 'A warm cedar retreat surrounded by quiet pine woods.',
+    acquisition: { type: 'coin-store', productId: 'trading-post.cabin-cedar-hideaway' },
+    customizationHooks: ['left-gallery-frame', 'hearth-gallery-frame', 'right-gallery-frame', 'forest-rug'],
+    slots: [{ id: 'featured-specimen', type: 'specimen', capacity: 1 }, { id: 'travel-souvenir', type: 'souvenir', capacity: 1 }],
+  },
+  {
+    id: 'captains-retreat', name: "Captain's Retreat", artworkKey: 'captains-retreat.jpg',
+    description: 'A mahogany-and-brass lake retreat for an angler with stories to spare.',
+    acquisition: { type: 'coin-store', productId: 'trading-post.cabin-captains-retreat' },
+    customizationHooks: ['captains-frame', 'left-upper-shelf', 'left-lower-shelf', 'right-upper-shelf', 'right-lower-shelf', 'navy-rug', 'mahogany-finish'],
+    slots: [{ id: 'featured-specimen', type: 'specimen', capacity: 1 }, { id: 'travel-souvenir', type: 'souvenir', capacity: 1 }],
+  },
+  {
     id: 'workshop-cabin', name: 'Workshop Cabin', artworkKey: 'workshop-cabin.png',
     description: 'A practical retreat for favorite rods, reels, lures, and tackle.',
     acquisition: { type: 'store', availability: 'deferred', productId: 'cabin.workshop' },

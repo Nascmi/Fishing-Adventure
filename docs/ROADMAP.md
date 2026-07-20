@@ -72,12 +72,14 @@ Phase 3 deepens atmosphere and gives players a peaceful sense of ownership throu
 - Added the gameplay-earned Angler's Lodge with three preserved-fish displays and an automatic Angling Keepsake cabinet.
 - Prepared authored artwork, fixed-slot contracts, and deferred storefront IDs for the Workshop Cabin, Lakeside Cottage, and Coastal Shack.
 - Added five earned location paintings and permanent Master Angler frames for Trophy-or-better mastery of every species in a location.
+- Added upgraded souvenirs, Amazing photographs, legendary miniatures, equipment plaques, and included authored-slot palettes.
+- Prepared a dormant non-consumable store catalog with stable product IDs, tentative prices, restoration requirements, and no live storefront integration.
+- Defined a $4.99 Lifetime Charter License that waives repeat fees only after each destination's first full charter is completed.
+- Added an earned-coin Trading Post with three complete permanent cabins as a late-game economy sink, while keeping twelve decor concepts hidden until their display slots are implemented.
 
-### Planned
+### Phase Status
 
-- Specialized future cabin styles with purpose-built slots: equipment in the Workshop Cabin, furniture and location paintings in the Lakeside Cottage, and nautical or boat décor in the Coastal Shack
-- Fixed-slot cabin customization designed for simple mobile controls, reliable visual composition, and future cosmetic themes
-- A balanced mix of included, earned, and optional purchased cosmetics with permanent ownership, clear prices, and no artificial scarcity
+Phase 3 is complete. Future real-money commerce work is platform integration rather than additional Phase 3 game design: configure platform products, implement authoritative ownership and restoration, connect prepared purchases to compatible slots, and complete platform review. The earned-coin Trading Post is live; its prices and catalog breadth should continue to be tuned from playtest income.
 
 ## Phase 4 — On the Water
 

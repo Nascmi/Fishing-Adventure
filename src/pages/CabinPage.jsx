@@ -7,11 +7,15 @@ import { fish, getFish } from '../data/fish'
 import { getKeepsakeDesign } from '../data/keepsakes'
 import { locations } from '../data/locations'
 import { locationPaintings } from '../data/locationPaintings'
-import { includedCabinCosmetics } from '../data/cabinCatalog'
+import { cabinCatalog, getCabinDefinition, includedCabinCosmetics } from '../data/cabinCatalog'
+import { getCoinStoreItem } from '../data/coinStoreCatalog'
 import { useGame } from '../hooks/useGame'
 import { createCabinShareImage } from '../utils/cabinShareImage'
 import cabinImage from '../assets/locations/cabin.webp'
 import lodgeImage from '../assets/locations/angler-lodge.png'
+import riverstoneCabin from '../assets/locations/riverstone-cabin.jpg'
+import cedarHideaway from '../assets/locations/cedar-hideaway.jpg'
+import captainsRetreat from '../assets/locations/captains-retreat.jpg'
 import willowSouvenir from '../assets/cabin/willow.webp'
 import pineSouvenir from '../assets/cabin/pine.webp'
 import greatSouvenir from '../assets/cabin/great.webp'
@@ -26,6 +30,14 @@ const souvenirArtwork = {
   'open-gulf': openSouvenir,
 }
 
+const cabinArtwork = {
+  starter: cabinImage,
+  'angler-lodge': lodgeImage,
+  'riverstone-cabin': riverstoneCabin,
+  'cedar-hideaway': cedarHideaway,
+  'captains-retreat': captainsRetreat,
+}
+
 export default function CabinPage({ onGoFishing }) {
   const { game, actions } = useGame()
   const cabin = game.cabin
@@ -35,6 +47,14 @@ export default function CabinPage({ onGoFishing }) {
   const legendaryCount = game.achievementProgress.legendaryLocations.length
   const lodgeUnlocked = legendaryCount >= 4
   const isLodge = cabin.styleId === 'angler-lodge' && lodgeUnlocked
+  const activeCabin = getCabinDefinition(cabin.styleId) || getCabinDefinition('starter')
+  const activeCabinImage = cabinArtwork[activeCabin.id] || cabinImage
+  const cabinChoices = cabinCatalog.filter((definition) => {
+    if (definition.id === 'starter') return true
+    if (definition.id === 'angler-lodge') return lodgeUnlocked
+    if (definition.acquisition.type !== 'coin-store') return false
+    return game.coinStore.ownedItemIds.includes(definition.acquisition.productId)
+  })
   const featuredFish = getFish(cabin.featuredFishId)
   const featuredSpecimen = cabin.specimens[cabin.featuredFishId]?.mounted
   const souvenir = locations.find((location) => location.id === cabin.souvenirLocationId)
@@ -53,20 +73,20 @@ export default function CabinPage({ onGoFishing }) {
     const displayIds = isLodge ? cabin.lodgeFeaturedFishIds : [cabin.featuredFishId]
     const fishDisplays = displayIds.map((fishId) => fishId ? { fish: getFish(fishId), specimen: cabin.specimens[fishId]?.mounted } : null)
     createCabinShareImage({
-      background: isLodge ? lodgeImage : cabinImage,
-      cabinName: isLodge ? "Angler's Lodge" : 'Starter Cabin',
+      background: activeCabinImage,
+      cabinName: activeCabin.name,
       fishDisplays,
       souvenir: !isLodge && souvenir ? souvenirArtwork[souvenir.id] : null,
       keepsakes: earnedKeepsakes.map((achievement) => getKeepsakeDesign(achievement.id)),
       isLodge,
     }).then((blob) => { if (!cancelled) setShareImage(blob) }).catch(() => { if (!cancelled) setShareStatus('Share image unavailable') })
     return () => { cancelled = true }
-  }, [cabin.featuredFishId, cabin.lodgeFeaturedFishIds, cabin.specimens, earnedKeepsakeKey, isLodge, souvenir])
+  }, [activeCabin.name, activeCabinImage, cabin.featuredFishId, cabin.lodgeFeaturedFishIds, cabin.specimens, earnedKeepsakeKey, isLodge, souvenir])
 
   const shareCabin = async () => {
     if (!shareImage) return
-    const cabinName = isLodge ? "Angler's Lodge" : 'Starter Cabin'
-    const filename = `fishing-adventure-${isLodge ? 'anglers-lodge' : 'starter-cabin'}.png`
+    const cabinName = activeCabin.name
+    const filename = `fishing-adventure-${activeCabin.id}.png`
     const file = typeof File === 'function' ? new File([shareImage], filename, { type: 'image/png' }) : null
     const shareData = file ? { files: [file], title: `My ${cabinName}`, text: `Take a look at my ${cabinName} in Fishing Adventure!` } : null
     try {
@@ -98,18 +118,19 @@ export default function CabinPage({ onGoFishing }) {
 
   return <main className="cabin-page">
     <div className="cabin-heading">
-      <div><span className="eyebrow">Backyard Pond</span><h2>{isLodge ? "Angler's Lodge" : 'Your Cabin'}</h2><p>{isLodge ? 'A place earned through legendary waters.' : 'A humble place for the stories you bring home.'}</p></div>
+      <div><span className="eyebrow">Backyard Pond</span><h2>{activeCabin.name}</h2><p>{activeCabin.description}</p></div>
       <div className="cabin-heading-actions"><button type="button" className="cabin-share-button" disabled={!shareImage} onClick={shareCabin}><Icon name="share" size={17}/>{shareImage ? 'Share cabin' : 'Preparing…'}</button><button type="button" className="secondary-button" onClick={onGoFishing}>Go fishing</button></div>
     </div>
     {shareStatus && <p className="cabin-share-status" role="status">{shareStatus}</p>}
 
     <section className="cabin-style-picker" aria-label="Cabin style">
-      <button type="button" className={!isLodge ? 'selected' : ''} onClick={() => actions.setCabinStyle('starter')}><span>Included</span><strong>Starter Cabin</strong></button>
-      <button type="button" className={isLodge ? 'selected' : ''} disabled={!lodgeUnlocked} onClick={() => actions.setCabinStyle('angler-lodge')}><span>{lodgeUnlocked ? 'Earned' : `${legendaryCount} of 4 legendary waters`}</span><strong>Angler's Lodge</strong></button>
+      {cabinChoices.map((definition) => <button type="button" className={cabin.styleId === definition.id ? 'selected' : ''} onClick={() => actions.setCabinStyle(definition.id)} key={definition.id}><span>{definition.acquisition.type === 'included' ? 'Included' : definition.acquisition.type === 'earned' ? 'Earned' : 'Trading Post'}</span><strong>{definition.name}</strong></button>)}
+      {!lodgeUnlocked && <button type="button" disabled><span>{legendaryCount} of 4 legendary waters</span><strong>Angler's Lodge</strong></button>}
+      {cabinCatalog.filter((definition) => definition.acquisition.type === 'coin-store' && !game.coinStore.ownedItemIds.includes(definition.acquisition.productId)).map((definition) => <button type="button" disabled key={definition.id}><span>{getCoinStoreItem(definition.acquisition.productId)?.price.toLocaleString()} coins · Shop</span><strong>{definition.name}</strong></button>)}
     </section>
 
     {!isLodge ? <>
-      <section className="cabin-scene" style={{ '--cabin-art': `url("${cabinImage}")` }} aria-label="A humble, lived-in fishing cabin">
+      <section className={`cabin-scene cabin-${activeCabin.id}`} style={{ '--cabin-art': `url("${activeCabinImage}")` }} aria-label={activeCabin.description}>
         <div className="cabin-featured" aria-label={featuredFish ? `Preserved catch: ${featuredFish.name}` : 'Empty preserved catch mount'}>
           {featuredFish ? <div className={`cabin-mount size-${featuredSpecimen.sizeTier}`}><FishArtwork fishId={featuredFish.id} name={featuredFish.name} className="cabin-fish-art"/></div> : <span>Ready for<br/>a preserved catch</span>}
         </div>

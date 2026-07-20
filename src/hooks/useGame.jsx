@@ -6,6 +6,7 @@ import { getLocation } from '../data/locations'
 import { achievements as achievementDefinitions, unlockAchievements } from '../data/achievements'
 import { getPreferredPhases } from '../utils/fishingEngine'
 import { unlockLocationCosmetics } from '../data/locationPaintings'
+import { getCoinStoreItem } from '../data/coinStoreCatalog'
 
 const GameContext = createContext(null)
 const randomBetween = (minimum, maximum) => Math.round(minimum + Math.random() * (maximum - minimum))
@@ -158,6 +159,16 @@ export function GameProvider({ children }) {
             },
           })
         }),
+      buyCoinStoreItem: (id) =>
+        setGame((current) => {
+          const item = getCoinStoreItem(id)
+          if (!item || current.coinStore.ownedItemIds.includes(id) || current.coins < item.price) return current
+          return {
+            ...current,
+            coins: current.coins - item.price,
+            coinStore: { ...current.coinStore, ownedItemIds: [...current.coinStore.ownedItemIds, id] },
+          }
+        }),
       equipRod: (id, locationId) =>
         setGame((current) =>
           current.gearByLocation[locationId]?.ownedRods.includes(id)
@@ -266,7 +277,8 @@ export function GameProvider({ children }) {
       setCabinStyle: (styleId) =>
         setGame((current) => {
           if (styleId === 'angler-lodge' && current.achievementProgress.legendaryLocations.length < 4) return current
-          if (!['starter', 'angler-lodge'].includes(styleId)) return current
+          const storeCabinOwned = current.coinStore.ownedItemIds.some((id) => getCoinStoreItem(id)?.cabinId === styleId)
+          if (!['starter', 'angler-lodge'].includes(styleId) && !storeCabinOwned) return current
           return { ...current, cabin: { ...current.cabin, styleId } }
         }),
       preserveSpecimen: (fishId) =>

@@ -5,10 +5,11 @@ import { classifyStoredCatch, getWeightTier } from '../utils/valueCalculator'
 import { achievements as achievementDefinitions, unlockAchievements } from '../data/achievements'
 import { locations } from '../data/locations'
 import { unlockLocationCosmetics } from '../data/locationPaintings'
+import { coinStoreItems } from '../data/coinStoreCatalog'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 16
+const CURRENT_VERSION = 17
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
 const defaultCabin = () => ({
   styleId: 'starter',
@@ -34,6 +35,7 @@ export const newGame = () => ({
     }),
   ),
   collection: {},
+  coinStore: { ownedItemIds: [] },
   cabin: defaultCabin(),
   weather: defaultWeather(),
   dayCycle: { homeElapsedMs: 0, activeTrip: null },
@@ -159,6 +161,10 @@ function migrateSave(raw) {
     migrated.achievementProgress = { ...(migrated.achievementProgress || {}), paintingsEarned: [], masterFramesEarned: [], upgradedSouvenirs: [], equipmentPlaques: [], amazingPhotos: [], legendaryMiniatures: [] }
     migrated.version = 16
   }
+  if (migrated.version < 17) {
+    migrated.coinStore = { ownedItemIds: [] }
+    migrated.version = 17
+  }
   return migrated
 }
 
@@ -171,6 +177,10 @@ export function validateSave(input) {
   if (!raw || typeof raw !== 'object') return base
 
   const validFish = new Set(fish.map((item) => item.id))
+  const validCoinStoreIds = new Set(coinStoreItems.map((item) => item.id))
+  const ownedItemIds = Array.isArray(raw.coinStore?.ownedItemIds)
+    ? [...new Set(raw.coinStore.ownedItemIds.filter((id) => validCoinStoreIds.has(id)))]
+    : []
   const gearByLocation = Object.fromEntries(rodLocationIds.map((locationId) => {
     const locationRods = getRodsForLocation(locationId)
     const validRods = new Set(locationRods.map((rod) => rod.id))
@@ -285,8 +295,12 @@ export function validateSave(input) {
       mounted,
     }
   })
+  const ownedCabinIds = new Set(coinStoreItems.filter((item) => item.cabinId && ownedItemIds.includes(item.id)).map((item) => item.cabinId))
+  const validCabinStyle = rawCabin.styleId === 'starter'
+    || (rawCabin.styleId === 'angler-lodge' && legendaryLocations.length >= 4)
+    || ownedCabinIds.has(rawCabin.styleId)
   const cabin = {
-    styleId: rawCabin.styleId === 'angler-lodge' && legendaryLocations.length >= 4 ? 'angler-lodge' : 'starter',
+    styleId: validCabinStyle ? rawCabin.styleId : 'starter',
     featuredFishId: validFish.has(rawCabin.featuredFishId) && specimens[rawCabin.featuredFishId]?.mounted ? rawCabin.featuredFishId : null,
     lodgeFeaturedFishIds: Array.isArray(rawCabin.lodgeFeaturedFishIds)
       ? [...rawCabin.lodgeFeaturedFishIds.slice(0, 3), null, null, null].slice(0, 3).map((id) => validFish.has(id) && specimens[id]?.mounted ? id : null)
@@ -310,6 +324,7 @@ export function validateSave(input) {
     inventory,
     gearByLocation,
     collection,
+    coinStore: { ownedItemIds },
     cabin,
     weather,
     dayCycle: {
