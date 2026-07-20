@@ -74,8 +74,7 @@ Phase 3 deepens atmosphere and gives players a peaceful sense of ownership throu
 - Added five earned location paintings and permanent Master Angler frames for Trophy-or-better mastery of every species in a location.
 - Added upgraded souvenirs, Amazing photographs, legendary miniatures, equipment plaques, and included authored-slot palettes.
 - Prepared a dormant non-consumable store catalog with stable product IDs, tentative prices, restoration requirements, and no live storefront integration.
-- Defined a $4.99 Lifetime Charter License that waives repeat fees only after each destination's first full charter is completed.
-- Added an earned-coin Trading Post with three complete permanent cabins as a late-game economy sink, while keeping twelve decor concepts hidden until their display slots are implemented.
+- Added an earned-coin Trading Post with three complete permanent cabins as a late-game economy sink, while presenting twelve decor concepts as disabled previews until their display slots are implemented.
 
 ### Phase Status
 

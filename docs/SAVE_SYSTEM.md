@@ -1,6 +1,6 @@
 # Save System
 
-The current save schema is version 16.
+The current save schema is version 17.
 
 ## Current Save Data
 
@@ -15,6 +15,7 @@ The current save schema is version 16.
 - One bounded Trophy or Amazing candidate per species, including its current preserved-mount snapshot
 - The bounded set of locations where a legendary fish has been caught, cabin style, and three Angler's Lodge display choices
 - Bounded ownership sets for earned location paintings, Master Angler frames, upgraded souvenirs, Amazing photographs, legendary miniatures, and equipment plaques
+- Validated permanent ownership of earned-coin Trading Post purchases, including the equipped coin-purchased cabin style
 
 Inventory catches include their generated specimen-size class. Older catches are classified from their saved weight during migration.
 
@@ -35,6 +36,7 @@ Inventory catches include their generated specimen-size class. Older catches are
 - Version 14 added preserved specimens and reconstructs eligible candidates from Trophy and Amazing catches still in inventory.
 - Version 15 added permanent Angler's Lodge unlock progress, reconstructs provable locations from legendary journal entries, and validates three specimen display slots.
 - Version 16 added permanent painting, Master Angler frame, upgraded souvenir, Amazing photograph, legendary miniature, and equipment-plaque ownership with retroactive reconstruction from existing records.
+- Version 17 added permanent Trading Post ownership and validates that a coin-purchased cabin can be equipped only while its catalog item is owned.
 
 ## Rules
 
@@ -48,4 +50,4 @@ Inventory catches include their generated specimen-size class. Older catches are
 - If recovery requires a new game, explain what happened instead of silently discarding progress.
 - Test loading an older save before releasing a schema change.
 
-The current implementation validates and migrates readable saves. When stored data cannot be read, it preserves a recoverable backup when practical, returns to a valid new-game state, and tells the player what happened. Representative older and damaged saves still require release testing.
+The current implementation validates and migrates readable saves. Automated fixtures cover representative version 1, version 12, version 16, malformed, partial, and unreadable saves through the current schema. When stored data cannot be read, the game preserves a recoverable backup when practical, returns to a valid new-game state, and tells the player what happened. Real-device storage failures and additional historical save samples remain release-testing responsibilities.

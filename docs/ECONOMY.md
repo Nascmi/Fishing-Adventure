@@ -20,7 +20,6 @@ The economy turns each catch into visible progress without turning fishing into 
 - Charter prices begin at 300 coins for Pine River, 800 for Great Lake, 1,600 for Gulf Coast, and 4,000 for Open Gulf; tune these against measured trip earnings.
 - Preserving the first Trophy or Amazing specimen of a species for cabin display has a starting cost of 100 coins. The game remembers eligible candidates before payment, and upgrading an existing mount to a heavier specimen of the same species is free.
 - The earned-coin Trading Post sells permanent cabin cosmetics at standard, fine, prestige, and legacy prices. It remains optional, provides no fishing power, and preserves the identity of included and accomplishment-earned rewards.
-- The planned Lifetime Charter License only waives repeat fees after a destination's first full three-day charter has been paid for and completed. It does not unlock locations or alter catches, rewards, or trip length.
 
 ## Tuning
 

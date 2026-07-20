@@ -81,23 +81,6 @@ export const storeProducts = [
     description: 'All three prepared optional cabins in one permanent collection.',
     entitlements: ['cabin:workshop-cabin', 'cabin:lakeside-cottage', 'cabin:coastal-shack'],
   },
-  {
-    id: 'convenience.lifetime_charter_license',
-    name: 'Lifetime Charter License',
-    category: 'convenience',
-    productType: 'non-consumable',
-    status: 'concept',
-    suggestedUsd: 4.99,
-    description: 'Waives repeat charter fees at destinations where the full three-day charter has already been completed.',
-    entitlements: ['convenience:lifetime-charter-license'],
-    rules: {
-      requiresCompletedCharter: true,
-      waivesFirstCharter: false,
-      affectsCatchRates: false,
-      affectsRewards: false,
-      affectsTripLength: false,
-    },
-  },
 ]
 
 export const storePolicy = {

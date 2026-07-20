@@ -1,0 +1,112 @@
+import { describe, expect, it } from 'vitest'
+import { GAME_CONFIG } from '../data/config'
+import { newGame } from '../services/saveService'
+import { chooseCabinStyle, equipOwnedRod, preserveCabinSpecimen, purchaseCoinStoreItem, purchaseRod, skipTimePhase, startTrip, tickGameTime } from './gameRules'
+
+const withCoins = (coins) => ({ ...newGame(), coins })
+
+describe('equipment purchases', () => {
+  it('deducts the exact rod price and records ownership', () => {
+    const next = purchaseRod(withCoins(500), 'fiberglass', 'willow-pond')
+    expect(next.coins).toBe(250)
+    expect(next.gearByLocation['willow-pond'].ownedRods).toContain('fiberglass')
+  })
+
+  it('enforces rod prerequisites and rejects invalid locations', () => {
+    const state = withCoins(10000)
+    expect(purchaseRod(state, 'carbon', 'willow-pond')).toBe(state)
+    expect(purchaseRod(state, 'fiberglass', 'pine-river')).toBe(state)
+  })
+
+  it('does not charge twice for an owned rod', () => {
+    const purchased = purchaseRod(withCoins(500), 'fiberglass', 'willow-pond')
+    expect(purchaseRod(purchased, 'fiberglass', 'willow-pond')).toBe(purchased)
+  })
+
+  it('equips only an owned rod', () => {
+    const state = withCoins(500)
+    expect(equipOwnedRod(state, 'carbon', 'willow-pond')).toBe(state)
+    const purchased = purchaseRod(state, 'fiberglass', 'willow-pond')
+    expect(equipOwnedRod(purchased, 'fiberglass', 'willow-pond').gearByLocation['willow-pond'].equippedRod).toBe('fiberglass')
+  })
+})
+
+describe('Trading Post purchases and cabin selection', () => {
+  it('deducts the cabin price and stores permanent ownership', () => {
+    const next = purchaseCoinStoreItem(withCoins(30000), 'trading-post.cabin-riverstone')
+    expect(next.coins).toBe(5000)
+    expect(next.coinStore.ownedItemIds).toEqual(['trading-post.cabin-riverstone'])
+  })
+
+  it('rejects insufficient funds, unknown items, and duplicate purchases', () => {
+    const poor = withCoins(100)
+    expect(purchaseCoinStoreItem(poor, 'trading-post.cabin-riverstone')).toBe(poor)
+    expect(purchaseCoinStoreItem(poor, 'missing')).toBe(poor)
+    const purchased = purchaseCoinStoreItem(withCoins(30000), 'trading-post.cabin-riverstone')
+    expect(purchaseCoinStoreItem(purchased, 'trading-post.cabin-riverstone')).toBe(purchased)
+  })
+
+  it('selects only owned or earned cabin styles', () => {
+    const state = withCoins(30000)
+    expect(chooseCabinStyle(state, 'riverstone-cabin')).toBe(state)
+    expect(chooseCabinStyle(state, 'angler-lodge')).toBe(state)
+    const purchased = purchaseCoinStoreItem(state, 'trading-post.cabin-riverstone')
+    expect(chooseCabinStyle(purchased, 'riverstone-cabin').cabin.styleId).toBe('riverstone-cabin')
+    const lodgeReady = { ...state, achievementProgress: { ...state.achievementProgress, legendaryLocations: ['willow-pond', 'pine-river', 'great-lake', 'gulf-coast'] } }
+    expect(chooseCabinStyle(lodgeReady, 'angler-lodge').cabin.styleId).toBe('angler-lodge')
+  })
+})
+
+describe('charters', () => {
+  it('books a destination, deducts its fee, and immediately unlocks Gone Fishing', () => {
+    const next = startTrip(withCoins(1000), 'pine-river', 12345)
+    expect(next.coins).toBe(700)
+    expect(next.dayCycle.activeTrip.locationId).toBe('pine-river')
+    expect(next.dayCycle.activeTrip.remainingMs).toBe(GAME_CONFIG.dayCycle.phaseMs * 12)
+    expect(next.achievements['gone-fishing']).toEqual({ unlockedAt: 12345 })
+  })
+
+  it('rejects the free home water and unaffordable destinations', () => {
+    const state = withCoins(10)
+    expect(startTrip(state, 'willow-pond')).toBe(state)
+    expect(startTrip(state, 'open-gulf')).toBe(state)
+  })
+
+  it('completes a charter, records it once, and awards its painting and keepsake', () => {
+    const booked = startTrip(withCoins(1000), 'pine-river', 1)
+    const nearlyDone = { ...booked, dayCycle: { ...booked.dayCycle, activeTrip: { ...booked.dayCycle.activeTrip, remainingMs: 50000 } } }
+    const completed = tickGameTime(nearlyDone, 'pine-river', 60000, () => 0.5, 2)
+    expect(completed.dayCycle.activeTrip).toBeNull()
+    expect(completed.achievementProgress.completedTrips).toEqual(['pine-river'])
+    expect(completed.achievementProgress.paintingsEarned).toContain('pine-river')
+    expect(completed.achievements['three-days']).toEqual({ unlockedAt: 2 })
+  })
+
+  it('can complete the last phase through Skip Ahead', () => {
+    const booked = startTrip(withCoins(1000), 'pine-river', 1)
+    const nearlyDone = { ...booked, dayCycle: { ...booked.dayCycle, activeTrip: { locationId: 'pine-river', elapsedMs: GAME_CONFIG.dayCycle.phaseMs * 11, remainingMs: GAME_CONFIG.dayCycle.phaseMs } } }
+    expect(skipTimePhase(nearlyDone, 'pine-river', 2).achievementProgress.completedTrips).toContain('pine-river')
+  })
+})
+
+describe('trophy preservation', () => {
+  const specimen = { fishId: 'bluegill', weight: 1.7, sizeTier: 'trophy', locationId: 'willow-pond', phase: 'morning', caughtAt: '2026-01-01T00:00:00.000Z', mounted: null }
+
+  it('charges once and records an exact preservation timestamp', () => {
+    const state = { ...withCoins(150), cabin: { ...newGame().cabin, specimens: { bluegill: specimen } } }
+    const next = preserveCabinSpecimen(state, 'bluegill', 777)
+    expect(next.coins).toBe(50)
+    expect(next.cabin.specimens.bluegill.mounted.preservedAt).toBe(777)
+    expect(next.cabin.featuredFishId).toBe('bluegill')
+  })
+
+  it('rejects unaffordable first mounts and makes heavier upgrades free', () => {
+    const poor = { ...withCoins(99), cabin: { ...newGame().cabin, specimens: { bluegill: specimen } } }
+    expect(preserveCabinSpecimen(poor, 'bluegill')).toBe(poor)
+    const mounted = { ...specimen, weight: 1.8, mounted: { ...specimen, weight: 1.7, preservedAt: 1 } }
+    const upgradeState = { ...withCoins(0), cabin: { ...newGame().cabin, specimens: { bluegill: mounted } } }
+    const upgraded = preserveCabinSpecimen(upgradeState, 'bluegill', 2)
+    expect(upgraded.coins).toBe(0)
+    expect(upgraded.cabin.specimens.bluegill.mounted.weight).toBe(1.8)
+  })
+})

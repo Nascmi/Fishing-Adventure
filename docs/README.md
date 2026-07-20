@@ -17,6 +17,7 @@ Use the remaining documents as focused references:
 - `ART_DIRECTION.md` and `UI_GUIDELINES.md` — presentation
 - `ECONOMY.md` and `BALANCE_NOTES.md` — progression tuning
 - `SAVE_SYSTEM.md` — persistence and compatibility
+- `TESTING.md` — automated rule, migration, and regression coverage
 - `CODING_STANDARDS.md` and `CODING_WITH_CODEX.md` — development workflow
 - `FUTURE_IDEAS.md` — ideas that are not yet approved
 - `CHANGELOG.md` and `RELEASE_HISTORY.md` — project history
@@ -32,15 +33,16 @@ When documents conflict, follow them in the order above and update the outdated 
 
 ## Current Development Status
 
-Version 0.1.0 has completed its core Backyard Pond polish and begun Phase 2. Pine River, Great Lake, and Gulf Coast expand the journey to four playable waters, each with its own scenery, fish population, fishing presentation, and equipment family, while ongoing accessibility, balance, save, and device testing continue across development.
+The current development build has completed Phases 1 through 3. Five playable waters—Backyard Pond, Pine River, Great Lake, Gulf Coast, and Open Gulf—now form a complete fishing journey with location-specific species, equipment, presentation, day cycles, and three-day destination charters. The game also includes Angling Keepsakes, specimen preservation, passing rain, earned and coin-purchased cabins, cabin sharing, and the earned-coin Trading Post.
 
-See `CHANGELOG.md` for the current unreleased work and `ROADMAP.md` for the remaining Phase 1 priorities.
+Phase 4 is planned around authored fishing areas, boats, and reusable lure families. Before broad Phase 4 implementation, accessibility, balance, save-migration, device, and economy testing remain ongoing quality priorities. See `CHANGELOG.md` for current work and `ROADMAP.md` for approved direction.
 
 ## Running the Project
 
 ```bash
 npm install
 npm run dev
+npm run test:run
 npm run build
 ```
 

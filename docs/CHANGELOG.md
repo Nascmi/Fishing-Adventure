@@ -1,20 +1,18 @@
 # Changelog
 
-- Added Gulf Coast as the fourth playable location, grounded in Alabama and Mississippi salt marshes, bays, oyster reefs, and nearshore water.
-- Added Atlantic Croaker, Sand Seatrout, Sheepshead, Southern Flounder, Spotted Seatrout, Black Drum, Red Drum, and Cobia as its fisheries-backed population.
-- Added original Gulf Coast environment art, eight naturalist fish illustrations, four saltwater inshore rods, and a popping-cork presentation.
-- Migrated saves to version 8 so existing players receive the Worn Inshore Rod without losing gear or catches.
-- Made the location selector horizontally scrollable on narrow screens as the playable journey expands to four waters.
-- Added Great Lake as the third playable location, replacing the planned Mountain Lake with a fictional Great Lakes-connected Upper Midwestern coastal bay.
-- Added Yellow Perch, Rock Bass, Smallmouth Bass, Walleye, Lake Trout, Northern Pike, and Great Lakes Muskellunge as its fisheries-backed population.
-- Added original Great Lake environment art, four new fish illustrations, a four-step spinning-rod family, and a retrieved-lure presentation.
-- Migrated saves to version 7 so existing players receive Great Lake's starter rod without losing gear or catches.
-- Established Backyard Pond as a rural Upper Midwestern farm pond and aligned its core population with official pond-management guidance: Bluegill, Pumpkinseed, Black Crappie, Largemouth Bass, and Channel Catfish.
-- Removed Yellow Perch, Smallmouth Bass, and Common Carp from Backyard Pond while preserving them as collectible species for better-matched future waters.
-
-Record player-facing changes here under an unreleased section, then move them beneath a version and date when released.
+Record player-facing changes under Unreleased, then archive them beneath a dated public version or clearly labeled internal milestone.
 
 ## Unreleased
+
+### Added
+
+- Added a Vitest regression suite covering save migration and recovery, deterministic fishing and values, purchases, charters, cabin ownership, trophy preservation, keepsakes, and earned cabin cosmetics.
+
+### Fixed
+
+- Evaluated Angling Keepsakes immediately after charter booking, removing unreachable code that delayed the Gone Fishing unlock until a later game event.
+
+## Phase 3 Complete — Five Waters & Cabin Life — 2026-07-20
 
 ### Fixed
 
@@ -23,13 +21,12 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Added
 
-- Defined the dormant $4.99 Lifetime Charter License, preserving first-charter progression while waiving repeat fees at completed destinations.
 - Added an earned-coin Trading Post alongside the Rod Shop with three permanent cabin purchases and no gameplay power.
 - Added the 25,000-coin Riverstone Cabin, 50,000-coin Cedar Hideaway, and 75,000-coin Captain's Retreat with original interiors and share-card support.
 - Added authored customization-hook counts to every purchasable cabin listing: three for Riverstone, four for Cedar Hideaway, and seven for Captain's Retreat.
 - Restored twelve planned decor items to the Trading Post as clearly disabled previews until cabin placement controls are implemented.
 - Migrated saves to version 17 with validated permanent Trading Post ownership and equipped-cabin recovery.
-- Prepared a dormant nine-product storefront catalog with stable IDs, tentative planning prices, permanent entitlements, and explicit no-gameplay-power policy.
+- Prepared a dormant eight-product cosmetic storefront catalog with stable IDs, tentative planning prices, permanent entitlements, and explicit no-gameplay-power policy.
 - Added permanent earned location paintings for full Backyard Pond discovery and completed destination charters, plus gold Master Angler frames for Trophy-or-better catches of every local species.
 - Added upgraded travel souvenirs for completed location journals, Amazing-catch photographs, legendary fish miniatures, full-equipment-family plaques, and nine included rug, frame, and timber-finish options.
 - Migrated saves to version 16 with bounded painting and Master Angler frame ownership, including retroactive unlocks from existing records.

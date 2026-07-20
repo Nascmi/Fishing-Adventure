@@ -1,35 +1,11 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { clearGame, loadGame, newGame, rarityRank, saveGame } from '../services/saveService'
-import { getRod } from '../data/rods'
-import { GAME_CONFIG } from '../data/config'
-import { getLocation } from '../data/locations'
 import { achievements as achievementDefinitions, unlockAchievements } from '../data/achievements'
 import { getPreferredPhases } from '../utils/fishingEngine'
 import { unlockLocationCosmetics } from '../data/locationPaintings'
-import { getCoinStoreItem } from '../data/coinStoreCatalog'
+import { chooseCabinStyle, endActiveTrip, equipOwnedRod, preserveCabinSpecimen, purchaseCoinStoreItem, purchaseRod, skipTimePhase, startTrip, tickGameTime } from '../game/gameRules'
 
 const GameContext = createContext(null)
-const randomBetween = (minimum, maximum) => Math.round(minimum + Math.random() * (maximum - minimum))
-
-const advanceWeather = (weather, delta) => {
-  if (weather.rainRemainingMs > 0) {
-    const rainRemainingMs = Math.max(0, weather.rainRemainingMs - delta)
-    return rainRemainingMs
-      ? { ...weather, rainRemainingMs }
-      : {
-          nextRainMs: randomBetween(GAME_CONFIG.weather.minRainIntervalMs, GAME_CONFIG.weather.maxRainIntervalMs),
-          rainRemainingMs: 0,
-        }
-  }
-
-  const nextRainMs = weather.nextRainMs - delta
-  if (nextRainMs > 0) return { ...weather, nextRainMs }
-  return {
-    nextRainMs: 0,
-    rainRemainingMs: randomBetween(GAME_CONFIG.weather.minRainDurationMs, GAME_CONFIG.weather.maxRainDurationMs),
-  }
-}
-
 export function GameProvider({ children }) {
   const [initial] = useState(loadGame)
   const [game, setGame] = useState(initial.game)
@@ -144,114 +120,13 @@ export function GameProvider({ children }) {
             },
           }
         }),
-      buyRod: (id, locationId) =>
-        setGame((current) => {
-          const rod = getRod(id, locationId)
-          const gear = current.gearByLocation[locationId]
-          if (!gear || rod.id !== id || rod.locationId !== locationId || gear.ownedRods.includes(id) || current.coins < rod.price) return current
-          if (rod.previousId && !gear.ownedRods.includes(rod.previousId)) return current
-          return unlockLocationCosmetics({
-            ...current,
-            coins: current.coins - rod.price,
-            gearByLocation: {
-              ...current.gearByLocation,
-              [locationId]: { ...gear, ownedRods: [...gear.ownedRods, id] },
-            },
-          })
-        }),
-      buyCoinStoreItem: (id) =>
-        setGame((current) => {
-          const item = getCoinStoreItem(id)
-          if (!item || current.coinStore.ownedItemIds.includes(id) || current.coins < item.price) return current
-          return {
-            ...current,
-            coins: current.coins - item.price,
-            coinStore: { ...current.coinStore, ownedItemIds: [...current.coinStore.ownedItemIds, id] },
-          }
-        }),
-      equipRod: (id, locationId) =>
-        setGame((current) =>
-          current.gearByLocation[locationId]?.ownedRods.includes(id)
-            ? {
-                ...current,
-                gearByLocation: {
-                  ...current.gearByLocation,
-                  [locationId]: { ...current.gearByLocation[locationId], equippedRod: id },
-                },
-              }
-            : current,
-        ),
-      bookTrip: (locationId) =>
-        setGame((current) => {
-          const location = getLocation(locationId)
-          if (!location.tripCost || current.coins < location.tripCost) return current
-          const duration = GAME_CONFIG.dayCycle.phaseMs * GAME_CONFIG.dayCycle.phases.length * GAME_CONFIG.dayCycle.tripDays
-          return {
-            ...current,
-            coins: current.coins - location.tripCost,
-            dayCycle: {
-              ...current.dayCycle,
-              activeTrip: { locationId, elapsedMs: 0, remainingMs: duration },
-            },
-            achievementProgress: {
-              ...current.achievementProgress,
-              locationsFished: [...new Set([...current.achievementProgress.locationsFished, locationId])],
-            },
-          }
-          return unlockAchievements(next).state
-        }),
-      tickDayCycle: (locationId, deltaMs) =>
-        setGame((current) => {
-          const delta = Math.max(0, Math.min(deltaMs, 60000))
-          if (!delta) return current
-          const weather = advanceWeather(current.weather, delta)
-          if (locationId === 'willow-pond') {
-            return { ...current, weather, dayCycle: { ...current.dayCycle, homeElapsedMs: current.dayCycle.homeElapsedMs + delta } }
-          }
-          const trip = current.dayCycle.activeTrip
-          if (trip?.locationId !== locationId) return { ...current, weather }
-          const remainingMs = Math.max(0, trip.remainingMs - delta)
-          const next = {
-            ...current,
-            weather,
-            dayCycle: {
-              ...current.dayCycle,
-              activeTrip: remainingMs ? { ...trip, elapsedMs: trip.elapsedMs + delta, remainingMs } : null,
-            },
-            achievementProgress: remainingMs ? current.achievementProgress : {
-              ...current.achievementProgress,
-              completedTrips: [...new Set([...current.achievementProgress.completedTrips, trip.locationId])],
-            },
-          }
-          return remainingMs ? next : unlockAchievements(unlockLocationCosmetics(next)).state
-        }),
-      skipDayPhase: (locationId) =>
-        setGame((current) => {
-          const phaseMs = GAME_CONFIG.dayCycle.phaseMs
-          const elapsed = locationId === 'willow-pond' ? current.dayCycle.homeElapsedMs : current.dayCycle.activeTrip?.elapsedMs
-          if (!Number.isFinite(elapsed)) return current
-          const advance = phaseMs - (elapsed % phaseMs || 0)
-          if (locationId === 'willow-pond') {
-            return { ...current, dayCycle: { ...current.dayCycle, homeElapsedMs: elapsed + advance } }
-          }
-          const trip = current.dayCycle.activeTrip
-          if (trip?.locationId !== locationId) return current
-          const used = Math.min(advance, trip.remainingMs)
-          const remainingMs = trip.remainingMs - used
-          const next = {
-            ...current,
-            dayCycle: {
-              ...current.dayCycle,
-              activeTrip: remainingMs ? { ...trip, elapsedMs: trip.elapsedMs + used, remainingMs } : null,
-            },
-            achievementProgress: remainingMs ? current.achievementProgress : {
-              ...current.achievementProgress,
-              completedTrips: [...new Set([...current.achievementProgress.completedTrips, trip.locationId])],
-            },
-          }
-          return remainingMs ? next : unlockAchievements(unlockLocationCosmetics(next)).state
-        }),
-      endTrip: () => setGame((current) => ({ ...current, dayCycle: { ...current.dayCycle, activeTrip: null } })),
+      buyRod: (id, locationId) => setGame((current) => purchaseRod(current, id, locationId)),
+      buyCoinStoreItem: (id) => setGame((current) => purchaseCoinStoreItem(current, id)),
+      equipRod: (id, locationId) => setGame((current) => equipOwnedRod(current, id, locationId)),
+      bookTrip: (locationId) => setGame((current) => startTrip(current, locationId)),
+      tickDayCycle: (locationId, deltaMs) => setGame((current) => tickGameTime(current, locationId, deltaMs)),
+      skipDayPhase: (locationId) => setGame((current) => skipTimePhase(current, locationId)),
+      endTrip: () => setGame(endActiveTrip),
       setReactionWindow: (reactionWindow) =>
         setGame((current) => ({
           ...current,
@@ -274,27 +149,8 @@ export function GameProvider({ children }) {
           nextDisplays[index] = fishId || null
           return { ...current, cabin: { ...current.cabin, lodgeFeaturedFishIds: nextDisplays } }
         }),
-      setCabinStyle: (styleId) =>
-        setGame((current) => {
-          if (styleId === 'angler-lodge' && current.achievementProgress.legendaryLocations.length < 4) return current
-          const storeCabinOwned = current.coinStore.ownedItemIds.some((id) => getCoinStoreItem(id)?.cabinId === styleId)
-          if (!['starter', 'angler-lodge'].includes(styleId) && !storeCabinOwned) return current
-          return { ...current, cabin: { ...current.cabin, styleId } }
-        }),
-      preserveSpecimen: (fishId) =>
-        setGame((current) => {
-          const specimen = current.cabin.specimens[fishId]
-          if (!specimen) return current
-          const isUpgrade = Boolean(specimen.mounted)
-          if (isUpgrade && specimen.weight <= specimen.mounted.weight) return current
-          if (!isUpgrade && current.coins < GAME_CONFIG.trophyPreservationCost) return current
-          const mounted = { weight: specimen.weight, sizeTier: specimen.sizeTier, locationId: specimen.locationId, phase: specimen.phase, caughtAt: specimen.caughtAt, preservedAt: Date.now() }
-          return {
-            ...current,
-            coins: isUpgrade ? current.coins : current.coins - GAME_CONFIG.trophyPreservationCost,
-            cabin: { ...current.cabin, featuredFishId: fishId, specimens: { ...current.cabin.specimens, [fishId]: { ...specimen, mounted } } },
-          }
-        }),
+      setCabinStyle: (styleId) => setGame((current) => chooseCabinStyle(current, styleId)),
+      preserveSpecimen: (fishId) => setGame((current) => preserveCabinSpecimen(current, fishId)),
       dismissNotice: () => setNotice(null),
       reset: () => {
         clearGame()

@@ -85,6 +85,18 @@ Three optional cabins have production-ready environment art, stable catalog IDs,
 
 These identifiers are preparatory only. No price, ownership entitlement, purchase button, or store availability should be shown until the app has a supported storefront. Platform-specific product configuration may map to these stable IDs later.
 
+## Earned-Coin Cabins
+
+The Trading Post offers three permanent cabin styles purchased only with coins earned through fishing. They provide no fishing power, do not replace the earned Angler's Lodge, and remain available after purchase. Their prices form a readable late-game progression while leaving the planned 100,000 Coin Club plaque as the first six-figure prestige purchase.
+
+- **Riverstone Cabin — 25,000 coins:** three authored hooks for the hearth frame, river shelf, and braided rug.
+- **Cedar Hideaway — 50,000 coins:** four authored hooks for its three visible gallery frames and forest rug.
+- **Captain's Retreat — 75,000 coins:** seven authored hooks for the central frame, four trophy shelves, navy rug, and mahogany finish.
+
+The shop discloses each cabin's hook count before purchase. The room artwork and permanent cabin ownership are live. The full hook-placement controls remain a later implementation step; until then, the cabin page preserves the existing specimen and travel-souvenir controls rather than accepting payment for decor that cannot be displayed.
+
+Twelve planned rugs, frames, finishes, small cabin objects, and the 100,000 Coin Club plaque appear in the Trading Post as disabled previews. Their stable IDs and target coin prices are planning commitments, not purchasable inventory. They may become active only when their compatible authored hooks, ownership behavior, save migration, and share-card presentation work end to end.
+
 Location paintings are earned records of exploration or completion. Cabin styles may provide different frames and wall arrangements, but purchasing a cabin must not purchase the underlying exploration accomplishment.
 
 Backyard Pond's painting is earned by discovering every local species. Each destination painting is earned by completing a full three-day charter there. Catching a Trophy or Amazing specimen of every species in a location permanently upgrades that location's painting to a gold **Master Angler frame**. Later population changes never revoke an earned painting or frame.
