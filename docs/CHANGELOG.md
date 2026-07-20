@@ -22,7 +22,7 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ### Added
 
-- Added quiet collection-card recognition: a personal-best ribbon after multiple catches, a gold frame at ten catches, and a Master Catch seal for Trophy-sized records.
+- Added quiet collection-card recognition: a gold frame at ten catches and a Master Catch seal for Trophy-sized records.
 - Added locally generated cabin share cards with native mobile sharing and an image-download fallback for the Starter Cabin and Angler's Lodge.
 - Added unique symbolic designs and bronze, silver, enamel, gold, copper, and dark-legend materials for all 24 Angling Keepsakes in both the Collection and lodge cabinet.
 - Prepared production artwork and dormant catalog definitions for the Workshop Cabin, Lakeside Cottage, and Coastal Shack without exposing unavailable purchases.

@@ -47,7 +47,7 @@ The target distribution is 68% regular, 22% good, 8% trophy, and 2% amazing. Lar
 
 Discovered species open into full journal entries with large artwork, concise natural-history flavor, habitat, typical size, and the player's largest and total catches. The journal should make discovery feel personal and deepen appreciation for familiar fish without becoming an encyclopedia.
 
-Collection cards quietly acknowledge a species relationship without changing gameplay: the first catch remains plain, a personal-best ribbon appears once multiple specimens provide a meaningful comparison, ten catches add a restrained gold frame, and a best catch at or above Trophy size receives a Master Catch seal. These treatments are records of play rather than rewards or power.
+Collection cards quietly acknowledge a species relationship without changing gameplay: the first catches remain plain, ten catches add a restrained gold frame, and a best catch at or above Trophy size receives a Master Catch seal. These treatments are records of play rather than rewards or power.
 
 ## Trophy Preservation
 
