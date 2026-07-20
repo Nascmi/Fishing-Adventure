@@ -1,8 +1,8 @@
 export const GAME_CONFIG = {
   startingCoins: 50,
   castingMs: 650,
-  waitMinMs: 2000,
-  waitMaxMs: 5000,
+  waitMinMs: 2500,
+  waitMaxMs: 10000,
   reactionWindows: {
     relaxed: 3000,
     standard: 1900,

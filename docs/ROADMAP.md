@@ -63,7 +63,7 @@ These quality practices continue throughout development rather than ending with 
 - Weather that changes atmosphere without creating pressure and builds on the living day cycle
 - Occasional environmental ambience such as drifting mist, floating leaves, subtle weather, and distant water ripples; no animated animals
 - Boats and lures
-- Aquarium
+
 - Cabin and cosmetic customization
 - Seasonal fish that do not rely on fear of missing out
 

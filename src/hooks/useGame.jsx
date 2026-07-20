@@ -93,6 +93,7 @@ export function GameProvider({ children }) {
               totalCoinsEarned: current.stats.totalCoinsEarned + item.value,
             },
           }
+          return next
         }),
       sellAll: () =>
         setGame((current) => {
