@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import FishArtwork from '../components/FishArtwork'
 import Icon from '../components/Icon'
 import { GAME_CONFIG } from '../data/config'
@@ -6,6 +7,7 @@ import { fish, getFish } from '../data/fish'
 import { getKeepsakeDesign } from '../data/keepsakes'
 import { locations } from '../data/locations'
 import { useGame } from '../hooks/useGame'
+import { createCabinShareImage } from '../utils/cabinShareImage'
 import cabinImage from '../assets/locations/cabin.webp'
 import lodgeImage from '../assets/locations/angler-lodge.png'
 import willowSouvenir from '../assets/cabin/willow.webp'
@@ -35,6 +37,52 @@ export default function CabinPage({ onGoFishing }) {
   const featuredSpecimen = cabin.specimens[cabin.featuredFishId]?.mounted
   const souvenir = locations.find((location) => location.id === cabin.souvenirLocationId)
   const earnedKeepsakes = achievements.filter((achievement) => game.achievements[achievement.id])
+  const earnedKeepsakeKey = earnedKeepsakes.map((achievement) => achievement.id).join('|')
+  const [shareImage, setShareImage] = useState(null)
+  const [shareStatus, setShareStatus] = useState('')
+
+  useEffect(() => {
+    let cancelled = false
+    setShareImage(null)
+    setShareStatus('')
+    const displayIds = isLodge ? cabin.lodgeFeaturedFishIds : [cabin.featuredFishId]
+    const fishDisplays = displayIds.map((fishId) => fishId ? { fish: getFish(fishId), specimen: cabin.specimens[fishId]?.mounted } : null)
+    createCabinShareImage({
+      background: isLodge ? lodgeImage : cabinImage,
+      cabinName: isLodge ? "Angler's Lodge" : 'Starter Cabin',
+      fishDisplays,
+      souvenir: !isLodge && souvenir ? souvenirArtwork[souvenir.id] : null,
+      keepsakes: earnedKeepsakes.map((achievement) => getKeepsakeDesign(achievement.id)),
+      isLodge,
+    }).then((blob) => { if (!cancelled) setShareImage(blob) }).catch(() => { if (!cancelled) setShareStatus('Share image unavailable') })
+    return () => { cancelled = true }
+  }, [cabin.featuredFishId, cabin.lodgeFeaturedFishIds, cabin.specimens, earnedKeepsakeKey, isLodge, souvenir])
+
+  const shareCabin = async () => {
+    if (!shareImage) return
+    const cabinName = isLodge ? "Angler's Lodge" : 'Starter Cabin'
+    const filename = `fishing-adventure-${isLodge ? 'anglers-lodge' : 'starter-cabin'}.png`
+    const file = typeof File === 'function' ? new File([shareImage], filename, { type: 'image/png' }) : null
+    const shareData = file ? { files: [file], title: `My ${cabinName}`, text: `Take a look at my ${cabinName} in Fishing Adventure!` } : null
+    try {
+      if (shareData && navigator.share && navigator.canShare?.(shareData)) {
+        await navigator.share(shareData)
+        setShareStatus('Cabin shared')
+        return
+      }
+      const url = URL.createObjectURL(shareImage)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = filename
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      setTimeout(() => URL.revokeObjectURL(url), 1000)
+      setShareStatus('Cabin image downloaded')
+    } catch (error) {
+      if (error.name !== 'AbortError') setShareStatus('Could not share this cabin')
+    }
+  }
 
   const displaySpecimen = (fishId) => {
     if (!isLodge) return actions.setCabinChoice('featuredFishId', fishId)
@@ -46,8 +94,9 @@ export default function CabinPage({ onGoFishing }) {
   return <main className="cabin-page">
     <div className="cabin-heading">
       <div><span className="eyebrow">Backyard Pond</span><h2>{isLodge ? "Angler's Lodge" : 'Your Cabin'}</h2><p>{isLodge ? 'A place earned through legendary waters.' : 'A humble place for the stories you bring home.'}</p></div>
-      <button type="button" className="secondary-button" onClick={onGoFishing}>Go fishing</button>
+      <div className="cabin-heading-actions"><button type="button" className="cabin-share-button" disabled={!shareImage} onClick={shareCabin}><Icon name="share" size={17}/>{shareImage ? 'Share cabin' : 'Preparing…'}</button><button type="button" className="secondary-button" onClick={onGoFishing}>Go fishing</button></div>
     </div>
+    {shareStatus && <p className="cabin-share-status" role="status">{shareStatus}</p>}
 
     <section className="cabin-style-picker" aria-label="Cabin style">
       <button type="button" className={!isLodge ? 'selected' : ''} onClick={() => actions.setCabinStyle('starter')}><span>Included</span><strong>Starter Cabin</strong></button>

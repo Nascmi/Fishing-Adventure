@@ -47,6 +47,8 @@ The target distribution is 68% regular, 22% good, 8% trophy, and 2% amazing. Lar
 
 Discovered species open into full journal entries with large artwork, concise natural-history flavor, habitat, typical size, and the player's largest and total catches. The journal should make discovery feel personal and deepen appreciation for familiar fish without becoming an encyclopedia.
 
+Collection cards quietly acknowledge a species relationship without changing gameplay: the first catch remains plain, a personal-best ribbon appears once multiple specimens provide a meaningful comparison, ten catches add a restrained gold frame, and a best catch at or above Trophy size receives a Master Catch seal. These treatments are records of play rather than rewards or power.
+
 ## Trophy Preservation
 
 Trophy and Amazing specimens can become permanent cabin displays. The game automatically retains the best eligible candidate for each species independently of inventory, including its weight, tier, location, day phase, and catch time. Players may later preserve a candidate for a configurable starting fee of 100 coins, avoiding an immediate pay-or-lose decision after a catch. A heavier eligible specimen of the same species may replace an existing mount for free. Amazing specimens use a distinct, more prestigious display treatment while remaining records of play rather than sources of power.
@@ -74,6 +76,8 @@ Fishing Adventure does not use a separate tutorial quest or optional-goals syste
 ## Catch Sharing
 
 Amazing specimens offer an optional Share action after the catch is complete. The game creates a polished catch card locally with the species artwork, weight, location, day phase, rarity, and personal-best status. Supported devices receive the image through the native share sheet; other browsers download the image for the player. Sharing never interrupts ordinary catches, uploads data, awards progress, or pressures the player to use social media.
+
+Cabins offer the same optional, local-only sharing model. A cabin share card reflects the selected room, displayed preserved specimens, travel souvenir, and earned-keepsake count. Sharing awards nothing, uploads nothing automatically, and falls back to downloading the image when native file sharing is unavailable.
 
 ## Audio Direction
 
