@@ -16,6 +16,10 @@ Record player-facing changes here under an unreleased section, then move them be
 
 ## Unreleased
 
+### Fixed
+
+- Prevented wide fish illustrations from overflowing and being clipped inside mobile Fish Journal cards.
+
 ### Added
 
 - Added unique symbolic designs and bronze, silver, enamel, gold, copper, and dark-legend materials for all 24 Angling Keepsakes in both the Collection and lodge cabinet.
