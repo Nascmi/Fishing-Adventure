@@ -13,6 +13,7 @@ These rules protect Fishing Adventure from feature creep, manipulation, and unne
 7. **Keep interfaces quiet.** Each screen needs one clear purpose. Add controls and counters only when they help the player.
 8. **Use calm feedback.** Animation, sound, and haptics should communicate events without creating constant noise.
 9. **No looping background music.** Silence is part of the fishing experience. If environmental ambience is added, it must be subtle, location-specific, optional, and free of short obvious repetition.
+10. **World logic before catalog logic.** Add boats, vehicles, access gates, and cosmetic surfaces only when the location and fishing style genuinely require them. Never reshape a location merely to create another purchase or saleable slot.
 
 ## Engineering Rules
 

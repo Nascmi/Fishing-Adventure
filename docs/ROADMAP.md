@@ -85,16 +85,16 @@ Phase 3 is complete. Future real-money commerce work is platform integration rat
 
 Phase 4 expands the fishing itself through deliberate choices about where and how to cast. New systems must preserve the one-touch core interaction, use clear tradeoffs instead of hidden optimization, and make existing locations worth seeing from a fresh perspective.
 
-### Planned
+### Completed
 
-- Boats that open authored fishing areas within suitable existing locations rather than adding a driving or fuel-management game
 - Reusable lure families with readable strengths tied to water, structure, or fish behavior; no consumable-bait grind or crowded inventory
-- Location-specific boat and lure presentation that retains the calm cast, wait, hook, and reel rhythm
-- A progression model that adds new opportunities without making shore fishing, starter tackle, or familiar species obsolete
+- A progression model for permanent included, affordable target, and legendary specialty tackle without making general-purpose tackle or familiar species obsolete
+- Location-aware permanent boats and authored area presentation at Great Lake and Gulf Coast
+- Captain-selected Open Gulf positions at Blue Water, Working Rig, and Reef Edge with a transparent per-relocation fuel fee and no additional owned boat
 
 ### In Progress
 
-The first playable slice is live at Great Lake: Rocky Shore remains free, a permanent skiff opens Weed Edge and Rocky Drop-off, and reusable lure families shift species likelihood. Phase 4 now also includes rare rod-dependent quiet casts and permanent specialty lures for each location's legendary fish. See `PHASE_4_DESIGN.md` for the exact probability contract and playtest questions.
+Reusable lure families are complete across all five locations. Great Lake and Gulf Coast provide a free starting area plus two permanent boat-access viewpoints. Open Gulf now provides three captain-selected charter positions without another owned boat. Pine River remains wading-focused and Backyard Pond remains bank fishing. The authored-water system is ready for device and economy playtesting across all three expanded destinations. See `PHASE_4_DESIGN.md` for the exact probability contract and playtest questions.
 
 ## Version 1.0
 

@@ -52,6 +52,20 @@ Change one variable at a time whenever practical. Do not rebalance from a single
 - Status: provisional until measured against Great Lake income, rod timing, and at least 25 casts per setup.
 - Next action: watch whether 5,000 coins makes the skiff an interesting parallel goal rather than delaying the Graphite or Master Lake Rod too sharply.
 
+### Gulf Coast Bay Skiff baseline — Phase 4
+
+- Starting value: permanent Bay Skiff at 12,500 coins, opening Oyster Reef and Tidal Channel while Marsh Bank remains included.
+- Habitat groups: Marsh Bank favors croaker and seatrout; Oyster Reef favors Sheepshead, Black Drum, and Red Drum; Tidal Channel favors Southern Flounder, Red Drum, and Cobia.
+- Weighting remains the established 1.5× area modifier within the rod-established encounter pool. Red Drum appears in two suitable boat habitats by design; no area guarantees a species.
+- Next action: measure purchase timing against Gulf Coast trip fees and Graphite/Master Inshore Rod progression before changing the provisional price.
+
+### Open Gulf charter relocation baseline — Phase 4
+
+- Blue Water is the free arrival position. Working Rig and Reef Edge are charter positions, not owned boats or permanent unlocks.
+- Every actual position change costs 250 coins, including a return to Blue Water; selecting the current position never charges.
+- Habitat groups: Blue Water favors pelagic mackerel, Mahi-Mahi, and Yellowfin; Working Rig favors Red Snapper and Greater Amberjack; Reef Edge favors Vermilion Snapper, Gray Triggerfish, Red Snapper, and Greater Amberjack.
+- Next action: watch moves per 4,000-coin charter and whether players experiment freely enough before changing the relocation fee.
+
 ### Informal household tournament — pre-Phase 4
 
 - Test conditions: several family members played together for multiple hours in an informal at-home fishing tournament. Exact catch, income, upgrade, and session metrics were not recorded.

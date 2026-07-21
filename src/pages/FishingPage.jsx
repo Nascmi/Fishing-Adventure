@@ -12,7 +12,7 @@ import { giveFeedback } from '../services/feedbackService'
 import { randomDelay, selectFish } from '../utils/fishingEngine'
 import { getWeightTier, makeCatch } from '../utils/valueCalculator'
 import { createCatchShareImage } from '../utils/catchShareImage'
-import { fishingAreas, getFishingArea, getLureFamily, getLuresForLocation, getPhaseFourFishWeights, greatLakeBoat } from '../data/waterSetup'
+import { getAreasForLocation, getBoatForLocation, getFishingArea, getLureFamily, getLuresForLocation, getPhaseFourFishWeights } from '../data/waterSetup'
 import { isQuietCast } from '../game/biteRules'
 
 const getCyclePosition = (elapsedMs) => {
@@ -85,8 +85,10 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
   const selectedArea = getFishingArea(fishingSetup?.areaId)
   const selectedLure = getLureFamily(fishingSetup?.lureId)
   const availableLures = getLuresForLocation(location.id).filter((lure) => lure.included || game.tackle.ownedLureIds.includes(lure.id))
-  const ownsLakeBoat = game.watercraft?.ownedBoatIds.includes(greatLakeBoat.id)
-  const sceneImage = location.id === 'great-lake' && selectedArea?.image ? selectedArea.image : location.image
+  const availableAreas = getAreasForLocation(location.id)
+  const locationBoat = getBoatForLocation(location.id)
+  const ownsLocationBoat = locationBoat && game.watercraft?.ownedBoatIds.includes(locationBoat.id)
+  const sceneImage = selectedArea?.image || location.image
 
   useEffect(() => {
     let cancelled = false
@@ -220,7 +222,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
   const rainEnding = isRaining && game.weather.rainRemainingMs <= 15000
 
   return <main className="fishing-page">
-    <section className={`lake ${fishingState} location-${location.id}${location.id === 'great-lake' ? ` area-${selectedArea?.id || 'great-lake-shore'}` : ''} phase-${cycle.phase.id}${isRaining ? ` weather-rain${rainEnding ? ' rain-ending' : ''}` : ''}`} style={{ '--location-art': `url("${sceneImage}")` }} aria-label={`${location.name}${selectedArea ? `, ${selectedArea.name}` : ''}: ${selectedArea?.description || location.description}${isRaining ? ' A gentle rain is passing through.' : ''}`}>
+    <section className={`lake ${fishingState} location-${location.id}${selectedArea ? ` area-${selectedArea.id}` : ''} phase-${cycle.phase.id}${isRaining ? ` weather-rain${rainEnding ? ' rain-ending' : ''}` : ''}`} style={{ '--location-art': `url("${sceneImage}")` }} aria-label={`${location.name}${selectedArea ? `, ${selectedArea.name}` : ''}: ${selectedArea?.description || location.description}${isRaining ? ' A gentle rain is passing through.' : ''}`}>
       {selectedArea?.id === 'great-lake-weed-edge' && <div className="mirrored-area-background" style={{ backgroundImage: `url("${sceneImage}")` }} aria-hidden="true"/>}
       {isRaining && <div className="weather-rainfall" aria-hidden="true"><i/><i/></div>}
       <div className={`day-cycle phase-${cycle.phase.id}`}>
@@ -230,15 +232,15 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
       </div>
       {location.id === 'willow-pond' && fishingState === 'ready' && <button type="button" className="cabin-entry" onClick={onOpenCabin}>Return to cabin</button>}
       <div className="water">
-        {location.id === 'great-lake' && selectedArea?.boatRequired && ownsLakeBoat && <img className={`scene-boat position-${selectedArea.boatPosition}`} src={greatLakeBoat.image} alt={`${greatLakeBoat.name} on the ${selectedArea.name}`}/>}
+        {selectedArea?.boatRequired && ownsLocationBoat && <img className={`scene-boat boat-${location.id} position-${selectedArea.boatPosition}`} src={locationBoat.image} alt={`${locationBoat.name} on the ${selectedArea.name}`}/>}
         <div className={`strike-marker ${location.fishingStyle} lure-${selectedLure?.id || 'default'}`} aria-hidden="true"><i/></div><div className="ripples"/>
       </div>
     </section>
 
     <section className={`action-card ${fishingState === 'reeling' ? 'reeling-active' : ''}`}>
       {fishingState === 'ready' && <section className={`water-setup${setupExpanded ? ' expanded' : ''}`} aria-label={`${location.name} fishing setup`}>
-        <div className="water-setup-heading"><div><span className="eyebrow">On the water</span><b>{selectedArea ? `${selectedArea.name} · ` : ''}{selectedLure?.name}</b></div><div className="water-setup-actions"><button type="button" className="setup-toggle" aria-expanded={setupExpanded} onClick={() => setSetupExpanded((expanded) => !expanded)}>{setupExpanded ? 'Done' : 'Change'}</button>{location.id === 'great-lake' && !ownsLakeBoat && <button type="button" disabled={game.coins < greatLakeBoat.price} onClick={() => actions.buyBoat(greatLakeBoat.id)}>Buy skiff · {greatLakeBoat.price.toLocaleString()}</button>}</div></div>
-        {location.id === 'great-lake' && <fieldset><legend>Fishing area</legend><div className="setup-options">{fishingAreas.map((area) => { const locked = area.boatRequired && !ownsLakeBoat; return <button type="button" key={area.id} className={selectedArea?.id === area.id ? 'selected' : ''} disabled={locked} onClick={() => actions.setFishingSetup(location.id, 'area', area.id)}><b>{area.name}</b><span>{locked ? 'Skiff required' : area.description}</span></button> })}</div></fieldset>}
+        <div className="water-setup-heading"><div><span className="eyebrow">On the water</span><b>{selectedArea ? `${selectedArea.name} · ` : ''}{selectedLure?.name}</b></div><div className="water-setup-actions"><button type="button" className="setup-toggle" aria-expanded={setupExpanded} onClick={() => setSetupExpanded((expanded) => !expanded)}>{setupExpanded ? 'Done' : 'Change'}</button>{locationBoat && !ownsLocationBoat && <button type="button" disabled={game.coins < locationBoat.price} onClick={() => actions.buyBoat(locationBoat.id)}>Buy {locationBoat.name.toLowerCase()} · {locationBoat.price.toLocaleString()}</button>}</div></div>
+        {availableAreas.length > 0 && <fieldset><legend>{location.id === 'open-gulf' ? 'Charter position' : 'Fishing area'}</legend><div className="setup-options">{availableAreas.map((area) => { const selected = selectedArea?.id === area.id; const locked = area.boatRequired && !ownsLocationBoat; const unaffordable = !selected && area.relocationCost > game.coins; const detail = locked ? `${locationBoat?.name || 'Boat'} required` : !selected && area.relocationCost ? `${area.description} · Move ${area.relocationCost.toLocaleString()}` : area.description; return <button type="button" key={area.id} className={selected ? 'selected' : ''} disabled={locked || unaffordable} onClick={() => actions.setFishingSetup(location.id, 'area', area.id)}><b>{area.name}</b><span>{unaffordable ? `${area.description} · Need ${(area.relocationCost - game.coins).toLocaleString()} more` : detail}</span></button> })}</div></fieldset>}
         <fieldset><legend>Reusable lure</legend><div className="setup-options">{availableLures.map((lure) => <button type="button" key={lure.id} className={selectedLure?.id === lure.id ? 'selected' : ''} onClick={() => actions.setFishingSetup(location.id, 'lure', lure.id)}><b>{lure.name}</b><span>{lure.targetFishIds?.length ? `${Math.round((lure.affinity - 1) * 100)}% target affinity` : lure.description}</span></button>)}</div></fieldset>
       </section>}
       <div className={`status ${fishingState}`} role="status" aria-live="assertive" aria-atomic="true"><span className="status-dot"/><div><b>{statusTitle}</b><p>{statusCopy[fishingState]}</p></div></div>

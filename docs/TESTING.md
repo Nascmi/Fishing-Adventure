@@ -16,9 +16,10 @@ npm run build
 
 - Save migrations from representative legacy versions through the current schema
 - A complete version 18 journey migrated in one fixture with coins, equipment, an active trip, keepsakes, a mounted specimen, cabin ownership, and compatible decor preserved together
-- Version 20 boat/setup migration into version 21, including permanent purchased-lure ownership validation and rejection of unowned equipped lures
+- Version 20 tackle, version 21 Gulf-area, and version 22 Open Gulf-position migration into version 23, including both permanent boat entitlements, purchased-lure ownership validation, and rejection of unowned equipment
 - Quiet-cast probability caps, high-end rod reduction, and prevention of consecutive quiet casts
 - Full playable setup matrix across every location, lure, and authored area, including valid positive weights and successful hook selection in every day phase
+- Open Gulf relocation charges, same-position protection, insufficient-coin rejection, and safe Blue Water arrival
 - Missing, malformed, and unreadable save recovery
 - Location-bounded rarity fallback and preferred day phases
 - Specimen-size boundaries, deterministic catch generation, and catch values

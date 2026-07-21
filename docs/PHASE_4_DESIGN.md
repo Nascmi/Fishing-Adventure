@@ -4,6 +4,16 @@
 
 Phase 4 adds meaningful choices about where and how to cast without adding steering, fuel, consumable bait, or extra actions during a catch. The calm cast, wait, hook, and reel loop remains unchanged.
 
+## Boat Suitability Decision
+
+Boats are authored world features, not a catalog template. A location receives a purchasable boat only when access to meaningfully different water is believable, visually readable, and useful without making the original fishing position obsolete. A cosmetic opportunity is never sufficient reason to add one.
+
+- **Great Lake:** personal skiff approved; moving from rocky shore to weed edge and drop-off water is natural.
+- **Gulf Coast:** personal Bay Skiff approved; shallow marsh, oyster reef, and tidal-channel access fit an inshore skiff.
+- **Pine River:** no boat. The location's identity is fly fishing and wading; a boat conflicts with that presentation.
+- **Open Gulf:** no purchasable personal boat. The player is already aboard a charter boat. Future area choices may represent the captain moving between Blue Water, a Working Rig, and a reef edge, but they are charter destinations rather than boat ownership.
+- **Backyard Pond:** no boat for the current pond. Its intimate bank-fishing scale does not justify separate water areas, and a rowboat would crowd the scene. A rowboat may be reconsidered only for a future, genuinely larger pond or small-lake destination.
+
 ## First Playable Slice: Great Lake
 
 Great Lake is the proving ground because its existing spinning presentation and population already support readable habitat choices.
@@ -16,7 +26,21 @@ Great Lake is the proving ground because its existing spinning presentation and 
 - **Affordable target tackle:** each location offers a curated two- or three-item catalog priced from 100 to 250 coins. Each permanent purchase applies a 1.05× relative affinity to one believable species or fish group, such as pond panfish, river trout, Gulf bay fish, or offshore reef fish.
 - **Specialty lures:** each location sells one expensive, permanent lure with a 20% relative affinity for its legendary fish. It never guarantees that fish and never expires.
 
-Each authored area uses a distinct viewpoint: Rocky Shore looks outward from granite shoreline, Weed Edge sits low beside reeds and lily pads, and Rocky Drop-off looks across deep water and submerged rock shelves. The skiff is visibly composited into every boat-access scene rather than baked into those backgrounds. Its broad hull is the stable cosmetic slot for future paint and finish purchases; cosmetics must not change fishing performance. The cast marker also changes silhouette and color with the equipped lure so setup choices remain visible during the fishing loop.
+## Second Playable Slice: Gulf Coast
+
+- **Marsh Bank:** included with every Gulf Coast trip and favors Atlantic Croaker, Sand Seatrout, and Spotted Seatrout.
+- **Oyster Reef:** reached by Bay Skiff and favors Sheepshead, Black Drum, and Red Drum around shell and pilings.
+- **Tidal Channel:** reached by Bay Skiff and favors Southern Flounder, Red Drum, and cruising Cobia in deeper moving water.
+- **Bay Skiff:** a permanent 12,500-coin unlock with no fuel, upkeep, steering, or performance advantage. Its separate deep-teal hull layer is reserved for future cosmetic finishes.
+
+## Charter Positions: Open Gulf
+
+- **Blue Water:** the free arrival/default position and a broad-water home for Spanish Mackerel, King Mackerel, Mahi-Mahi, and Yellowfin Tuna.
+- **Working Rig:** a close structural position favoring Red Snapper and Greater Amberjack around deep platform pilings.
+- **Reef Edge:** a submerged current seam favoring Vermilion Snapper, Gray Triggerfish, Red Snapper, and Greater Amberjack.
+- **Relocation fee:** changing to any different position costs 250 coins each time, including returning to Blue Water. Remaining at the current position is free. This represents charter fuel and captain time, not personal boat ownership.
+
+Each authored area uses a distinct viewpoint. Great Lake moves from granite shoreline to sheltered weeds and deep rock structure; Gulf Coast moves from a marsh bank to exposed oyster shell and a broader tidal channel. Each skiff is visibly composited into boat-access scenery rather than baked into it. Broad hull panels provide stable future cosmetic slots, and cosmetics must not change fishing performance. The cast marker also changes silhouette and color with the equipped lure so setup choices remain visible during the fishing loop.
 
 The equipped rod establishes the dominant rarity-weight profile. Area strengths and lure affinities then modify individual species weights in the complete encounter pool. This means a specialty lure can modestly improve the real encounter chance for a location's sole legendary fish, but the 1.2× relative modifier is far smaller than the rod progression and never guarantees a catch. Matching an included lure to a Great Lake area gives the clearest broad habitat preference; mismatched setups remain valid and can still catch every local species.
 
@@ -38,10 +62,16 @@ On narrow screens, the setup panel is collapsed during normal play to a one-line
 - Quiet casts remain capped at 3%, cannot repeat back-to-back, and improve with rod quality.
 - The skiff price is provisional until measured against actual Great Lake trip earnings and rod-upgrade timing.
 - New areas should change the character of a session, not create a single mathematically mandatory setup.
+- Never add a boat merely to create a purchase or cosmetic slot; location fantasy and meaningful water access come first.
+- Open Gulf relocation must remain a modest deliberate cost, clearly shown before selection, and must never silently charge the currently selected position.
 - Later locations adopt this system only after the Great Lake slice is comfortable on phones and understandable without a tutorial wall.
 
 ## Next Validation
 
+- Reusable lure families are implementation-complete across all current locations; continue observing affinity and shop breadth during ordinary play rather than treating them as unfinished feature work.
+- Confirm Gulf Coast area switching, Bay Skiff placement, and the expanded selector on the Samsung Galaxy S20 FE.
+- Record time-to-Bay-Skiff against Gulf Coast trip earnings and inshore rod upgrades before changing the provisional 12,500-coin price.
+- Observe whether the 250-coin Open Gulf relocation fee encourages deliberate positioning without discouraging experimentation during a 4,000-coin charter.
 - Confirm the selector is comfortable on the Samsung Galaxy S20 FE and does not push the cast control below a natural thumb position.
 - Compare species counts across at least 25 casts per area/lure combination.
 - Record time-to-skiff alongside time-to-Graphite and Master Lake Rod.

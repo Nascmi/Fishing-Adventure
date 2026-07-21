@@ -8,13 +8,13 @@ import { unlockLocationCosmetics } from '../data/locationPaintings'
 import { coinStoreItems } from '../data/coinStoreCatalog'
 import { cabinCatalog } from '../data/cabinCatalog'
 import { getCabinDecor, isDecorOwned } from '../data/cabinDecor'
-import { fishingAreas, getDefaultLure, greatLakeBoat, lureFamilies } from '../data/waterSetup'
+import { boats, fishingAreas, getAreasForLocation, getBoatForLocation, getDefaultLure, lureFamilies } from '../data/waterSetup'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 21
+const CURRENT_VERSION = 23
 const defaultFishingSetups = () => Object.fromEntries(rodLocationIds.map((locationId) => [locationId, {
-  areaId: locationId === 'great-lake' ? 'great-lake-shore' : null,
+  areaId: getAreasForLocation(locationId)[0]?.id || null,
   lureId: getDefaultLure(locationId).id,
 }]))
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
@@ -202,6 +202,14 @@ function migrateSave(raw) {
     migrated.fishingSetupByLocation = { ...defaultFishingSetups(), ...(migrated.fishingSetupByLocation || {}) }
     migrated.version = 21
   }
+  if (migrated.version < 22) {
+    migrated.fishingSetupByLocation = { ...defaultFishingSetups(), ...(migrated.fishingSetupByLocation || {}) }
+    migrated.version = 22
+  }
+  if (migrated.version < 23) {
+    migrated.fishingSetupByLocation = { ...defaultFishingSetups(), ...(migrated.fishingSetupByLocation || {}) }
+    migrated.version = 23
+  }
   return migrated
 }
 
@@ -218,17 +226,18 @@ export function validateSave(input) {
   const ownedItemIds = Array.isArray(raw.coinStore?.ownedItemIds)
     ? [...new Set(raw.coinStore.ownedItemIds.filter((id) => validCoinStoreIds.has(id)))]
     : []
-  const ownedBoatIds = Array.isArray(raw.watercraft?.ownedBoatIds) && raw.watercraft.ownedBoatIds.includes(greatLakeBoat.id)
-    ? [greatLakeBoat.id]
-    : []
+  const validBoatIds = new Set(boats.map((boat) => boat.id))
+  const ownedBoatIds = Array.isArray(raw.watercraft?.ownedBoatIds) ? [...new Set(raw.watercraft.ownedBoatIds.filter((id) => validBoatIds.has(id)))] : []
   const purchasableLureIds = new Set(lureFamilies.filter((lure) => !lure.included).map((lure) => lure.id))
   const ownedLureIds = Array.isArray(raw.tackle?.ownedLureIds) ? [...new Set(raw.tackle.ownedLureIds.filter((id) => purchasableLureIds.has(id)))] : []
   const fishingSetupByLocation = Object.fromEntries(rodLocationIds.map((locationId) => {
     const rawSetup = raw.fishingSetupByLocation?.[locationId]
     const defaultLure = getDefaultLure(locationId)
     const selectedLure = lureFamilies.find((lure) => lure.id === rawSetup?.lureId && lure.locationId === locationId && (lure.included || ownedLureIds.includes(lure.id)))
-    const selectedArea = locationId === 'great-lake' ? fishingAreas.find((area) => area.id === rawSetup?.areaId) : null
-    const areaId = selectedArea && (!selectedArea.boatRequired || ownedBoatIds.includes(greatLakeBoat.id)) ? selectedArea.id : locationId === 'great-lake' ? 'great-lake-shore' : null
+    const defaultArea = getAreasForLocation(locationId)[0]
+    const selectedArea = fishingAreas.find((area) => area.id === rawSetup?.areaId && area.locationId === locationId)
+    const boat = getBoatForLocation(locationId)
+    const areaId = selectedArea && (!selectedArea.boatRequired || (boat && ownedBoatIds.includes(boat.id))) ? selectedArea.id : defaultArea?.id || null
     return [locationId, { areaId, lureId: selectedLure?.id || defaultLure.id }]
   }))
   const gearByLocation = Object.fromEntries(rodLocationIds.map((locationId) => {

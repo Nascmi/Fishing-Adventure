@@ -21,6 +21,8 @@ Monetization is not part of the current roadmap. If introduced later, it must su
 
 Prices, purchase restoration, parental considerations, platform requirements, and offline behavior must be designed deliberately before commerce is implemented.
 
+Boat cosmetics may exist only for boats already justified by the fishing location and visibly owned in normal play. Monetization must never cause a boat, access gate, or redundant water area to be added where the location fantasy does not support one. Pine River, Open Gulf, and the current Backyard Pond therefore receive no personal boat merely to create something saleable.
+
 ## Prepared Real-Money Product Catalog
 
 The project contains dormant planning metadata for eight possible non-consumable cosmetic products. None are imported by the live app, visible to players, configured on a platform, or available for purchase.

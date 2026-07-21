@@ -35,7 +35,7 @@ When documents conflict, follow them in the order above and update the outdated 
 
 The current development build has completed Phases 1 through 3. Five playable waters—Backyard Pond, Pine River, Great Lake, Gulf Coast, and Open Gulf—now form a complete fishing journey with location-specific species, equipment, presentation, day cycles, and three-day destination charters. The game also includes Angling Keepsakes, specimen preservation, passing rain, earned and coin-purchased cabins, cabin sharing, and the earned-coin Trading Post.
 
-Phase 4 has begun with authored Great Lake areas, a permanent skiff, reusable included tackle, permanent specialty lures for legendary targets, and rare rod-dependent quiet casts. Accessibility, balance, save-migration, device, and economy testing remain ongoing quality priorities. See `PHASE_4_DESIGN.md` for the design contract, `CHANGELOG.md` for current work, and `ROADMAP.md` for approved direction.
+Phase 4 now includes authored Great Lake and Gulf Coast areas, permanent location-aware boats, paid captain-selected Open Gulf charter positions, complete reusable tackle families, permanent specialty lures for legendary targets, and rare rod-dependent quiet casts. Accessibility, balance, save-migration, device, and economy testing remain ongoing quality priorities. See `PHASE_4_DESIGN.md` for the design contract, `CHANGELOG.md` for current work, and `ROADMAP.md` for approved direction.
 
 ## Running the Project
 

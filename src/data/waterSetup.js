@@ -1,15 +1,33 @@
 import greatLakeSkiffImage from '../assets/locations/great-lake-skiff.webp'
 import greatLakeWeedEdgeImage from '../assets/locations/great-lake-weed-edge.webp'
 import greatLakeDropOffImage from '../assets/locations/great-lake-drop-off.webp'
+import gulfCoastBaySkiffImage from '../assets/locations/gulf-coast-bay-skiff.webp'
+import gulfCoastOysterReefImage from '../assets/locations/gulf-coast-oyster-reef.png'
+import gulfCoastTidalChannelImage from '../assets/locations/gulf-coast-tidal-channel.png'
+import openGulfWorkingRigImage from '../assets/locations/open-gulf-working-rig.png'
+import openGulfReefEdgeImage from '../assets/locations/open-gulf-reef-edge.png'
 
 export const greatLakeBoat = {
   id: 'great-lake-skiff',
+  locationId: 'great-lake',
   name: 'Great Lake Skiff',
   price: 5000,
   description: 'A permanent, quiet ride to the lake’s authored offshore water.',
   image: greatLakeSkiffImage,
   cosmeticSlot: 'hull',
 }
+
+export const gulfCoastBoat = {
+  id: 'gulf-coast-bay-skiff',
+  locationId: 'gulf-coast',
+  name: 'Bay Skiff',
+  price: 12500,
+  description: 'A permanent shallow-draft skiff for oyster reefs and tidal channels.',
+  image: gulfCoastBaySkiffImage,
+  cosmeticSlot: 'hull',
+}
+
+export const boats = [greatLakeBoat, gulfCoastBoat]
 
 export const fishingAreas = [
   {
@@ -39,6 +57,63 @@ export const fishingAreas = [
     boatPosition: 'drop-off',
     image: greatLakeDropOffImage,
     fishStrengths: ['walleye', 'lake-trout'],
+  },
+  {
+    id: 'gulf-coast-marsh-bank',
+    locationId: 'gulf-coast',
+    name: 'Marsh Bank',
+    description: 'Sheltered shoreline for croaker and seatrout moving through the grass.',
+    boatRequired: false,
+    fishStrengths: ['atlantic-croaker', 'sand-seatrout', 'spotted-seatrout'],
+  },
+  {
+    id: 'gulf-coast-oyster-reef',
+    locationId: 'gulf-coast',
+    name: 'Oyster Reef',
+    description: 'Hard shell and weathered pilings draw powerful structure feeders.',
+    boatRequired: true,
+    boatPosition: 'oyster-reef',
+    image: gulfCoastOysterReefImage,
+    fishStrengths: ['sheepshead', 'black-drum', 'red-drum'],
+  },
+  {
+    id: 'gulf-coast-tidal-channel',
+    locationId: 'gulf-coast',
+    name: 'Tidal Channel',
+    description: 'Deeper moving water for flounder, Red Drum, and cruising Cobia.',
+    boatRequired: true,
+    boatPosition: 'tidal-channel',
+    image: gulfCoastTidalChannelImage,
+    fishStrengths: ['southern-flounder', 'red-drum', 'cobia'],
+  },
+  {
+    id: 'open-gulf-blue-water',
+    locationId: 'open-gulf',
+    name: 'Blue Water',
+    description: 'The charter arrival point for fast-moving pelagic fish.',
+    boatRequired: false,
+    relocationCost: 250,
+    fishStrengths: ['spanish-mackerel', 'king-mackerel', 'mahi-mahi', 'yellowfin-tuna'],
+  },
+  {
+    id: 'open-gulf-working-rig',
+    locationId: 'open-gulf',
+    name: 'Working Rig',
+    description: 'The captain holds near deep pilings where powerful fish gather.',
+    boatRequired: false,
+    relocationCost: 250,
+    image: openGulfWorkingRigImage,
+    fishStrengths: ['red-snapper', 'greater-amberjack'],
+  },
+  {
+    id: 'open-gulf-reef-edge',
+    locationId: 'open-gulf',
+    name: 'Reef Edge',
+    description: 'A current seam above submerged structure and reef fish below.',
+    boatRequired: false,
+    relocationCost: 250,
+    image: openGulfReefEdgeImage,
+    fishStrengths: ['vermilion-snapper', 'gray-triggerfish', 'red-snapper', 'greater-amberjack'],
   },
 ]
 
@@ -92,6 +167,8 @@ export const lureFamilies = [
 
 export const getAreasForLocation = (locationId) => fishingAreas.filter((area) => area.locationId === locationId)
 export const getFishingArea = (id) => fishingAreas.find((area) => area.id === id)
+export const getBoat = (id) => boats.find((boat) => boat.id === id)
+export const getBoatForLocation = (locationId) => boats.find((boat) => boat.locationId === locationId)
 export const getLureFamily = (id) => lureFamilies.find((lure) => lure.id === id)
 export const getLuresForLocation = (locationId) => lureFamilies.filter((lure) => lure.locationId === locationId)
 export const getDefaultLure = (locationId) => getLuresForLocation(locationId).find((lure) => lure.included)

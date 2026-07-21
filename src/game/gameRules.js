@@ -6,7 +6,7 @@ import { GAME_CONFIG } from '../data/config'
 import { getLocation } from '../data/locations'
 import { unlockLocationCosmetics } from '../data/locationPaintings'
 import { getRod } from '../data/rods'
-import { getFishingArea, getLureFamily, greatLakeBoat } from '../data/waterSetup'
+import { getBoat, getBoatForLocation, getFishingArea, getLureFamily } from '../data/waterSetup'
 
 const randomBetween = (minimum, maximum, random) => Math.round(minimum + random() * (maximum - minimum))
 
@@ -66,8 +66,9 @@ export const equipOwnedRod = (state, id, locationId) =>
     : state
 
 export const purchaseBoat = (state, id) => {
-  if (id !== greatLakeBoat.id || state.watercraft.ownedBoatIds.includes(id) || state.coins < greatLakeBoat.price) return state
-  return { ...state, coins: state.coins - greatLakeBoat.price, watercraft: { ...state.watercraft, ownedBoatIds: [...state.watercraft.ownedBoatIds, id] } }
+  const boat = getBoat(id)
+  if (!boat || state.watercraft.ownedBoatIds.includes(id) || state.coins < boat.price) return state
+  return { ...state, coins: state.coins - boat.price, watercraft: { ...state.watercraft, ownedBoatIds: [...state.watercraft.ownedBoatIds, id] } }
 }
 
 export const purchaseLure = (state, id) => {
@@ -83,8 +84,12 @@ export const chooseFishingSetup = (state, locationId, type, id) => {
     return { ...state, fishingSetupByLocation: { ...state.fishingSetupByLocation, [locationId]: { ...current, lureId: id } } }
   }
   const area = getFishingArea(id)
-  if (locationId !== 'great-lake' || type !== 'area' || !area || area.locationId !== locationId || (area.boatRequired && !state.watercraft.ownedBoatIds.includes(greatLakeBoat.id))) return state
-  return { ...state, fishingSetupByLocation: { ...state.fishingSetupByLocation, [locationId]: { ...current, areaId: id } } }
+  const boat = getBoatForLocation(locationId)
+  if (type !== 'area' || !area || area.locationId !== locationId || (area.boatRequired && (!boat || !state.watercraft.ownedBoatIds.includes(boat.id)))) return state
+  if (current.areaId === id) return state
+  const relocationCost = area.relocationCost || 0
+  if (state.coins < relocationCost) return state
+  return { ...state, coins: state.coins - relocationCost, fishingSetupByLocation: { ...state.fishingSetupByLocation, [locationId]: { ...current, areaId: id } } }
 }
 
 export const startTrip = (state, locationId, now = Date.now()) => {

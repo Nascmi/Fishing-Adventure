@@ -1,7 +1,16 @@
 # Changelog
 
-## Phase 4 — Great Lake first playable slice
+## Phase 4 — Authored water choices
 
+- Added Open Gulf Blue Water, Working Rig, and Reef Edge charter positions with distinct authored stern viewpoints and habitat weighting.
+- Added a transparent 250-coin fuel/time charge for every actual Open Gulf relocation, with same-position protection and exact insufficient-coin UI feedback.
+- Migrated saves to version 23 with Blue Water as the safe Open Gulf default and expanded the full setup matrix across all charter positions.
+- Documented the boat-suitability boundary: personal boats belong at Great Lake and Gulf Coast, not Pine River, the charter-based Open Gulf, or the current intimate Backyard Pond; sales and cosmetic slots may never drive location design.
+- Added Gulf Coast Marsh Bank, Oyster Reef, and Tidal Channel areas with habitat-specific fish weighting and distinct authored viewpoints.
+- Added the permanent 12,500-coin Bay Skiff, with a separate cosmetic-ready hull layer and ownership-gated coastal areas.
+- Generalized boat purchasing, area access, presentation, and save validation so they are location-aware rather than Great Lake-specific.
+- Migrated saves to version 22 with a safe Marsh Bank default and validation for both permanent boats.
+- Marked reusable lure families complete after implementing all current-location catalogs, permanent ownership, presentation, migration, and full setup-matrix regression coverage.
 - Fixed purchased target lures failing at the moment of hooking when paired with an authored fishing area, including the Pike Spoon at Great Lake's Weed Edge.
 - Added matrix regression coverage for every valid location, lure, and fishing-area combination across all four day phases.
 - Added a permanent Great Lake Skiff that opens the authored Weed Edge and Rocky Drop-off areas while Rocky Shore remains available to everyone.

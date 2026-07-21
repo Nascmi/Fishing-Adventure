@@ -12,7 +12,7 @@ afterEach(() => {
 describe('save migrations and validation', () => {
   it('creates a complete version 19 new game', () => {
     const state = newGame()
-    expect(state.version).toBe(21)
+    expect(state.version).toBe(23)
     expect(state.coinStore).toEqual({ ownedItemIds: [] })
     expect(state.cabin.styleId).toBe('starter')
     expect(Object.keys(state.gearByLocation)).toHaveLength(5)
@@ -28,7 +28,7 @@ describe('save migrations and validation', () => {
       equippedRod: 'fiberglass',
       stats: legacyStats,
     })
-    expect(state.version).toBe(21)
+    expect(state.version).toBe(23)
     expect(state.coins).toBe(432)
     expect(state.gearByLocation['willow-pond']).toEqual({ ownedRods: ['old', 'fiberglass'], equippedRod: 'fiberglass' })
     expect(state.gearByLocation['open-gulf'].ownedRods).toContain('offshore-starter')
@@ -49,14 +49,14 @@ describe('save migrations and validation', () => {
       settings: {},
       stats: { ...legacyStats, totalCaught: 1 },
     })
-    expect(state.version).toBe(21)
+    expect(state.version).toBe(23)
     expect(state.cabin.specimens.bluegill).toMatchObject({ fishId: 'bluegill', weight: 1.6, sizeTier: 'great' })
     expect(state.cabin.specimens.bluegill.mounted).toBeNull()
   })
 
   it('migrates version 16 with an empty Trading Post ownership set', () => {
     const state = validateSave({ version: 16, coins: 90 })
-    expect(state.version).toBe(21)
+    expect(state.version).toBe(23)
     expect(state.coinStore.ownedItemIds).toEqual([])
   })
 
@@ -73,7 +73,7 @@ describe('save migrations and validation', () => {
 
   it('migrates version 17 with independent empty cabin decor selections', () => {
     const state = validateSave({ version: 17, coinStore: { ownedItemIds: ['trading-post.cabin-riverstone'] }, cabin: { styleId: 'riverstone-cabin' } })
-    expect(state.version).toBe(21)
+    expect(state.version).toBe(23)
     expect(state.cabin.decorByCabin['riverstone-cabin']).toEqual({ 'hearth-frame': null, 'river-shelf': null, 'braided-rug': null })
   })
 
@@ -111,7 +111,7 @@ describe('save migrations and validation', () => {
       achievementProgress: { locationsFished: ['willow-pond', 'pine-river'], completedTrips: [], peakMoments: [] },
     })
 
-    expect(state.version).toBe(21)
+    expect(state.version).toBe(23)
     expect(state.coins).toBe(24680)
     expect(state.gearByLocation['pine-river']).toEqual({ ownedRods: ['worn-fly', 'fiberglass-fly'], equippedRod: 'fiberglass-fly' })
     expect(state.dayCycle.activeTrip).toEqual({ locationId: 'pine-river', elapsedMs: 60000, remainingMs: 120000 })
@@ -127,7 +127,7 @@ describe('save migrations and validation', () => {
 
   it('adds safe Phase 4 defaults to version 19 saves and preserves valid version 20 setup', () => {
     const migrated = validateSave({ version: 19, coins: 300 })
-    expect(migrated.version).toBe(21)
+    expect(migrated.version).toBe(23)
     expect(migrated.watercraft.ownedBoatIds).toEqual([])
     expect(migrated.fishingSetupByLocation['great-lake']).toEqual({ areaId: 'great-lake-shore', lureId: 'spoon' })
 
@@ -146,6 +146,22 @@ describe('save migrations and validation', () => {
     expect(owned.tackle.ownedLureIds).toEqual(['muskie-bucktail'])
     expect(owned.fishingSetupByLocation['great-lake'].lureId).toBe('muskie-bucktail')
     expect(validateSave({ version: 21, fishingSetupByLocation: { 'great-lake': { lureId: 'muskie-bucktail' } } }).fishingSetupByLocation['great-lake'].lureId).toBe('spoon')
+  })
+
+  it('adds the Gulf Coast shore default to version 21 and preserves an owned Bay Skiff setup', () => {
+    expect(validateSave({ version: 21 }).fishingSetupByLocation['gulf-coast']).toEqual({ areaId: 'gulf-coast-marsh-bank', lureId: 'popping-shrimp' })
+
+    const preserved = validateSave({
+      version: 22,
+      watercraft: { ownedBoatIds: ['gulf-coast-bay-skiff'] },
+      fishingSetupByLocation: { 'gulf-coast': { areaId: 'gulf-coast-oyster-reef', lureId: 'popping-shrimp' } },
+    })
+    expect(preserved.watercraft.ownedBoatIds).toEqual(['gulf-coast-bay-skiff'])
+    expect(preserved.fishingSetupByLocation['gulf-coast']).toEqual({ areaId: 'gulf-coast-oyster-reef', lureId: 'popping-shrimp' })
+  })
+
+  it('adds Blue Water as the safe Open Gulf position for version 22 saves', () => {
+    expect(validateSave({ version: 22 }).fishingSetupByLocation['open-gulf']).toEqual({ areaId: 'open-gulf-blue-water', lureId: 'metal-jig' })
   })
 
   it('returns an unowned or unknown cabin to the Starter Cabin', () => {
@@ -172,8 +188,8 @@ describe('save migrations and validation', () => {
   })
 
   it('falls back safely for null and non-object input', () => {
-    expect(validateSave(null).version).toBe(21)
-    expect(validateSave('damaged').version).toBe(21)
+    expect(validateSave(null).version).toBe(23)
+    expect(validateSave('damaged').version).toBe(23)
     expect(validateSave(null).coins).toBe(50)
   })
 
@@ -185,7 +201,7 @@ describe('save migrations and validation', () => {
       removeItem: () => {},
     }
     const loaded = loadGame()
-    expect(loaded.game.version).toBe(21)
+    expect(loaded.game.version).toBe(23)
     expect(loaded.notice).toMatch(/could not read/i)
     expect([...writes.values()]).toContain('{not-json')
   })

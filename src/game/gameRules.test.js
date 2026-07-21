@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { GAME_CONFIG } from '../data/config'
 import { newGame } from '../services/saveService'
-import { greatLakeBoat } from '../data/waterSetup'
+import { greatLakeBoat, gulfCoastBoat } from '../data/waterSetup'
 import { chooseCabinDecor, chooseCabinStyle, chooseFishingSetup, equipOwnedRod, preserveCabinSpecimen, purchaseBoat, purchaseCoinStoreItem, purchaseLure, purchaseRod, skipTimePhase, startTrip, tickGameTime } from './gameRules'
 
 const withCoins = (coins) => ({ ...newGame(), coins })
@@ -15,6 +15,28 @@ describe('on-the-water setup', () => {
     expect(purchased.watercraft.ownedBoatIds).toEqual([greatLakeBoat.id])
     expect(chooseFishingSetup(purchased, 'great-lake', 'area', 'great-lake-drop-off').fishingSetupByLocation['great-lake'].areaId).toBe('great-lake-drop-off')
     expect(purchaseBoat(purchased, greatLakeBoat.id)).toBe(purchased)
+  })
+
+  it('buys the Bay Skiff once and gates Gulf Coast areas behind its ownership', () => {
+    const state = withCoins(gulfCoastBoat.price + 100)
+    expect(chooseFishingSetup(state, 'gulf-coast', 'area', 'gulf-coast-oyster-reef')).toBe(state)
+    const purchased = purchaseBoat(state, gulfCoastBoat.id)
+    expect(purchased.coins).toBe(100)
+    expect(purchased.watercraft.ownedBoatIds).toEqual([gulfCoastBoat.id])
+    expect(chooseFishingSetup(purchased, 'gulf-coast', 'area', 'gulf-coast-tidal-channel').fishingSetupByLocation['gulf-coast'].areaId).toBe('gulf-coast-tidal-channel')
+    expect(purchaseBoat(purchased, gulfCoastBoat.id)).toBe(purchased)
+  })
+
+  it('charges the Open Gulf charter relocation fee only when changing positions', () => {
+    const state = withCoins(600)
+    const atRig = chooseFishingSetup(state, 'open-gulf', 'area', 'open-gulf-working-rig')
+    expect(atRig.coins).toBe(350)
+    expect(atRig.fishingSetupByLocation['open-gulf'].areaId).toBe('open-gulf-working-rig')
+    expect(chooseFishingSetup(atRig, 'open-gulf', 'area', 'open-gulf-working-rig')).toBe(atRig)
+
+    const atReef = chooseFishingSetup(atRig, 'open-gulf', 'area', 'open-gulf-reef-edge')
+    expect(atReef.coins).toBe(100)
+    expect(chooseFishingSetup(atReef, 'open-gulf', 'area', 'open-gulf-blue-water')).toBe(atReef)
   })
 
   it('changes reusable lures without spending coins', () => {

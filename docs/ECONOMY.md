@@ -18,6 +18,8 @@ The economy turns each catch into visible progress without turning fishing into 
 - Rod upgrades within a location are purchased in sequence, even when the player already has enough shared coins for a later rod.
 - Each location's included lure remains free. Specialty legendary-fish lures are permanent one-time coin purchases priced from 10,000 to 35,000 coins; they provide a modest 20% relative target affinity and are gameplay progression rather than real-money products.
 - Curated non-legendary target tackle is also permanent and costs 100–250 coins. These purchases provide a 5% relative affinity to one fish or believable fish group and serve as early experimentation rather than a complete species-by-species checklist.
+- Boats are permanent earned-coin purchases: the Great Lake Skiff costs 5,000 coins and the Gulf Coast Bay Skiff costs a provisional 12,500 coins. They open authored fishing areas but never improve rod rarity odds or guarantee fish.
+- Open Gulf uses the existing charter rather than another owned boat. Each move to a different charter position costs 250 coins as a visible fuel/time fee; arrival at Blue Water and staying put are free.
 - Backyard Pond is always free. Other locations are recurring coin sinks framed as three-day charter trips rather than per-cast fees.
 - Charter prices begin at 300 coins for Pine River, 800 for Great Lake, 1,600 for Gulf Coast, and 4,000 for Open Gulf; tune these against measured trip earnings.
 - Preserving the first Great or Trophy specimen of a species for cabin display has a starting cost of 100 coins. The game remembers eligible candidates before payment, and upgrading an existing mount to a heavier specimen of the same species is free.
