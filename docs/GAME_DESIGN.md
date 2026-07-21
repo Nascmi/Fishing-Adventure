@@ -28,7 +28,7 @@ Players should understand the basic loop within a few minutes. Common catches mu
 
 The bite response adds attention without turning fishing into a reflex test. Its timing should be generous, adjustable for accessibility, and paired with clear visual, audio, and haptic feedback where available.
 
-The reeling interaction uses one control: hold to gain catch progress and release to reduce line tension. Common fish should be landed quickly, while larger and rarer fish require a little more care. Better rods improve line control as well as rarity odds. The interaction should remain forgiving, readable, and short enough that ordinary catches never become chores.
+The reeling interaction uses one control: hold to gain catch progress and release to reduce line tension. Progress continues more slowly under high tension, but staying there accumulates line strain and can break the line; leaving the line slack lets the fish regain progress and eventually escape. Larger and rarer fish create strain faster, while brief mistakes remain recoverable. Common fish should be landed quickly, while larger and rarer fish require a little more care. Better rods improve line control as well as rarity odds. The interaction should remain forgiving, readable, and short enough that ordinary catches never become chores.
 
 The fishing control stays in one fixed thumb position throughout casting, hooking, and reeling. During reeling, tension and progress appear above the control over the pond so the player's hand does not hide critical feedback.
 

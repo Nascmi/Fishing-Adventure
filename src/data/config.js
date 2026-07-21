@@ -1,3 +1,5 @@
+import { RARITY_REELING_DIFFICULTY } from './rarities'
+
 export const GAME_CONFIG = {
   startingCoins: 50,
   trophyPreservationCost: 100,
@@ -33,15 +35,13 @@ export const GAME_CONFIG = {
     tensionRecoveryPerSecond: 31,
     progressPerSecond: 29,
     progressLossPerSecond: 4,
+    redZoneProgressMultiplier: 0.45,
+    slackProgressLossMultiplier: 2.5,
+    lineStrainPerSecond: 30,
+    lineStrainRecoveryPerSecond: 18,
     safeTensionMin: 22,
-    safeTensionMax: 84,
-    rarityDifficulty: {
-      common: 0.82,
-      uncommon: 0.94,
-      rare: 1.06,
-      epic: 1.18,
-      legendary: 1.3,
-    },
+    safeTensionMax: 70,
+    rarityDifficulty: RARITY_REELING_DIFFICULTY,
   },
   catchWeights: [
     { id: 'ordinary', label: 'Regular catch', chance: 68, minPercent: 0, maxPercent: 0.5 },

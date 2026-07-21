@@ -1,5 +1,5 @@
 import { fish } from '../data/fish'
-const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
+import { RARITY_ORDER } from '../data/rarities'
 const preferredPhases = {
   bluegill: ['morning', 'evening'], sunfish: ['midday'], crappie: ['morning', 'evening'],
   'largemouth-bass': ['morning', 'evening'], catfish: ['evening', 'night'], 'old-whiskers': ['night'],
@@ -25,13 +25,13 @@ const weightedPick = (pool, weights, random) => {
 }
 export function selectFish(chances, allowedIds, phase = 'morning', random = Math.random) {
   const eligible = fish.filter((item) => allowedIds.includes(item.id))
-  const rarityWeights = Object.fromEntries(rarityOrder.map((rarity) => [rarity, 0]))
+  const rarityWeights = Object.fromEntries(RARITY_ORDER.map((rarity) => [rarity, 0]))
   for (const [rarity, chance] of Object.entries(chances)) {
-    let index = rarityOrder.indexOf(rarity)
-    while (index >= 0 && !eligible.some((item) => item.rarity === rarityOrder[index])) index -= 1
-    if (index >= 0) rarityWeights[rarityOrder[index]] += chance
+    let index = RARITY_ORDER.indexOf(rarity)
+    while (index >= 0 && !eligible.some((item) => item.rarity === RARITY_ORDER[index])) index -= 1
+    if (index >= 0) rarityWeights[RARITY_ORDER[index]] += chance
   }
-  const rarityCounts = Object.fromEntries(rarityOrder.map((rarity) => [rarity, eligible.filter((item) => item.rarity === rarity).length]))
+  const rarityCounts = Object.fromEntries(RARITY_ORDER.map((rarity) => [rarity, eligible.filter((item) => item.rarity === rarity).length]))
   const weights = eligible.map((item) => {
     const baseline = rarityWeights[item.rarity] / Math.max(1, rarityCounts[item.rarity])
     return baseline * (preferredPhases[item.id]?.includes(phase) ? 2.25 : 1)

@@ -1,4 +1,3 @@
-export const RARITY = { common: 1, uncommon: 1.25, rare: 1.7, epic: 2.4, legendary: 4 }
 const artwork = import.meta.glob('../assets/fish/*.webp', {
   eager: true,
   query: '?url',

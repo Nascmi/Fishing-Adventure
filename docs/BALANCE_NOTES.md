@@ -44,6 +44,14 @@ Change one variable at a time whenever practical. Do not rebalance from a single
 - Result: the player can cast, hook, and reel without changing grip.
 - Next action: verify the placement on several phone heights and with system text scaling.
 
+### Reeling tension risk — pre-Phase 4 tuning
+
+- Test conditions: player feedback across the current one-button reeling interaction.
+- Observation: holding the reel continuously could land many fish before tension reached the breaking point, especially with upgraded rods.
+- Variable changed: lowered the safe-tension ceiling from 84% to 70%, added accumulating high-tension line strain weighted by fish difficulty, and increased progress loss while the line is slack.
+- Intended result: brief entry into either danger zone remains recoverable, but continuous holding can break the line and prolonged slack can let the fish escape. Progress continues in the red zone at a reduced rate.
+- Next action: playtest common and Trophy catches with every rod tier, then tune strain and recovery rates without widening the safe zone first.
+
 ### Pine River population — Phase 2 Pacific Northwest pass
 
 - Population: Mountain Whitefish, Coastal Cutthroat Trout, Rainbow Trout, Steelhead, and Chinook Salmon.

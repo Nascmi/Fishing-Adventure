@@ -1,5 +1,6 @@
 import { GAME_CONFIG } from '../data/config'
-import { fish as fishData, RARITY } from '../data/fish'
+import { fish as fishData } from '../data/fish'
+import { RARITY_VALUE_MULTIPLIERS } from '../data/rarities'
 
 function selectWeightTier(random) {
   let roll = random() * 100
@@ -29,7 +30,7 @@ export function makeCatch(fish, random = Math.random, now = Date.now()) {
   const sizeRatio = weight / fish.minWeight
   const value = Math.max(
     1,
-    Math.round(fish.baseValue * (0.55 + sizeRatio * 0.45) * RARITY[fish.rarity]),
+    Math.round(fish.baseValue * (0.55 + sizeRatio * 0.45) * RARITY_VALUE_MULTIPLIERS[fish.rarity]),
   )
 
   return {

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { GAME_CONFIG } from '../data/config'
+import { advanceReeling } from '../game/reelingRules'
 import Icon from './Icon'
 
 const clamp = (value, min = 0, max = 100) => Math.min(max, Math.max(min, value))
@@ -10,6 +11,7 @@ export default function ReelingGame({ catchItem, fish, rod, onCatch, onEscape })
   const game = useRef({
     tension: tuning.startingTension,
     progress: tuning.startingProgress,
+    lineStrain: 0,
     elapsed: 0,
   })
   const finished = useRef(false)
@@ -28,29 +30,16 @@ export default function ReelingGame({ catchItem, fish, rod, onCatch, onEscape })
     const tick = (time) => {
       const delta = Math.min((time - previousTime) / 1000, 0.05)
       previousTime = time
-      const current = game.current
-      current.elapsed += delta
+      const result = advanceReeling(game.current, { holding: holding.current, difficulty, lineControl: rod.lineControl, delta, tuning })
+      game.current = result.state
+      const current = result.state
 
-      const fishPull = 1 + Math.max(0, Math.sin(current.elapsed * (2.4 + difficulty))) * 0.22
-      if (holding.current) {
-        current.tension += tuning.tensionRisePerSecond * difficulty * fishPull * (1 - rod.lineControl) * delta
-        const controlBonus = 1 + rod.lineControl * 0.35
-        const usefulTension = current.tension >= tuning.safeTensionMin && current.tension <= tuning.safeTensionMax
-        current.progress += tuning.progressPerSecond * controlBonus / difficulty * (usefulTension ? 1 : 0.45) * delta
-      } else {
-        current.tension -= tuning.tensionRecoveryPerSecond * (1 + rod.lineControl) * delta
-        if (current.elapsed > 1.2) current.progress -= tuning.progressLossPerSecond * difficulty * delta
-      }
-
-      current.tension = clamp(current.tension)
-      current.progress = clamp(current.progress)
-
-      if (current.progress >= 100 && !finished.current) {
+      if (result.outcome === 'caught' && !finished.current) {
         finished.current = true
         onCatch()
         return
       }
-      if ((current.tension >= 100 || current.progress <= 0) && !finished.current) {
+      if (result.outcome === 'escaped' && !finished.current) {
         finished.current = true
         onEscape()
         return
@@ -76,7 +65,8 @@ export default function ReelingGame({ catchItem, fish, rod, onCatch, onEscape })
     holding.current = true
   }
   const stopReeling = () => { holding.current = false }
-  const tensionState = display.tension > tuning.safeTensionMax ? 'Ease off' : display.tension < tuning.safeTensionMin ? 'Reel steadily' : 'Good tension'
+  const tensionState = display.tension > tuning.safeTensionMax ? 'Line may break!' : display.tension < tuning.safeTensionMin ? 'Fish is slipping!' : 'Good tension'
+  const tensionDanger = display.tension > tuning.safeTensionMax || display.tension < tuning.safeTensionMin
 
-  return <section className="reeling-game" aria-label="Reeling mini-game"><div className="reeling-hud"><div className="reeling-heading"><div><span className="eyebrow">Something is on the line</span><h3>Keep steady</h3></div><span className={`tension-label ${display.tension > tuning.safeTensionMax ? 'danger' : ''}`}>{tensionState}</span></div><div className="tension-track" role="meter" aria-label="Line tension" aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(display.tension)}><span className="safe-zone"/><i style={{ left: `${display.tension}%` }}/></div><div className="catch-progress"><span>Catch progress</span><b>{Math.round(display.progress)}%</b><div><i style={{ width: `${display.progress}%` }}/><span className="fish-progress-marker" style={{ left: `${display.progress}%` }}><Icon name="fish" size={18}/></span></div></div></div><button className="reel-control" onPointerDown={startReeling} onPointerUp={stopReeling} onPointerCancel={stopReeling} onLostPointerCapture={stopReeling} onBlur={stopReeling} onKeyDown={(event) => { if ((event.key === ' ' || event.key === 'Enter') && !event.repeat) startReeling(event) }} onKeyUp={(event) => { if (event.key === ' ' || event.key === 'Enter') stopReeling() }}><span>Hold to reel</span><small>Release when the line gets tight</small></button></section>
+  return <section className="reeling-game" aria-label="Reeling mini-game"><div className="reeling-hud"><div className="reeling-heading"><div><span className="eyebrow">Something is on the line</span><h3>Keep steady</h3></div><span className={`tension-label ${tensionDanger ? 'danger' : ''}`}>{tensionState}</span></div><div className="tension-track" role="meter" aria-label="Line tension" aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(display.tension)}><span className="safe-zone"/><i style={{ left: `${display.tension}%` }}/></div><div className="catch-progress"><span>Catch progress</span><b>{Math.round(display.progress)}%</b><div><i style={{ width: `${display.progress}%` }}/><span className="fish-progress-marker" style={{ left: `${display.progress}%` }}><Icon name="fish" size={18}/></span></div></div></div><button className="reel-control" onPointerDown={startReeling} onPointerUp={stopReeling} onPointerCancel={stopReeling} onLostPointerCapture={stopReeling} onBlur={stopReeling} onKeyDown={(event) => { if ((event.key === ' ' || event.key === 'Enter') && !event.repeat) startReeling(event) }} onKeyUp={(event) => { if (event.key === ' ' || event.key === 'Enter') stopReeling() }}><span>Hold to reel</span><small>Release when the line gets tight</small></button></section>
 }

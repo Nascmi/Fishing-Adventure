@@ -4,6 +4,8 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 
 ## Unreleased
 
+- Consolidated rarity order, labels, value multipliers, and reeling difficulty into one validated catalog shared by fish selection, catch values, and gameplay tuning.
+- Tightened the reeling safe zone and added recoverable high-tension line strain and stronger slack-line progress loss, making hold-and-release decisions meaningful for larger fish.
 - Completed the Riverstone, Cedar Hideaway, and Captain's Retreat customization hooks with fixed authored placement and compatible-item filtering.
 - Activated twelve permanent earned-coin decor purchases and added included and accomplishment-earned choices to compatible cabin hooks.
 - Migrated saves to version 18 with validated per-cabin decor selections and added selected decor to cabin share images.

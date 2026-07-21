@@ -32,8 +32,8 @@
 .reeling-heading h3{margin:3px 0 0;font:1.35rem/1 var(--display)}
 .tension-label{padding:6px 9px;border-radius:20px;background:#dcebe1;color:#2c655b;font-size:.67rem;font-weight:700;transition:background .2s,color .2s}
 .tension-label.danger{background:#f5ddd3;color:#9a4936}
-.tension-track{position:relative;height:25px;margin:4px 8px 18px;border-radius:20px;background:linear-gradient(90deg,#8fb4b1 0 22%,#d5e5b9 22% 84%,#df8b6d 84%);box-shadow:inset 0 2px 5px #17373626}
-.tension-track .safe-zone{position:absolute;left:22%;right:16%;top:4px;bottom:4px;border:1px solid #fff9;border-radius:12px}
+.tension-track{position:relative;height:25px;margin:4px 8px 18px;border-radius:20px;background:linear-gradient(90deg,#d7a078 0 22%,#d5e5b9 22% 70%,#df8b6d 70%);box-shadow:inset 0 2px 5px #17373626}
+.tension-track .safe-zone{position:absolute;left:22%;right:30%;top:4px;bottom:4px;border:1px solid #fff9;border-radius:12px}
 .tension-track>i{position:absolute;top:50%;width:17px;height:31px;border:3px solid #fff;border-radius:9px;background:#173f3d;box-shadow:0 3px 8px #17373644;transform:translate(-50%,-50%);transition:left .045s linear}
 .catch-progress{margin-bottom:14px;font-size:.7rem;color:#526c66}
 .catch-progress>span{font-weight:600}.catch-progress>b{float:right;color:#264f4a}
