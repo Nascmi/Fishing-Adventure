@@ -22,6 +22,8 @@ A quiet morning beside the water: peaceful, natural, cozy, and mature rather tha
 
 Fish use cohesive hand-painted naturalist illustrations with recognizable silhouettes and species markings. New fish should match their restrained detail, side-profile presentation, warm natural palette, and soft diffuse lighting.
 
+In the Fish Collection, discovered fish use their transparent artwork directly against the warm card surface rather than inside a blue-green picture box. This keeps attention on the silhouette and avoids visually cropping deep-bodied or wide species. Milestone treatments belong to the surrounding card and must not crowd the fish.
+
 Fishing rods use the same hand-painted naturalist treatment. Each location has an equipment family appropriate to its fishing style, and each upgrade should communicate better materials and craftsmanship without exaggerated fantasy effects. Pine River's fly rods progress from weathered traditional tackle through warm fiberglass and modern graphite to understated heirloom craftsmanship. Great Lake's spinning rods follow the same material progression with reels and stronger open-water proportions. Gulf Coast's saltwater spinning rods add sealed reels and corrosion-resistant fittings without becoming flashy or modernistic. Open Gulf's offshore rods are visibly heavier, with larger reels and blue-water proportions, while preserving the same restrained progression.
 
 Backyard Pond establishes the environment style: hand-painted naturalism, layered atmospheric depth, soft mist, calm reflective water, and restrained golden sunrise light. Future locations should be recognizable at a glance while preserving this calm, mature character.

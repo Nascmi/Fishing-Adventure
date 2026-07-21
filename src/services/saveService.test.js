@@ -86,6 +86,45 @@ describe('save migrations and validation', () => {
     expect(state.cabin.decorByCabin['riverstone-cabin']).toEqual({ 'hearth-frame': null, 'river-shelf': null, 'braided-rug': 'trading-post.rug-deep-water' })
   })
 
+  it('preserves a complete version 18 journey across the version 19 migration', () => {
+    const state = validateSave({
+      version: 18,
+      coins: 24680,
+      gearByLocation: {
+        'pine-river': { ownedRods: ['worn-fly', 'fiberglass-fly'], equippedRod: 'fiberglass-fly' },
+      },
+      collection: { bluegill: { count: 3, largestWeight: 1.8 } },
+      coinStore: { ownedItemIds: ['trading-post.cabin-riverstone', 'trading-post.rug-deep-water'] },
+      cabin: {
+        styleId: 'riverstone-cabin',
+        featuredFishId: 'bluegill',
+        specimens: {
+          bluegill: {
+            fishId: 'bluegill', weight: 1.8, sizeTier: 'amazing', locationId: 'willow-pond', phase: 'evening', caughtAt: '2026-06-01T12:00:00.000Z',
+            mounted: { weight: 1.8, sizeTier: 'amazing', locationId: 'willow-pond', phase: 'evening', caughtAt: '2026-06-01T12:00:00.000Z', preservedAt: 123456 },
+          },
+        },
+        decorByCabin: { 'riverstone-cabin': { 'braided-rug': 'trading-post.rug-deep-water' } },
+      },
+      dayCycle: { homeElapsedMs: 5000, activeTrip: { locationId: 'pine-river', elapsedMs: 60000, remainingMs: 120000 } },
+      achievements: { 'gone-fishing': { unlockedAt: 123 } },
+      achievementProgress: { locationsFished: ['willow-pond', 'pine-river'], completedTrips: [], peakMoments: [] },
+    })
+
+    expect(state.version).toBe(19)
+    expect(state.coins).toBe(24680)
+    expect(state.gearByLocation['pine-river']).toEqual({ ownedRods: ['worn-fly', 'fiberglass-fly'], equippedRod: 'fiberglass-fly' })
+    expect(state.dayCycle.activeTrip).toEqual({ locationId: 'pine-river', elapsedMs: 60000, remainingMs: 120000 })
+    expect(state.achievements['gone-fishing']).toEqual({ unlockedAt: 123 })
+    expect(state.achievementProgress.locationsFished).toContain('pine-river')
+    expect(state.coinStore.ownedItemIds).toEqual(['trading-post.cabin-riverstone', 'trading-post.rug-deep-water'])
+    expect(state.cabin.styleId).toBe('riverstone-cabin')
+    expect(state.cabin.specimens.bluegill).toMatchObject({ fishId: 'bluegill', weight: 1.8, sizeTier: 'trophy' })
+    expect(state.cabin.specimens.bluegill.mounted).toMatchObject({ weight: 1.8, sizeTier: 'trophy', preservedAt: 123456 })
+    expect(state.cabin.featuredFishId).toBe('bluegill')
+    expect(state.cabin.decorByCabin['riverstone-cabin']['braided-rug']).toBe('trading-post.rug-deep-water')
+  })
+
   it('returns an unowned or unknown cabin to the Starter Cabin', () => {
     expect(validateSave({ version: 17, cabin: { styleId: 'captains-retreat' } }).cabin.styleId).toBe('starter')
     expect(validateSave({ version: 17, cabin: { styleId: 'imaginary-cabin' } }).cabin.styleId).toBe('starter')

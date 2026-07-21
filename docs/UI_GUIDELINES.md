@@ -9,6 +9,8 @@ The interface should become quiet enough for the player to focus on fishing.
 - Use consistent spacing, rounded surfaces, and restrained shadows.
 - Keep essential status visible without filling every open area.
 - Size framed fish artwork intrinsically within explicit safe-area padding so fins and tails never touch or clip against the frame edge.
+- Present discovered Fish Collection artwork directly on the warm journal card without a colored inner panel. Preserve transparent breathing room around each silhouette; use the outer card for ten-catch recognition and retain a distinct muted frame only for undiscovered fish.
+- Anchor the Master Catch seal at the upper-left of collection artwork so it reads as card recognition without covering the fish's head or mouth.
 
 ## Interaction
 

@@ -61,9 +61,9 @@ export default function CollectionPage() {
         <p>Explore every fishing spot to reveal this species.</p>
       </article>
 
-      return <article className="collection-card collection-card-button" key={item.id}>
+      return <article className={`collection-card collection-card-button ${record.count >= 10 ? 'seasoned' : ''}`} key={item.id}>
         <button type="button" className="collection-card-hit" onClick={() => setSelectedFish(item)} aria-label={`Open journal entry for ${item.name}`}/>
-        <div className={`collection-art-frame ${record.count >= 10 ? 'seasoned' : ''}`}>
+        <div className="collection-art-frame">
           <FishArtwork fishId={item.id} name={item.name} className="collection-fish-art"/>
           {record.largestWeight >= item.maxWeight * .91 && <span className="master-catch-seal" aria-label="Master Catch: Trophy-sized personal record"><Icon name="star-fish" size={16}/><b>Master<br/>Catch</b></span>}
         </div>

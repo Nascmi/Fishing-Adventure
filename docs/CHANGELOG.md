@@ -4,6 +4,9 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 
 ## Unreleased
 
+- Moved the Master Catch seal to the upper-left of Fish Collection artwork so it no longer covers right-facing fish heads.
+- Removed the blue-green inner panels from discovered Fish Collection artwork, added safer transparent spacing for varied silhouettes, and moved ten-catch recognition to the outer journal card.
+- Added a comprehensive version 18-to-19 save regression fixture proving that equipment, active trips, keepsakes, mounted specimens, cabin ownership, and compatible decor survive together without touching player storage.
 - Restored non-overlapping 12-pixel keepsakes on narrow phones and added quiet empty cabinet positions that fill as the player earns each of the 20 Angling Keepsakes, including in cabin share images.
 - Simplified the cabin style picker to show only included, earned, or purchased cabins the player can currently use, removing locked cabin prices and unavailable choices from the cabin screen.
 - Shifted the Angler's Lodge share-card keepsake grid five pixels right and restored a larger 14-pixel mobile medallion floor so cabinet rewards remain individually readable on the Galaxy S20 FE.

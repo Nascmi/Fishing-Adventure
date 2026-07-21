@@ -15,6 +15,7 @@ npm run build
 ## Covered Systems
 
 - Save migrations from representative legacy versions through the current schema
+- A complete version 18 journey migrated in one fixture with coins, equipment, an active trip, keepsakes, a mounted specimen, cabin ownership, and compatible decor preserved together
 - Missing, malformed, and unreadable save recovery
 - Location-bounded rarity fallback and preferred day phases
 - Specimen-size boundaries, deterministic catch generation, and catch values
