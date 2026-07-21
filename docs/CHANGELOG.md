@@ -12,7 +12,7 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 
 ### Added
 
-- Added a Vitest regression suite covering save migration and recovery, deterministic fishing and values, purchases, charters, cabin ownership, trophy preservation, keepsakes, and earned cabin cosmetics.
+- Added a Vitest regression suite covering save migration and recovery, deterministic fishing and values, purchases, charters, cabin ownership, specimen preservation, keepsakes, and earned cabin cosmetics.
 
 ### Fixed
 
@@ -33,8 +33,8 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 - Restored twelve planned decor items to the Trading Post as clearly disabled previews until cabin placement controls are implemented.
 - Migrated saves to version 17 with validated permanent Trading Post ownership and equipped-cabin recovery.
 - Prepared a dormant eight-product cosmetic storefront catalog with stable IDs, tentative planning prices, permanent entitlements, and explicit no-gameplay-power policy.
-- Added permanent earned location paintings for full Backyard Pond discovery and completed destination charters, plus gold Master Angler frames for Trophy-or-better catches of every local species.
-- Added upgraded travel souvenirs for completed location journals, Amazing-catch photographs, legendary fish miniatures, full-equipment-family plaques, and nine included rug, frame, and timber-finish options.
+- Added permanent earned location paintings for full Backyard Pond discovery and completed destination charters, plus gold Master Angler frames for Great-or-better catches of every local species.
+- Added upgraded travel souvenirs for completed location journals, Trophy-catch photographs, legendary fish miniatures, full-equipment-family plaques, and nine included rug, frame, and timber-finish options.
 - Migrated saves to version 16 with bounded painting and Master Angler frame ownership, including retroactive unlocks from existing records.
 - Added quiet collection-card recognition: a gold frame at ten catches and a Master Catch seal for Trophy-sized records.
 - Added locally generated cabin share cards with native mobile sharing and an image-download fallback for the Starter Cabin and Angler's Lodge.
@@ -43,7 +43,7 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 - Added the earned Angler's Lodge, permanently unlocked by catching legendary fish at four distinct locations.
 - Added three preserved-specimen displays, an automatic Angling Keepsake cabinet, cabin switching, and purpose-built lodge artwork.
 - Migrated saves to version 15 with bounded legendary-location progress, retroactive journal evidence, and validated lodge display choices.
-- Added cabin trophy preservation for Trophy and Amazing catches, including remembered best candidates, a configurable 100-coin first mount, and free heavier upgrades.
+- Added cabin specimen preservation for Great and Trophy catches, including remembered best candidates, a configurable 100-coin first mount, and free heavier upgrades.
 - Migrated saves to version 14, preserving eligible catches still held in inventory while validating bounded specimen records.
 - Added Passing Rain as a saved three-to-five-minute atmospheric event after roughly three to four in-game days of active fishing, with no gameplay effects or rewards.
 - Added cool rain shading, fine rainfall, mist, water ripples, reduced-motion handling, optional procedural rain, and occasional distant thunder across current fishing locations.
@@ -53,7 +53,7 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 - Added original Open Gulf environment art, eight naturalist fish illustrations, four offshore rods, and a deep-jig presentation.
 - Added the hidden Gold on the Horizon keepsake for landing a morning Yellowfin Tuna.
 - Migrated saves to version 11 so existing players receive the Worn Offshore Rod without losing progress.
-- Added an optional Share button for Amazing catches that creates a polished local catch image and opens the native share sheet when supported.
+- Added an optional Share button for Trophy catches that creates a polished local catch image and opens the native share sheet when supported.
 - Added a private offline fallback that downloads the catch image when native file sharing is unavailable.
 - Added Angling Keepsakes inside Collection with permanent milestones for first catches, exploration, complete journals, day phases, preferred-time fishing, full charters, exceptional specimens, and legendary encounters.
 - Added five hidden story keepsakes tied to Old Whiskers, Chinook Salmon, Red Drum, Cobia, and Great Lakes Muskellunge.
@@ -78,7 +78,7 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 - Added line-control benefits to rod upgrades.
 - Added optional offline sound cues and device haptics.
 - Added animated coin changes and personal-best catch feedback.
-- Added weighted regular, good, trophy, and amazing specimen sizes.
+- Added weighted regular, good, great, and trophy specimen sizes.
 - Added twelve species-specific hand-painted fish illustrations.
 - Added four hand-painted rod illustrations with clear material progression.
 - Added the finished Backyard Pond sunrise environment.

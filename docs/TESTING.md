@@ -21,7 +21,7 @@ npm run build
 - Rod prerequisites, equipment ownership, and exact coin deductions
 - Charter booking, completion, paintings, and keepsake evaluation
 - Trading Post ownership, duplicate rejection, cabin eligibility, and compatible per-cabin decor selections
-- Trophy preservation costs and free heavier upgrades
+- Specimen preservation costs and free heavier upgrades
 - Keepsakes, location paintings, Master Angler frames, photographs, miniatures, and equipment plaques
 
 ## Test Design Rules

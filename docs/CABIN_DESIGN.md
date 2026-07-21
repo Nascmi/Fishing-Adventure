@@ -21,7 +21,7 @@ The included cabin is humble, lived-in, and intentionally focused. It represents
 
 Its customizable displays are:
 
-- one preserved Trophy or Amazing specimen above the fireplace; and
+- one preserved Great or Trophy specimen above the fireplace; and
 - one travel souvenir from a visited location.
 
 The painted rod rack, furniture, rug, lighting, and other room details remain part of the background. Interchangeable rods, keepsakes, and furniture are excluded because overlays cannot reliably match this cabin's painted perspective. They belong in future cabin styles with purpose-built display areas.
@@ -34,17 +34,17 @@ Current travel souvenirs are physical shelf objects rather than floating labels:
 - Gulf Coast: an oyster-shell display; and
 - Open Gulf: a brass mariner's compass.
 
-## Trophy Preservation
+## Specimen Preservation
 
-Trophy preservation turns exceptional catches into permanent stories and provides a gentle coin sink.
+Specimen preservation turns exceptional catches into permanent stories and provides a gentle coin sink.
 
-- Trophy specimens (76–90% of species maximum weight) and Amazing specimens (91–100%) become eligible trophy candidates.
+- Great specimens (76–90% of species maximum weight) and Trophy specimens (91–100%) become eligible preservation candidates.
 - The game automatically remembers the best eligible candidate for each species, even if the inventory fish is later sold.
 - A player may preserve an eligible candidate from the cabin for a starting fee of 100 coins. The price remains configurable and must be tuned through playtesting.
 - Preserving is never an immediate catch-screen demand. A player can decide later without losing the candidate.
 - If a heavier eligible specimen of the same species is caught, it becomes available as a free replacement for the mounted specimen.
-- Amazing specimens receive a distinct, more prestigious presentation, such as a larger backing or pedestal and restrained gold craftsmanship.
-- A larger Trophy may improve an existing Trophy display; an Amazing may replace a Trophy when heavier. Display treatment always reflects the mounted specimen's actual tier.
+- Trophy specimens receive a distinct, more prestigious presentation, such as a larger backing or pedestal and restrained gold craftsmanship.
+- A larger Great specimen may improve an existing Great display; a Trophy may replace a Great specimen when heavier. Display treatment always reflects the mounted specimen's actual tier.
 
 The best candidate record must remain bounded to one specimen per species and preserve:
 
@@ -70,7 +70,7 @@ The requirement asks the player to experience most of the fishing journey while 
 The Angler's Lodge specializes in accomplishments:
 
 - multiple mounted-fish displays;
-- purpose-built Trophy and Amazing presentations; and
+- purpose-built Great and Trophy presentations; and
 - an Angling Keepsake cabinet.
 
 It is earned through play and must not be purchasable as a shortcut. This keeps the game's central story and most meaningful cabin unlock independent of cosmetic spending.
@@ -99,12 +99,12 @@ Twelve rugs, frames, finishes, small cabin objects, and the 100,000 Coin Club pl
 
 Location paintings are earned records of exploration or completion. Cabin styles may provide different frames and wall arrangements, but purchasing a cabin must not purchase the underlying exploration accomplishment.
 
-Backyard Pond's painting is earned by discovering every local species. Each destination painting is earned by completing a full three-day charter there. Catching a Trophy or Amazing specimen of every species in a location permanently upgrades that location's painting to a gold **Master Angler frame**. Later population changes never revoke an earned painting or frame.
+Backyard Pond's painting is earned by discovering every local species. Each destination painting is earned by completing a full three-day charter there. Catching a Great or Trophy specimen of every species in a location permanently upgrades that location's painting to a gold **Master Angler frame**. Later population changes never revoke an earned painting or frame.
 
 The broader Cabin Collection recognizes existing play without adding currencies or generated tasks:
 
 - completing a location's full species journal earns its upgraded travel souvenir;
-- every recorded Amazing specimen earns a local catch photograph;
+- every recorded Trophy specimen earns a local catch photograph;
 - discovering a legendary species earns its handcrafted miniature;
 - owning a location's complete rod family earns its equipment plaque; and
 - three rugs, three display-frame treatments, and three timber finishes are included for compatible authored slots.

@@ -56,7 +56,7 @@ These quality practices continue throughout development rather than ending with 
 - Established Backyard Pond as the free home water and three-day paid charters for destination fishing.
 - Added Fishing Trips as a dedicated navigation destination for booking and continuing charters.
 - Added permanent Angling Keepsakes for discovery, exploration, collection, and memorable catches without currency or power rewards.
-- Added optional native image sharing for Amazing catches with an offline download fallback.
+- Added optional native image sharing for Trophy catches with an offline download fallback.
 
 ## Phase 3 — Deeper Atmosphere & Personalization
 
@@ -68,11 +68,11 @@ Phase 3 deepens atmosphere and gives players a peaceful sense of ownership throu
 - Added Passing Rain after roughly three to four in-game days of active fishing, lasting three to five minutes with no gameplay effects, forecasts, or rewards.
 - Added a cool rain treatment, fine rainfall, mist, water ripples, reduced-motion handling, optional procedural rain, and occasional distant thunder.
 - Migrated saves to version 13 with a bounded, persistent weather schedule that pauses outside active fishing.
-- Added trophy preservation that remembers the best eligible specimen per species, charges 100 coins for a first mount, and offers heavier upgrades for free.
+- Added specimen preservation that remembers the best eligible specimen per species, charges 100 coins for a first mount, and offers heavier upgrades for free.
 - Added the gameplay-earned Angler's Lodge with three preserved-fish displays and an automatic Angling Keepsake cabinet.
 - Prepared authored artwork, fixed-slot contracts, and deferred storefront IDs for the Workshop Cabin, Lakeside Cottage, and Coastal Shack.
-- Added five earned location paintings and permanent Master Angler frames for Trophy-or-better mastery of every species in a location.
-- Added upgraded souvenirs, Amazing photographs, legendary miniatures, equipment plaques, and included authored-slot palettes.
+- Added five earned location paintings and permanent Master Angler frames for Great-or-better mastery of every species in a location.
+- Added upgraded souvenirs, Trophy photographs, legendary miniatures, equipment plaques, and included authored-slot palettes.
 - Prepared a dormant non-consumable store catalog with stable product IDs, tentative prices, restoration requirements, and no live storefront integration.
 - Added an earned-coin Trading Post with three complete permanent cabins and twelve functional decor purchases as a late-game economy sink.
 - Added fixed cabin-specific hooks, compatible-item filtering, independent per-cabin setups, included and earned choices, and decor-aware cabin sharing.

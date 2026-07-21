@@ -49,7 +49,7 @@ Discovered species open into full journal entries with large artwork, concise na
 
 Collection cards quietly acknowledge a species relationship without changing gameplay: the first catches remain plain, ten catches add a restrained gold frame, and a best catch at or above Trophy size receives a Master Catch seal. These treatments are records of play rather than rewards or power.
 
-## Trophy Preservation
+## Specimen Preservation
 
 Great and Trophy specimens can become permanent cabin displays. The game automatically retains the best eligible candidate for each species independently of inventory, including its weight, tier, location, day phase, and catch time. Players may later preserve a candidate for a configurable starting fee of 100 coins, avoiding an immediate pay-or-lose decision after a catch. A heavier eligible specimen of the same species may replace an existing mount for free. Trophy specimens use a distinct, more prestigious display treatment while remaining records of play rather than sources of power.
 
@@ -71,11 +71,11 @@ Angling Keepsakes share the Collection screen with the Fish Journal and commemor
 
 Every keepsake has a distinct symbolic motif and belongs to a shared material family: bronze for beginnings, silver for exploration, colored enamel for time and place, gold for mastery, and dark metal with restrained accents for hidden legendary stories. Locked hidden keepsakes conceal their motif until earned. These designs appear consistently in the Collection and the Angler's Lodge cabinet.
 
-Fishing Adventure does not use a separate tutorial quest or optional-goals system. Keepsakes provide broad lifetime milestones, while journal completion, preferred activity periods, personal records, Amazing specimens, legendary encounters, and destination trips create natural player-directed reasons to return. A dedicated goals layer would duplicate those systems, add interface pressure, and risk turning peaceful fishing into a checklist. If future playtesting reveals a genuine need for more direction, consider only a simple player-chosen journal pin with no reward, deadline, or generated task.
+Fishing Adventure does not use a separate tutorial quest or optional-goals system. Keepsakes provide broad lifetime milestones, while journal completion, preferred activity periods, personal records, Trophy specimens, legendary encounters, and destination trips create natural player-directed reasons to return. A dedicated goals layer would duplicate those systems, add interface pressure, and risk turning peaceful fishing into a checklist. If future playtesting reveals a genuine need for more direction, consider only a simple player-chosen journal pin with no reward, deadline, or generated task.
 
 ## Catch Sharing
 
-Amazing specimens offer an optional Share action after the catch is complete. The game creates a polished catch card locally with the species artwork, weight, location, day phase, rarity, and personal-best status. Supported devices receive the image through the native share sheet; other browsers download the image for the player. Sharing never interrupts ordinary catches, uploads data, awards progress, or pressures the player to use social media.
+Trophy specimens offer an optional Share action after the catch is complete. The game creates a polished catch card locally with the species artwork, weight, location, day phase, rarity, and personal-best status. Supported devices receive the image through the native share sheet; other browsers download the image for the player. Sharing never interrupts ordinary catches, uploads data, awards progress, or pressures the player to use social media.
 
 Cabins offer the same optional, local-only sharing model. A cabin share card reflects the selected room, displayed preserved specimens, travel souvenir, and earned-keepsake count. Sharing awards nothing, uploads nothing automatically, and falls back to downloading the image when native file sharing is unavailable.
 
