@@ -22,6 +22,7 @@ The interface should become quiet enough for the player to focus on fishing.
 - Prefer one-thumb interactions for the core fishing loop.
 - Keep destination selection on the dedicated Fishing Trips page so the active fishing scene stays calm and focused.
 - Offer catch sharing only after a Trophy catch, never as a persistent fishing-screen control or social prompt.
+- Use the cabin style picker only for owned and earned cabin choices. Keep locked-cabin prices and acquisition prompts in their appropriate progression or shop surfaces.
 
 ## Typography and Accessibility
 

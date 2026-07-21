@@ -1,3 +1,5 @@
+import { lodgeLayout } from '../data/lodgeLayout'
+
 const loadImage = (src) => new Promise((resolve, reject) => {
   const image = new Image()
   image.onload = () => resolve(image)
@@ -41,6 +43,17 @@ const drawMedallion = (context, x, y, radius, material) => {
   context.stroke()
 }
 
+const drawEmptyMedallion = (context, x, y, radius) => {
+  context.save()
+  context.globalAlpha = .38
+  context.strokeStyle = '#b99a6b'
+  context.lineWidth = 1.5
+  context.beginPath()
+  context.arc(x, y, radius, 0, Math.PI * 2)
+  context.stroke()
+  context.restore()
+}
+
 export async function createCabinShareImage({ background, cabinName, fishDisplays, souvenir, keepsakes, isLodge, decor = [] }) {
   const canvas = document.createElement('canvas')
   canvas.width = 1200
@@ -82,7 +95,7 @@ export async function createCabinShareImage({ background, cabinName, fishDisplay
   }
 
   const fishSlots = isLodge
-    ? [{ x: 314, y: 118, width: 122, height: 190 }, { x: 518, y: 82, width: 160, height: 228 }, { x: 770, y: 120, width: 110, height: 185 }]
+    ? lodgeLayout.specimenMounts.map(({ x, y, width, height }) => ({ x: x * 12, y: y * 8, width: width * 12, height: height * 8 }))
     : [{ x: 540, y: 104, width: 184, height: 164 }]
 
   await Promise.all(fishDisplays.map(async (display, index) => {
@@ -93,12 +106,19 @@ export async function createCabinShareImage({ background, cabinName, fishDisplay
     context.shadowColor = '#130b0777'
     context.shadowBlur = 12
     context.shadowOffsetY = 6
-    drawContained(context, fishImage, slot.x, slot.y, slot.width, slot.height)
+    if (isLodge) drawContained(context, fishImage, slot.x + slot.width * .06, slot.y + slot.height * .18, slot.width * .88, slot.height * .64)
+    else drawContained(context, fishImage, slot.x, slot.y, slot.width, slot.height)
     context.restore()
     if (display.specimen?.sizeTier === 'trophy') {
       context.strokeStyle = '#dfbd62'
       context.lineWidth = 3
-      context.strokeRect(slot.x + 6, slot.y + 6, slot.width - 12, slot.height - 12)
+      if (isLodge) {
+        context.beginPath()
+        context.ellipse(slot.x + slot.width / 2, slot.y + slot.height / 2, slot.width * .45, slot.height * .45, 0, 0, Math.PI * 2)
+        context.stroke()
+      } else {
+        context.strokeRect(slot.x + 6, slot.y + 6, slot.width - 12, slot.height - 12)
+      }
     }
   }))
 
@@ -108,10 +128,21 @@ export async function createCabinShareImage({ background, cabinName, fishDisplay
   }
 
   if (isLodge) {
-    keepsakes.slice(0, 20).forEach((keepsake, index) => {
-      const column = index % 4
-      const row = Math.floor(index / 4)
-      drawMedallion(context, 935 + column * 42, 285 + row * 43, 12, keepsake.material)
+    const cabinet = lodgeLayout.keepsakeCabinet
+    const cabinetLeft = cabinet.x * 12 + cabinet.shareOffsetX
+    const cabinetTop = cabinet.y * 8
+    const cabinetWidth = cabinet.width * 12
+    const cabinetHeight = cabinet.height * 8
+    Array.from({ length: 20 }, (_, index) => keepsakes[index] || null).forEach((keepsake, index) => {
+      const column = index % cabinet.columns
+      const row = Math.floor(index / cabinet.columns)
+      const cellWidth = cabinetWidth / cabinet.columns
+      const cellHeight = cabinetHeight / cabinet.rows
+      const x = cabinetLeft + cellWidth * (column + .5)
+      const y = cabinetTop + cellHeight * (row + .5)
+      const radius = Math.min(cellWidth, cellHeight) * .34
+      if (keepsake) drawMedallion(context, x, y, radius, keepsake.material)
+      else drawEmptyMedallion(context, x, y, radius)
     })
   }
 

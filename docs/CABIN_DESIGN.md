@@ -6,6 +6,8 @@ Cabins are quiet, authored spaces where the player's fishing stories come home. 
 
 Cabins specialize instead of forming a simple ladder where every new room is larger and objectively better. Each style is designed around a small set of displays that belong naturally in its artwork. This protects visual quality, keeps mobile controls simple, and gives every cabin a distinct identity.
 
+The cabin style picker lists only cabins the player currently owns or has earned. Locked cabins, unlock progress, and purchase prices are not repeated there; earned requirements remain in progression surfaces, while coin-purchased cabins are discovered and purchased through the Trading Post. This keeps the cabin screen focused on switching and decorating available rooms.
+
 ## Design Principles
 
 - A cabin must look complete before the player customizes it.
@@ -72,6 +74,8 @@ The Angler's Lodge specializes in accomplishments:
 - multiple mounted-fish displays;
 - purpose-built Great and Trophy presentations; and
 - an Angling Keepsake cabinet.
+
+The keepsake cabinet presents its 20-medallion capacity as four columns by five fitted rows. Unearned positions appear as quiet empty outlines, then fill with the player's actual keepsakes so progress is visible directly in the room. Its authored overlay must remain fully inside the painted cabinet at portrait-phone sizes; medallions may not overlap and no row may overflow or be clipped. The three specimen mounts and cabinet use shared percentage-based anchor zones for both the live cabin and generated share card. Responsive styling may scale the contents within those zones, but the anchors remain tied to the artwork. The share-card cabinet applies a five-pixel optical correction to the right because its fixed export treatment centers differently from the live icon grid.
 
 It is earned through play and must not be purchasable as a shortcut. This keeps the game's central story and most meaningful cabin unlock independent of cosmetic spending.
 

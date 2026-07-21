@@ -7,8 +7,8 @@ import { fish, getFish } from '../data/fish'
 import { getKeepsakeDesign } from '../data/keepsakes'
 import { locations } from '../data/locations'
 import { locationPaintings } from '../data/locationPaintings'
+import { lodgeLayout } from '../data/lodgeLayout'
 import { cabinCatalog, getCabinDefinition, includedCabinCosmetics } from '../data/cabinCatalog'
-import { getCoinStoreItem } from '../data/coinStoreCatalog'
 import { getOwnedCabinDecor } from '../data/cabinDecor'
 import { useGame } from '../hooks/useGame'
 import { createCabinShareImage } from '../utils/cabinShareImage'
@@ -134,8 +134,6 @@ export default function CabinPage({ onGoFishing }) {
 
     <section className="cabin-style-picker" aria-label="Cabin style">
       {cabinChoices.map((definition) => <button type="button" className={cabin.styleId === definition.id ? 'selected' : ''} onClick={() => actions.setCabinStyle(definition.id)} key={definition.id}><span>{definition.acquisition.type === 'included' ? 'Included' : definition.acquisition.type === 'earned' ? 'Earned' : 'Trading Post'}</span><strong>{definition.name}</strong></button>)}
-      {!lodgeUnlocked && <button type="button" disabled><span>{legendaryCount} of 4 legendary waters</span><strong>Angler's Lodge</strong></button>}
-      {cabinCatalog.filter((definition) => definition.acquisition.type === 'coin-store' && !game.coinStore.ownedItemIds.includes(definition.acquisition.productId)).map((definition) => <button type="button" disabled key={definition.id}><span>{getCoinStoreItem(definition.acquisition.productId)?.price.toLocaleString()} coins · Shop</span><strong>{definition.name}</strong></button>)}
     </section>
 
     {!isLodge ? <>
@@ -156,11 +154,12 @@ export default function CabinPage({ onGoFishing }) {
         {cabin.lodgeFeaturedFishIds.map((fishId, index) => {
           const mountedFish = getFish(fishId)
           const mounted = cabin.specimens[fishId]?.mounted
-          return <div className={`lodge-mount lodge-mount-${index + 1} ${mounted?.sizeTier === 'trophy' ? 'size-amazing' : ''}`} key={index} aria-label={mountedFish ? `Preserved catch: ${mountedFish.name}` : `Empty lodge mount ${index + 1}`}>
+          const bounds = lodgeLayout.specimenMounts[index]
+          return <div className={`lodge-mount ${mounted?.sizeTier === 'trophy' ? 'size-amazing' : ''}`} style={{ left: `${bounds.x}%`, top: `${bounds.y}%`, width: `${bounds.width}%`, height: `${bounds.height}%` }} key={index} aria-label={mountedFish ? `Preserved catch: ${mountedFish.name}` : `Empty lodge mount ${index + 1}`}>
             {mountedFish && <FishArtwork fishId={mountedFish.id} name={mountedFish.name} className="lodge-fish-art"/>}
           </div>
         })}
-        <div className="lodge-keepsakes" aria-label={`${earnedKeepsakes.length} Angling Keepsakes displayed`}>{earnedKeepsakes.slice(0, 20).map((achievement) => { const design = getKeepsakeDesign(achievement.id); return <span className={`material-${design.material}`} title={achievement.name} key={achievement.id}><Icon name={design.icon} size={18}/></span> })}</div>
+        <div className="lodge-keepsakes" style={{ left: `${lodgeLayout.keepsakeCabinet.x}%`, top: `${lodgeLayout.keepsakeCabinet.y}%`, width: `${lodgeLayout.keepsakeCabinet.width}%`, height: `${lodgeLayout.keepsakeCabinet.height}%`, gridTemplateColumns: `repeat(${lodgeLayout.keepsakeCabinet.columns},1fr)`, gridAutoRows: `${100 / lodgeLayout.keepsakeCabinet.rows}%` }} aria-label={`${earnedKeepsakes.length} of 20 Angling Keepsakes displayed`}>{Array.from({ length: 20 }, (_, index) => { const achievement = earnedKeepsakes[index]; if (!achievement) return <span className="empty" aria-hidden="true" key={`empty-${index}`}/>; const design = getKeepsakeDesign(achievement.id); return <span className={`material-${design.material}`} title={achievement.name} key={achievement.id}><Icon name={design.icon} size={18}/></span> })}</div>
       </section>
       <section className="lodge-story"><article><span>Legendary waters</span><strong>{legendaryCount} explored</strong><small>The lodge remains yours permanently.</small></article><article><span>Preserved displays</span><strong>{cabin.lodgeFeaturedFishIds.filter(Boolean).length} of 3 filled</strong><small>Choose any preserved Great or Trophy specimens.</small></article><article><span>Keepsake cabinet</span><strong>{earnedKeepsakes.length} earned</strong><small>Your Angling Keepsakes appear automatically.</small></article></section>
     </>}

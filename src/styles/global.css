@@ -260,3 +260,7 @@
 .cabin-decor-overlay.decor-frame{padding:0}
 .cabin-decor-overlay.decor-display{border-radius:18% 18% 8% 8%}
 .lodge-fish-art{width:86%;height:62%;overflow:visible;background:transparent}
+.lodge-keepsakes{left:74.9%;top:27%;width:15.2%;height:38%;grid-auto-rows:20%;padding:1.5%}
+.lodge-keepsakes span{width:clamp(12px,72%,25px)}
+.lodge-keepsakes span.empty{border:1px solid #b99a6b88;background:transparent;box-shadow:inset 0 0 0 1px #21160e55;opacity:.42}
+@media(max-width:600px){.lodge-fish-art{width:98%;height:72%}.lodge-keepsakes{padding:2.5% 4%}.lodge-keepsakes span{width:12px}}

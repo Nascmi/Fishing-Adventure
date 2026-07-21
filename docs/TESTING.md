@@ -22,6 +22,7 @@ npm run build
 - Charter booking, completion, paintings, and keepsake evaluation
 - Trading Post ownership, duplicate rejection, cabin eligibility, and compatible per-cabin decor selections
 - Specimen preservation costs and free heavier upgrades
+- Angler's Lodge specimen and keepsake anchor-zone capacity and artwork bounds
 - Keepsakes, location paintings, Master Angler frames, photographs, miniatures, and equipment plaques
 
 ## Test Design Rules

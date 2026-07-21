@@ -4,6 +4,11 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 
 ## Unreleased
 
+- Restored non-overlapping 12-pixel keepsakes on narrow phones and added quiet empty cabinet positions that fill as the player earns each of the 20 Angling Keepsakes, including in cabin share images.
+- Simplified the cabin style picker to show only included, earned, or purchased cabins the player can currently use, removing locked cabin prices and unavailable choices from the cabin screen.
+- Shifted the Angler's Lodge share-card keepsake grid five pixels right and restored a larger 14-pixel mobile medallion floor so cabinet rewards remain individually readable on the Galaxy S20 FE.
+- Unified the live Angler's Lodge and generated share card around shared percentage-based anchor zones, enlarged fish and keepsakes on phones, and replaced rectangular share-card Trophy outlines with plaque-shaped rings.
+- Corrected the Angler's Lodge keepsake cabinet from four-row sizing to five fitted rows, then shifted the overlay up and left so all 20 keepsakes remain centered and visible on Galaxy S20 FE-sized screens and cabin share images.
 - Established a repository-wide requirement that every project change update the appropriate documentation during the same task.
 - Realigned every live cabin customization hook to its painted frame, shelf, or rug; corrected decor fitting by hook type; and removed Starter Cabin overlays that conflicted with purchased-cabin displays.
 - Removed the pale card background behind Angler's Lodge fish so preserved specimens sit naturally within their authored plaques.
