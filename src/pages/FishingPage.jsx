@@ -53,6 +53,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
   const [shareImage, setShareImage] = useState(null)
   const [shareStatus, setShareStatus] = useState('')
   const [setupExpanded, setSetupExpanded] = useState(false)
+  const [pendingRelocation, setPendingRelocation] = useState(null)
   const timers = useRef(new Set())
   const stateRef = useRef(fishingState)
   const previousCastWasQuiet = useRef(false)
@@ -76,6 +77,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
   }, [])
 
   useEffect(() => clearTimers, [clearTimers])
+  useEffect(() => setPendingRelocation(null), [location.id])
 
   const activeTrip = game.dayCycle.activeTrip
   const hasLocationAccess = location.id === 'willow-pond' || activeTrip?.locationId === location.id
@@ -220,6 +222,20 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
     : ''
   const isRaining = game.weather.rainRemainingMs > 0
   const rainEnding = isRaining && game.weather.rainRemainingMs <= 15000
+  const chooseArea = (area) => {
+    if (area.id === selectedArea?.id) return
+    if (area.relocationCost) {
+      setPendingRelocation(area)
+      return
+    }
+    actions.setFishingSetup(location.id, 'area', area.id)
+  }
+
+  const acceptRelocation = () => {
+    if (!pendingRelocation || game.coins < pendingRelocation.relocationCost) return
+    actions.setFishingSetup(location.id, 'area', pendingRelocation.id)
+    setPendingRelocation(null)
+  }
 
   return <main className="fishing-page">
     <section className={`lake ${fishingState} location-${location.id}${selectedArea ? ` area-${selectedArea.id}` : ''} phase-${cycle.phase.id}${isRaining ? ` weather-rain${rainEnding ? ' rain-ending' : ''}` : ''}`} style={{ '--location-art': `url("${sceneImage}")` }} aria-label={`${location.name}${selectedArea ? `, ${selectedArea.name}` : ''}: ${selectedArea?.description || location.description}${isRaining ? ' A gentle rain is passing through.' : ''}`}>
@@ -240,7 +256,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
     <section className={`action-card ${fishingState === 'reeling' ? 'reeling-active' : ''}`}>
       {fishingState === 'ready' && <section className={`water-setup${setupExpanded ? ' expanded' : ''}`} aria-label={`${location.name} fishing setup`}>
         <div className="water-setup-heading"><div><span className="eyebrow">On the water</span><b>{selectedArea ? `${selectedArea.name} · ` : ''}{selectedLure?.name}</b></div><div className="water-setup-actions"><button type="button" className="setup-toggle" aria-expanded={setupExpanded} onClick={() => setSetupExpanded((expanded) => !expanded)}>{setupExpanded ? 'Done' : 'Change'}</button>{locationBoat && !ownsLocationBoat && <button type="button" disabled={game.coins < locationBoat.price} onClick={() => actions.buyBoat(locationBoat.id)}>Buy {locationBoat.name.toLowerCase()} · {locationBoat.price.toLocaleString()}</button>}</div></div>
-        {availableAreas.length > 0 && <fieldset><legend>{location.id === 'open-gulf' ? 'Charter position' : 'Fishing area'}</legend><div className="setup-options">{availableAreas.map((area) => { const selected = selectedArea?.id === area.id; const locked = area.boatRequired && !ownsLocationBoat; const unaffordable = !selected && area.relocationCost > game.coins; const detail = locked ? `${locationBoat?.name || 'Boat'} required` : !selected && area.relocationCost ? `${area.description} · Move ${area.relocationCost.toLocaleString()}` : area.description; return <button type="button" key={area.id} className={selected ? 'selected' : ''} disabled={locked || unaffordable} onClick={() => actions.setFishingSetup(location.id, 'area', area.id)}><b>{area.name}</b><span>{unaffordable ? `${area.description} · Need ${(area.relocationCost - game.coins).toLocaleString()} more` : detail}</span></button> })}</div></fieldset>}
+        {availableAreas.length > 0 && <fieldset><legend>{location.id === 'open-gulf' ? 'Charter position' : 'Fishing area'}</legend><div className="setup-options">{availableAreas.map((area) => { const selected = selectedArea?.id === area.id; const locked = area.boatRequired && !ownsLocationBoat; const unaffordable = !selected && area.relocationCost > game.coins; const detail = locked ? `${locationBoat?.name || 'Boat'} required` : !selected && area.relocationCost ? `${area.description} · Move ${area.relocationCost.toLocaleString()}` : area.description; return <button type="button" key={area.id} className={selected ? 'selected' : ''} disabled={locked || unaffordable} onClick={() => chooseArea(area)}><b>{area.name}</b><span>{unaffordable ? `${area.description} · Need ${(area.relocationCost - game.coins).toLocaleString()} more` : detail}</span></button> })}</div></fieldset>}
         <fieldset><legend>Reusable lure</legend><div className="setup-options">{availableLures.map((lure) => <button type="button" key={lure.id} className={selectedLure?.id === lure.id ? 'selected' : ''} onClick={() => actions.setFishingSetup(location.id, 'lure', lure.id)}><b>{lure.name}</b><span>{lure.targetFishIds?.length ? `${Math.round((lure.affinity - 1) * 100)}% target affinity` : lure.description}</span></button>)}</div></fieldset>
       </section>}
       <div className={`status ${fishingState}`} role="status" aria-live="assertive" aria-atomic="true"><span className="status-dot"/><div><b>{statusTitle}</b><p>{statusCopy[fishingState]}</p></div></div>
@@ -252,5 +268,6 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
           <button className={`primary-button ${fishingState === 'biting' ? 'urgent' : ''}`} disabled={isLineOut || isResult} onClick={fishingState === 'biting' ? reel : cast}>{fishingState === 'biting' ? 'Hook Fish!' : isLineOut ? 'Line is out…' : 'Cast Line'}</button>
         </>}
     </section>
+    {pendingRelocation && <div className="relocation-confirmation-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setPendingRelocation(null) }}><section className="relocation-confirmation" role="dialog" aria-modal="true" aria-labelledby="relocation-title" aria-describedby="relocation-description" onKeyDown={(event) => { if (event.key === 'Escape') setPendingRelocation(null) }}><span className="eyebrow">Charter relocation</span><h2 id="relocation-title">Move to {pendingRelocation.name}?</h2><p id="relocation-description">The Captain can relocate the charter, but he charges <b>{pendingRelocation.relocationCost.toLocaleString()} coins</b> for fuel. Do you accept?</p><div><button type="button" className="secondary-button" autoFocus onClick={() => setPendingRelocation(null)}>Stay here</button><button type="button" className="primary-button" onClick={acceptRelocation}>Accept and relocate</button></div></section></div>}
   </main>
 }

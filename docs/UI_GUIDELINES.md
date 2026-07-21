@@ -10,7 +10,7 @@ The interface should become quiet enough for the player to focus on fishing.
 - Keep essential status visible without filling every open area.
 - Reflect the selected lure in the in-water strike marker, and show an owned boat in boat-access scenes so equipment and future cosmetics have a visible home.
 - Use the same compact area/lure selector and one-time boat purchase language at Great Lake and Gulf Coast; locked areas name the location's required boat rather than using generic access copy.
-- Label Open Gulf choices as charter positions. Show the 250-coin move cost within every unselected option, disable unaffordable moves with the exact shortfall, and never imply another boat purchase.
+- Label Open Gulf choices as charter positions. Show the 250-coin move cost within every unselected option, disable unaffordable moves with the exact shortfall, and never imply another boat purchase. Selecting an affordable destination opens a focused confirmation naming the destination and making clear that the Captain charges 250 coins for fuel; `Stay here` is the initial focus and no coins are spent until `Accept and relocate` is chosen.
 - Give each authored fishing area a materially different viewpoint and structure silhouette; area selection should be visually apparent without rereading its label.
 - On phones, collapse pre-cast area and lure choices into a single setup summary with an explicit Change/Done control. Normal fishing posture should show meaningful water and the cast control at the same time.
 - Show specialty lures in a location-aware shop department with their named target, 20% relative affinity, permanent ownership, price, and equipped state visible before purchase.

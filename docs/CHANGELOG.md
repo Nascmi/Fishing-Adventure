@@ -2,6 +2,7 @@
 
 ## Phase 4 — Authored water choices
 
+- Added an explicit Open Gulf relocation confirmation that names the destination, makes clear that the Captain charges 250 coins for fuel, and offers `Stay here` or `Accept and relocate`.
 - Added Open Gulf Blue Water, Working Rig, and Reef Edge charter positions with distinct authored stern viewpoints and habitat weighting.
 - Added a transparent 250-coin fuel/time charge for every actual Open Gulf relocation, with same-position protection and exact insufficient-coin UI feedback.
 - Migrated saves to version 23 with Blue Water as the safe Open Gulf default and expanded the full setup matrix across all charter positions.

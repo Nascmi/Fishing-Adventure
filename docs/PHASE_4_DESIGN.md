@@ -38,7 +38,7 @@ Great Lake is the proving ground because its existing spinning presentation and 
 - **Blue Water:** the free arrival/default position and a broad-water home for Spanish Mackerel, King Mackerel, Mahi-Mahi, and Yellowfin Tuna.
 - **Working Rig:** a close structural position favoring Red Snapper and Greater Amberjack around deep platform pilings.
 - **Reef Edge:** a submerged current seam favoring Vermilion Snapper, Gray Triggerfish, Red Snapper, and Greater Amberjack.
-- **Relocation fee:** changing to any different position costs 250 coins each time, including returning to Blue Water. Remaining at the current position is free. This represents charter fuel and captain time, not personal boat ownership.
+- **Relocation fee:** changing to any different position costs 250 coins each time, including returning to Blue Water. Remaining at the current position is free. Before coins are spent, a confirmation names the destination, explains the fuel charge, and offers `Stay here` or `Accept and relocate`. This represents charter fuel and captain time, not personal boat ownership.
 
 Each authored area uses a distinct viewpoint. Great Lake moves from granite shoreline to sheltered weeds and deep rock structure; Gulf Coast moves from a marsh bank to exposed oyster shell and a broader tidal channel. Each skiff is visibly composited into boat-access scenery rather than baked into it. Broad hull panels provide stable future cosmetic slots, and cosmetics must not change fishing performance. The cast marker also changes silhouette and color with the equipped lure so setup choices remain visible during the fishing loop.
 

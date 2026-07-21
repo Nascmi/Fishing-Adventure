@@ -20,6 +20,7 @@ npm run build
 - Quiet-cast probability caps, high-end rod reduction, and prevention of consecutive quiet casts
 - Full playable setup matrix across every location, lure, and authored area, including valid positive weights and successful hook selection in every day phase
 - Open Gulf relocation charges, same-position protection, insufficient-coin rejection, and safe Blue Water arrival
+- Manual keyboard and touch verification of the Open Gulf relocation confirmation, including initial safe focus, Escape/backdrop cancellation, and acceptance-only coin spending
 - Missing, malformed, and unreadable save recovery
 - Location-bounded rarity fallback and preferred day phases
 - Specimen-size boundaries, deterministic catch generation, and catch values
