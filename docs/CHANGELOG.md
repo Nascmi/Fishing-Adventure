@@ -1,7 +1,23 @@
 # Changelog
 
+- Made premium cabin descriptions literal: owned rods can fill Workshop rack pegs; an included lure board joins the reel, bobber, and tackle tin; the Coastal Shack gains included rope-and-float peg decor; and specialized compatibility tags prevent implausible cross-placement of rods, tackle, nautical pieces, and model boats.
+- Added painting-compatible hooks to every cabin, including shared hearth and side-mount positions in the Starter Cabin and Angler's Lodge. Artwork and frame styles are now independently selectable and composited in live cabins and share images; save schema advanced to version 27.
+- Added the $2.99-tentative Grand Trophy Room IAP cabin with twelve authored preserved-fish mounts, two painting/frame gallery hooks, responsive live and share-image layouts, permanent entitlement gating, and save schema version 26 migration.
+
 ## Current polish pass
 
+- Activated a provider-independent Cabin Store for the three completed premium cabins with localized platform prices, clear permanent/cosmetic messaging, owned and pending states, restoration, safe failures, and a labeled development sandbox.
+- Added three optional supporter contribution levels at tentative $0.99, $2.99, and $4.99 prices; every level grants the same modest Community Supporter recognition and no gameplay or status advantage.
+- Made the storefront explicitly state that Fishing Adventure has no ads and that higher supporter amounts do not provide extra benefits.
+- Migrated saves to version 24 with a bounded offline cache of verified cosmetic entitlements; older saves receive no automatic purchase grants, and premium cabins remain gated by platform-derived ownership.
+- Added six commerce regressions covering storefront visibility, permanent restoration, hidden concept rejection, entitlement validation, and premium-cabin equipment rules.
+- Added an Android IAP release checklist defining exact product IDs, native bridge behavior, Google Play testing, verification, acknowledgement, and remaining provider decisions.
+- Replaced dormant premium-cabin capacity regions with 26 functional artwork-aligned customization hooks: 12 Workshop, 4 Lakeside Cottage, and 10 Coastal Shack anchors.
+- Added three included display pieces so premium cabin customization works immediately without another purchase, plus automated hook-bound and compatibility coverage.
+- Added three permanent earned-coin cabin models—a Freshwater Skiff, Bay Skiff, and offshore Charter Boat—with transparent handcrafted artwork and contained live/share rendering.
+- Added two tentative $0.99 permanent hull-color packs with two finishes each, gated behind ownership of the corresponding coin-earned boat and carrying no gameplay benefit.
+- Migrated saves to version 25 with validated per-boat cosmetic selections and safe fallback to each original included hull finish.
+- Expanded the future-ideas parking lot with a meaningful catch-and-release system and researched marquee encounters for marlin, sharks, sturgeon, and similar exceptional fish.
 - Preloaded alternate fishing viewpoints and added a brief scene crossfade so area changes feel intentional instead of flashing between large images; reduced-motion users receive an immediate swap.
 - Added accessible selected-state announcements to area and lure controls, focus trapping and focus restoration to confirmation/settings dialogs, and background scroll locking while dialogs are open.
 - Added a clear post-relocation status message, modern mobile viewport and safe-area spacing, and a short-landscape confirmation layout.

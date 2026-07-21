@@ -1,6 +1,6 @@
 # Save System
 
-The current save schema is version 18.
+The current save schema is version 27.
 
 ## Current Save Data
 
@@ -17,6 +17,9 @@ The current save schema is version 18.
 - Bounded ownership sets for earned location paintings, Master Angler frames, upgraded souvenirs, Trophy photographs, legendary miniatures, and equipment plaques
 - Validated permanent ownership of earned-coin Trading Post purchases, including the equipped coin-purchased cabin style and decor
 - Independent, validated decor selections for every authored hook in each customizable cabin
+- A validated offline cache of platform-confirmed cosmetic entitlement IDs; the platform storefront remains authoritative and refreshes this cache after successful synchronization
+- Resetting fishing progress preserves verified purchase entitlements; it does not turn a permanent platform purchase into lost progress
+- A validated equipped hull finish for each earnable personal boat; unknown, unentitled, cross-boat, or unearned-boat selections return to the included finish
 
 Inventory catches include their generated specimen-size class. Older catches are classified from their saved weight during migration.
 
@@ -39,6 +42,11 @@ Inventory catches include their generated specimen-size class. Older catches are
 - Version 16 added permanent painting, Master Angler frame, upgraded souvenir, Trophy photograph, legendary miniature, and equipment-plaque ownership with retroactive reconstruction from existing records.
 - Version 17 added permanent Trading Post ownership and validates that a coin-purchased cabin can be equipped only while its catalog item is owned.
 - Version 18 added per-cabin hook selections and validates decor ownership and hook compatibility.
+- Versions 19 through 23 added authored-water setup, permanent boats and reusable tackle, Gulf Coast defaults, and Open Gulf charter positions.
+- Version 24 added a bounded cache for verified cosmetic commerce entitlements without granting any purchase during migration.
+- Version 25 added validated per-boat cosmetic selections and gives older saves each boat's included original finish.
+- Version 26 adds twelve validated Grand Trophy Room display selections. Older saves receive twelve empty mounts, while invalid or unpreserved fish references are removed safely.
+- Version 27 separates frame-hook artwork from frame treatments. Legacy painting or frame selections are classified into the correct field, allowing earned artwork and purchased frames to be displayed together.
 
 ## Rules
 
@@ -52,4 +60,4 @@ Inventory catches include their generated specimen-size class. Older catches are
 - If recovery requires a new game, explain what happened instead of silently discarding progress.
 - Test loading an older save before releasing a schema change.
 
-The current version 23 implementation validates and migrates readable saves. Phase 4 stores permanent location-aware boat ownership, all permanent purchased-tackle ownership, and each location's equipped area or charter position and reusable lure. Version 19 and 20 saves receive safe included-tackle defaults; version 21 saves receive Marsh Bank as the safe Gulf Coast area; version 22 saves receive Blue Water as the safe Open Gulf position without changing coins or prior progress. Automated fixtures cover representative version 1, version 12, version 16, version 19, version 20, version 21 Gulf defaults, version 22 Open Gulf defaults, both boat entitlements, purchased-lure ownership, malformed, partial, and unreadable saves through the current schema. When stored data cannot be read, the game preserves a recoverable backup when practical, returns to a valid new-game state, and tells the player what happened. Real-device storage failures and additional historical save samples remain release-testing responsibilities.
+The current version 27 implementation validates and migrates readable saves. Phase 4 stores permanent location-aware boat ownership, all permanent purchased-tackle ownership, each location's equipped area or charter position and reusable lure, a bounded offline cache of platform-confirmed cosmetic entitlements, validated equipped hull finishes, the Grand Trophy Room's twelve display selections, and independently selected artwork and treatments for every frame hook. Versions 19 through 26 receive their safe defaults without changing coins or prior progress. Automated fixtures cover representative legacy saves, current water setup, commerce entitlement validation, boat-cosmetic gating, trophy-room displays, cabin artwork/frame composition, malformed, partial, and unreadable saves through the current schema. When stored data cannot be read, the game preserves a recoverable backup when practical, returns to a valid new-game state, and tells the player what happened. Real-device storage failures and Google Play restoration remain release-testing responsibilities.

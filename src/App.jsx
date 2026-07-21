@@ -100,6 +100,7 @@ export default function App() {
         <span className="eyebrow">Angler profile</span>
         <h2 id="settings-title">Journey & Settings</h2>
         <StatsPanel/>
+        {game.commerce?.entitlementIds.includes('supporter:community') && <p className="supporter-recognition"><Icon name="crown-fish" size={20}/><span><b>Community Supporter</b><small>Thank you for helping Fishing Adventure grow.</small></span></p>}
 
         <div className="settings-section">
           <h3>Bite timing</h3>

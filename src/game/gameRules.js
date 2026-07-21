@@ -1,12 +1,14 @@
 import { unlockAchievements } from '../data/achievements'
 import { getCoinStoreItem } from '../data/coinStoreCatalog'
 import { getCabinDefinition } from '../data/cabinCatalog'
-import { getOwnedCabinDecor } from '../data/cabinDecor'
+import { hasProductEntitlement } from '../data/storeCatalog'
+import { getOwnedCabinDecor, isDecorCompatible } from '../data/cabinDecor'
 import { GAME_CONFIG } from '../data/config'
 import { getLocation } from '../data/locations'
 import { unlockLocationCosmetics } from '../data/locationPaintings'
 import { getRod } from '../data/rods'
 import { getBoat, getBoatForLocation, getFishingArea, getLureFamily } from '../data/waterSetup'
+import { getBoatCosmetic, isBoatCosmeticOwned } from '../data/boatCosmetics'
 
 const randomBetween = (minimum, maximum, random) => Math.round(minimum + random() * (maximum - minimum))
 
@@ -69,6 +71,13 @@ export const purchaseBoat = (state, id) => {
   const boat = getBoat(id)
   if (!boat || state.watercraft.ownedBoatIds.includes(id) || state.coins < boat.price) return state
   return { ...state, coins: state.coins - boat.price, watercraft: { ...state.watercraft, ownedBoatIds: [...state.watercraft.ownedBoatIds, id] } }
+}
+
+export const chooseBoatCosmetic = (state, boatId, cosmeticId) => {
+  if (!state.watercraft.ownedBoatIds.includes(boatId)) return state
+  const cosmetic = getBoatCosmetic(cosmeticId)
+  if (!cosmetic || cosmetic.boatId !== boatId || !isBoatCosmeticOwned(state, cosmetic)) return state
+  return { ...state, watercraft: { ...state.watercraft, cosmeticByBoat: { ...state.watercraft.cosmeticByBoat, [boatId]: cosmeticId } } }
 }
 
 export const purchaseLure = (state, id) => {
@@ -167,19 +176,32 @@ export const endActiveTrip = (state) => ({ ...state, dayCycle: { ...state.dayCyc
 export const chooseCabinStyle = (state, styleId) => {
   if (styleId === 'angler-lodge' && state.achievementProgress.legendaryLocations.length < 4) return state
   const storeCabinOwned = state.coinStore.ownedItemIds.some((id) => getCoinStoreItem(id)?.cabinId === styleId)
-  if (!['starter', 'angler-lodge'].includes(styleId) && !storeCabinOwned) return state
+  const definition = getCabinDefinition(styleId)
+  const premiumCabinOwned = definition?.acquisition.type === 'store' && hasProductEntitlement(state.commerce?.entitlementIds || [], definition.acquisition.productId)
+  if (!['starter', 'angler-lodge'].includes(styleId) && !storeCabinOwned && !premiumCabinOwned) return state
   return { ...state, cabin: { ...state.cabin, styleId } }
 }
 
-export const chooseCabinDecor = (state, cabinId, hookId, decorId) => {
+export const chooseCabinDecor = (state, cabinId, hookId, decorId, frameRole = null) => {
   const cabin = getCabinDefinition(cabinId)
   const hook = cabin?.customizationHooks?.find((item) => item.id === hookId)
   if (!hook) return state
+  if (hook.type === 'frame') {
+    const current = state.cabin.decorByCabin[cabinId]?.[hookId]
+    const selection = current && typeof current === 'object' ? current : { artworkId: null, frameId: null }
+    if (decorId === null && !frameRole) return { ...state, cabin: { ...state.cabin, decorByCabin: { ...state.cabin.decorByCabin, [cabinId]: { ...state.cabin.decorByCabin[cabinId], [hookId]: { artworkId: null, frameId: null } } } } }
+    const decor = getOwnedCabinDecor(state).find((item) => item.id === decorId)
+    const effectiveRole = frameRole || decor?.frameRole
+    const key = effectiveRole === 'treatment' ? 'frameId' : 'artworkId'
+    if (decorId === null) return { ...state, cabin: { ...state.cabin, decorByCabin: { ...state.cabin.decorByCabin, [cabinId]: { ...state.cabin.decorByCabin[cabinId], [hookId]: { ...selection, [key]: null } } } } }
+    if (!decor || decor.hookType !== 'frame' || decor.frameRole !== effectiveRole) return state
+    return { ...state, cabin: { ...state.cabin, decorByCabin: { ...state.cabin.decorByCabin, [cabinId]: { ...state.cabin.decorByCabin[cabinId], [hookId]: { ...selection, [key]: decorId } } } } }
+  }
   if (decorId === null) {
     return { ...state, cabin: { ...state.cabin, decorByCabin: { ...state.cabin.decorByCabin, [cabinId]: { ...state.cabin.decorByCabin[cabinId], [hookId]: null } } } }
   }
   const decor = getOwnedCabinDecor(state).find((item) => item.id === decorId)
-  if (!decor || decor.hookType !== hook.type) return state
+  if (!isDecorCompatible(hook, decor)) return state
   return { ...state, cabin: { ...state.cabin, decorByCabin: { ...state.cabin.decorByCabin, [cabinId]: { ...state.cabin.decorByCabin[cabinId], [hookId]: decorId } } } }
 }
 

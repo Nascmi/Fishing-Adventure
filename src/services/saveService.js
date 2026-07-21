@@ -7,12 +7,14 @@ import { locations } from '../data/locations'
 import { unlockLocationCosmetics } from '../data/locationPaintings'
 import { coinStoreItems } from '../data/coinStoreCatalog'
 import { cabinCatalog } from '../data/cabinCatalog'
-import { getCabinDecor, isDecorOwned } from '../data/cabinDecor'
+import { getCabinDecor, isDecorCompatible, isDecorOwned } from '../data/cabinDecor'
 import { boats, fishingAreas, getAreasForLocation, getBoatForLocation, getDefaultLure, lureFamilies } from '../data/waterSetup'
+import { hasProductEntitlement, knownEntitlementIds } from '../data/storeCatalog'
+import { boatCosmetics, getDefaultBoatCosmetic } from '../data/boatCosmetics'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 23
+const CURRENT_VERSION = 27
 const defaultFishingSetups = () => Object.fromEntries(rodLocationIds.map((locationId) => [locationId, {
   areaId: getAreasForLocation(locationId)[0]?.id || null,
   lureId: getDefaultLure(locationId).id,
@@ -22,6 +24,7 @@ const defaultCabin = () => ({
   styleId: 'starter',
   featuredFishId: null,
   lodgeFeaturedFishIds: [null, null, null],
+  trophyRoomFeaturedFishIds: Array(12).fill(null),
   souvenirLocationId: 'willow-pond',
   specimens: {},
   decorByCabin: {},
@@ -44,7 +47,8 @@ export const newGame = () => ({
   ),
   collection: {},
   coinStore: { ownedItemIds: [] },
-  watercraft: { ownedBoatIds: [] },
+  commerce: { entitlementIds: [] },
+  watercraft: { ownedBoatIds: [], cosmeticByBoat: Object.fromEntries(boats.map((boat) => [boat.id, getDefaultBoatCosmetic(boat.id)?.id || null])) },
   tackle: { ownedLureIds: [] },
   fishingSetupByLocation: defaultFishingSetups(),
   cabin: defaultCabin(),
@@ -210,6 +214,19 @@ function migrateSave(raw) {
     migrated.fishingSetupByLocation = { ...defaultFishingSetups(), ...(migrated.fishingSetupByLocation || {}) }
     migrated.version = 23
   }
+  if (migrated.version < 24) {
+    migrated.commerce = { entitlementIds: [] }
+    migrated.version = 24
+  }
+  if (migrated.version < 25) {
+    migrated.watercraft = { ...(migrated.watercraft || {}), cosmeticByBoat: {} }
+    migrated.version = 25
+  }
+  if (migrated.version < 26) {
+    migrated.cabin = { ...defaultCabin(), ...(migrated.cabin || {}), trophyRoomFeaturedFishIds: Array(12).fill(null) }
+    migrated.version = 26
+  }
+  if (migrated.version < 27) migrated.version = 27
   return migrated
 }
 
@@ -228,6 +245,12 @@ export function validateSave(input) {
     : []
   const validBoatIds = new Set(boats.map((boat) => boat.id))
   const ownedBoatIds = Array.isArray(raw.watercraft?.ownedBoatIds) ? [...new Set(raw.watercraft.ownedBoatIds.filter((id) => validBoatIds.has(id)))] : []
+  const entitlementIds = Array.isArray(raw.commerce?.entitlementIds) ? [...new Set(raw.commerce.entitlementIds.filter((id) => knownEntitlementIds.includes(id)))] : []
+  const cosmeticByBoat = Object.fromEntries(boats.map((boat) => {
+    const cosmetic = boatCosmetics.find((item) => item.id === raw.watercraft?.cosmeticByBoat?.[boat.id] && item.boatId === boat.id)
+    const allowed = cosmetic && (cosmetic.included || (ownedBoatIds.includes(boat.id) && entitlementIds.includes(cosmetic.entitlementId)))
+    return [boat.id, allowed ? cosmetic.id : getDefaultBoatCosmetic(boat.id)?.id || null]
+  }))
   const purchasableLureIds = new Set(lureFamilies.filter((lure) => !lure.included).map((lure) => lure.id))
   const ownedLureIds = Array.isArray(raw.tackle?.ownedLureIds) ? [...new Set(raw.tackle.ownedLureIds.filter((id) => purchasableLureIds.has(id)))] : []
   const fishingSetupByLocation = Object.fromEntries(rodLocationIds.map((locationId) => {
@@ -361,13 +384,19 @@ export function validateSave(input) {
     }
   })
   const ownedCabinIds = new Set(coinStoreItems.filter((item) => item.cabinId && ownedItemIds.includes(item.id)).map((item) => item.cabinId))
+  const premiumCabinOwned = (styleId) => {
+    const definition = cabinCatalog.find((cabin) => cabin.id === styleId)
+    return definition?.acquisition.type === 'store' && hasProductEntitlement(entitlementIds, definition.acquisition.productId)
+  }
   const validCabinStyle = rawCabin.styleId === 'starter'
     || (rawCabin.styleId === 'angler-lodge' && legendaryLocations.length >= 4)
     || ownedCabinIds.has(rawCabin.styleId)
+    || premiumCabinOwned(rawCabin.styleId)
   const decorState = {
     ...base,
     coinStore: { ownedItemIds },
-    watercraft: { ownedBoatIds },
+    commerce: { entitlementIds },
+    watercraft: { ownedBoatIds, cosmeticByBoat },
     tackle: { ownedLureIds },
     fishingSetupByLocation,
     achievementProgress: { ...base.achievementProgress, paintingsEarned, upgradedSouvenirs, equipmentPlaques, amazingPhotos, legendaryMiniatures },
@@ -377,8 +406,18 @@ export function validateSave(input) {
   const decorByCabin = Object.fromEntries(cabinCatalog.filter((definition) => definition.customizationHooks).map((definition) => {
     const rawSelections = rawDecorByCabin[definition.id] && typeof rawDecorByCabin[definition.id] === 'object' ? rawDecorByCabin[definition.id] : {}
     const selections = Object.fromEntries(definition.customizationHooks.map((hook) => {
-      const decor = availableDecor.get(rawSelections[hook.id])
-      return [hook.id, decor?.hookType === hook.type ? decor.id : null]
+      const rawSelection = rawSelections[hook.id]
+      if (hook.type === 'frame') {
+        const legacyDecor = typeof rawSelection === 'string' ? availableDecor.get(rawSelection) : null
+        const artwork = availableDecor.get(typeof rawSelection === 'object' ? rawSelection?.artworkId : legacyDecor?.frameRole === 'artwork' ? rawSelection : null)
+        const frame = availableDecor.get(typeof rawSelection === 'object' ? rawSelection?.frameId : legacyDecor?.frameRole === 'treatment' ? rawSelection : null)
+        return [hook.id, {
+          artworkId: artwork?.hookType === 'frame' && artwork.frameRole === 'artwork' ? artwork.id : null,
+          frameId: frame?.hookType === 'frame' && frame.frameRole === 'treatment' ? frame.id : null,
+        }]
+      }
+      const decor = availableDecor.get(rawSelection)
+      return [hook.id, isDecorCompatible(hook, decor) ? decor.id : null]
     }))
     return [definition.id, selections]
   }))
@@ -388,6 +427,16 @@ export function validateSave(input) {
     lodgeFeaturedFishIds: Array.isArray(rawCabin.lodgeFeaturedFishIds)
       ? [...rawCabin.lodgeFeaturedFishIds.slice(0, 3), null, null, null].slice(0, 3).map((id) => validFish.has(id) && specimens[id]?.mounted ? id : null)
       : base.cabin.lodgeFeaturedFishIds,
+    trophyRoomFeaturedFishIds: Array.isArray(rawCabin.trophyRoomFeaturedFishIds)
+      ? (() => {
+          const seen = new Set()
+          return [...rawCabin.trophyRoomFeaturedFishIds.slice(0, 12), ...Array(12).fill(null)].slice(0, 12).map((id) => {
+            if (!validFish.has(id) || !specimens[id]?.mounted || seen.has(id)) return null
+            seen.add(id)
+            return id
+          })
+        })()
+      : base.cabin.trophyRoomFeaturedFishIds,
     souvenirLocationId: visitedLocationIds.has(rawCabin.souvenirLocationId) ? rawCabin.souvenirLocationId : base.cabin.souvenirLocationId,
     specimens,
     decorByCabin,
@@ -409,7 +458,8 @@ export function validateSave(input) {
     gearByLocation,
     collection,
     coinStore: { ownedItemIds },
-    watercraft: { ownedBoatIds },
+    commerce: { entitlementIds },
+    watercraft: { ownedBoatIds, cosmeticByBoat },
     tackle: { ownedLureIds },
     fishingSetupByLocation,
     cabin,

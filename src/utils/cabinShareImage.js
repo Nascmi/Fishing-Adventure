@@ -1,4 +1,5 @@
 import { lodgeLayout } from '../data/lodgeLayout'
+import { trophyRoomLayout } from '../data/trophyRoomLayout'
 
 const loadImage = (src) => new Promise((resolve, reject) => {
   const image = new Image()
@@ -54,7 +55,7 @@ const drawEmptyMedallion = (context, x, y, radius) => {
   context.restore()
 }
 
-export async function createCabinShareImage({ background, cabinName, fishDisplays, souvenir, keepsakes, isLodge, decor = [] }) {
+export async function createCabinShareImage({ background, cabinName, fishDisplays, souvenir, keepsakes, isLodge, isTrophyRoom = false, decor = [] }) {
   const canvas = document.createElement('canvas')
   canvas.width = 1200
   canvas.height = 800
@@ -88,7 +89,12 @@ export async function createCabinShareImage({ background, cabinName, fishDisplay
     }
     if (item.artwork) {
       const artwork = await loadImage(item.artwork)
-      if (hook.type === 'frame' || hook.type === 'rug') context.drawImage(artwork, left, top, drawWidth, drawHeight)
+      if (item.displayTags?.includes('rod')) {
+        context.translate(left + drawWidth / 2, top + drawHeight / 2)
+        context.rotate(Math.PI / 2)
+        drawContained(context, artwork, -drawHeight / 2, -drawWidth / 2, drawHeight, drawWidth)
+      } else if (item.fit === 'contain') drawContained(context, artwork, left, top, drawWidth, drawHeight)
+      else if (hook.type === 'frame' || hook.type === 'rug') context.drawImage(artwork, left, top, drawWidth, drawHeight)
       else drawCovered(context, artwork, left, top, drawWidth, drawHeight)
     }
     context.restore()
@@ -96,6 +102,8 @@ export async function createCabinShareImage({ background, cabinName, fishDisplay
 
   const fishSlots = isLodge
     ? lodgeLayout.specimenMounts.map(({ x, y, width, height }) => ({ x: x * 12, y: y * 8, width: width * 12, height: height * 8 }))
+    : isTrophyRoom
+      ? trophyRoomLayout.specimenMounts.map(({ x, y, width, height }) => ({ x: x * 12, y: y * 8, width: width * 12, height: height * 8 }))
     : [{ x: 540, y: 104, width: 184, height: 164 }]
 
   await Promise.all(fishDisplays.map(async (display, index) => {
@@ -106,13 +114,13 @@ export async function createCabinShareImage({ background, cabinName, fishDisplay
     context.shadowColor = '#130b0777'
     context.shadowBlur = 12
     context.shadowOffsetY = 6
-    if (isLodge) drawContained(context, fishImage, slot.x + slot.width * .06, slot.y + slot.height * .18, slot.width * .88, slot.height * .64)
+    if (isLodge || isTrophyRoom) drawContained(context, fishImage, slot.x + slot.width * .06, slot.y + slot.height * .18, slot.width * .88, slot.height * .64)
     else drawContained(context, fishImage, slot.x, slot.y, slot.width, slot.height)
     context.restore()
     if (display.specimen?.sizeTier === 'trophy') {
       context.strokeStyle = '#dfbd62'
       context.lineWidth = 3
-      if (isLodge) {
+      if (isLodge || isTrophyRoom) {
         context.beginPath()
         context.ellipse(slot.x + slot.width / 2, slot.y + slot.height / 2, slot.width * .45, slot.height * .45, 0, 0, Math.PI * 2)
         context.stroke()

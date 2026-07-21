@@ -14,6 +14,9 @@ export const coinStoreItems = [
   { id: 'trading-post.finish-captains-mahogany', name: "Captain's Mahogany", category: 'finish', hookType: 'finish', price: 75000, tier: 'prestige', artwork: captainsMahogany, colors: ['#351b16', '#824c34'] },
   { id: 'trading-post.decor-antique-creel', name: 'Antique Fishing Creel', category: 'cabin-decor', hookType: 'display', price: 12500, tier: 'fine', artwork: antiqueCreel, colors: ['#76502e', '#c5a36a'] },
   { id: 'trading-post.decor-hand-carved-decoy', name: 'Hand-Carved Fish Decoy', category: 'cabin-decor', hookType: 'display', price: 25000, tier: 'prestige', artwork: handCarvedDecoy, colors: ['#315d58', '#bb7445'] },
+  { id: 'trading-post.model-freshwater-skiff', name: 'Freshwater Skiff Model', category: 'cabin-decor', hookType: 'display', price: 7500, tier: 'standard', artwork: modelFreshwaterSkiff, fit: 'contain', colors: ['#315d47', '#c6a96b'], description: 'A handcrafted miniature of a familiar freshwater fishing skiff.' },
+  { id: 'trading-post.model-bay-skiff', name: 'Bay Skiff Model', category: 'cabin-decor', hookType: 'display', price: 15000, tier: 'fine', artwork: modelBaySkiff, fit: 'contain', colors: ['#d8cfb0', '#5f9489'], description: 'A weathered center-console miniature inspired by quiet coastal water.' },
+  { id: 'trading-post.model-charter-boat', name: 'Charter Boat Model', category: 'cabin-decor', hookType: 'display', price: 30000, tier: 'prestige', artwork: modelCharterBoat, fit: 'contain', colors: ['#efe3bd', '#183b5c'], description: 'A detailed offshore charter miniature with flybridge and outriggers.' },
   { id: 'trading-post.plaque-100k-club', name: 'Hundred-Thousand Coin Club Plaque', category: 'prestige', hookType: 'display', price: 100000, tier: 'legacy', artwork: coinClubPlaque, colors: ['#342814', '#e0bd57'] },
 ]
 
@@ -45,3 +48,6 @@ import captainsMahogany from '../assets/decor/captains-mahogany.jpg'
 import antiqueCreel from '../assets/decor/antique-creel.jpg'
 import handCarvedDecoy from '../assets/decor/hand-carved-decoy.jpg'
 import coinClubPlaque from '../assets/decor/coin-club-plaque.jpg'
+import modelFreshwaterSkiff from '../assets/decor/model-freshwater-skiff.png'
+import modelBaySkiff from '../assets/decor/model-bay-skiff.png'
+import modelCharterBoat from '../assets/decor/model-charter-boat.png'

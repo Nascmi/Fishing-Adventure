@@ -8,12 +8,17 @@ export const cabinCatalog = [
     description: 'A humble home for one preserved catch and one travel memory.',
     acquisition: { type: 'included' },
     slots: [{ id: 'featured-specimen', type: 'specimen', capacity: 1 }, { id: 'travel-souvenir', type: 'souvenir', capacity: 1 }],
+    customizationHooks: [hook('hearth-gallery', 'Hearth gallery', 'frame', { x: 44.2, y: 12.7, width: 16.5, height: 22.5 })],
   },
   {
     id: 'angler-lodge', name: "Angler's Lodge", artworkKey: 'angler-lodge.png',
     description: 'An earned lodge for legendary journeys and lasting accomplishments.',
     acquisition: { type: 'earned', requirementId: 'legendary-locations-4' },
     slots: [{ id: 'specimen-mounts', type: 'specimen', capacity: 3 }, { id: 'keepsake-cabinet', type: 'keepsake', capacity: 20, automatic: true }],
+    customizationHooks: [
+      hook('left-gallery-frame', 'Left gallery', 'frame', { x: 26.2, y: 20.2, width: 10.2, height: 19.8 }),
+      hook('right-gallery-frame', 'Right gallery', 'frame', { x: 64.1, y: 20.5, width: 9.1, height: 20.5 }),
+    ],
   },
   {
     id: 'riverstone-cabin', name: 'Riverstone Cabin', artworkKey: 'riverstone-cabin.jpg',
@@ -54,31 +59,57 @@ export const cabinCatalog = [
     id: 'workshop-cabin', name: 'Workshop Cabin', artworkKey: 'workshop-cabin.png',
     description: 'A practical retreat for favorite rods, reels, lures, and tackle.',
     acquisition: { type: 'store', availability: 'deferred', productId: 'cabin.workshop' },
-    slots: [
-      { id: 'rod-rack', type: 'equipment', capacity: 5, bounds: { x: 26.5, y: 8.5, width: 42.5, height: 17 } },
-      { id: 'tackle-bench', type: 'tackle', capacity: 4, bounds: { x: 31, y: 34, width: 34, height: 23 } },
-      { id: 'tackle-cabinet', type: 'tackle', capacity: 6, bounds: { x: 71, y: 17.5, width: 22, height: 26 } },
+    customizationHooks: [
+      { ...hook('rod-peg-1', 'Rod rack peg 1', 'display', { x: 28.4, y: 10.8, width: 6.4, height: 11.5 }), accepts: ['rod'] },
+      { ...hook('rod-peg-2', 'Rod rack peg 2', 'display', { x: 36.4, y: 10.8, width: 6.4, height: 11.5 }), accepts: ['rod'] },
+      { ...hook('rod-peg-3', 'Rod rack peg 3', 'display', { x: 44.4, y: 10.8, width: 6.4, height: 11.5 }), accepts: ['rod'] },
+      { ...hook('rod-peg-4', 'Rod rack peg 4', 'display', { x: 52.4, y: 10.8, width: 6.4, height: 11.5 }), accepts: ['rod'] },
+      { ...hook('rod-peg-5', 'Rod rack peg 5', 'display', { x: 60.4, y: 10.8, width: 6.4, height: 11.5 }), accepts: ['rod'] },
+      hook('workbench-frame', 'Workbench display', 'frame', { x: 31.1, y: 33.4, width: 34.4, height: 24.2 }),
+      { ...hook('cabinet-upper-left', 'Cabinet upper left', 'display', { x: 72.8, y: 19.1, width: 8, height: 6.3 }), accepts: ['tackle'] },
+      { ...hook('cabinet-upper-right', 'Cabinet upper right', 'display', { x: 82.5, y: 19.1, width: 8, height: 6.3 }), accepts: ['tackle'] },
+      { ...hook('cabinet-middle-left', 'Cabinet middle left', 'display', { x: 72.8, y: 27.4, width: 8, height: 6.3 }), accepts: ['tackle'] },
+      { ...hook('cabinet-middle-right', 'Cabinet middle right', 'display', { x: 82.5, y: 27.4, width: 8, height: 6.3 }), accepts: ['tackle'] },
+      { ...hook('cabinet-lower-left', 'Cabinet lower left', 'display', { x: 72.8, y: 35.7, width: 8, height: 6.3 }), accepts: ['tackle'] },
+      { ...hook('cabinet-lower-right', 'Cabinet lower right', 'display', { x: 82.5, y: 35.7, width: 8, height: 6.3 }), accepts: ['tackle'] },
     ],
   },
   {
     id: 'lakeside-cottage', name: 'Lakeside Cottage', artworkKey: 'lakeside-cottage.png',
     description: 'A bright cottage for travel paintings and quiet domestic details.',
     acquisition: { type: 'store', availability: 'deferred', productId: 'cabin.lakeside_cottage' },
-    slots: [
-      { id: 'location-paintings', type: 'location-painting', capacity: 2, bounds: { x: 47.3, y: 13.5, width: 20.8, height: 20 } },
-      { id: 'rug', type: 'rug', capacity: 1, bounds: { x: 29, y: 72, width: 42, height: 26 } },
-      { id: 'travel-display', type: 'souvenir', capacity: 1, bounds: { x: 75, y: 47, width: 16, height: 25 } },
+    customizationHooks: [
+      hook('left-gallery-frame', 'Left gallery frame', 'frame', { x: 47.4, y: 13.5, width: 9.8, height: 20.1 }),
+      hook('right-gallery-frame', 'Right gallery frame', 'frame', { x: 58.8, y: 13.5, width: 9.8, height: 20.1 }),
+      hook('cottage-rug', 'Cottage rug', 'rug', { x: 18.3, y: 72, width: 57.5, height: 27.2 }),
+      hook('sideboard-display', 'Sideboard display', 'display', { x: 75.5, y: 46.7, width: 15.7, height: 15.5 }),
     ],
   },
   {
     id: 'coastal-shack', name: 'Coastal Shack', artworkKey: 'coastal-shack.png',
     description: 'A weathered Gulf hideaway for nautical memories and boat stories.',
     acquisition: { type: 'store', availability: 'deferred', productId: 'cabin.coastal_shack' },
-    slots: [
-      { id: 'gulf-shelf', type: 'souvenir', capacity: 5, bounds: { x: 36, y: 14, width: 31, height: 19 } },
-      { id: 'nautical-shadowbox', type: 'nautical', capacity: 1, bounds: { x: 40, y: 38, width: 23, height: 21 } },
-      { id: 'model-boat-table', type: 'boat-model', capacity: 1, bounds: { x: 33, y: 62, width: 40, height: 17 } },
-      { id: 'dock-keepsakes', type: 'nautical', capacity: 5, bounds: { x: 66, y: 36, width: 16, height: 14 } },
+    customizationHooks: [
+      { ...hook('upper-shelf-left', 'Upper shelf left', 'display', { x: 37.1, y: 15.2, width: 8.4, height: 15.8 }), accepts: ['nautical', 'souvenir', 'miniature'] },
+      { ...hook('upper-shelf-center', 'Upper shelf center', 'display', { x: 47.3, y: 15.2, width: 8.4, height: 15.8 }), accepts: ['nautical', 'souvenir', 'miniature'] },
+      { ...hook('upper-shelf-right', 'Upper shelf right', 'display', { x: 57.5, y: 15.2, width: 8.4, height: 15.8 }), accepts: ['nautical', 'souvenir', 'miniature'] },
+      hook('nautical-shadowbox', 'Nautical shadowbox', 'frame', { x: 40.2, y: 37.2, width: 24.6, height: 20.6 }),
+      { ...hook('model-boat-table', 'Model boat table', 'display', { x: 36, y: 61.7, width: 36, height: 13.8 }), accepts: ['model-boat'] },
+      { ...hook('dock-peg-1', 'Dock peg 1', 'display', { x: 67, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
+      { ...hook('dock-peg-2', 'Dock peg 2', 'display', { x: 70.7, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
+      { ...hook('dock-peg-3', 'Dock peg 3', 'display', { x: 74.4, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
+      { ...hook('dock-peg-4', 'Dock peg 4', 'display', { x: 78.1, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
+      { ...hook('dock-peg-5', 'Dock peg 5', 'display', { x: 81.8, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
+    ],
+  },
+  {
+    id: 'trophy-room', name: 'Grand Trophy Room', artworkKey: 'trophy-room.png',
+    description: 'A warm gallery with twelve mounts for the preserved catches you are proudest of.',
+    acquisition: { type: 'store', availability: 'prepared', productId: 'cabin.trophy_room' },
+    slots: [{ id: 'trophy-gallery', type: 'specimen', capacity: 12 }],
+    customizationHooks: [
+      hook('left-gallery-painting', 'Left gallery painting', 'frame', { x: 7.8, y: 70.8, width: 20.5, height: 15.8 }),
+      hook('right-gallery-painting', 'Right gallery painting', 'frame', { x: 71.7, y: 70.8, width: 20.5, height: 15.8 }),
     ],
   },
 ]
@@ -86,6 +117,11 @@ export const cabinCatalog = [
 export const getCabinDefinition = (id) => cabinCatalog.find((cabin) => cabin.id === id)
 
 export const includedCabinCosmetics = {
+  displays: [
+    { id: 'display-brass-reel', name: 'Brass Reel', colors: ['#75522d', '#d8b665'] },
+    { id: 'display-painted-bobber', name: 'Painted Bobber', colors: ['#315f59', '#d87855'] },
+    { id: 'display-weathered-tackle-tin', name: 'Weathered Tackle Tin', colors: ['#405d57', '#a99169'] },
+  ],
   rugs: [
     { id: 'rug-braided-earth', name: 'Braided Earth', colors: ['#765238', '#b58a5b', '#4d6a57'] },
     { id: 'rug-river-blue', name: 'River Blue', colors: ['#496d76', '#9bb5ae', '#d8c99d'] },

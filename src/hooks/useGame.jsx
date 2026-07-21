@@ -3,7 +3,8 @@ import { clearGame, loadGame, newGame, rarityRank, saveGame } from '../services/
 import { achievements as achievementDefinitions, unlockAchievements } from '../data/achievements'
 import { getPreferredPhases } from '../utils/fishingEngine'
 import { unlockLocationCosmetics } from '../data/locationPaintings'
-import { chooseCabinDecor, chooseCabinStyle, chooseFishingSetup, endActiveTrip, equipOwnedRod, preserveCabinSpecimen, purchaseBoat, purchaseCoinStoreItem, purchaseLure, purchaseRod, skipTimePhase, startTrip, tickGameTime } from '../game/gameRules'
+import { chooseBoatCosmetic, chooseCabinDecor, chooseCabinStyle, chooseFishingSetup, endActiveTrip, equipOwnedRod, preserveCabinSpecimen, purchaseBoat, purchaseCoinStoreItem, purchaseLure, purchaseRod, skipTimePhase, startTrip, tickGameTime } from '../game/gameRules'
+import { initializeCommerce, purchaseStoreProduct, restoreStorePurchases } from '../services/commerceService'
 
 const GameContext = createContext(null)
 export function GameProvider({ children }) {
@@ -11,11 +12,24 @@ export function GameProvider({ children }) {
   const [game, setGame] = useState(initial.game)
   const [notice, setNotice] = useState(initial.notice)
   const [storageAvailable, setStorageAvailable] = useState(true)
+  const [commerce, setCommerce] = useState({ status: 'loading', available: false, provider: null, products: [], ownedProductIds: [], pendingProductId: null, message: null })
   const knownAchievements = useRef(new Set(Object.keys(initial.game.achievements)))
 
   useEffect(() => {
     setStorageAvailable(saveGame(game))
   }, [game])
+
+  useEffect(() => {
+    let active = true
+    initializeCommerce().then((result) => {
+      if (!active) return
+      setCommerce({ status: 'ready', pendingProductId: null, message: null, ...result })
+      if (result.available) setGame((current) => ({ ...current, commerce: { entitlementIds: result.entitlementIds } }))
+    }).catch(() => {
+      if (active) setCommerce((current) => ({ ...current, status: 'error', message: 'The store could not connect. Your saved game is safe.' }))
+    })
+    return () => { active = false }
+  }, [])
 
   useEffect(() => {
     const newIds = Object.keys(game.achievements).filter((id) => !knownAchievements.current.has(id))
@@ -129,6 +143,7 @@ export function GameProvider({ children }) {
       buyCoinStoreItem: (id) => setGame((current) => purchaseCoinStoreItem(current, id)),
       equipRod: (id, locationId) => setGame((current) => equipOwnedRod(current, id, locationId)),
       buyBoat: (id) => setGame((current) => purchaseBoat(current, id)),
+      setBoatCosmetic: (boatId, cosmeticId) => setGame((current) => chooseBoatCosmetic(current, boatId, cosmeticId)),
       buyLure: (id) => setGame((current) => purchaseLure(current, id)),
       setFishingSetup: (locationId, type, id) => setGame((current) => chooseFishingSetup(current, locationId, type, id)),
       bookTrip: (locationId) => setGame((current) => startTrip(current, locationId)),
@@ -157,22 +172,57 @@ export function GameProvider({ children }) {
           nextDisplays[index] = fishId || null
           return { ...current, cabin: { ...current.cabin, lodgeFeaturedFishIds: nextDisplays } }
         }),
+      setTrophyRoomDisplay: (index, fishId) =>
+        setGame((current) => {
+          if (!current.commerce?.entitlementIds.includes('cabin:trophy-room') || index < 0 || index > 11) return current
+          const nextDisplays = [...current.cabin.trophyRoomFeaturedFishIds]
+          nextDisplays[index] = fishId || null
+          return { ...current, cabin: { ...current.cabin, trophyRoomFeaturedFishIds: nextDisplays } }
+        }),
       setCabinStyle: (styleId) => setGame((current) => chooseCabinStyle(current, styleId)),
-      setCabinDecor: (cabinId, hookId, decorId) => setGame((current) => chooseCabinDecor(current, cabinId, hookId, decorId)),
+      setCabinDecor: (cabinId, hookId, decorId, frameRole) => setGame((current) => chooseCabinDecor(current, cabinId, hookId, decorId, frameRole)),
       preserveSpecimen: (fishId) => setGame((current) => preserveCabinSpecimen(current, fishId)),
+      purchaseStoreProduct: async (productId) => {
+        setCommerce((current) => ({ ...current, pendingProductId: productId, message: null }))
+        try {
+          const result = await purchaseStoreProduct(productId)
+          if (result.status === 'pending') {
+            setCommerce((current) => ({ ...current, pendingProductId: null, message: 'Purchase pending approval. It will unlock after Google Play confirms payment.' }))
+            return result
+          }
+          setGame((current) => ({ ...current, commerce: { entitlementIds: result.entitlementIds } }))
+          setCommerce((current) => ({ ...current, ownedProductIds: result.ownedProductIds, pendingProductId: null, message: 'Purchase complete. Your cabin is permanently unlocked.' }))
+          return result
+        } catch (error) {
+          setCommerce((current) => ({ ...current, pendingProductId: null, message: error?.message || 'The purchase did not complete. You were not charged.' }))
+          return null
+        }
+      },
+      restoreStorePurchases: async () => {
+        setCommerce((current) => ({ ...current, status: 'restoring', message: null }))
+        try {
+          const result = await restoreStorePurchases()
+          setGame((current) => ({ ...current, commerce: { entitlementIds: result.entitlementIds } }))
+          setCommerce((current) => ({ ...current, status: 'ready', ownedProductIds: result.ownedProductIds, message: result.ownedProductIds.length ? 'Purchases restored.' : 'No previous purchases were found.' }))
+          return result
+        } catch (error) {
+          setCommerce((current) => ({ ...current, status: 'error', message: error?.message || 'Purchases could not be restored. Try again later.' }))
+          return null
+        }
+      },
       dismissNotice: () => setNotice(null),
       reset: () => {
         clearGame()
         knownAchievements.current.clear()
         setNotice(null)
-        setGame(newGame())
+        setGame((current) => ({ ...newGame(), commerce: current.commerce }))
       },
     }),
     [],
   )
 
   return (
-    <GameContext.Provider value={{ game, actions, notice, storageAvailable }}>
+    <GameContext.Provider value={{ game, actions, notice, storageAvailable, commerce }}>
       {children}
     </GameContext.Provider>
   )

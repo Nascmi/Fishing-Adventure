@@ -83,9 +83,16 @@ It is earned through play and must not be purchasable as a shortcut. This keeps 
 
 Three optional cabins have production-ready environment art, stable catalog IDs, and authored display contracts. They remain unavailable in the playable interface until a real platform storefront and purchase-restoration flow exist.
 
-- **Workshop Cabin (`cabin.workshop`):** a five-rod rack, workbench tackle display, and glass-front tackle cabinet.
-- **Lakeside Cottage (`cabin.lakeside_cottage`):** two location paintings, one rug treatment, and one travel display.
-- **Coastal Shack (`cabin.coastal_shack`):** a Gulf souvenir shelf, nautical shadowbox, model-boat table, and dock-keepsake rail.
+- **Workshop Cabin (`cabin.workshop`):** twelve functional hooks across five individual rod-rack pegs, one workbench frame, and six glass-front cabinet cells. Rod pegs offer only rods the player actually owns. Cabinet cells accept only tackle-class pieces, including the included brass reel, painted bobber, tackle tin, and Classic Lure Board.
+- **Lakeside Cottage (`cabin.lakeside_cottage`):** four functional hooks for two individual location-painting frames, the full painted rug footprint, and one sideboard display.
+- **Coastal Shack (`cabin.coastal_shack`):** ten functional hooks across three nautical upper-shelf displays, one nautical shadowbox, one model-boat-only tabletop, and five nautical-peg-only dock hooks. The included Dockside Rope & Float populates the pegs, while the earned-coin freshwater, bay, and charter models populate the table.
+
+Specialized display hooks use compatibility tags rather than the broad `display` type alone. This prevents rods, tackle, model boats, shelf keepsakes, and hanging dock decor from appearing in physically implausible positions.
+- **Grand Trophy Room (`cabin.trophy_room`):** twelve fixed specimen anchors—four large central hero mounts and eight supporting side-wall mounts—plus two large lower gallery hooks compatible with earned paintings, earned trophy photographs, included frames, and purchased frame treatments. It displays only Great or Trophy specimens the player has already preserved, prevents duplicate selections, and adds no fishing power or catches.
+
+Premium cabins use the same validated `customizationHooks` contract as earned-coin cabins; inactive multi-item capacity regions are not accepted. Brass Reel, Painted Bobber, and Weathered Tackle Tin are included display choices so every purchased cabin can be customized immediately without an additional purchase.
+
+Three transparent handcrafted model boats are available as earned-coin display decor. Their artwork uses contained fitting in both the live cabin and generated share image so long hulls and outriggers are not cropped by narrow authored hooks.
 
 These identifiers are preparatory only. No price, ownership entitlement, purchase button, or store availability should be shown until the app has a supported storefront. Platform-specific product configuration may map to these stable IDs later.
 
@@ -102,6 +109,8 @@ The shop discloses each cabin's hook count before purchase. Each hook has a fixe
 Twelve rugs, frames, finishes, small cabin objects, and the 100,000 Coin Club plaque are permanent earned-coin purchases. Included rugs, frames, and finishes and accomplishment-earned paintings, photographs, souvenirs, miniatures, and plaques appear beside purchased choices wherever a compatible hook exists.
 
 Location paintings are earned records of exploration or completion. Cabin styles may provide different frames and wall arrangements, but purchasing a cabin must not purchase the underlying exploration accomplishment.
+
+Every cabin now provides at least one authored frame hook. Each frame hook stores artwork and frame treatment independently, so an earned location painting or Trophy photograph can be shown inside an included or Trading Post frame. The Starter Cabin shares its hearth display between a specimen and wall art; the Angler's Lodge shares its two side mounts with wall art. Selecting artwork temporarily covers the fish in that shared position without deleting either selection. The always-visible painting grid is collapsed into the Cabin Collection so displayed artwork belongs visually to the room.
 
 Backyard Pond's painting is earned by discovering every local species. Each destination painting is earned by completing a full three-day charter there. Catching a Great or Trophy specimen of every species in a location permanently upgrades that location's painting to a gold **Master Angler frame**. Later population changes never revoke an earned painting or frame.
 

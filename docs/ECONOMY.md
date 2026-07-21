@@ -24,6 +24,7 @@ The economy turns each catch into visible progress without turning fishing into 
 - Charter prices begin at 300 coins for Pine River, 800 for Great Lake, 1,600 for Gulf Coast, and 4,000 for Open Gulf; tune these against measured trip earnings.
 - Preserving the first Great or Trophy specimen of a species for cabin display has a starting cost of 100 coins. The game remembers eligible candidates before payment, and upgrading an existing mount to a heavier specimen of the same species is free.
 - The earned-coin Trading Post sells permanent cabin cosmetics at standard, fine, prestige, and legacy prices. It remains optional, provides no fishing power, and preserves the identity of included and accomplishment-earned rewards.
+- Handcrafted cabin model boats are permanent Trading Post displays: the Freshwater Skiff Model costs 7,500 coins, the Bay Skiff Model costs 15,000, and the Charter Boat Model costs 30,000.
 
 ## Tuning
 

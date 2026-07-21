@@ -100,4 +100,9 @@ Reusable lure families are complete across all five locations. Great Lake and Gu
 
 A polished, accessible, offline-friendly fishing game ready for public Android and iOS release.
 
+### Android commerce preparation
+
+- The provider-independent Cabin Store, three completed non-consumable products, development sandbox, entitlement gating, and restoration UI are implemented.
+- Remaining work requires the final Android application ID, Capacitor shell, chosen native billing provider, Play Console product setup, signed Internal testing build, license testing, verification/acknowledgement validation, and store-policy completion.
+
 Unapproved concepts remain in `FUTURE_IDEAS.md` until deliberately promoted here.

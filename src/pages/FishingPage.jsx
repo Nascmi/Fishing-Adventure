@@ -13,6 +13,7 @@ import { randomDelay, selectFish } from '../utils/fishingEngine'
 import { getWeightTier, makeCatch } from '../utils/valueCalculator'
 import { createCatchShareImage } from '../utils/catchShareImage'
 import { getAreasForLocation, getBoatForLocation, getFishingArea, getLureFamily, getLuresForLocation, getPhaseFourFishWeights } from '../data/waterSetup'
+import { getEquippedBoatImage } from '../data/boatCosmetics'
 import { isQuietCast } from '../game/biteRules'
 
 const getCyclePosition = (elapsedMs) => {
@@ -314,7 +315,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
       </div>
       {location.id === 'willow-pond' && fishingState === 'ready' && <button type="button" className="cabin-entry" onClick={onOpenCabin}>Return to cabin</button>}
       <div className="water">
-        {selectedArea?.boatRequired && ownsLocationBoat && <img className={`scene-boat boat-${location.id} position-${selectedArea.boatPosition}`} src={locationBoat.image} alt={`${locationBoat.name} on the ${selectedArea.name}`} decoding="async"/>}
+        {selectedArea?.boatRequired && ownsLocationBoat && <img className={`scene-boat boat-${location.id} position-${selectedArea.boatPosition}`} src={getEquippedBoatImage(game, locationBoat)} alt={`${locationBoat.name} on the ${selectedArea.name}`} decoding="async"/>}
         <div className={`strike-marker ${location.fishingStyle} lure-${selectedLure?.id || 'default'}`} aria-hidden="true"><i/></div><div className="ripples"/>
       </div>
     </section>

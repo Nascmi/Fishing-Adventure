@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { GAME_CONFIG } from '../data/config'
 import { newGame } from '../services/saveService'
 import { greatLakeBoat, gulfCoastBoat } from '../data/waterSetup'
-import { chooseCabinDecor, chooseCabinStyle, chooseFishingSetup, equipOwnedRod, preserveCabinSpecimen, purchaseBoat, purchaseCoinStoreItem, purchaseLure, purchaseRod, skipTimePhase, startTrip, tickGameTime } from './gameRules'
+import { chooseBoatCosmetic, chooseCabinDecor, chooseCabinStyle, chooseFishingSetup, equipOwnedRod, preserveCabinSpecimen, purchaseBoat, purchaseCoinStoreItem, purchaseLure, purchaseRod, skipTimePhase, startTrip, tickGameTime } from './gameRules'
 
 const withCoins = (coins) => ({ ...newGame(), coins })
 
@@ -83,6 +83,35 @@ describe('equipment purchases', () => {
   })
 })
 
+describe('premium cabin entitlements', () => {
+  it('equips a verified premium cabin without changing coins', () => {
+    const state = { ...newGame(), commerce: { entitlementIds: ['cabin:workshop-cabin'] } }
+    const equipped = chooseCabinStyle(state, 'workshop-cabin')
+    expect(equipped.cabin.styleId).toBe('workshop-cabin')
+    expect(equipped.coins).toBe(state.coins)
+  })
+
+  it('rejects a premium cabin without its entitlement', () => {
+    const state = newGame()
+    expect(chooseCabinStyle(state, 'workshop-cabin')).toBe(state)
+  })
+})
+
+describe('boat cosmetics', () => {
+  it('requires both the earned boat and cosmetic entitlement', () => {
+    const base = { ...newGame(), commerce: { entitlementIds: ['boat-style:great-lake-classics'] } }
+    expect(chooseBoatCosmetic(base, 'great-lake-skiff', 'great-lake-midnight')).toBe(base)
+    const boatOwned = { ...base, watercraft: { ...base.watercraft, ownedBoatIds: ['great-lake-skiff'] } }
+    expect(chooseBoatCosmetic(boatOwned, 'great-lake-skiff', 'great-lake-midnight').watercraft.cosmeticByBoat['great-lake-skiff']).toBe('great-lake-midnight')
+    expect(chooseBoatCosmetic(boatOwned, 'gulf-coast-bay-skiff', 'great-lake-midnight')).toBe(boatOwned)
+  })
+
+  it('always allows an owned boat to return to its included finish', () => {
+    const state = { ...newGame(), watercraft: { ...newGame().watercraft, ownedBoatIds: ['great-lake-skiff'], cosmeticByBoat: { ...newGame().watercraft.cosmeticByBoat, 'great-lake-skiff': 'great-lake-midnight' } } }
+    expect(chooseBoatCosmetic(state, 'great-lake-skiff', 'great-lake-original').watercraft.cosmeticByBoat['great-lake-skiff']).toBe('great-lake-original')
+  })
+})
+
 describe('Trading Post purchases and cabin selection', () => {
   it('deducts the cabin price and stores permanent ownership', () => {
     const next = purchaseCoinStoreItem(withCoins(30000), 'trading-post.cabin-riverstone')
@@ -121,9 +150,25 @@ describe('Trading Post purchases and cabin selection', () => {
     const state = newGame()
     const riverstone = chooseCabinDecor(state, 'riverstone-cabin', 'hearth-frame', 'frame-walnut')
     const captain = chooseCabinDecor(riverstone, 'captains-retreat', 'captains-frame', 'frame-aged-brass')
-    expect(captain.cabin.decorByCabin['riverstone-cabin']['hearth-frame']).toBe('frame-walnut')
-    expect(captain.cabin.decorByCabin['captains-retreat']['captains-frame']).toBe('frame-aged-brass')
-    expect(chooseCabinDecor(captain, 'riverstone-cabin', 'hearth-frame', null).cabin.decorByCabin['riverstone-cabin']['hearth-frame']).toBeNull()
+    expect(captain.cabin.decorByCabin['riverstone-cabin']['hearth-frame']).toEqual({ artworkId: null, frameId: 'frame-walnut' })
+    expect(captain.cabin.decorByCabin['captains-retreat']['captains-frame']).toEqual({ artworkId: null, frameId: 'frame-aged-brass' })
+    expect(chooseCabinDecor(captain, 'riverstone-cabin', 'hearth-frame', null).cabin.decorByCabin['riverstone-cabin']['hearth-frame']).toEqual({ artworkId: null, frameId: null })
+  })
+
+  it('composes earned artwork and owned frame treatments on one cabin hook', () => {
+    const base = newGame()
+    const state = { ...base, achievementProgress: { ...base.achievementProgress, paintingsEarned: ['willow-pond'] } }
+    const withArtwork = chooseCabinDecor(state, 'starter', 'hearth-gallery', 'earned.painting.willow-pond', 'artwork')
+    const framed = chooseCabinDecor(withArtwork, 'starter', 'hearth-gallery', 'frame-walnut', 'treatment')
+    expect(framed.cabin.decorByCabin.starter['hearth-gallery']).toEqual({ artworkId: 'earned.painting.willow-pond', frameId: 'frame-walnut' })
+  })
+
+  it('supports included decor on premium cabin hooks', () => {
+    const state = { ...newGame(), commerce: { entitlementIds: ['cabin:workshop-cabin'] } }
+    const decorated = chooseCabinDecor(state, 'workshop-cabin', 'rod-peg-1', 'equipment.rod.old')
+    expect(decorated.cabin.decorByCabin['workshop-cabin']['rod-peg-1']).toBe('equipment.rod.old')
+    expect(chooseCabinDecor(decorated, 'workshop-cabin', 'rod-peg-2', 'display-brass-reel')).toBe(decorated)
+    expect(chooseCabinDecor(state, 'workshop-cabin', 'workbench-frame', 'display-brass-reel')).toBe(state)
   })
 })
 

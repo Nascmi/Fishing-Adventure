@@ -1,5 +1,13 @@
 # Art Direction
 
+The Grand Trophy Room uses a symmetrical walnut-and-stone gallery: four large central hero plaques and eight smaller side plaques remain readable as the player's preserved collection fills the room. Two lower landscape-oriented gallery positions give earned paintings and frame treatments room to breathe without competing with the trophy wall.
+
+Workshop equipment displays reuse the player's real rod artwork and a handcrafted walnut lure board. Coastal peg decor uses salt-weathered rope, faded painted wood, cork, and aged brass. Both remain transparent cutouts and must scale as believable physical objects in their authored spaces.
+
+## Boat Models and Hull Finishes
+
+Cabin model boats use warm, photorealistic handcrafted scale-model materials on transparent backgrounds. They should read as keepsakes rather than full-size vehicles. Hull cosmetics preserve the original boat silhouette, equipment, lighting, and perspective while changing only the painted exterior panel. Alternate finishes remain grounded, weathered, and appropriate to the location rather than using neon, animated, branded, or immersion-breaking treatments.
+
 ## Desired Feeling
 
 A quiet morning beside the water: peaceful, natural, cozy, and mature rather than childish.
