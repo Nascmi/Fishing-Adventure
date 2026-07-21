@@ -13,6 +13,8 @@ Read these documents before making a significant change:
 
 Use the remaining documents as focused references:
 
+- `PLAYTEST_WORKSHEET.md` - a lightweight tournament feedback form for balance and usability evidence
+
 - `THE_SOUL_OF_THE_GAME.md` — the emotional north star
 - `ART_DIRECTION.md` and `UI_GUIDELINES.md` — presentation
 - `ECONOMY.md` and `BALANCE_NOTES.md` — progression tuning

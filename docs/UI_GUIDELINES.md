@@ -1,5 +1,13 @@
 # UI Guidelines
 
+## Phase 4 Interaction Polish
+
+- Preload alternate authored viewpoints and crossfade briefly between them; honor reduced-motion preferences with an immediate scene change.
+- Selected fishing areas and lures must expose their state programmatically, not through color alone.
+- Modal dialogs trap keyboard focus, close with Escape or an explicit cancel action, lock background scrolling, and restore focus to the control that opened them.
+- Confirmation layouts must remain usable in narrow portrait and short landscape viewports, with bottom navigation respecting device safe areas.
+- Paid relocations provide a concise success message after the Captain's fuel charge is applied.
+
 The interface should become quiet enough for the player to focus on fishing.
 
 ## Layout

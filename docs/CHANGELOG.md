@@ -1,5 +1,12 @@
 # Changelog
 
+## Current polish pass
+
+- Preloaded alternate fishing viewpoints and added a brief scene crossfade so area changes feel intentional instead of flashing between large images; reduced-motion users receive an immediate swap.
+- Added accessible selected-state announcements to area and lure controls, focus trapping and focus restoration to confirmation/settings dialogs, and background scroll locking while dialogs are open.
+- Added a clear post-relocation status message, modern mobile viewport and safe-area spacing, and a short-landscape confirmation layout.
+- Added a reusable tournament playtest worksheet plus an explicit device/offline smoke-test checklist without changing live balance values.
+
 ## Phase 4 — Authored water choices
 
 - Added an explicit Open Gulf relocation confirmation that names the destination, makes clear that the Captain charges 250 coins for fuel, and offers `Stay here` or `Accept and relocate`.

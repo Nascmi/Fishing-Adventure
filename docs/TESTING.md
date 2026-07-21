@@ -41,3 +41,9 @@ npm run build
 - Keep production builds as a separate required check; passing unit tests does not prove the application bundles successfully.
 
 Browser-level navigation, touch interaction, visual regression, and device storage behavior remain manual release checks until a dedicated browser suite is approved.
+
+## Device and Offline Smoke Test
+
+Before a release, load the game once while connected, make one catch, then reload and confirm the save survives. Disable the connection without clearing site data and confirm the already-loaded session can continue using bundled art and rules; reconnect before expecting a fresh Firebase-hosted page load because the project does not currently install a service worker. Also verify portrait and short-landscape layouts, bottom safe-area clearance, scene transitions, and both confirmation/settings dialogs.
+
+Use `PLAYTEST_WORKSHEET.md` for tournament feedback. It intentionally separates memorable observations from probability claims so a small lucky or unlucky sample does not trigger premature balance changes.

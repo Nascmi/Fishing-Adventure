@@ -19,6 +19,8 @@ export default function App() {
   const [locationId, setLocationId] = useState('willow-pond')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const closeButtonRef = useRef(null)
+  const settingsDialogRef = useRef(null)
+  const settingsTriggerRef = useRef(null)
   const { game, actions, notice, storageAvailable } = useGame()
   const rainActive = game.weather.rainRemainingMs > 0
   const pages = {
@@ -41,12 +43,33 @@ export default function App() {
 
   useEffect(() => {
     if (!settingsOpen) return undefined
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
     closeButtonRef.current?.focus()
-    const closeOnEscape = (event) => {
-      if (event.key === 'Escape') setSettingsOpen(false)
+    const handleDialogKeys = (event) => {
+      if (event.key === 'Escape') {
+        setSettingsOpen(false)
+        return
+      }
+      if (event.key !== 'Tab') return
+      const focusable = [...(settingsDialogRef.current?.querySelectorAll('button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])') || [])]
+      if (!focusable.length) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
     }
-    document.addEventListener('keydown', closeOnEscape)
-    return () => document.removeEventListener('keydown', closeOnEscape)
+    document.addEventListener('keydown', handleDialogKeys)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', handleDialogKeys)
+      settingsTriggerRef.current?.focus()
+    }
   }, [settingsOpen])
 
   const reset = () => {
@@ -68,11 +91,11 @@ export default function App() {
     {notice && <div className="notice" role="alert"><span>{notice}</span><button onClick={actions.dismissNotice}>Dismiss</button></div>}
     {!storageAvailable && <div className="notice warning" role="alert">Progress cannot be saved in this browser session. Check your storage or privacy settings.</div>}
     <div className="app-content">{pages[page]}</div>
-    <button className="settings-trigger" onClick={() => setSettingsOpen(true)} aria-label="Open profile and settings"><Icon name="settings" size={21}/></button>
+    <button ref={settingsTriggerRef} className="settings-trigger" onClick={() => setSettingsOpen(true)} aria-label="Open profile and settings"><Icon name="settings" size={21}/></button>
     <NavBar page={page} setPage={setPage}/>
 
     {settingsOpen && <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) setSettingsOpen(false) }}>
-      <section className="modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <section ref={settingsDialogRef} className="modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
         <button ref={closeButtonRef} className="modal-close" onClick={() => setSettingsOpen(false)} aria-label="Close settings">×</button>
         <span className="eyebrow">Angler profile</span>
         <h2 id="settings-title">Journey & Settings</h2>
