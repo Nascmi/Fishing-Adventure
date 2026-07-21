@@ -60,9 +60,9 @@
 .catch-card.rare,.catch-card.epic,.catch-card.legendary{position:relative;overflow:hidden}
 .catch-card.epic{border-color:#b998cd;background:#eee5f3}.catch-card.legendary{border-color:#d4ad4d;background:#f8edc9;box-shadow:0 8px 24px #ad772a2b}
 .catch-card.epic:after,.catch-card.legendary:after{content:"";position:absolute;inset:-80% -30%;background:linear-gradient(110deg,transparent 42%,#fff9 50%,transparent 58%);animation:catch-shimmer 1.2s ease-out}
-.catch-card.size-trophy{box-shadow:0 8px 22px #426d5d26;border-color:#88aa91}
-.catch-card.size-amazing{background:#f8edc9;border-color:#d4ad4d;box-shadow:0 9px 26px #ad772a38}
-.catch-card.size-amazing .fish-mark{background:#ead18b;color:#72551b}
+.catch-card.size-great{box-shadow:0 8px 22px #426d5d26;border-color:#88aa91}
+.catch-card.size-trophy{background:#f8edc9;border-color:#d4ad4d;box-shadow:0 9px 26px #ad772a38}
+.catch-card.size-trophy .fish-mark{background:#ead18b;color:#72551b}
 @keyframes coin-bump{50%{transform:scale(1.06)}}
 @keyframes coin-float{to{opacity:0;transform:translateY(-15px)}}
 @keyframes catch-shimmer{from{transform:translateX(-45%)}to{transform:translateX(45%)}}
@@ -83,7 +83,7 @@
 .collection-open{display:flex;justify-content:flex-end;gap:5px;margin-top:12px;color:var(--pine);font-size:.67rem;font-weight:700}
 .hidden-art{background:linear-gradient(145deg,#d6ddd6,#c6d0c8);border:1px dashed #94a79f;color:#71827b}
 .hidden-art img{filter:brightness(0) opacity(.58);transform:scale(.92)}
-.catch-card.size-amazing .fish-artwork{background:linear-gradient(145deg,#f1dfad,#dfc56e)}
+.catch-card.size-trophy .fish-artwork{background:linear-gradient(145deg,#f1dfad,#dfc56e)}
 @media(max-width:430px){.catch-fish-art{width:78px;height:60px}.inventory-fish-art{width:74px;height:58px}.collection-fish-art{height:118px;padding:4px 18px 12px}.collection-art-frame .collection-fish-art{height:124px;padding:3px 18px 11px}}
 
 /* Full species journal entries. */
@@ -245,7 +245,7 @@
 .planned-decor-heading{margin-top:30px}.trading-post-card.planned{opacity:.82;background:#f4f3eb}.trading-post-card.planned .trading-post-art{filter:saturate(.72)}.trading-post-card.planned button:disabled{font-size:.72rem}
 @media(max-width:540px){.shop-page{padding-left:12px;padding-right:12px}.trading-post-grid{grid-template-columns:1fr 1fr;gap:9px}.trading-post-card{min-height:325px;padding:11px}.trading-post-art{height:96px;margin:-11px -11px 11px}.trading-post-art.category-frame{margin:0 0 11px}.trading-post-copy h3{font-size:1.05rem}.trading-post-copy p{min-height:58px;font-size:.67rem}.trading-post-price{display:block}.trading-post-price strong{display:block;margin-top:3px}.trading-post-card button{font-size:.7rem}.cabin-style-picker{grid-template-columns:1fr 1fr}}
 
-/* Amazing catches can become optional, shareable story cards. */
+/* Trophy catches can become optional, shareable story cards. */
 .amazing-share{display:flex;align-items:center;gap:10px;margin:-5px 0 14px}.amazing-share button{min-height:42px;display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid #caa449;border-radius:11px;padding:0 14px;background:#fff3ce;color:#72551b;font-weight:700}.amazing-share button:disabled{opacity:.58}.amazing-share span{font-size:.67rem;color:#61736e}
 @media(max-width:430px){.amazing-share{align-items:stretch;flex-direction:column;gap:5px}.amazing-share span{text-align:center}}
 

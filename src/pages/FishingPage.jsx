@@ -81,7 +81,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
     let cancelled = false
     setShareImage(null)
     setShareStatus('')
-    if (recentCatch?.sizeTier !== 'amazing') return () => { cancelled = true }
+    if (recentCatch?.sizeTier !== 'trophy') return () => { cancelled = true }
     createCatchShareImage(recentCatch, getFish(recentCatch.fishId), location, recentCatch.phaseLabel)
       .then((blob) => { if (!cancelled) setShareImage(blob) })
       .catch(() => { if (!cancelled) setShareStatus('Share image unavailable') })
@@ -168,7 +168,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
     const safeName = recentCatch.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
     const filename = `fishing-adventure-${safeName}.png`
     const file = typeof File === 'function' ? new File([shareImage], filename, { type: 'image/png' }) : null
-    const shareData = file ? { files: [file], title: `Amazing ${recentCatch.name} catch`, text: `I caught an amazing ${recentCatch.weight} lb ${recentCatch.name} at ${location.name} in Fishing Adventure!` } : null
+    const shareData = file ? { files: [file], title: `Trophy ${recentCatch.name} catch`, text: `I caught a trophy ${recentCatch.weight} lb ${recentCatch.name} at ${location.name} in Fishing Adventure!` } : null
     try {
       if (shareData && navigator.share && navigator.canShare?.(shareData)) {
         await navigator.share(shareData)
@@ -217,7 +217,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
         ? <ReelingGame catchItem={hookedCatch.catchItem} fish={hookedCatch.fish} rod={equippedRod} onCatch={landFish} onEscape={loseFish}/>
         : <>
           {recentCatch && <article className={`catch-card ${recentCatch.rarity} size-${recentCatch.sizeTier}`}><FishArtwork fishId={recentCatch.fishId} name={recentCatch.name} className="catch-fish-art"/><div><span>{catchLabel}</span><h3>{recentCatch.name}</h3><RarityBadge rarity={recentCatch.rarity}/></div><div className="catch-numbers"><b>{recentCatch.weight} lb</b><span>{recentCatch.value} coins</span></div></article>}
-          {recentCatch?.sizeTier === 'amazing' && <div className="amazing-share"><button type="button" disabled={!shareImage} onClick={shareCatch}><Icon name="share" size={18}/>{shareImage ? 'Share amazing catch' : 'Preparing catch image…'}</button>{shareStatus && <span role="status">{shareStatus}</span>}</div>}
+          {recentCatch?.sizeTier === 'trophy' && <div className="amazing-share"><button type="button" disabled={!shareImage} onClick={shareCatch}><Icon name="share" size={18}/>{shareImage ? 'Share trophy catch' : 'Preparing catch image…'}</button>{shareStatus && <span role="status">{shareStatus}</span>}</div>}
           <button className={`primary-button ${fishingState === 'biting' ? 'urgent' : ''}`} disabled={isLineOut || isResult} onClick={fishingState === 'biting' ? reel : cast}>{fishingState === 'biting' ? 'Hook Fish!' : isLineOut ? 'Line is out…' : 'Cast Line'}</button>
         </>}
     </section>

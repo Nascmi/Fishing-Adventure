@@ -55,7 +55,7 @@ export async function createCatchShareImage(catchItem, fish, location, phaseLabe
   context.fillStyle = '#49645d'
   context.font = '700 23px system-ui, sans-serif'
   context.letterSpacing = '3px'
-  context.fillText('AMAZING CATCH', 140, 102)
+  context.fillText('TROPHY CATCH', 140, 102)
 
   if (fish.image) {
     const fishImage = await loadImage(fish.image)

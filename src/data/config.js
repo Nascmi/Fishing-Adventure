@@ -46,8 +46,8 @@ export const GAME_CONFIG = {
   catchWeights: [
     { id: 'ordinary', label: 'Regular catch', chance: 68, minPercent: 0, maxPercent: 0.5 },
     { id: 'good', label: 'Good catch', chance: 22, minPercent: 0.51, maxPercent: 0.75 },
-    { id: 'trophy', label: 'Trophy catch', chance: 8, minPercent: 0.76, maxPercent: 0.9 },
-    { id: 'amazing', label: 'Amazing catch', chance: 2, minPercent: 0.91, maxPercent: 1 },
+    { id: 'great', label: 'Great catch', chance: 8, minPercent: 0.76, maxPercent: 0.9 },
+    { id: 'trophy', label: 'Trophy catch', chance: 2, minPercent: 0.91, maxPercent: 1 },
   ],
 }
 

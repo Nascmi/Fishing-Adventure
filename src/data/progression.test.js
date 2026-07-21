@@ -40,7 +40,7 @@ describe('earned cabin cosmetics', () => {
   it('earns a Master Angler frame from Trophy-or-better records for every local species', () => {
     const state = newGame()
     const pond = locations.find((location) => location.id === 'willow-pond')
-    const specimens = Object.fromEntries(pond.fishIds.map((fishId) => [fishId, { fishId, weight: 1, sizeTier: 'trophy' }]))
+    const specimens = Object.fromEntries(pond.fishIds.map((fishId) => [fishId, { fishId, weight: 1, sizeTier: 'great' }]))
     const next = unlockLocationCosmetics({ ...state, cabin: { ...state.cabin, specimens } })
     expect(next.achievementProgress.masterFramesEarned).toContain('willow-pond')
   })
@@ -51,7 +51,7 @@ describe('earned cabin cosmetics', () => {
     const next = unlockLocationCosmetics({
       ...state,
       collection: { [legendary.id]: { count: 1, largestWeight: legendary.maxWeight } },
-      cabin: { ...state.cabin, specimens: { [legendary.id]: { fishId: legendary.id, weight: legendary.maxWeight, sizeTier: 'amazing' } } },
+      cabin: { ...state.cabin, specimens: { [legendary.id]: { fishId: legendary.id, weight: legendary.maxWeight, sizeTier: 'trophy' } } },
     })
     expect(next.achievementProgress.amazingPhotos).toContain(legendary.id)
     expect(next.achievementProgress.legendaryMiniatures).toContain(legendary.id)

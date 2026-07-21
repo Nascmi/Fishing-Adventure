@@ -85,7 +85,7 @@ export async function createCabinShareImage({ background, cabinName, fishDisplay
     context.shadowOffsetY = 6
     drawContained(context, fishImage, slot.x, slot.y, slot.width, slot.height)
     context.restore()
-    if (display.specimen?.sizeTier === 'amazing') {
+    if (display.specimen?.sizeTier === 'trophy') {
       context.strokeStyle = '#dfbd62'
       context.lineWidth = 3
       context.strokeRect(slot.x + 6, slot.y + 6, slot.width - 12, slot.height - 12)

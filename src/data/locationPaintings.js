@@ -35,7 +35,7 @@ export const unlockLocationCosmetics = (state) => {
   })
 
   fish.forEach((fishItem) => {
-    if (state.cabin.specimens[fishItem.id]?.sizeTier === 'amazing') earnedPhotos.add(fishItem.id)
+    if (state.cabin.specimens[fishItem.id]?.sizeTier === 'trophy') earnedPhotos.add(fishItem.id)
     if (fishItem.rarity === 'legendary' && state.collection[fishItem.id]?.count) earnedMiniatures.add(fishItem.id)
   })
 

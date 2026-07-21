@@ -38,10 +38,10 @@ Fish size is separate from species rarity. The generator selects a size class be
 
 - Regular: up to 50% of the species maximum weight
 - Good: 51–75%
-- Trophy: 76–90%
-- Amazing: 91–100%
+- Great: 76–90%
+- Trophy: 91–100%
 
-The target distribution is 68% regular, 22% good, 8% trophy, and 2% amazing. Large specimens should feel notable even when the species itself is common.
+The target distribution is 68% regular, 22% good, 8% great, and 2% trophy. Large specimens should feel notable even when the species itself is common.
 
 ## Fishing Journal
 
@@ -51,7 +51,7 @@ Collection cards quietly acknowledge a species relationship without changing gam
 
 ## Trophy Preservation
 
-Trophy and Amazing specimens can become permanent cabin displays. The game automatically retains the best eligible candidate for each species independently of inventory, including its weight, tier, location, day phase, and catch time. Players may later preserve a candidate for a configurable starting fee of 100 coins, avoiding an immediate pay-or-lose decision after a catch. A heavier eligible specimen of the same species may replace an existing mount for free. Amazing specimens use a distinct, more prestigious display treatment while remaining records of play rather than sources of power.
+Great and Trophy specimens can become permanent cabin displays. The game automatically retains the best eligible candidate for each species independently of inventory, including its weight, tier, location, day phase, and catch time. Players may later preserve a candidate for a configurable starting fee of 100 coins, avoiding an immediate pay-or-lose decision after a catch. A heavier eligible specimen of the same species may replace an existing mount for free. Trophy specimens use a distinct, more prestigious display treatment while remaining records of play rather than sources of power.
 
 ## Cabin Progression
 

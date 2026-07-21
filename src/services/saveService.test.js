@@ -10,9 +10,9 @@ afterEach(() => {
 })
 
 describe('save migrations and validation', () => {
-  it('creates a complete version 18 new game', () => {
+  it('creates a complete version 19 new game', () => {
     const state = newGame()
-    expect(state.version).toBe(18)
+    expect(state.version).toBe(19)
     expect(state.coinStore).toEqual({ ownedItemIds: [] })
     expect(state.cabin.styleId).toBe('starter')
     expect(Object.keys(state.gearByLocation)).toHaveLength(5)
@@ -28,7 +28,7 @@ describe('save migrations and validation', () => {
       equippedRod: 'fiberglass',
       stats: legacyStats,
     })
-    expect(state.version).toBe(18)
+    expect(state.version).toBe(19)
     expect(state.coins).toBe(432)
     expect(state.gearByLocation['willow-pond']).toEqual({ ownedRods: ['old', 'fiberglass'], equippedRod: 'fiberglass' })
     expect(state.gearByLocation['open-gulf'].ownedRods).toContain('offshore-starter')
@@ -49,14 +49,14 @@ describe('save migrations and validation', () => {
       settings: {},
       stats: { ...legacyStats, totalCaught: 1 },
     })
-    expect(state.version).toBe(18)
-    expect(state.cabin.specimens.bluegill).toMatchObject({ fishId: 'bluegill', weight: 1.6, sizeTier: 'trophy' })
+    expect(state.version).toBe(19)
+    expect(state.cabin.specimens.bluegill).toMatchObject({ fishId: 'bluegill', weight: 1.6, sizeTier: 'great' })
     expect(state.cabin.specimens.bluegill.mounted).toBeNull()
   })
 
   it('migrates version 16 with an empty Trading Post ownership set', () => {
     const state = validateSave({ version: 16, coins: 90 })
-    expect(state.version).toBe(18)
+    expect(state.version).toBe(19)
     expect(state.coinStore.ownedItemIds).toEqual([])
   })
 
@@ -73,7 +73,7 @@ describe('save migrations and validation', () => {
 
   it('migrates version 17 with independent empty cabin decor selections', () => {
     const state = validateSave({ version: 17, coinStore: { ownedItemIds: ['trading-post.cabin-riverstone'] }, cabin: { styleId: 'riverstone-cabin' } })
-    expect(state.version).toBe(18)
+    expect(state.version).toBe(19)
     expect(state.cabin.decorByCabin['riverstone-cabin']).toEqual({ 'hearth-frame': null, 'river-shelf': null, 'braided-rug': null })
   })
 
@@ -110,8 +110,8 @@ describe('save migrations and validation', () => {
   })
 
   it('falls back safely for null and non-object input', () => {
-    expect(validateSave(null).version).toBe(18)
-    expect(validateSave('damaged').version).toBe(18)
+    expect(validateSave(null).version).toBe(19)
+    expect(validateSave('damaged').version).toBe(19)
     expect(validateSave(null).coins).toBe(50)
   })
 
@@ -123,7 +123,7 @@ describe('save migrations and validation', () => {
       removeItem: () => {},
     }
     const loaded = loadGame()
-    expect(loaded.game.version).toBe(18)
+    expect(loaded.game.version).toBe(19)
     expect(loaded.notice).toMatch(/could not read/i)
     expect([...writes.values()]).toContain('{not-json')
   })

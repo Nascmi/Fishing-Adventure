@@ -11,7 +11,7 @@ import { getCabinDecor, isDecorOwned } from '../data/cabinDecor'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 18
+const CURRENT_VERSION = 19
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
 const defaultCabin = () => ({
   styleId: 'starter',
@@ -172,6 +172,17 @@ function migrateSave(raw) {
     migrated.cabin = { ...defaultCabin(), ...(migrated.cabin || {}), decorByCabin: {} }
     migrated.version = 18
   }
+  if (migrated.version < 19) {
+    const renameTier = (item) => item && ({ ...item, sizeTier: item.sizeTier === 'amazing' ? 'trophy' : item.sizeTier === 'trophy' ? 'great' : item.sizeTier })
+    migrated.inventory = Array.isArray(migrated.inventory) ? migrated.inventory.map(renameTier) : migrated.inventory
+    migrated.stats = { ...(migrated.stats || {}), largestFish: renameTier(migrated.stats?.largestFish), rarestFish: renameTier(migrated.stats?.rarestFish) }
+    migrated.cabin = {
+      ...defaultCabin(),
+      ...(migrated.cabin || {}),
+      specimens: Object.fromEntries(Object.entries(migrated.cabin?.specimens || {}).map(([id, record]) => [id, { ...renameTier(record), mounted: renameTier(record?.mounted) }])),
+    }
+    migrated.version = 19
+  }
   return migrated
 }
 
@@ -278,16 +289,16 @@ export function validateSave(input) {
   const equipmentPlaques = validList(progress.equipmentPlaques, locationIds)
   const amazingPhotos = validList(progress.amazingPhotos, validFish)
   const legendaryMiniatures = validList(progress.legendaryMiniatures, validFish)
-  const eligibleInventory = inventory.filter((item) => ['trophy', 'amazing'].includes(item.sizeTier))
+  const eligibleInventory = inventory.filter((item) => ['great', 'trophy'].includes(item.sizeTier))
   const rawSpecimens = rawCabin.specimens && typeof rawCabin.specimens === 'object' ? rawCabin.specimens : {}
   const specimens = {}
   fish.forEach((fishItem) => {
     const rawRecord = rawSpecimens[fishItem.id]
     const inventoryBest = eligibleInventory.filter((item) => item.fishId === fishItem.id).sort((a, b) => b.weight - a.weight)[0]
-    const validCandidate = rawRecord && Number.isFinite(rawRecord.weight) && rawRecord.weight > 0 && ['trophy', 'amazing'].includes(rawRecord.sizeTier)
+    const validCandidate = rawRecord && Number.isFinite(rawRecord.weight) && rawRecord.weight > 0 && ['great', 'trophy'].includes(rawRecord.sizeTier)
     const candidate = validCandidate ? rawRecord : inventoryBest
     if (!candidate) return
-    const mounted = rawRecord?.mounted && Number.isFinite(rawRecord.mounted.weight) && rawRecord.mounted.weight > 0 && ['trophy', 'amazing'].includes(rawRecord.mounted.sizeTier)
+    const mounted = rawRecord?.mounted && Number.isFinite(rawRecord.mounted.weight) && rawRecord.mounted.weight > 0 && ['great', 'trophy'].includes(rawRecord.mounted.sizeTier)
       ? {
           weight: rawRecord.mounted.weight,
           sizeTier: rawRecord.mounted.sizeTier,
@@ -374,7 +385,7 @@ export function validateSave(input) {
       equipmentPlaques,
       amazingPhotos,
       legendaryMiniatures,
-      amazingLegendaryCaught: progress.amazingLegendaryCaught === true || inventory.some((item) => item.rarity === 'legendary' && item.sizeTier === 'amazing'),
+      amazingLegendaryCaught: progress.amazingLegendaryCaught === true || inventory.some((item) => item.rarity === 'legendary' && item.sizeTier === 'trophy'),
     },
     settings: {
       reactionWindow,

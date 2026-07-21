@@ -147,7 +147,7 @@ export default function CabinPage({ onGoFishing }) {
       </section>
 
       <section className="cabin-story" aria-label="Cabin displays">
-        <article><span>Above the fire</span><strong>{featuredFish?.name || 'No preserved catch yet'}</strong>{featuredFish && <small>{featuredSpecimen.weight} lb · {featuredSpecimen.sizeTier === 'amazing' ? 'Amazing' : 'Trophy'} specimen</small>}</article>
+        <article><span>Above the fire</span><strong>{featuredFish?.name || 'No preserved catch yet'}</strong>{featuredFish && <small>{featuredSpecimen.weight} lb · {featuredSpecimen.sizeTier === 'trophy' ? 'Trophy' : 'Great'} specimen</small>}</article>
         <article><span>On the shelf</span><strong>{souvenir ? `${souvenir.name} souvenir` : 'An open place for a travel memory'}</strong><small>{souvenir ? `A reminder of time spent at ${souvenir.name}` : 'Backyard Pond feels like home'}</small></article>
       </section>
     </> : <>
@@ -155,13 +155,13 @@ export default function CabinPage({ onGoFishing }) {
         {cabin.lodgeFeaturedFishIds.map((fishId, index) => {
           const mountedFish = getFish(fishId)
           const mounted = cabin.specimens[fishId]?.mounted
-          return <div className={`lodge-mount lodge-mount-${index + 1} ${mounted?.sizeTier === 'amazing' ? 'size-amazing' : ''}`} key={index} aria-label={mountedFish ? `Preserved catch: ${mountedFish.name}` : `Empty lodge mount ${index + 1}`}>
+          return <div className={`lodge-mount lodge-mount-${index + 1} ${mounted?.sizeTier === 'trophy' ? 'size-amazing' : ''}`} key={index} aria-label={mountedFish ? `Preserved catch: ${mountedFish.name}` : `Empty lodge mount ${index + 1}`}>
             {mountedFish && <FishArtwork fishId={mountedFish.id} name={mountedFish.name} className="lodge-fish-art"/>}
           </div>
         })}
         <div className="lodge-keepsakes" aria-label={`${earnedKeepsakes.length} Angling Keepsakes displayed`}>{earnedKeepsakes.slice(0, 20).map((achievement) => { const design = getKeepsakeDesign(achievement.id); return <span className={`material-${design.material}`} title={achievement.name} key={achievement.id}><Icon name={design.icon} size={18}/></span> })}</div>
       </section>
-      <section className="lodge-story"><article><span>Legendary waters</span><strong>{legendaryCount} explored</strong><small>The lodge remains yours permanently.</small></article><article><span>Preserved displays</span><strong>{cabin.lodgeFeaturedFishIds.filter(Boolean).length} of 3 filled</strong><small>Choose any preserved Trophy or Amazing specimens.</small></article><article><span>Keepsake cabinet</span><strong>{earnedKeepsakes.length} earned</strong><small>Your Angling Keepsakes appear automatically.</small></article></section>
+      <section className="lodge-story"><article><span>Legendary waters</span><strong>{legendaryCount} explored</strong><small>The lodge remains yours permanently.</small></article><article><span>Preserved displays</span><strong>{cabin.lodgeFeaturedFishIds.filter(Boolean).length} of 3 filled</strong><small>Choose any preserved Great or Trophy specimens.</small></article><article><span>Keepsake cabinet</span><strong>{earnedKeepsakes.length} earned</strong><small>Your Angling Keepsakes appear automatically.</small></article></section>
     </>}
 
     <section className="cabin-customizer" aria-labelledby="cabin-customizer-title">
@@ -181,7 +181,7 @@ export default function CabinPage({ onGoFishing }) {
     </section>}
 
     <section className="painting-gallery" aria-labelledby="painting-gallery-title">
-      <div><span className="eyebrow">Earned cabin cosmetics</span><h3 id="painting-gallery-title">Location paintings</h3><p>Complete each water's story to earn its painting. Catch a Trophy or Amazing specimen of every local species to earn the permanent Master Angler frame.</p></div>
+      <div><span className="eyebrow">Earned cabin cosmetics</span><h3 id="painting-gallery-title">Location paintings</h3><p>Complete each water's story to earn its painting. Catch a Great or Trophy specimen of every local species to earn the permanent Master Angler frame.</p></div>
       <div className="painting-grid">{locationPaintings.map((painting) => {
         const earned = game.achievementProgress.paintingsEarned.includes(painting.locationId)
         const mastered = game.achievementProgress.masterFramesEarned.includes(painting.locationId)
@@ -200,7 +200,7 @@ export default function CabinPage({ onGoFishing }) {
           return <article className={earned ? 'earned' : 'locked'} key={location.id}><div>{earned && <img src={souvenirArtwork[location.id]} alt=""/>}</div><span>{earned ? 'Journal complete' : 'Undiscovered'}</span><strong>{earned ? `${location.name} keepsake` : 'Unfinished souvenir'}</strong></article>
         })}</div></section>
 
-        <section><h4>Amazing-catch photographs</h4><p>Every species with a recorded Amazing specimen earns a permanent cabin photograph.</p>{amazingPhotoFish.length ? <div className="photo-collection-grid">{amazingPhotoFish.map((item) => { const specimen = cabin.specimens[item.id]; const location = locations.find((entry) => entry.id === specimen.locationId); return <article key={item.id} style={{ '--photo-art': `url("${location?.image}")` }}><FishArtwork fishId={item.id} name={item.name} className="photo-fish"/><span>Amazing · {specimen.weight} lb</span><strong>{item.name}</strong><small>{location?.name}</small></article> })}</div> : <div className="cabin-collection-empty">Your first Amazing specimen will develop into a photograph here.</div>}</section>
+        <section><h4>Trophy-catch photographs</h4><p>Every species with a recorded Trophy specimen earns a permanent cabin photograph.</p>{amazingPhotoFish.length ? <div className="photo-collection-grid">{amazingPhotoFish.map((item) => { const specimen = cabin.specimens[item.id]; const location = locations.find((entry) => entry.id === specimen.locationId); return <article key={item.id} style={{ '--photo-art': `url("${location?.image}")` }}><FishArtwork fishId={item.id} name={item.name} className="photo-fish"/><span>Trophy · {specimen.weight} lb</span><strong>{item.name}</strong><small>{location?.name}</small></article> })}</div> : <div className="cabin-collection-empty">Your first Trophy specimen will develop into a photograph here.</div>}</section>
 
         <section><h4>Legendary fish miniatures</h4><p>Discover a legendary species to earn its small handcrafted display figure.</p><div className="miniature-grid">{legendaryFish.map((item) => { const earned = game.achievementProgress.legendaryMiniatures.includes(item.id); return <article className={earned ? 'earned' : 'locked'} key={item.id}><FishArtwork fishId={item.id} name={earned ? item.name : undefined} hidden={!earned} className="miniature-fish"/><strong>{earned ? item.name : 'Unknown legend'}</strong></article> })}</div></section>
 
@@ -211,14 +211,14 @@ export default function CabinPage({ onGoFishing }) {
     </details>
 
     <section className="specimen-workshop" aria-labelledby="specimen-title">
-      <div><span className="eyebrow">Trophy preservation</span><h3 id="specimen-title">Exceptional catches</h3><p>The best Trophy or Amazing catch of each species is remembered here, even after it is sold.</p></div>
-      {!specimens.length && <p className="specimen-empty">Your first Trophy or Amazing specimen will appear here.</p>}
+      <div><span className="eyebrow">Specimen preservation</span><h3 id="specimen-title">Exceptional catches</h3><p>The best Great or Trophy catch of each species is remembered here, even after it is sold.</p></div>
+      {!specimens.length && <p className="specimen-empty">Your first Great or Trophy specimen will appear here.</p>}
       <div className="specimen-grid">{specimens.map(({ fish: item, record }) => {
         const canUpgrade = record.mounted && record.weight > record.mounted.weight
         const location = locations.find((entry) => entry.id === record.locationId)
-        return <article className={`specimen-card size-${record.sizeTier}`} key={item.id}>
+        return <article className={`specimen-card ${record.sizeTier === 'trophy' ? 'size-amazing' : 'size-great'}`} key={item.id}>
           <FishArtwork fishId={item.id} name={item.name} className="specimen-art"/>
-          <div><span>{record.sizeTier === 'amazing' ? 'Amazing specimen' : 'Trophy specimen'}</span><h4>{item.name}</h4><p>{record.weight} lb · {location?.name || 'Unknown water'}</p>{record.mounted && <small>Preserved at {record.mounted.weight} lb</small>}</div>
+          <div><span>{record.sizeTier === 'trophy' ? 'Trophy specimen' : 'Great specimen'}</span><h4>{item.name}</h4><p>{record.weight} lb · {location?.name || 'Unknown water'}</p>{record.mounted && <small>Preserved at {record.mounted.weight} lb</small>}</div>
           {!record.mounted && <button type="button" disabled={game.coins < GAME_CONFIG.trophyPreservationCost} onClick={() => actions.preserveSpecimen(item.id)}>Preserve · {GAME_CONFIG.trophyPreservationCost} coins</button>}
           {canUpgrade && <button type="button" onClick={() => actions.preserveSpecimen(item.id)}>Upgrade mount · Free</button>}
           {record.mounted && !canUpgrade && <button type="button" className="secondary-button" onClick={() => displaySpecimen(item.id)}>Display</button>}

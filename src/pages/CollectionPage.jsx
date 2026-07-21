@@ -65,7 +65,7 @@ export default function CollectionPage() {
         <button type="button" className="collection-card-hit" onClick={() => setSelectedFish(item)} aria-label={`Open journal entry for ${item.name}`}/>
         <div className={`collection-art-frame ${record.count >= 10 ? 'seasoned' : ''}`}>
           <FishArtwork fishId={item.id} name={item.name} className="collection-fish-art"/>
-          {record.largestWeight >= item.maxWeight * .76 && <span className="master-catch-seal" aria-label="Master Catch: Trophy-sized personal record"><Icon name="star-fish" size={16}/><b>Master<br/>Catch</b></span>}
+          {record.largestWeight >= item.maxWeight * .91 && <span className="master-catch-seal" aria-label="Master Catch: Trophy-sized personal record"><Icon name="star-fish" size={16}/><b>Master<br/>Catch</b></span>}
         </div>
         <RarityBadge rarity={item.rarity}/>
         <h3>{item.name}</h3>

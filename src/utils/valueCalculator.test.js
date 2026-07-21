@@ -12,9 +12,9 @@ describe('specimen sizes and values', () => {
   it.each([
     [0.5, 'ordinary'],
     [0.51, 'good'],
-    [0.76, 'trophy'],
-    [0.91, 'amazing'],
-    [1, 'amazing'],
+    [0.76, 'great'],
+    [0.91, 'trophy'],
+    [1, 'trophy'],
   ])('classifies %s of maximum as %s', (ratio, tier) => {
     expect(classifyWeight(bluegill, bluegill.maxWeight * ratio)).toBe(tier)
   })
@@ -25,7 +25,7 @@ describe('specimen sizes and values', () => {
 
   it('creates deterministic catches with bounded weight and timestamp', () => {
     const caught = makeCatch(bluegill, sequence(0.99, 1, 0.25), 1700000000000)
-    expect(caught.sizeTier).toBe('amazing')
+    expect(caught.sizeTier).toBe('trophy')
     expect(caught.weight).toBe(bluegill.maxWeight)
     expect(caught.value).toBeGreaterThan(0)
     expect(caught.catchId).toBe('1700000000000-9')
@@ -40,7 +40,7 @@ describe('specimen sizes and values', () => {
   })
 
   it('classifies old catches from stored weight', () => {
-    expect(classifyStoredCatch({ fishId: bluegill.id, weight: bluegill.maxWeight * 0.8 })).toBe('trophy')
+    expect(classifyStoredCatch({ fishId: bluegill.id, weight: bluegill.maxWeight * 0.8 })).toBe('great')
     expect(classifyStoredCatch({ fishId: 'missing', weight: 10 })).toBe('ordinary')
   })
 })

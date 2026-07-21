@@ -11,7 +11,7 @@ Use this file for measured playtest observations and decisions. Record the build
 - Session length without external pressure
 - Whether common fish remain satisfying
 - How often players discover a new species
-- Catch size distribution: 68% regular, 22% good, 8% trophy, 2% amazing
+- Catch size distribution: 68% regular, 22% good, 8% great, 2% trophy
 
 ## Observation Template
 
@@ -32,7 +32,7 @@ Change one variable at a time whenever practical. Do not rebalance from a single
 
 - Test conditions: early Backyard Pond play, with crappie as the clearest example.
 - Observation: uniformly generated weights made ordinary catches feel too close to unusually large real-world fish.
-- Variable changed: split every species' weight range into regular, good, trophy, and amazing classes.
+- Variable changed: split every species' weight range into regular, good, great, and trophy classes.
 - Current baseline: 68% at 0–50% of maximum weight, 22% at 51–75%, 8% at 76–90%, and 2% at 91–100%.
 - Next action: compare the observed distribution and sale income across longer sessions before changing it again.
 

@@ -51,7 +51,7 @@ export function GameProvider({ children }) {
               : current.stats.rarestFish
           const isPeak = getPreferredPhases(item.fishId).includes(phase)
           const previousSpecimen = current.cabin.specimens[item.fishId]
-          const isEligibleSpecimen = ['trophy', 'amazing'].includes(item.sizeTier)
+          const isEligibleSpecimen = ['great', 'trophy'].includes(item.sizeTier)
           const isBetterSpecimen = isEligibleSpecimen && (!previousSpecimen || item.weight > previousSpecimen.weight)
           const next = {
             ...current,
@@ -79,7 +79,7 @@ export function GameProvider({ children }) {
               legendaryLocations: item.rarity === 'legendary'
                 ? [...new Set([...current.achievementProgress.legendaryLocations, locationId])]
                 : current.achievementProgress.legendaryLocations,
-              amazingLegendaryCaught: current.achievementProgress.amazingLegendaryCaught || (item.rarity === 'legendary' && item.sizeTier === 'amazing'),
+              amazingLegendaryCaught: current.achievementProgress.amazingLegendaryCaught || (item.rarity === 'legendary' && item.sizeTier === 'trophy'),
             },
             cabin: isBetterSpecimen ? {
               ...current.cabin,
