@@ -2,6 +2,8 @@
 
 ## Phase 4 — Great Lake first playable slice
 
+- Fixed purchased target lures failing at the moment of hooking when paired with an authored fishing area, including the Pike Spoon at Great Lake's Weed Edge.
+- Added matrix regression coverage for every valid location, lure, and fishing-area combination across all four day phases.
 - Added a permanent Great Lake Skiff that opens the authored Weed Edge and Rocky Drop-off areas while Rocky Shore remains available to everyone.
 - Added three reusable lure families with clear species strengths and no consumable bait inventory.
 - Kept rod rarity odds authoritative; area and lure choices only redistribute species within the rolled rarity.

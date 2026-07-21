@@ -1,8 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import { selectFish } from './fishingEngine'
-import { getPhaseFourFishWeights } from '../data/waterSetup'
+import { locations } from '../data/locations'
+import { fishingAreas, getPhaseFourFishWeights, lureFamilies } from '../data/waterSetup'
 
 const masterChances = { common: 38, uncommon: 31, rare: 21, epic: 8.5, legendary: 1.5 }
+const setupCombinations = locations.flatMap((location) => {
+  const lures = lureFamilies.filter((lure) => lure.locationId === location.id)
+  const areas = fishingAreas.filter((area) => area.locationId === location.id)
+  return lures.flatMap((lure) => (areas.length ? areas : [null]).map((area) => ({ location, area, lure })))
+})
 
 describe('fish selection', () => {
   it('never selects outside the active location pool', () => {
@@ -43,5 +49,23 @@ describe('fish selection', () => {
     expect(weights.sunfish).toBeCloseTo(1.05)
     expect(weights.crappie).toBeCloseTo(1.05)
     expect(weights['largemouth-bass']).toBeUndefined()
+  })
+
+  it('combines a purchased target lure with an authored fishing area', () => {
+    const weights = getPhaseFourFishWeights('great-lake-weed-edge', 'pike-spoon')
+    expect(weights['northern-pike']).toBeCloseTo(1.5 * 1.05)
+    expect(weights['smallmouth-bass']).toBeCloseTo(1.5)
+    expect(weights['great-lakes-muskellunge']).toBeCloseTo(1.5)
+  })
+
+  it.each(setupCombinations)('hooks safely at $location.name with $lure.name in $area.name', ({ location, area, lure }) => {
+    const weights = getPhaseFourFishWeights(area?.id, lure.id)
+    expect(Object.keys(weights).every((fishId) => location.fishIds.includes(fishId))).toBe(true)
+    expect(Object.values(weights).every((weight) => Number.isFinite(weight) && weight > 0)).toBe(true)
+
+    for (const [index, phase] of ['morning', 'midday', 'evening', 'night'].entries()) {
+      const selected = selectFish(masterChances, location.fishIds, phase, () => (index + 1) / 5, weights)
+      expect(location.fishIds).toContain(selected.id)
+    }
   })
 })

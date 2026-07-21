@@ -18,6 +18,7 @@ npm run build
 - A complete version 18 journey migrated in one fixture with coins, equipment, an active trip, keepsakes, a mounted specimen, cabin ownership, and compatible decor preserved together
 - Version 20 boat/setup migration into version 21, including permanent purchased-lure ownership validation and rejection of unowned equipped lures
 - Quiet-cast probability caps, high-end rod reduction, and prevention of consecutive quiet casts
+- Full playable setup matrix across every location, lure, and authored area, including valid positive weights and successful hook selection in every day phase
 - Missing, malformed, and unreadable save recovery
 - Location-bounded rarity fallback and preferred day phases
 - Specimen-size boundaries, deterministic catch generation, and catch values

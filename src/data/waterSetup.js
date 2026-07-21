@@ -101,7 +101,7 @@ export const getPhaseFourFishWeights = (areaId, lureId) => {
   const lure = getLureFamily(lureId)
   const weights = Object.fromEntries([...new Set([...(area?.fishStrengths || []), ...(lure?.fishStrengths || [])])].map((fishId) => {
     const areaMatch = area?.fishStrengths.includes(fishId)
-    const lureMatch = lure?.fishStrengths.includes(fishId)
+    const lureMatch = lure?.fishStrengths?.includes(fishId)
     return [fishId, areaMatch && lureMatch ? 2.25 : 1.5]
   }))
   for (const fishId of lure?.targetFishIds || []) weights[fishId] = (weights[fishId] || 1) * (lure.affinity || 1.05)
