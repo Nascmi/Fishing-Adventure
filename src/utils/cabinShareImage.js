@@ -12,6 +12,15 @@ const drawContained = (context, image, x, y, width, height) => {
   context.drawImage(image, x + (width - drawWidth) / 2, y + (height - drawHeight) / 2, drawWidth, drawHeight)
 }
 
+const drawCovered = (context, image, x, y, width, height) => {
+  const scale = Math.max(width / image.width, height / image.height)
+  const sourceWidth = width / scale
+  const sourceHeight = height / scale
+  const sourceX = (image.width - sourceWidth) / 2
+  const sourceY = (image.height - sourceHeight) / 2
+  context.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, x, y, width, height)
+}
+
 const materialColors = {
   bronze: ['#e4b77f', '#8c552f'], silver: ['#eef3ef', '#879795'], enamel: ['#72a99b', '#214f4c'],
   copper: ['#db8b5b', '#813b29'], gold: ['#ffe89b', '#bd8b28'], legend: ['#56666b', '#121d23'],
@@ -66,7 +75,8 @@ export async function createCabinShareImage({ background, cabinName, fishDisplay
     }
     if (item.artwork) {
       const artwork = await loadImage(item.artwork)
-      drawContained(context, artwork, left + 8, top + 8, drawWidth - 16, drawHeight - 16)
+      if (hook.type === 'frame' || hook.type === 'rug') context.drawImage(artwork, left, top, drawWidth, drawHeight)
+      else drawCovered(context, artwork, left, top, drawWidth, drawHeight)
     }
     context.restore()
   }

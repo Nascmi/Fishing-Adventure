@@ -10,6 +10,7 @@
 - Clean up timers, listeners, and asynchronous work.
 - Test affected behavior and run a production build before completion.
 - Never knowingly commit a broken build.
-- Update relevant documentation when behavior or architecture changes.
+- Update documentation in `docs/` after every project change. At minimum, record player-facing work in `CHANGELOG.md`, and update every affected design, system, roadmap, testing, balance, or workflow document in the same task.
+- Treat documentation drift as an incomplete change; do not postpone it to a later truth pass.
 
 Follow the style already established in the codebase unless there is a concrete reason to improve it.

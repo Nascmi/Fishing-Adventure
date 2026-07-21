@@ -4,6 +4,9 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 
 ## Unreleased
 
+- Established a repository-wide requirement that every project change update the appropriate documentation during the same task.
+- Realigned every live cabin customization hook to its painted frame, shelf, or rug; corrected decor fitting by hook type; and removed Starter Cabin overlays that conflicted with purchased-cabin displays.
+- Removed the pale card background behind Angler's Lodge fish so preserved specimens sit naturally within their authored plaques.
 - Consolidated rarity order, labels, value multipliers, and reeling difficulty into one validated catalog shared by fish selection, catch values, and gameplay tuning.
 - Tightened the reeling safe zone and added recoverable high-tension line strain and stronger slack-line progress loss, making hold-and-release decisions meaningful for larger fish.
 - Completed the Riverstone, Cedar Hideaway, and Captain's Retreat customization hooks with fixed authored placement and compatible-item filtering.

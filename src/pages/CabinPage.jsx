@@ -49,6 +49,7 @@ export default function CabinPage({ onGoFishing }) {
   const lodgeUnlocked = legendaryCount >= 4
   const isLodge = cabin.styleId === 'angler-lodge' && lodgeUnlocked
   const activeCabin = getCabinDefinition(cabin.styleId) || getCabinDefinition('starter')
+  const isStarter = activeCabin.id === 'starter'
   const activeCabinImage = cabinArtwork[activeCabin.id] || cabinImage
   const cabinChoices = cabinCatalog.filter((definition) => {
     if (definition.id === 'starter') return true
@@ -77,19 +78,19 @@ export default function CabinPage({ onGoFishing }) {
     let cancelled = false
     setShareImage(null)
     setShareStatus('')
-    const displayIds = isLodge ? cabin.lodgeFeaturedFishIds : [cabin.featuredFishId]
+    const displayIds = isLodge ? cabin.lodgeFeaturedFishIds : isStarter ? [cabin.featuredFishId] : []
     const fishDisplays = displayIds.map((fishId) => fishId ? { fish: getFish(fishId), specimen: cabin.specimens[fishId]?.mounted } : null)
     createCabinShareImage({
       background: activeCabinImage,
       cabinName: activeCabin.name,
       fishDisplays,
-      souvenir: !isLodge && souvenir ? souvenirArtwork[souvenir.id] : null,
+      souvenir: isStarter && souvenir ? souvenirArtwork[souvenir.id] : null,
       keepsakes: earnedKeepsakes.map((achievement) => getKeepsakeDesign(achievement.id)),
       isLodge,
       decor: selectedDecor,
     }).then((blob) => { if (!cancelled) setShareImage(blob) }).catch(() => { if (!cancelled) setShareStatus('Share image unavailable') })
     return () => { cancelled = true }
-  }, [activeCabin.name, activeCabinImage, cabin.featuredFishId, cabin.lodgeFeaturedFishIds, cabin.specimens, cabin.decorByCabin, earnedKeepsakeKey, isLodge, souvenir])
+  }, [activeCabin.name, activeCabinImage, cabin.featuredFishId, cabin.lodgeFeaturedFishIds, cabin.specimens, cabin.decorByCabin, earnedKeepsakeKey, isLodge, isStarter, souvenir])
 
   const shareCabin = async () => {
     if (!shareImage) return
@@ -139,17 +140,17 @@ export default function CabinPage({ onGoFishing }) {
 
     {!isLodge ? <>
       <section className={`cabin-scene cabin-${activeCabin.id}`} style={{ '--cabin-art': `url("${activeCabinImage}")` }} aria-label={activeCabin.description}>
-        {selectedDecor.map(({ hook, item }) => <div className={`cabin-decor-overlay decor-${hook.type}`} style={{ '--decor-x': `${hook.bounds.x}%`, '--decor-y': `${hook.bounds.y}%`, '--decor-width': `${hook.bounds.width}%`, '--decor-height': `${hook.bounds.height}%`, '--decor-a': item.colors?.[0], '--decor-b': item.colors?.[1] }} title={`${hook.name}: ${item.name}`} key={hook.id}>{item.artwork && <img src={item.artwork} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }}/>}<span>{hook.type === 'display' && !item.artwork ? item.name : ''}</span></div>)}
-        <div className="cabin-featured" aria-label={featuredFish ? `Preserved catch: ${featuredFish.name}` : 'Empty preserved catch mount'}>
+        {selectedDecor.map(({ hook, item }) => <div className={`cabin-decor-overlay decor-${hook.type}`} style={{ '--decor-x': `${hook.bounds.x}%`, '--decor-y': `${hook.bounds.y}%`, '--decor-width': `${hook.bounds.width}%`, '--decor-height': `${hook.bounds.height}%`, '--decor-a': item.colors?.[0], '--decor-b': item.colors?.[1] }} title={`${hook.name}: ${item.name}`} key={hook.id}>{item.artwork && <img src={item.artwork} alt=""/>}<span>{hook.type === 'display' && !item.artwork ? item.name : ''}</span></div>)}
+        {isStarter && <div className="cabin-featured" aria-label={featuredFish ? `Preserved catch: ${featuredFish.name}` : 'Empty preserved catch mount'}>
           {featuredFish ? <div className={`cabin-mount size-${featuredSpecimen.sizeTier}`}><FishArtwork fishId={featuredFish.id} name={featuredFish.name} className="cabin-fish-art"/></div> : <span>Ready for<br/>a preserved catch</span>}
-        </div>
-        {souvenir && <img className="cabin-souvenir" src={souvenirArtwork[souvenir.id]} alt={`${souvenir.name} souvenir`}/>}
+        </div>}
+        {isStarter && souvenir && <img className="cabin-souvenir" src={souvenirArtwork[souvenir.id]} alt={`${souvenir.name} souvenir`}/>}
       </section>
 
-      <section className="cabin-story" aria-label="Cabin displays">
+      {isStarter && <section className="cabin-story" aria-label="Cabin displays">
         <article><span>Above the fire</span><strong>{featuredFish?.name || 'No preserved catch yet'}</strong>{featuredFish && <small>{featuredSpecimen.weight} lb · {featuredSpecimen.sizeTier === 'trophy' ? 'Trophy' : 'Great'} specimen</small>}</article>
         <article><span>On the shelf</span><strong>{souvenir ? `${souvenir.name} souvenir` : 'An open place for a travel memory'}</strong><small>{souvenir ? `A reminder of time spent at ${souvenir.name}` : 'Backyard Pond feels like home'}</small></article>
-      </section>
+      </section>}
     </> : <>
       <section className="cabin-scene lodge-scene" style={{ '--cabin-art': `url("${lodgeImage}")` }} aria-label="The earned Angler's Lodge with three specimen mounts and a keepsake cabinet">
         {cabin.lodgeFeaturedFishIds.map((fishId, index) => {
@@ -164,13 +165,13 @@ export default function CabinPage({ onGoFishing }) {
       <section className="lodge-story"><article><span>Legendary waters</span><strong>{legendaryCount} explored</strong><small>The lodge remains yours permanently.</small></article><article><span>Preserved displays</span><strong>{cabin.lodgeFeaturedFishIds.filter(Boolean).length} of 3 filled</strong><small>Choose any preserved Great or Trophy specimens.</small></article><article><span>Keepsake cabinet</span><strong>{earnedKeepsakes.length} earned</strong><small>Your Angling Keepsakes appear automatically.</small></article></section>
     </>}
 
-    <section className="cabin-customizer" aria-labelledby="cabin-customizer-title">
+    {(isStarter || isLodge) && <section className="cabin-customizer" aria-labelledby="cabin-customizer-title">
       <div><span className="eyebrow">Make it yours</span><h3 id="cabin-customizer-title">Cabin displays</h3><p>Everything here is yours to change whenever you like.</p></div>
       {!isLodge ? <>
         <label>Preserved display<select value={cabin.featuredFishId || ''} onChange={(event) => actions.setCabinChoice('featuredFishId', event.target.value || null)}><option value="">Empty mount</option>{preservedFish.map(({ fish: item, record }) => <option value={item.id} key={item.id}>{item.name} · {record.mounted.weight} lb</option>)}</select></label>
         <label>Travel souvenir<select value={cabin.souvenirLocationId} onChange={(event) => actions.setCabinChoice('souvenirLocationId', event.target.value)}>{visitedLocations.map((location) => <option value={location.id} key={location.id}>{location.name}</option>)}</select></label>
       </> : cabin.lodgeFeaturedFishIds.map((fishId, index) => <label key={index}>Mount {index + 1}<select value={fishId || ''} onChange={(event) => actions.setLodgeDisplay(index, event.target.value || null)}><option value="">Empty mount</option>{preservedFish.map(({ fish: item, record }) => <option value={item.id} disabled={cabin.lodgeFeaturedFishIds.includes(item.id) && fishId !== item.id} key={item.id}>{item.name} · {record.mounted.weight} lb</option>)}</select></label>)}
-    </section>
+    </section>}
 
     {!!activeCabin.customizationHooks?.length && <section className="cabin-customizer decor-customizer" aria-labelledby="decor-customizer-title">
       <div><span className="eyebrow">Authored placement</span><h3 id="decor-customizer-title">Cabin decor</h3><p>{activeCabin.customizationHooks.length} fixed hooks keep every choice aligned with this room. Included, earned, and Trading Post pieces appear only where they fit.</p></div>
