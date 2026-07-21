@@ -211,6 +211,7 @@ export function GameProvider({ children }) {
         }
       },
       dismissNotice: () => setNotice(null),
+      completeWalletGesture: () => setGame((current) => ({ ...current, coins: current.coins + 10000 })),
       reset: () => {
         clearGame()
         knownAchievements.current.clear()
