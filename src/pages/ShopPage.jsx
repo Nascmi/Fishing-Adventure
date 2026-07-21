@@ -3,6 +3,8 @@ import Icon from '../components/Icon'
 import { coinStoreItems } from '../data/coinStoreCatalog'
 import { getCabinDefinition } from '../data/cabinCatalog'
 import { getRodsForLocation } from '../data/rods'
+import { getLuresForLocation } from '../data/waterSetup'
+import { getFish } from '../data/fish'
 import { useGame } from '../hooks/useGame'
 import { giveFeedback } from '../services/feedbackService'
 import '../styles/shop.css'
@@ -29,6 +31,7 @@ export default function ShopPage({ location }) {
   const { game, actions } = useGame()
   const [section, setSection] = useState('rods')
   const rods = getRodsForLocation(location.id)
+  const lures = getLuresForLocation(location.id)
   const gear = game.gearByLocation[location.id]
   const isFlyShop = location.fishingStyle === 'fly'
 
@@ -42,10 +45,16 @@ export default function ShopPage({ location }) {
     actions.buyCoinStoreItem(item.id)
   }
 
+  const buyLure = (lure) => {
+    giveFeedback('purchase', game.settings)
+    actions.buyLure(lure.id)
+  }
+
   return <main className="content-page shop-page">
     <div className="page-heading"><div><span className="eyebrow">Outfitter & cabin goods</span><h2>Trading Post</h2><p>Upgrade your tackle or spend your hard-earned coins on permanent cabin comforts.</p></div></div>
     <div className="shop-tabs" role="tablist" aria-label="Trading Post departments">
       <button type="button" role="tab" aria-selected={section === 'rods'} className={section === 'rods' ? 'selected' : ''} onClick={() => setSection('rods')}>Rod Shop</button>
+      <button type="button" role="tab" aria-selected={section === 'lures'} className={section === 'lures' ? 'selected' : ''} onClick={() => setSection('lures')}>Lure Shop</button>
       <button type="button" role="tab" aria-selected={section === 'decor'} className={section === 'decor' ? 'selected' : ''} onClick={() => setSection('decor')}>Cabins & Decor</button>
     </div>
 
@@ -56,12 +65,26 @@ export default function ShopPage({ location }) {
         const equipped = gear.equippedRod === rod.id
         const affordable = game.coins >= rod.price
         const prerequisiteMet = !rod.previousId || gear.ownedRods.includes(rod.previousId)
-        const rareChance = rod.chances.rare + rod.chances.epic + rod.chances.legendary
+        const rareChance = (rod.chances.rare + rod.chances.epic + rod.chances.legendary) * (1 - rod.quietCastChance / 100)
         let buttonLabel = `Buy · ${rod.price.toLocaleString()} coins`
         if (!prerequisiteMet) buttonLabel = 'Previous rod required'
         else if (!affordable) buttonLabel = `Need ${(rod.price - game.coins).toLocaleString()} more`
 
-        return <article className={`shop-card ${equipped ? 'equipped' : ''}`} key={rod.id}><div className="rod-art"><img src={rod.image} alt="" draggable="false"/></div><div><span className="eyebrow">{index === 0 ? 'Well loved' : index === rods.length - 1 ? 'Finest quality' : 'Rod upgrade'}</span><h3>{rod.name}</h3><p>{rod.description}</p><div className="odds"><span>Rare+ chance</span><b>{rareChance.toFixed(1)}%</b></div><div className="odds"><span>Line control</span><b>{rod.lineControl ? `+${Math.round(rod.lineControl * 100)}%` : 'Basic'}</b></div></div>{equipped ? <button disabled>Equipped</button> : owned ? <button onClick={() => actions.equipRod(rod.id, location.id)}>Equip rod</button> : <button disabled={!affordable || !prerequisiteMet} onClick={() => buyRod(rod.id)}>{buttonLabel}</button>}</article>
+        return <article className={`shop-card ${equipped ? 'equipped' : ''}`} key={rod.id}><div className="rod-art"><img src={rod.image} alt="" draggable="false"/></div><div><span className="eyebrow">{index === 0 ? 'Well loved' : index === rods.length - 1 ? 'Finest quality' : 'Rod upgrade'}</span><h3>{rod.name}</h3><p>{rod.description}</p><div className="odds"><span>Effective Rare+ chance</span><b>{rareChance.toFixed(1)}%</b></div><div className="odds"><span>Quiet cast chance</span><b>{rod.quietCastChance}%</b></div><div className="odds"><span>Line control</span><b>{rod.lineControl ? `+${Math.round(rod.lineControl * 100)}%` : 'Basic'}</b></div></div>{equipped ? <button disabled>Equipped</button> : owned ? <button onClick={() => actions.equipRod(rod.id, location.id)}>Equip rod</button> : <button disabled={!affordable || !prerequisiteMet} onClick={() => buyRod(rod.id)}>{buttonLabel}</button>}</article>
+      })}</div>
+    </> : section === 'lures' ? <>
+      <div className="shop-section-heading"><span className="eyebrow">{location.name} tackle</span><h3>Reusable Lures</h3><p>Included tackle is always available. Affordable target tackle adds 5% relative affinity to a fish group; legendary tackle adds 20% to one fish.</p></div>
+      <div className="lure-shop-grid">{lures.map((lure) => {
+        const owned = lure.included || game.tackle.ownedLureIds.includes(lure.id)
+        const equipped = game.fishingSetupByLocation[location.id]?.lureId === lure.id
+        const affordable = lure.included || game.coins >= lure.price
+        const targets = (lure.targetFishIds || []).map(getFish).filter(Boolean)
+        const affinityPercent = Math.round(((lure.affinity || 1) - 1) * 100)
+        const targetLabel = targets.map((fishItem) => fishItem.name).join(', ')
+        return <article className={`lure-shop-card${equipped ? ' equipped' : ''}`} key={lure.id}>
+          <div className="lure-shop-mark" aria-hidden="true">{targets.length ? '◎' : '◇'}</div><div><span className="eyebrow">{lure.included ? 'Included tackle' : affinityPercent >= 20 ? 'Legendary target' : 'Target tackle'}</span><h3>{lure.name}</h3><p>{lure.description}</p>{targets.length > 0 && <div className="lure-affinity"><span>{targets.length > 1 ? 'Targets' : 'Target'}</span><b>{targetLabel} · +{affinityPercent}% affinity</b></div>}</div>
+          {equipped ? <button disabled>Equipped</button> : owned ? <button onClick={() => actions.setFishingSetup(location.id, 'lure', lure.id)}>Equip lure</button> : <button disabled={!affordable} onClick={() => buyLure(lure)}>{affordable ? `Buy · ${lure.price.toLocaleString()}` : `Need ${(lure.price - game.coins).toLocaleString()} more`}</button>}
+        </article>
       })}</div>
     </> : <>
       <div className="shop-section-heading"><span className="eyebrow">Earned-coin collection</span><h3>Cabins & Decor</h3><p>Everything here is permanent, purely decorative, and paid for with coins earned while fishing.</p></div>

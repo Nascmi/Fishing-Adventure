@@ -3,7 +3,7 @@ import { clearGame, loadGame, newGame, rarityRank, saveGame } from '../services/
 import { achievements as achievementDefinitions, unlockAchievements } from '../data/achievements'
 import { getPreferredPhases } from '../utils/fishingEngine'
 import { unlockLocationCosmetics } from '../data/locationPaintings'
-import { chooseCabinDecor, chooseCabinStyle, endActiveTrip, equipOwnedRod, preserveCabinSpecimen, purchaseCoinStoreItem, purchaseRod, skipTimePhase, startTrip, tickGameTime } from '../game/gameRules'
+import { chooseCabinDecor, chooseCabinStyle, chooseFishingSetup, endActiveTrip, equipOwnedRod, preserveCabinSpecimen, purchaseBoat, purchaseCoinStoreItem, purchaseLure, purchaseRod, skipTimePhase, startTrip, tickGameTime } from '../game/gameRules'
 
 const GameContext = createContext(null)
 export function GameProvider({ children }) {
@@ -36,6 +36,11 @@ export function GameProvider({ children }) {
         setGame((current) => ({
           ...current,
           stats: { ...current.stats, escaped: current.stats.escaped + 1 },
+        })),
+      recordQuietCast: () =>
+        setGame((current) => ({
+          ...current,
+          stats: { ...current.stats, quietCasts: (current.stats.quietCasts || 0) + 1 },
         })),
       addCatch: (item, locationId, phase) =>
         setGame((current) => {
@@ -123,6 +128,9 @@ export function GameProvider({ children }) {
       buyRod: (id, locationId) => setGame((current) => purchaseRod(current, id, locationId)),
       buyCoinStoreItem: (id) => setGame((current) => purchaseCoinStoreItem(current, id)),
       equipRod: (id, locationId) => setGame((current) => equipOwnedRod(current, id, locationId)),
+      buyBoat: (id) => setGame((current) => purchaseBoat(current, id)),
+      buyLure: (id) => setGame((current) => purchaseLure(current, id)),
+      setFishingSetup: (locationId, type, id) => setGame((current) => chooseFishingSetup(current, locationId, type, id)),
       bookTrip: (locationId) => setGame((current) => startTrip(current, locationId)),
       tickDayCycle: (locationId, deltaMs) => setGame((current) => tickGameTime(current, locationId, deltaMs)),
       skipDayPhase: (locationId) => setGame((current) => skipTimePhase(current, locationId)),

@@ -8,6 +8,11 @@ The interface should become quiet enough for the player to focus on fishing.
 - Give each screen one obvious purpose and primary action.
 - Use consistent spacing, rounded surfaces, and restrained shadows.
 - Keep essential status visible without filling every open area.
+- Reflect the selected lure in the in-water strike marker, and show an owned boat in boat-access scenes so equipment and future cosmetics have a visible home.
+- Give each authored fishing area a materially different viewpoint and structure silhouette; area selection should be visually apparent without rereading its label.
+- On phones, collapse pre-cast area and lure choices into a single setup summary with an explicit Change/Done control. Normal fishing posture should show meaningful water and the cast control at the same time.
+- Show specialty lures in a location-aware shop department with their named target, 20% relative affinity, permanent ownership, price, and equipped state visible before purchase.
+- Show affordable target tackle in the same department with all targeted species, its 5% relative affinity, permanent price, and a marker silhouette distinct from included and legendary tackle.
 - Size framed fish artwork intrinsically within explicit safe-area padding so fins and tails never touch or clip against the frame edge.
 - Present discovered Fish Collection artwork directly on the warm journal card without a colored inner panel. Preserve transparent breathing room around each silhouette; use the outer card for ten-catch recognition and retain a distinct muted frame only for undiscovered fish.
 - Anchor the Master Catch seal at the upper-left of collection artwork so it reads as card recognition without covering the fish's head or mouth.

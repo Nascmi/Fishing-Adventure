@@ -36,6 +36,12 @@ Gulf Coast shifts to humid peach-gold sunrise over muted blue-green brackish wat
 
 Open Gulf removes the shoreline and opens onto deep blue dawn water, a distant working rig, and the quiet stern of a charter boat. The scale should feel like a culmination without becoming loud or cinematic. A compact metal jig replaces the cork as the fishing focal point.
 
+Phase 4 Great Lake areas use separate establishing viewpoints rather than recoloring or relabeling one painting. Rocky Shore retains the original granite foreground, Weed Edge moves low beside aquatic vegetation in a sheltered cove, and Rocky Drop-off opens onto cobalt water with submerged stone structure. Boat areas layer a modest aluminum skiff over their authored background rather than baking it into the painting. Weed Edge mirrors its background so vegetation frames the right side while the skiff remains on the left, leaving open water around the strike indicator. Keep the skiff high enough above the overlapping fishing card that its full painted hull remains readable on desktop and mobile. The broad forest-green hull serves as the future cosmetic surface. The boat remains secondary to the water and strike marker, with gentle motion disabled under reduced-motion preferences. Casting Spoon, Flash Spinner, and Deep Jig each use a distinct marker silhouette so the selected lure is visible without additional text.
+
+Legendary-target specialty lures continue that visual rule across all locations: Old Whiskers Stinkbait is dark and earthy, the Chinook Egg Pattern is a bright round river bead, the Muskie Bucktail carries a long skirted profile, the Cobia Eel is a dark swimming silhouette, and the Yellowfin Cedar Plug is a warm wooden offshore shape.
+
+Affordable target tackle uses the same compact marker system with recognizable family cues: tiny warm panfish bait, green bass jig, earthy bottom bait, subdued nymph, bright Steelhead spinner, tube, harness, broad Pike spoon, pink shrimp, rust shellfish rig, vertical reef rig, and blue-gold trolling plug. These are readable differences at fishing scale rather than detailed inventory illustrations.
+
 ## Asset Quality Checks
 
 - Inspect each exported fish independently at its in-game size, not only on a multi-species source sheet.

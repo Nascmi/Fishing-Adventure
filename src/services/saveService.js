@@ -8,10 +8,15 @@ import { unlockLocationCosmetics } from '../data/locationPaintings'
 import { coinStoreItems } from '../data/coinStoreCatalog'
 import { cabinCatalog } from '../data/cabinCatalog'
 import { getCabinDecor, isDecorOwned } from '../data/cabinDecor'
+import { fishingAreas, getDefaultLure, greatLakeBoat, lureFamilies } from '../data/waterSetup'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const CURRENT_VERSION = 19
+const CURRENT_VERSION = 21
+const defaultFishingSetups = () => Object.fromEntries(rodLocationIds.map((locationId) => [locationId, {
+  areaId: locationId === 'great-lake' ? 'great-lake-shore' : null,
+  lureId: getDefaultLure(locationId).id,
+}]))
 const rarityOrder = ['common', 'uncommon', 'rare', 'epic', 'legendary']
 const defaultCabin = () => ({
   styleId: 'starter',
@@ -39,6 +44,9 @@ export const newGame = () => ({
   ),
   collection: {},
   coinStore: { ownedItemIds: [] },
+  watercraft: { ownedBoatIds: [] },
+  tackle: { ownedLureIds: [] },
+  fishingSetupByLocation: defaultFishingSetups(),
   cabin: defaultCabin(),
   weather: defaultWeather(),
   dayCycle: { homeElapsedMs: 0, activeTrip: null },
@@ -64,6 +72,7 @@ export const newGame = () => ({
     totalCoinsEarned: 0,
     totalCasts: 0,
     escaped: 0,
+    quietCasts: 0,
     largestFish: null,
     rarestFish: null,
   },
@@ -183,6 +192,16 @@ function migrateSave(raw) {
     }
     migrated.version = 19
   }
+  if (migrated.version < 20) {
+    migrated.watercraft = { ownedBoatIds: [] }
+    migrated.fishingSetupByLocation = { 'great-lake': { areaId: 'great-lake-shore', lureId: 'spoon' } }
+    migrated.version = 20
+  }
+  if (migrated.version < 21) {
+    migrated.tackle = { ownedLureIds: [] }
+    migrated.fishingSetupByLocation = { ...defaultFishingSetups(), ...(migrated.fishingSetupByLocation || {}) }
+    migrated.version = 21
+  }
   return migrated
 }
 
@@ -199,6 +218,19 @@ export function validateSave(input) {
   const ownedItemIds = Array.isArray(raw.coinStore?.ownedItemIds)
     ? [...new Set(raw.coinStore.ownedItemIds.filter((id) => validCoinStoreIds.has(id)))]
     : []
+  const ownedBoatIds = Array.isArray(raw.watercraft?.ownedBoatIds) && raw.watercraft.ownedBoatIds.includes(greatLakeBoat.id)
+    ? [greatLakeBoat.id]
+    : []
+  const purchasableLureIds = new Set(lureFamilies.filter((lure) => !lure.included).map((lure) => lure.id))
+  const ownedLureIds = Array.isArray(raw.tackle?.ownedLureIds) ? [...new Set(raw.tackle.ownedLureIds.filter((id) => purchasableLureIds.has(id)))] : []
+  const fishingSetupByLocation = Object.fromEntries(rodLocationIds.map((locationId) => {
+    const rawSetup = raw.fishingSetupByLocation?.[locationId]
+    const defaultLure = getDefaultLure(locationId)
+    const selectedLure = lureFamilies.find((lure) => lure.id === rawSetup?.lureId && lure.locationId === locationId && (lure.included || ownedLureIds.includes(lure.id)))
+    const selectedArea = locationId === 'great-lake' ? fishingAreas.find((area) => area.id === rawSetup?.areaId) : null
+    const areaId = selectedArea && (!selectedArea.boatRequired || ownedBoatIds.includes(greatLakeBoat.id)) ? selectedArea.id : locationId === 'great-lake' ? 'great-lake-shore' : null
+    return [locationId, { areaId, lureId: selectedLure?.id || defaultLure.id }]
+  }))
   const gearByLocation = Object.fromEntries(rodLocationIds.map((locationId) => {
     const locationRods = getRodsForLocation(locationId)
     const validRods = new Set(locationRods.map((rod) => rod.id))
@@ -326,6 +358,9 @@ export function validateSave(input) {
   const decorState = {
     ...base,
     coinStore: { ownedItemIds },
+    watercraft: { ownedBoatIds },
+    tackle: { ownedLureIds },
+    fishingSetupByLocation,
     achievementProgress: { ...base.achievementProgress, paintingsEarned, upgradedSouvenirs, equipmentPlaques, amazingPhotos, legendaryMiniatures },
   }
   const availableDecor = new Map(getCabinDecor(decorState).filter((item) => isDecorOwned(decorState, item)).map((item) => [item.id, item]))
@@ -365,6 +400,9 @@ export function validateSave(input) {
     gearByLocation,
     collection,
     coinStore: { ownedItemIds },
+    watercraft: { ownedBoatIds },
+    tackle: { ownedLureIds },
+    fishingSetupByLocation,
     cabin,
     weather,
     dayCycle: {
@@ -400,6 +438,7 @@ export function validateSave(input) {
       totalCoinsEarned: Math.floor(validNumber(stats.totalCoinsEarned, 0)),
       totalCasts: Math.floor(validNumber(stats.totalCasts, 0)),
       escaped: Math.floor(validNumber(stats.escaped, 0)),
+      quietCasts: Math.floor(validNumber(stats.quietCasts, 0)),
     },
   }
   return unlockAchievements(unlockLocationCosmetics(validated)).state

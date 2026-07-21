@@ -5,10 +5,10 @@ const artwork = import.meta.glob('../assets/rods/*.webp', {
 })
 
 const progression = [
-  { price: 0, lineControl: 0, chances: { common: 75, uncommon: 20, rare: 4, epic: .9, legendary: .1 } },
-  { price: 250, lineControl: .1, chances: { common: 65, uncommon: 25, rare: 8, epic: 1.8, legendary: .2 } },
-  { price: 1500, lineControl: .2, chances: { common: 52, uncommon: 29, rare: 14, epic: 4.4, legendary: .6 } },
-  { price: 7500, lineControl: .3, chances: { common: 38, uncommon: 31, rare: 21, epic: 8.5, legendary: 1.5 } },
+  { price: 0, lineControl: 0, quietCastChance: 3, chances: { common: 75, uncommon: 20, rare: 4, epic: .9, legendary: .1 } },
+  { price: 250, lineControl: .1, quietCastChance: 2.5, chances: { common: 65, uncommon: 25, rare: 8, epic: 1.8, legendary: .2 } },
+  { price: 1500, lineControl: .2, quietCastChance: 2, chances: { common: 52, uncommon: 29, rare: 14, epic: 4.4, legendary: .6 } },
+  { price: 7500, lineControl: .3, quietCastChance: 1.5, chances: { common: 38, uncommon: 31, rare: 21, epic: 8.5, legendary: 1.5 } },
 ]
 
 const rodFamilies = {

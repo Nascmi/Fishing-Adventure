@@ -28,6 +28,38 @@ Change one variable at a time whenever practical. Do not rebalance from a single
 
 ## Recorded Decisions
 
+### Quiet casts and specialty lures — Phase 4
+
+- Quiet-cast baseline: 3%, 2.5%, 2%, and 1.5% across the four rod tiers. A quiet cast ends without a bite, does not increment escapes, and cannot occur immediately after another quiet cast.
+- Probability handling: conditional rod rarity weights remain unchanged. Effective catch probability is reduced only by the rod's 97%–98.5% bite rate, after which time, area, and lure species weights choose the encounter.
+- Specialty-lure effect: a permanent purchased lure multiplies its named target's relative encounter weight by 1.2. This is not a 20-percentage-point bonus or a guarantee.
+- Legendary lure prices: Old Whiskers 10,000; Chinook Salmon 15,000; Great Lakes Muskellunge 20,000; Cobia 25,000; Yellowfin Tuna 35,000 coins.
+- Next action: measure at least 200 casts across rod tiers for quiet-cast frequency and compare at least 500 matched/unmatched casts before changing the 1.2× affinity or prices.
+
+### Affordable target tackle — Phase 4
+
+- Catalog rule: two or three researched, permanent target-tackle purchases per location rather than one lure for every species.
+- Price range: 100–250 coins, with broader early groups generally cheaper and focused trophy-predator tackle reaching 250.
+- Affinity: every named target receives a 1.05× relative encounter weight. Only the equipped lure applies, so bonuses do not stack.
+- Group examples: pond panfish; river whitefish and trout; Gulf bay shrimp feeders; offshore reef fish; offshore trolling predators.
+- Next action: watch early shop comprehension and clutter, then compare target frequencies before expanding the catalog.
+
+### Great Lake skiff and lure baseline — Phase 4
+
+- Starting values: permanent skiff at 5,000 coins; authored Rocky Shore, Weed Edge, and Rocky Drop-off areas; three reusable lure families.
+- Weighting rule: an area or lure strength applies a 1.5× species weight within its rarity, and a matching area-plus-lure applies 2.25×. Rod rarity odds are unchanged.
+- Reasoning: add readable species targeting without guaranteeing high-rarity catches or invalidating the existing shore, rod, time, and reeling systems.
+- Status: provisional until measured against Great Lake income, rod timing, and at least 25 casts per setup.
+- Next action: watch whether 5,000 coins makes the skiff an interesting parallel goal rather than delaying the Graphite or Master Lake Rod too sharply.
+
+### Informal household tournament — pre-Phase 4
+
+- Test conditions: several family members played together for multiple hours in an informal at-home fishing tournament. Exact catch, income, upgrade, and session metrics were not recorded.
+- Observation: players remained engaged, enjoyed comparing catches, and naturally tried to surpass one another's best fish. Progress and the shared fishing economy did not produce an obvious frustration or pacing complaint during the session.
+- Variable changed: none.
+- Result: positive qualitative evidence that catching, specimen comparison, and the current economy can sustain an extended group play session without additional competitive systems.
+- Next action: keep current economy values unchanged entering Phase 4 and continue collecting measured charter earnings and upgrade timing when practical.
+
 ### Specimen weights — Phase 1 polish
 
 - Test conditions: early Backyard Pond play, with crappie as the clearest example.

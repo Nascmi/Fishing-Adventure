@@ -92,6 +92,10 @@ Phase 4 expands the fishing itself through deliberate choices about where and ho
 - Location-specific boat and lure presentation that retains the calm cast, wait, hook, and reel rhythm
 - A progression model that adds new opportunities without making shore fishing, starter tackle, or familiar species obsolete
 
+### In Progress
+
+The first playable slice is live at Great Lake: Rocky Shore remains free, a permanent skiff opens Weed Edge and Rocky Drop-off, and reusable lure families shift species likelihood. Phase 4 now also includes rare rod-dependent quiet casts and permanent specialty lures for each location's legendary fish. See `PHASE_4_DESIGN.md` for the exact probability contract and playtest questions.
+
 ## Version 1.0
 
 A polished, accessible, offline-friendly fishing game ready for public Android and iOS release.

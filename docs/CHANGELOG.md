@@ -1,5 +1,23 @@
 # Changelog
 
+## Phase 4 — Great Lake first playable slice
+
+- Added a permanent Great Lake Skiff that opens the authored Weed Edge and Rocky Drop-off areas while Rocky Shore remains available to everyone.
+- Added three reusable lure families with clear species strengths and no consumable bait inventory.
+- Kept rod rarity odds authoritative; area and lure choices only redistribute species within the rolled rarity.
+- Added version 20 save migration and validation for boat ownership and fishing setup.
+- Added automated coverage for boat gating, reusable lure selection, setup weighting, and version 19 migration.
+- Added a visible, cosmetic-ready Great Lake skiff to boat-access areas and distinct in-water markers for each selected lure family.
+- Added distinct Rocky Shore, Weed Edge, and Rocky Drop-off viewpoints while keeping the skiff as an independent layer for future hull cosmetics.
+- Mirrored the Weed Edge scenery and returned the skiff to the left, preserving open water around the strike indicator.
+- Raised the Great Lake skiff above the overlapping fishing card, with extra desktop and mobile clearance so its full cosmetic-ready hull remains visible.
+- Collapsed Great Lake setup choices behind a compact Change/Done summary on phones so players can see both the water and Cast Line during normal play.
+- Added 3%–1.5% rod-based quiet casts, excluded them from escape statistics, and prevented consecutive quiet casts.
+- Added permanent specialty lures for each location's legendary fish, priced from 10,000 to 35,000 coins with a transparent 20% relative target affinity.
+- Added a location-aware Lure Shop, permanent ownership/equipment rules, version 21 migration, and expanded automated coverage.
+- Added distinct in-water markers for all five legendary-target specialty lures.
+- Added twelve researched, permanent target-tackle purchases priced from 100 to 250 coins, using curated species groups and a 5% relative affinity instead of one lure per fish.
+
 Record player-facing changes under Unreleased, then archive them beneath a dated public version or clearly labeled internal milestone.
 
 ## Unreleased

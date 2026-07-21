@@ -23,7 +23,7 @@ const weightedPick = (pool, weights, random) => {
   }
   return pool[pool.length - 1]
 }
-export function selectFish(chances, allowedIds, phase = 'morning', random = Math.random) {
+export function selectFish(chances, allowedIds, phase = 'morning', random = Math.random, fishWeights = {}) {
   const eligible = fish.filter((item) => allowedIds.includes(item.id))
   const rarityWeights = Object.fromEntries(RARITY_ORDER.map((rarity) => [rarity, 0]))
   for (const [rarity, chance] of Object.entries(chances)) {
@@ -34,7 +34,7 @@ export function selectFish(chances, allowedIds, phase = 'morning', random = Math
   const rarityCounts = Object.fromEntries(RARITY_ORDER.map((rarity) => [rarity, eligible.filter((item) => item.rarity === rarity).length]))
   const weights = eligible.map((item) => {
     const baseline = rarityWeights[item.rarity] / Math.max(1, rarityCounts[item.rarity])
-    return baseline * (preferredPhases[item.id]?.includes(phase) ? 2.25 : 1)
+    return baseline * (preferredPhases[item.id]?.includes(phase) ? 2.25 : 1) * (fishWeights[item.id] || 1)
   })
   return weightedPick(eligible, weights, random) || fish[0]
 }

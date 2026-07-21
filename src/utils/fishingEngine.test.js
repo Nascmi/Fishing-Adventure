@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { selectFish } from './fishingEngine'
+import { getPhaseFourFishWeights } from '../data/waterSetup'
 
 const masterChances = { common: 38, uncommon: 31, rare: 21, epic: 8.5, legendary: 1.5 }
 
@@ -24,5 +25,23 @@ describe('fish selection', () => {
 
   it('has a safe fallback for an empty pool', () => {
     expect(selectFish(masterChances, [], 'morning', () => 0.5)).toBeDefined()
+  })
+
+  it('applies setup strengths without creating weight for a rarity absent from the rod', () => {
+    const selected = selectFish({ common: 100 }, ['perch', 'rock-bass', 'walleye'], 'night', () => 0.6, { perch: 10 })
+    expect(selected.id).toBe('perch')
+    expect(selected.rarity).toBe('common')
+  })
+
+  it('gives purchased specialty lures a twenty percent relative target affinity', () => {
+    expect(getPhaseFourFishWeights(null, 'cobia-eel').cobia).toBeCloseTo(1.2)
+  })
+
+  it('applies five percent affinity to every fish in an affordable tackle group', () => {
+    const weights = getPhaseFourFishWeights(null, 'panfish-bites')
+    expect(weights.bluegill).toBeCloseTo(1.05)
+    expect(weights.sunfish).toBeCloseTo(1.05)
+    expect(weights.crappie).toBeCloseTo(1.05)
+    expect(weights['largemouth-bass']).toBeUndefined()
   })
 })

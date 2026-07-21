@@ -1,9 +1,39 @@
 import { describe, expect, it } from 'vitest'
 import { GAME_CONFIG } from '../data/config'
 import { newGame } from '../services/saveService'
-import { chooseCabinDecor, chooseCabinStyle, equipOwnedRod, preserveCabinSpecimen, purchaseCoinStoreItem, purchaseRod, skipTimePhase, startTrip, tickGameTime } from './gameRules'
+import { greatLakeBoat } from '../data/waterSetup'
+import { chooseCabinDecor, chooseCabinStyle, chooseFishingSetup, equipOwnedRod, preserveCabinSpecimen, purchaseBoat, purchaseCoinStoreItem, purchaseLure, purchaseRod, skipTimePhase, startTrip, tickGameTime } from './gameRules'
 
 const withCoins = (coins) => ({ ...newGame(), coins })
+
+describe('on-the-water setup', () => {
+  it('buys the skiff once and gates offshore areas behind ownership', () => {
+    const state = withCoins(greatLakeBoat.price + 100)
+    expect(chooseFishingSetup(state, 'great-lake', 'area', 'great-lake-drop-off')).toBe(state)
+    const purchased = purchaseBoat(state, greatLakeBoat.id)
+    expect(purchased.coins).toBe(100)
+    expect(purchased.watercraft.ownedBoatIds).toEqual([greatLakeBoat.id])
+    expect(chooseFishingSetup(purchased, 'great-lake', 'area', 'great-lake-drop-off').fishingSetupByLocation['great-lake'].areaId).toBe('great-lake-drop-off')
+    expect(purchaseBoat(purchased, greatLakeBoat.id)).toBe(purchased)
+  })
+
+  it('changes reusable lures without spending coins', () => {
+    const state = newGame()
+    const next = chooseFishingSetup(state, 'great-lake', 'lure', 'deep-jig')
+    expect(next.coins).toBe(state.coins)
+    expect(next.fishingSetupByLocation['great-lake'].lureId).toBe('deep-jig')
+  })
+
+  it('purchases a specialty lure once before it can be equipped', () => {
+    const state = withCoins(25000)
+    expect(chooseFishingSetup(state, 'great-lake', 'lure', 'muskie-bucktail')).toBe(state)
+    const purchased = purchaseLure(state, 'muskie-bucktail')
+    expect(purchased.coins).toBe(5000)
+    expect(purchased.tackle.ownedLureIds).toEqual(['muskie-bucktail'])
+    expect(chooseFishingSetup(purchased, 'great-lake', 'lure', 'muskie-bucktail').fishingSetupByLocation['great-lake'].lureId).toBe('muskie-bucktail')
+    expect(purchaseLure(purchased, 'muskie-bucktail')).toBe(purchased)
+  })
+})
 
 describe('equipment purchases', () => {
   it('deducts the exact rod price and records ownership', () => {

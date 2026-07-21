@@ -6,6 +6,7 @@ import { GAME_CONFIG } from '../data/config'
 import { getLocation } from '../data/locations'
 import { unlockLocationCosmetics } from '../data/locationPaintings'
 import { getRod } from '../data/rods'
+import { getFishingArea, getLureFamily, greatLakeBoat } from '../data/waterSetup'
 
 const randomBetween = (minimum, maximum, random) => Math.round(minimum + random() * (maximum - minimum))
 
@@ -63,6 +64,28 @@ export const equipOwnedRod = (state, id, locationId) =>
         },
       }
     : state
+
+export const purchaseBoat = (state, id) => {
+  if (id !== greatLakeBoat.id || state.watercraft.ownedBoatIds.includes(id) || state.coins < greatLakeBoat.price) return state
+  return { ...state, coins: state.coins - greatLakeBoat.price, watercraft: { ...state.watercraft, ownedBoatIds: [...state.watercraft.ownedBoatIds, id] } }
+}
+
+export const purchaseLure = (state, id) => {
+  const lure = getLureFamily(id)
+  if (!lure || lure.included || state.tackle.ownedLureIds.includes(id) || state.coins < lure.price) return state
+  return { ...state, coins: state.coins - lure.price, tackle: { ...state.tackle, ownedLureIds: [...state.tackle.ownedLureIds, id] } }
+}
+
+export const chooseFishingSetup = (state, locationId, type, id) => {
+  const current = state.fishingSetupByLocation[locationId]
+  const lure = getLureFamily(id)
+  if (type === 'lure' && lure?.locationId === locationId && (lure.included || state.tackle.ownedLureIds.includes(id))) {
+    return { ...state, fishingSetupByLocation: { ...state.fishingSetupByLocation, [locationId]: { ...current, lureId: id } } }
+  }
+  const area = getFishingArea(id)
+  if (locationId !== 'great-lake' || type !== 'area' || !area || area.locationId !== locationId || (area.boatRequired && !state.watercraft.ownedBoatIds.includes(greatLakeBoat.id))) return state
+  return { ...state, fishingSetupByLocation: { ...state.fishingSetupByLocation, [locationId]: { ...current, areaId: id } } }
+}
 
 export const startTrip = (state, locationId, now = Date.now()) => {
   const location = getLocation(locationId)
