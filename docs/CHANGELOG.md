@@ -61,6 +61,9 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 
 ## Unreleased
 
+- Rebuilt the purchased cabin rugs as isolated room-ready artwork so they fit authored floor spaces without stretched catalog walls or tabletops.
+- Rebuilt the Antique Fishing Creel, Hand-Carved Fish Decoy, and Hundred-Thousand Coin Club Plaque as complete transparent cutouts, and removed the generic framed backing from physical display objects.
+- Unified decor fitting between all live cabin types and generated cabin share images so contained objects are no longer cropped.
 - Moved the Master Catch seal to the upper-left of Fish Collection artwork so it no longer covers right-facing fish heads.
 - Removed the blue-green inner panels from discovered Fish Collection artwork, added safer transparent spacing for varied silhouettes, and moved ten-catch recognition to the outer journal card.
 - Added a comprehensive version 18-to-19 save regression fixture proving that equipment, active trips, keepsakes, mounted specimens, cabin ownership, and compatible decor survive together without touching player storage.

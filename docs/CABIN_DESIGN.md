@@ -108,6 +108,8 @@ The shop discloses each cabin's hook count before purchase. Each hook has a fixe
 
 Twelve rugs, frames, finishes, small cabin objects, and the 100,000 Coin Club plaque are permanent earned-coin purchases. Included rugs, frames, and finishes and accomplishment-earned paintings, photographs, souvenirs, miniatures, and plaques appear beside purchased choices wherever a compatible hook exists.
 
+Room-facing decoration artwork is distinct from Trading Post catalog photography. Rugs use isolated overhead artwork fitted to each authored floor footprint; physical shelf objects and plaques use transparent, fully visible cutouts with contained scaling and no generic picture-frame backing. The live cabin and generated share image follow the same presentation rules.
+
 Location paintings are earned records of exploration or completion. Cabin styles may provide different frames and wall arrangements, but purchasing a cabin must not purchase the underlying exploration accomplishment.
 
 Every cabin now provides at least one authored frame hook. Each frame hook stores artwork and frame treatment independently, so an earned location painting or Trophy photograph can be shown inside an included or Trading Post frame. The Starter Cabin shares its hearth display between a specimen and wall art; the Angler's Lodge shares its two side mounts with wall art. Selecting artwork temporarily covers the fish in that shared position without deleting either selection. The always-visible painting grid is collapsed into the Cabin Collection so displayed artwork belongs visually to the room.

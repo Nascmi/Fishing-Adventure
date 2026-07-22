@@ -54,6 +54,10 @@ Affordable target tackle uses the same compact marker system with recognizable f
 
 ## Asset Quality Checks
 
+- Cabin decor used as a physical object must be exported as a transparent, fully visible cutout; catalog walls, tabletops, and photo backdrops may not appear in room overlays.
+- Replacement rugs must use isolated overhead artwork and fill only the authored rug footprint without importing scenery from the catalog image.
+- Validate decor at its smallest live cabin hook and in the generated share image; no object may be cropped or placed inside an unintended generic frame.
+
 - Inspect each exported fish independently at its in-game size, not only on a multi-species source sheet.
 - Reject neighboring fins, tails, shadows, color fragments, or other source-sheet artifacts around the silhouette.
 - Preserve transparent backgrounds and enough clear padding for responsive cards.

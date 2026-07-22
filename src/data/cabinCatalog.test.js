@@ -1,9 +1,17 @@
 import { describe, expect, it } from 'vitest'
 import { cabinCatalog } from './cabinCatalog'
+import { coinStoreItems } from './coinStoreCatalog'
 
 const premiumCabins = cabinCatalog.filter((cabin) => cabin.acquisition.type === 'store' && cabin.customizationHooks)
 
 describe('premium cabin decoration hooks', () => {
+  it('uses room-ready artwork and contained presentation for physical decor', () => {
+    const rugs = coinStoreItems.filter((item) => item.hookType === 'rug')
+    const objects = coinStoreItems.filter((item) => ['trading-post.decor-antique-creel', 'trading-post.decor-hand-carved-decoy', 'trading-post.plaque-100k-club'].includes(item.id))
+    expect(rugs.every((item) => item.artwork.endsWith('.webp') && item.fit === 'fill')).toBe(true)
+    expect(objects.every((item) => item.artwork.endsWith('.webp') && item.fit === 'contain' && item.presentation)).toBe(true)
+  })
+
   it('gives every cabin at least one painting-compatible frame hook', () => {
     expect(cabinCatalog.every((cabin) => cabin.customizationHooks?.some((hook) => hook.type === 'frame'))).toBe(true)
   })

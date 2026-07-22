@@ -49,6 +49,14 @@ const cabinArtwork = {
   'trophy-room': trophyRoom,
 }
 
+const DecorOverlay = ({ hook, item }) => <div
+  className={`cabin-decor-overlay decor-${hook.type}${item.displayTags?.includes('rod') ? ' decor-tag-rod' : ''}${item.presentation ? ` decor-presentation-${item.presentation}` : ''}`}
+  style={{ '--decor-x': `${hook.bounds.x}%`, '--decor-y': `${hook.bounds.y}%`, '--decor-width': `${hook.bounds.width}%`, '--decor-height': `${hook.bounds.height}%`, '--decor-a': item.colors?.[0], '--decor-b': item.colors?.[1] }}
+  title={`${hook.name}: ${item.name}`}
+>
+  {item.artwork && <img src={item.artwork} alt="" style={item.fit ? { objectFit: item.fit } : undefined}/>}<span>{hook.type === 'display' && !item.artwork ? item.name : ''}</span>
+</div>
+
 export default function CabinPage({ onGoFishing }) {
   const { game, actions } = useGame()
   const cabin = game.cabin
@@ -171,7 +179,7 @@ export default function CabinPage({ onGoFishing }) {
           {featuredFish ? <div className={`cabin-mount size-${featuredSpecimen.sizeTier}`}><FishArtwork fishId={featuredFish.id} name={featuredFish.name} className="cabin-fish-art"/></div> : <span>Ready for<br/>a preserved catch</span>}
         </div>}
         {isStarter && souvenir && <img className="cabin-souvenir" src={souvenirArtwork[souvenir.id]} alt={`${souvenir.name} souvenir`}/>}
-        {selectedDecor.map(({ hook, item }) => <div className={`cabin-decor-overlay decor-${hook.type}${item.displayTags?.includes('rod') ? ' decor-tag-rod' : ''}`} style={{ '--decor-x': `${hook.bounds.x}%`, '--decor-y': `${hook.bounds.y}%`, '--decor-width': `${hook.bounds.width}%`, '--decor-height': `${hook.bounds.height}%`, '--decor-a': item.colors?.[0], '--decor-b': item.colors?.[1] }} title={`${hook.name}: ${item.name}`} key={hook.id}>{item.artwork && <img src={item.artwork} alt="" style={item.fit ? { objectFit: item.fit } : undefined}/>}<span>{hook.type === 'display' && !item.artwork ? item.name : ''}</span></div>)}
+        {selectedDecor.map(({ hook, item }) => <DecorOverlay hook={hook} item={item} key={hook.id}/>)}
       </section>
 
       {isStarter && <section className="cabin-story" aria-label="Cabin displays">
@@ -188,13 +196,13 @@ export default function CabinPage({ onGoFishing }) {
             {mountedFish && !lodgeFrameOccupied(index) && <FishArtwork fishId={mountedFish.id} name={mountedFish.name} className="lodge-fish-art"/>}
           </div>
         })}
-        {selectedDecor.map(({ hook, item }) => <div className={`cabin-decor-overlay decor-${hook.type}${item.displayTags?.includes('rod') ? ' decor-tag-rod' : ''}`} style={{ '--decor-x': `${hook.bounds.x}%`, '--decor-y': `${hook.bounds.y}%`, '--decor-width': `${hook.bounds.width}%`, '--decor-height': `${hook.bounds.height}%`, '--decor-a': item.colors?.[0], '--decor-b': item.colors?.[1] }} title={`${hook.name}: ${item.name}`} key={hook.id}>{item.artwork && <img src={item.artwork} alt=""/>}</div>)}
+        {selectedDecor.map(({ hook, item }) => <DecorOverlay hook={hook} item={item} key={hook.id}/>)}
         <div className="lodge-keepsakes" style={{ left: `${lodgeLayout.keepsakeCabinet.x}%`, top: `${lodgeLayout.keepsakeCabinet.y}%`, width: `${lodgeLayout.keepsakeCabinet.width}%`, height: `${lodgeLayout.keepsakeCabinet.height}%`, gridTemplateColumns: `repeat(${lodgeLayout.keepsakeCabinet.columns},1fr)`, gridAutoRows: `${100 / lodgeLayout.keepsakeCabinet.rows}%` }} aria-label={`${earnedKeepsakes.length} of 20 Angling Keepsakes displayed`}>{Array.from({ length: 20 }, (_, index) => { const achievement = earnedKeepsakes[index]; if (!achievement) return <span className="empty" aria-hidden="true" key={`empty-${index}`}/>; const design = getKeepsakeDesign(achievement.id); return <span className={`material-${design.material}`} title={achievement.name} key={achievement.id}><Icon name={design.icon} size={18}/></span> })}</div>
       </section>
       <section className="lodge-story"><article><span>Legendary waters</span><strong>{legendaryCount} explored</strong><small>The lodge remains yours permanently.</small></article><article><span>Preserved displays</span><strong>{cabin.lodgeFeaturedFishIds.filter(Boolean).length} of 3 filled</strong><small>Choose any preserved Great or Trophy specimens.</small></article><article><span>Keepsake cabinet</span><strong>{earnedKeepsakes.length} earned</strong><small>Your Angling Keepsakes appear automatically.</small></article></section>
     </> : <>
       <section className="cabin-scene trophy-room-scene" style={{ '--cabin-art': `url("${trophyRoom}")` }} aria-label="The Grand Trophy Room with twelve preserved specimen mounts">
-        {selectedDecor.map(({ hook, item }) => <div className={`cabin-decor-overlay decor-${hook.type}${item.displayTags?.includes('rod') ? ' decor-tag-rod' : ''}`} style={{ '--decor-x': `${hook.bounds.x}%`, '--decor-y': `${hook.bounds.y}%`, '--decor-width': `${hook.bounds.width}%`, '--decor-height': `${hook.bounds.height}%`, '--decor-a': item.colors?.[0], '--decor-b': item.colors?.[1] }} title={`${hook.name}: ${item.name}`} key={hook.id}>{item.artwork && <img src={item.artwork} alt=""/>}</div>)}
+        {selectedDecor.map(({ hook, item }) => <DecorOverlay hook={hook} item={item} key={hook.id}/>)}
         {cabin.trophyRoomFeaturedFishIds.map((fishId, index) => {
           const mountedFish = getFish(fishId)
           const mounted = cabin.specimens[fishId]?.mounted

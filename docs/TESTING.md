@@ -67,3 +67,8 @@ The Android shell must pass `:app:compileDebugJavaWithJavac` or an Android Studi
 Before a release, load the game once while connected, make one catch, then reload and confirm the save survives. Disable the connection without clearing site data and confirm the already-loaded session can continue using bundled art and rules; reconnect before expecting a fresh Firebase-hosted page load because the project does not currently install a service worker. Also verify portrait and short-landscape layouts, bottom safe-area clearance, scene transitions, and both confirmation/settings dialogs.
 
 Use `PLAYTEST_WORKSHEET.md` for tournament feedback. It intentionally separates memorable observations from probability claims so a small lucky or unlucky sample does not trigger premature balance changes.
+## Cabin Decoration Visual Checks
+
+- Equip every purchased rug in Riverstone Cabin, Cedar Hideaway, and Captain's Retreat. Confirm each replaces only the painted floor-rug footprint, has no square photo background, and remains recognizable without severe distortion.
+- Equip the Antique Fishing Creel, Hand-Carved Fish Decoy, model boats, and Coin Club plaque in every compatible display hook. Confirm the complete object remains visible and no generic frame or colored backing appears behind artwork.
+- Generate a cabin share image for each category above and confirm it matches the live scene's transparent/contained presentation.

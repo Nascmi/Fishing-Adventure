@@ -75,11 +75,12 @@ export async function createCabinShareImage({ background, cabinName, fishDisplay
     context.save()
     context.globalAlpha = hook.type === 'finish' ? .22 : .92
     context.fillStyle = gradient
-    if (hook.type === 'rug') {
+    const artworkOnly = Boolean(item.artwork && (hook.type === 'display' || hook.type === 'rug'))
+    if (hook.type === 'rug' && !artworkOnly) {
       context.beginPath()
       context.ellipse(left + drawWidth / 2, top + drawHeight / 2, drawWidth / 2, drawHeight / 2, 0, 0, Math.PI * 2)
       context.fill()
-    } else {
+    } else if (!artworkOnly) {
       context.fillRect(left, top, drawWidth, drawHeight)
       if (hook.type === 'frame') {
         context.strokeStyle = item.colors?.[1] || '#d5bd79'
