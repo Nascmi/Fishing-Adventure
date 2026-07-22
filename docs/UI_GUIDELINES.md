@@ -14,6 +14,7 @@ The interface should become quiet enough for the player to focus on fishing.
 
 - Design for portrait phones first, then adapt gracefully to larger screens.
 - Give each screen one obvious purpose and primary action.
+- House Journey & Settings under the Inventory screen's `Angler profile` action. Do not float global utility controls over authored fishing or cabin artwork.
 - Use consistent spacing, rounded surfaces, and restrained shadows.
 - Keep essential status visible without filling every open area.
 - Reflect the selected lure in the in-water strike marker, and show an owned boat in boat-access scenes so equipment and future cosmetics have a visible home.

@@ -73,6 +73,8 @@ The Android shell must pass `:app:compileDebugJavaWithJavac` or an Android Studi
 
 Before a release, load the game once while connected, make one catch, then reload and confirm the save survives. Disable the connection without clearing site data and confirm the already-loaded session can continue using bundled art and rules; reconnect before expecting a fresh Firebase-hosted page load because the project does not currently install a service worker. Also verify portrait and short-landscape layouts, bottom safe-area clearance, scene transitions, and both confirmation/settings dialogs.
 
+On Inventory, confirm `Angler profile` opens Journey & Settings whether the basket is empty or full, the dialog restores focus to that button after closing, and no profile/settings control floats over fishing, cabin, shop, collection, or trip artwork.
+
 Use `PLAYTEST_WORKSHEET.md` for tournament feedback. It intentionally separates memorable observations from probability claims so a small lucky or unlucky sample does not trigger premature balance changes.
 ## Cabin Decoration Visual Checks
 

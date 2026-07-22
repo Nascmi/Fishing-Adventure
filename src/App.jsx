@@ -26,7 +26,7 @@ export default function App() {
   const pages = {
     fishing: <FishingPage locationId={locationId} onLocationChange={setLocationId} onOpenCabin={() => setPage('cabin')}/>,
     cabin: <CabinPage returnLocationName={getLocation(locationId).name} onGoFishing={() => setPage('fishing')}/>,
-    inventory: <InventoryPage />,
+    inventory: <InventoryPage onOpenSettings={() => setSettingsOpen(true)} settingsButtonRef={settingsTriggerRef}/>,
     shop: <ShopPage location={getLocation(locationId)} />,
     collection: <CollectionPage />,
     trips: <TripsPage currentLocationId={locationId} onChooseLocation={setLocationId} onGoFishing={() => setPage('fishing')}/>,
@@ -91,7 +91,6 @@ export default function App() {
     {notice && <div className="notice" role="alert"><span>{notice}</span><button onClick={actions.dismissNotice}>Dismiss</button></div>}
     {!storageAvailable && <div className="notice warning" role="alert">Progress cannot be saved in this browser session. Check your storage or privacy settings.</div>}
     <div className="app-content">{pages[page]}</div>
-    <button ref={settingsTriggerRef} className="settings-trigger" onClick={() => setSettingsOpen(true)} aria-label="Open profile and settings"><Icon name="settings" size={21}/></button>
     <NavBar page={page} setPage={setPage}/>
 
     {settingsOpen && <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) setSettingsOpen(false) }}>
