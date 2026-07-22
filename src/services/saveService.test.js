@@ -10,12 +10,13 @@ afterEach(() => {
 })
 
 describe('save migrations and validation', () => {
-  it('creates a complete version 19 new game', () => {
+  it('creates a complete current-version new game', () => {
     const state = newGame()
-    expect(state.version).toBe(27)
+    expect(state.version).toBe(28)
     expect(state.coinStore).toEqual({ ownedItemIds: [] })
     expect(state.cabin.styleId).toBe('starter')
     expect(Object.keys(state.gearByLocation)).toHaveLength(5)
+    expect(state.activities).toEqual({ fieldNotes: { entries: [], lastGeneratedDay: null }, derbies: { active: null, personalBests: {} } })
   })
 
   it('migrates a representative version 1 save without losing pond gear or coins', () => {
@@ -28,7 +29,7 @@ describe('save migrations and validation', () => {
       equippedRod: 'fiberglass',
       stats: legacyStats,
     })
-    expect(state.version).toBe(27)
+    expect(state.version).toBe(28)
     expect(state.coins).toBe(432)
     expect(state.gearByLocation['willow-pond']).toEqual({ ownedRods: ['old', 'fiberglass'], equippedRod: 'fiberglass' })
     expect(state.gearByLocation['open-gulf'].ownedRods).toContain('offshore-starter')
@@ -49,14 +50,14 @@ describe('save migrations and validation', () => {
       settings: {},
       stats: { ...legacyStats, totalCaught: 1 },
     })
-    expect(state.version).toBe(27)
+    expect(state.version).toBe(28)
     expect(state.cabin.specimens.bluegill).toMatchObject({ fishId: 'bluegill', weight: 1.6, sizeTier: 'great' })
     expect(state.cabin.specimens.bluegill.mounted).toBeNull()
   })
 
   it('migrates version 16 with an empty Trading Post ownership set', () => {
     const state = validateSave({ version: 16, coins: 90 })
-    expect(state.version).toBe(27)
+    expect(state.version).toBe(28)
     expect(state.coinStore.ownedItemIds).toEqual([])
   })
 
@@ -73,8 +74,15 @@ describe('save migrations and validation', () => {
 
   it('migrates version 17 with independent empty cabin decor selections', () => {
     const state = validateSave({ version: 17, coinStore: { ownedItemIds: ['trading-post.cabin-riverstone'] }, cabin: { styleId: 'riverstone-cabin' } })
-    expect(state.version).toBe(27)
+    expect(state.version).toBe(28)
     expect(state.cabin.decorByCabin['riverstone-cabin']).toEqual({ 'hearth-frame': { artworkId: null, frameId: null }, 'river-shelf': null })
+  })
+
+  it('adds empty optional activities to a version 27 save without changing progress', () => {
+    const state = validateSave({ version: 27, coins: 4321, activities: { fieldNotes: { entries: [{ id: 'ignored-old-shape' }] } } })
+    expect(state.version).toBe(28)
+    expect(state.coins).toBe(4321)
+    expect(state.activities).toEqual({ fieldNotes: { entries: [], lastGeneratedDay: null }, derbies: { active: null, personalBests: {} } })
   })
 
   it('removes retired rug ownership and selections while rejecting incompatible decor', () => {
@@ -112,7 +120,7 @@ describe('save migrations and validation', () => {
       achievementProgress: { locationsFished: ['willow-pond', 'pine-river'], completedTrips: [], peakMoments: [] },
     })
 
-    expect(state.version).toBe(27)
+    expect(state.version).toBe(28)
     expect(state.coins).toBe(24680)
     expect(state.gearByLocation['pine-river']).toEqual({ ownedRods: ['worn-fly', 'fiberglass-fly'], equippedRod: 'fiberglass-fly' })
     expect(state.dayCycle.activeTrip).toEqual({ locationId: 'pine-river', elapsedMs: 60000, remainingMs: 120000 })
@@ -128,7 +136,7 @@ describe('save migrations and validation', () => {
 
   it('adds safe Phase 4 defaults to version 19 saves and preserves valid version 20 setup', () => {
     const migrated = validateSave({ version: 19, coins: 300 })
-    expect(migrated.version).toBe(27)
+    expect(migrated.version).toBe(28)
     expect(migrated.watercraft.ownedBoatIds).toEqual([])
     expect(migrated.fishingSetupByLocation['great-lake']).toEqual({ areaId: 'great-lake-shore', lureId: 'spoon' })
 
@@ -172,7 +180,7 @@ describe('save migrations and validation', () => {
 
   it('migrates version 23 saves and validates only known commerce entitlements', () => {
     const migrated = validateSave({ version: 23, commerce: { entitlementIds: ['cabin:workshop-cabin'] } })
-    expect(migrated.version).toBe(27)
+    expect(migrated.version).toBe(28)
     expect(migrated.commerce.entitlementIds).toEqual([])
 
     const entitled = validateSave({ version: 25, commerce: { entitlementIds: ['cabin:workshop-cabin', 'supporter:community', 'fake:power'] }, cabin: { styleId: 'workshop-cabin' } })
@@ -194,7 +202,7 @@ describe('save migrations and validation', () => {
         trophyRoomFeaturedFishIds: ['bluegill', 'bluegill', 'not-a-fish'],
       },
     })
-    expect(state.version).toBe(27)
+    expect(state.version).toBe(28)
     expect(state.cabin.styleId).toBe('trophy-room')
     expect(state.cabin.trophyRoomFeaturedFishIds).toHaveLength(12)
     expect(state.cabin.trophyRoomFeaturedFishIds.slice(0, 3)).toEqual(['bluegill', null, null])
@@ -230,8 +238,8 @@ describe('save migrations and validation', () => {
   })
 
   it('falls back safely for null and non-object input', () => {
-    expect(validateSave(null).version).toBe(27)
-    expect(validateSave('damaged').version).toBe(27)
+    expect(validateSave(null).version).toBe(28)
+    expect(validateSave('damaged').version).toBe(28)
     expect(validateSave(null).coins).toBe(50)
   })
 
@@ -243,7 +251,7 @@ describe('save migrations and validation', () => {
       removeItem: () => {},
     }
     const loaded = loadGame()
-    expect(loaded.game.version).toBe(27)
+    expect(loaded.game.version).toBe(28)
     expect(loaded.notice).toMatch(/could not read/i)
     expect([...writes.values()]).toContain('{not-json')
   })

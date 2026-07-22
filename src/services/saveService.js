@@ -11,11 +11,12 @@ import { getCabinDecor, isDecorCompatible, isDecorOwned } from '../data/cabinDec
 import { boats, fishingAreas, getAreasForLocation, getBoatForLocation, getDefaultLure, lureFamilies } from '../data/waterSetup'
 import { hasProductEntitlement, knownEntitlementIds } from '../data/storeCatalog'
 import { boatCosmetics, getDefaultBoatCosmetic } from '../data/boatCosmetics'
+import { defaultActivities, validateActivities } from '../game/activityRules'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
 const LOCALHOST_COIN_GRANT_KEY = 'fishing-adventure-localhost-million-v1'
-const CURRENT_VERSION = 27
+const CURRENT_VERSION = 28
 const defaultFishingSetups = () => Object.fromEntries(rodLocationIds.map((locationId) => [locationId, {
   areaId: getAreasForLocation(locationId)[0]?.id || null,
   lureId: getDefaultLure(locationId).id,
@@ -55,6 +56,7 @@ export const newGame = () => ({
   cabin: defaultCabin(),
   weather: defaultWeather(),
   dayCycle: { homeElapsedMs: 0, activeTrip: null },
+  activities: defaultActivities(),
   achievements: {},
   achievementProgress: {
     locationsFished: ['willow-pond'],
@@ -228,6 +230,10 @@ function migrateSave(raw) {
     migrated.version = 26
   }
   if (migrated.version < 27) migrated.version = 27
+  if (migrated.version < 28) {
+    migrated.activities = defaultActivities()
+    migrated.version = 28
+  }
   return migrated
 }
 
@@ -469,6 +475,7 @@ export function validateSave(input) {
       homeElapsedMs: validNumber(raw.dayCycle?.homeElapsedMs, 0),
       activeTrip: activeTrip?.remainingMs > 0 ? activeTrip : null,
     },
+    activities: validateActivities(raw.activities),
     achievements: achievementRecords,
     achievementProgress: {
       locationsFished: [...new Set(['willow-pond', ...discoveredLocations, ...validList(progress.locationsFished, locationIds)])],

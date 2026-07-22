@@ -10,6 +10,8 @@ The Grand Trophy Room regression confirms its permanent entitlement gate, twelve
 
 Fishing Adventure uses Vitest for deterministic rule and persistence tests. The suite runs in a Node environment through Vite's normal module pipeline; browser emulation is not required for the current rules layer.
 
+Optional-activity regressions cover deterministic one-per-day Field Note generation, three-day pruning, one-time ordinary-catch rewards, fixed twelve-cast Derby completion, location-aware pausing, consequence-free abandonment, personal-best retention, and malformed-save bounds.
+
 The current local browser test profile receives a one-time 1,000,000-coin grant on `localhost` or `127.0.0.1`. A separate local marker prevents repeat grants on reload, and deployed hosts never receive it. Remove the localhost grant and its marker key after the cabin/economy testing pass.
 
 ## Commands
@@ -26,12 +28,12 @@ npm run build
 
 - Save migrations from representative legacy versions through the current schema
 - A complete version 18 journey migrated in one fixture with coins, equipment, an active trip, keepsakes, a mounted specimen, cabin ownership, and compatible decor preserved together
-- Version 20 tackle, version 21 Gulf-area, and version 22 Open Gulf-position migration through version 27, including both permanent boat entitlements, purchased-lure ownership validation, and rejection of unowned equipment
+- Version 20 tackle, version 21 Gulf-area, and version 22 Open Gulf-position migration through version 28, including both permanent boat entitlements, purchased-lure ownership validation, and rejection of unowned equipment
 - Version 24 commerce migration, known-entitlement validation, premium-cabin gating, and no automatic purchase grants to older saves
 - Development-store catalog visibility, permanent ownership restoration, entitlement mapping, and rejection of hidden concept products
 - Equal Community Supporter entitlement mapping across every contribution level, with no tier-specific gameplay or status reward
 - Premium-cabin hook counts, unique identifiers, supported decor types, artwork bounds, included display compatibility, and rejection of mismatched decor
-- Boat-cosmetic entitlement plus earned-boat gating, cross-boat rejection, included-finish restoration, and version 27 save validation
+- Boat-cosmetic entitlement plus earned-boat gating, cross-boat rejection, included-finish restoration, and version 28 save validation
 - Every cabin exposes a painting-compatible frame hook; artwork and frame treatment can be selected independently and render together in both the live cabin and share image.
 - Workshop rod pegs reject non-rod decor, Workshop cabinet cells reject non-tackle decor, the Coastal model table accepts only model boats, and Coastal dock pegs accept only hanging nautical pieces. Owned rods appear without a second purchase.
 - Workshop's Brass Reel, Painted Bobber, and Weathered Tackle Tin use transparent object artwork rather than fallback color labels; all five equipped rods remain individually readable inside the wooden rack.
@@ -81,4 +83,6 @@ Use `PLAYTEST_WORKSHEET.md` for tournament feedback. It intentionally separates 
 - Equip all three included and all three purchased timber finishes in Captain's Retreat. Confirm each produces a readable 36%-opacity room treatment without hiding the underlying painted detail.
 - Fill all twelve Grand Trophy Room plaques. Confirm the four hero fish remain centered within 82% by 60% safe areas, the eight supporting fish remain centered within 76% by 56%, and Trophy fish receive only the restrained gold shadow—not a drawn oval.
 - At Backyard Pond and every charter location, confirm `View cabin` appears in the setup header and never overlays the water artwork. Verify it remains usable beside `Change` on a portrait phone. From each location, open the cabin and confirm the return button names that water, restores it with the same selected area/lure/boat, does not end the trip, and does not consume trip time while the cabin is open.
+- Open Fishing Trips on three consecutive local dates and confirm Field Notes retain no more than the current three-day window, create no streak language, and progress from ordinary catches without requiring activation. Complete each template and confirm its coin reward is granted exactly once.
+- Start a Derby at each accessible water, confirm its twelve-cast score rules are visible before entry, misses consume casts, the final catch scores before completion, leaving the water pauses it, restart restores it, and setting it aside has no cost. Complete multiple attempts and confirm only the better personal result is retained and no Derby coins or exclusive items are awarded.
 - Generate cabin share images for physical objects, framed Trophy photographs, timber finishes, and a full Trophy Room; confirm each matches the live scene's scaling and presentation.

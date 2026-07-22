@@ -85,6 +85,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
   useEffect(() => setPendingRelocation(null), [location.id])
 
   const activeTrip = game.dayCycle.activeTrip
+  const activeDerby = game.activities.derbies.active?.locationId === location.id ? game.activities.derbies.active : null
   const hasLocationAccess = location.id === 'willow-pond' || activeTrip?.locationId === location.id
   const elapsedMs = location.id === 'willow-pond' ? game.dayCycle.homeElapsedMs : activeTrip?.elapsedMs || 0
   const cycle = getCyclePosition(elapsedMs)
@@ -190,7 +191,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
     setHookedCatch(null)
     changeState('casting')
     giveFeedback('cast', game.settings)
-    actions.recordCast()
+    actions.recordCast(location.id)
 
     later(() => {
       changeState('waiting')
@@ -198,7 +199,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
         const quiet = isQuietCast(equippedRod, previousCastWasQuiet.current)
         previousCastWasQuiet.current = quiet
         if (quiet) {
-          actions.recordQuietCast()
+          actions.recordQuietCast(location.id)
           changeState('quiet')
           finishAfterPause()
           return
@@ -208,7 +209,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
         const reactionMs = GAME_CONFIG.reactionWindows[game.settings.reactionWindow]
         later(() => {
           if (stateRef.current !== 'biting') return
-          actions.recordEscape()
+          actions.recordEscape(location.id)
           giveFeedback('escape', game.settings)
           changeState('escaped')
           finishAfterPause()
@@ -243,7 +244,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
 
   const loseFish = useCallback(() => {
     if (stateRef.current !== 'reeling') return
-    actions.recordEscape()
+    actions.recordEscape(location.id)
     giveFeedback('escape', game.settings)
     changeState('escaped')
     finishAfterPause()
@@ -322,6 +323,7 @@ export default function FishingPage({ locationId, onLocationChange, onOpenCabin 
     <section className={`action-card ${fishingState === 'reeling' ? 'reeling-active' : ''}`}>
       {fishingState === 'ready' && <section className={`water-setup${setupExpanded ? ' expanded' : ''}`} aria-label={`${location.name} fishing setup`}>
         <div className="water-setup-heading"><div><span className="eyebrow">On the water</span><b>{selectedArea ? `${selectedArea.name} · ` : ''}{selectedLure?.name}</b></div><div className="water-setup-actions"><button type="button" className="return-cabin-button" onClick={onOpenCabin}>View cabin</button><button type="button" className="setup-toggle" aria-expanded={setupExpanded} onClick={() => setSetupExpanded((expanded) => !expanded)}>{setupExpanded ? 'Done' : 'Change'}</button>{locationBoat && !ownsLocationBoat && <button type="button" disabled={game.coins < locationBoat.price} onClick={() => actions.buyBoat(locationBoat.id)}>Buy {locationBoat.name.toLowerCase()} · {locationBoat.price.toLocaleString()}</button>}</div></div>
+        {activeDerby && <p className="derby-water-status" role="status">Personal Derby · {activeDerby.castsUsed}/{activeDerby.castLimit} casts · {activeDerby.score} points</p>}
         {availableAreas.length > 0 && <fieldset><legend>{location.id === 'open-gulf' ? 'Charter position' : 'Fishing area'}</legend><div className="setup-options">{availableAreas.map((area) => { const selected = selectedArea?.id === area.id; const locked = area.boatRequired && !ownsLocationBoat; const unaffordable = !selected && area.relocationCost > game.coins; const detail = locked ? `${locationBoat?.name || 'Boat'} required` : !selected && area.relocationCost ? `${area.description} · Move ${area.relocationCost.toLocaleString()}` : area.description; return <button type="button" key={area.id} className={selected ? 'selected' : ''} aria-pressed={selected} disabled={locked || unaffordable} onClick={() => chooseArea(area)}><b>{area.name}</b><span>{unaffordable ? `${area.description} · Need ${(area.relocationCost - game.coins).toLocaleString()} more` : detail}</span></button> })}</div></fieldset>}
         <fieldset><legend>Reusable lure</legend><div className="setup-options">{availableLures.map((lure) => { const selected = selectedLure?.id === lure.id; return <button type="button" key={lure.id} className={selected ? 'selected' : ''} aria-pressed={selected} onClick={() => actions.setFishingSetup(location.id, 'lure', lure.id)}><b>{lure.name}</b><span>{lure.targetFishIds?.length ? `${Math.round((lure.affinity - 1) * 100)}% target affinity` : lure.description}</span></button> })}</div></fieldset>
       </section>}

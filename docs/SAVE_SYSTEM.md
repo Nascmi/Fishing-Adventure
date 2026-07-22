@@ -1,6 +1,6 @@
 # Save System
 
-The current save schema is version 27.
+The current save schema is version 28.
 
 ## Current Save Data
 
@@ -20,6 +20,7 @@ The current save schema is version 27.
 - A validated offline cache of platform-confirmed cosmetic entitlement IDs; the platform storefront remains authoritative and refreshes this cache after successful synchronization
 - Resetting fishing progress preserves verified purchase entitlements; it does not turn a permanent platform purchase into lost progress
 - A validated equipped hull finish for each earnable personal boat; unknown, unentitled, cross-boat, or unearned-boat selections return to the included finish
+- A bounded three-day Field Note backlog plus one optional fixed-cast Derby, with local personal-best results by location
 
 Inventory catches include their generated specimen-size class. Older catches are classified from their saved weight during migration.
 
@@ -47,6 +48,7 @@ Inventory catches include their generated specimen-size class. Older catches are
 - Version 25 added validated per-boat cosmetic selections and gives older saves each boat's included original finish.
 - Version 26 adds twelve validated Grand Trophy Room display selections. Older saves receive twelve empty mounts, while invalid or unpreserved fish references are removed safely.
 - Version 27 separates frame-hook artwork from frame treatments. Legacy painting or frame selections are classified into the correct field, allowing earned artwork and purchased frames to be displayed together.
+- Version 28 adds bounded Field Notes and personal fixed-cast Fishing Derbies without reconstructing or altering earlier progress.
 
 Retired rug product IDs and rug-hook selections are no longer part of the valid catalog. Save validation removes those obsolete identifiers while preserving coins, cabin ownership, and every unrelated decor choice; this catalog cleanup does not require a schema-version increment.
 
@@ -62,6 +64,6 @@ Retired rug product IDs and rug-hook selections are no longer part of the valid 
 - If recovery requires a new game, explain what happened instead of silently discarding progress.
 - Test loading an older save before releasing a schema change.
 
-The current version 27 implementation validates and migrates readable saves. Phase 4 stores permanent location-aware boat ownership, all permanent purchased-tackle ownership, each location's equipped area or charter position and reusable lure, a bounded offline cache of platform-confirmed cosmetic entitlements, validated equipped hull finishes, the Grand Trophy Room's twelve display selections, and independently selected artwork and treatments for every frame hook. Versions 19 through 26 receive their safe defaults without changing coins or prior progress. Automated fixtures cover representative legacy saves, current water setup, commerce entitlement validation, boat-cosmetic gating, trophy-room displays, cabin artwork/frame composition, malformed, partial, and unreadable saves through the current schema. When stored data cannot be read, the game preserves a recoverable backup when practical, returns to a valid new-game state, and tells the player what happened. Real-device storage failures and Google Play restoration remain release-testing responsibilities.
+The current version 28 implementation validates and migrates readable saves. Phase 4 stores permanent location-aware boat ownership, all permanent purchased-tackle ownership, each location's equipped area or charter position and reusable lure, a bounded offline cache of platform-confirmed cosmetic entitlements, validated equipped hull finishes, the Grand Trophy Room's twelve display selections, independently selected artwork and treatments for every frame hook, and bounded optional activity state. Versions 19 through 27 receive safe defaults without changing coins or prior progress. Automated fixtures cover representative legacy saves, current water setup, commerce entitlement validation, boat-cosmetic gating, trophy-room displays, cabin artwork/frame composition, activity bounds, malformed, partial, and unreadable saves through the current schema. When stored data cannot be read, the game preserves a recoverable backup when practical, returns to a valid new-game state, and tells the player what happened. Real-device storage failures and Google Play restoration remain release-testing responsibilities.
 
-The temporary localhost testing grant uses the separate `fishing-adventure-localhost-million-v1` marker. On `localhost` or `127.0.0.1`, the first load adds exactly 1,000,000 coins to the current validated save, immediately persists it, and records the marker so reloads cannot repeat the grant. It never activates on a deployed hostname and is not part of the version 27 save schema.
+The temporary localhost testing grant uses the separate `fishing-adventure-localhost-million-v1` marker. On `localhost` or `127.0.0.1`, the first load adds exactly 1,000,000 coins to the current validated save, immediately persists it, and records the marker so reloads cannot repeat the grant. It never activates on a deployed hostname and is not part of the version 28 save schema.

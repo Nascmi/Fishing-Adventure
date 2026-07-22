@@ -55,6 +55,7 @@ These quality practices continue throughout development rather than ending with 
 - Added a four-phase living day cycle with gentle species activity shifts.
 - Established Backyard Pond as the free home water and three-day paid charters for destination fishing.
 - Added Fishing Trips as a dedicated navigation destination for booking and continuing charters.
+- Added calm optional Field Notes with a three-day backlog and personal twelve-cast Fishing Derbies with offline per-location bests.
 - Added permanent Angling Keepsakes for discovery, exploration, collection, and memorable catches without currency or power rewards.
 - Added optional native image sharing for Trophy catches with an offline download fallback.
 

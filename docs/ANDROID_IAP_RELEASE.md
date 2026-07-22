@@ -46,7 +46,7 @@ The web app expects a Capacitor billing adapter at `globalThis.FishingAdventureP
 
 The adapter must query current purchases on startup and resume, use Google Play's localized display price, support pending transactions, and return only currently owned catalog IDs. It must not report a product as owned until the purchase state is `PURCHASED`, verification succeeds, content delivery is recorded, and the transaction is acknowledged/finished. Cancellation is not an error and must never grant an entitlement.
 
-The JavaScript layer maps verified product IDs to cosmetic entitlement IDs, caches those entitlements in save version 27 for offline use, and replaces the cache whenever a successful authoritative sync occurs. A failed or unavailable store connection does not erase the last verified offline cache.
+The JavaScript layer maps verified product IDs to cosmetic entitlement IDs, caches those entitlements in save version 28 for offline use, and replaces the cache whenever a successful authoritative sync occurs. A failed or unavailable store connection does not erase the last verified offline cache.
 
 ## Provider Decision
 

@@ -1,5 +1,6 @@
 # Changelog
 
+- Added optional offline Field Notes with a forgiving three-day backlog and three ordinary-fishing objectives, plus personal twelve-cast Fishing Derbies with transparent scoring, pause/resume behavior, consequence-free abandonment, and per-location personal bests. Neither system uses streaks, entry fees, online rankings, paid advantages, or exclusive rewards; save schema advanced to version 28.
 - Made `View cabin` available from every fishing location as a non-travel collection interlude; leaving the cabin now returns to the exact active water instead of forcing the player back to Backyard Pond.
 - Replaced the Workshop cabinet's colored text stand-ins with transparent, room-ready Brass Reel, Painted Bobber, and Weathered Tackle Tin artwork, and reduced rod-rack overlay scale for cleaner peg alignment.
 

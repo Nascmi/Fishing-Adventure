@@ -7,6 +7,7 @@ import { chooseBoatCosmetic, chooseCabinDecor, chooseCabinStyle, chooseFishingSe
 import { initializeCommerce, purchaseStoreProduct, restoreStorePurchases } from '../services/commerceService'
 import { App } from '@capacitor/app'
 import { Capacitor } from '@capacitor/core'
+import { abandonDerby, recordActivityCast, recordActivityOutcome, startDerby, syncFieldNotes } from '../game/activityRules'
 
 const GameContext = createContext(null)
 export function GameProvider({ children }) {
@@ -20,6 +21,10 @@ export function GameProvider({ children }) {
   useEffect(() => {
     setStorageAvailable(saveGame(game))
   }, [game])
+
+  useEffect(() => {
+    setGame((current) => syncFieldNotes(current))
+  }, [])
 
   useEffect(() => {
     let active = true
@@ -61,21 +66,21 @@ export function GameProvider({ children }) {
 
   const actions = useMemo(
     () => ({
-      recordCast: () =>
-        setGame((current) => unlockAchievements({
+      recordCast: (locationId) =>
+        setGame((current) => unlockAchievements(recordActivityCast({
           ...current,
           stats: { ...current.stats, totalCasts: current.stats.totalCasts + 1 },
-        }).state),
-      recordEscape: () =>
-        setGame((current) => ({
+        }, locationId)).state),
+      recordEscape: (locationId) =>
+        setGame((current) => recordActivityOutcome({
           ...current,
           stats: { ...current.stats, escaped: current.stats.escaped + 1 },
-        })),
-      recordQuietCast: () =>
-        setGame((current) => ({
+        }, locationId)),
+      recordQuietCast: (locationId) =>
+        setGame((current) => recordActivityOutcome({
           ...current,
           stats: { ...current.stats, quietCasts: (current.stats.quietCasts || 0) + 1 },
-        })),
+        }, locationId)),
       addCatch: (item, locationId, phase) =>
         setGame((current) => {
           const previous = current.collection[item.fishId] || { count: 0, largestWeight: 0 }
@@ -128,7 +133,7 @@ export function GameProvider({ children }) {
               },
             } : current.cabin,
           }
-          return unlockAchievements(unlockLocationCosmetics(next)).state
+          return unlockAchievements(unlockLocationCosmetics(recordActivityOutcome(next, locationId, item))).state
         }),
       sell: (id) =>
         setGame((current) => {
@@ -170,6 +175,9 @@ export function GameProvider({ children }) {
       tickDayCycle: (locationId, deltaMs) => setGame((current) => tickGameTime(current, locationId, deltaMs)),
       skipDayPhase: (locationId) => setGame((current) => skipTimePhase(current, locationId)),
       endTrip: () => setGame(endActiveTrip),
+      syncFieldNotes: () => setGame((current) => syncFieldNotes(current)),
+      startDerby: (locationId) => setGame((current) => startDerby(current, locationId)),
+      abandonDerby: () => setGame(abandonDerby),
       setReactionWindow: (reactionWindow) =>
         setGame((current) => ({
           ...current,

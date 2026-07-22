@@ -39,6 +39,7 @@ The interface should become quiet enough for the player to focus on fishing.
 - Place time-sensitive status and meters above the active thumb, even when that temporarily covers scenery. Never hide critical feedback beneath the player's hand.
 - Prefer one-thumb interactions for the core fishing loop.
 - Keep destination selection on the dedicated Fishing Trips page so the active fishing scene stays calm and focused.
+- Keep Field Notes and personal Derby controls on Fishing Trips rather than the active water screen. Label both as optional, disclose Derby scoring before entry, show bounded progress without countdown urgency, and offer consequence-free Derby abandonment. While a Derby is active at the current water, the ready-state setup may show a quiet read-only cast-and-score summary so the player never has to remember the count.
 - Keep the universal `View cabin` action in the setup header beside the other non-casting controls; it must not float over or obscure the authored fishing scene. Treat it as a paused look back home rather than travel: the cabin return action names and restores the active fishing location.
 - Offer catch sharing only after a Trophy catch, never as a persistent fishing-screen control or social prompt.
 - Use the cabin style picker only for owned and earned cabin choices. Keep locked-cabin prices and acquisition prompts in their appropriate progression or shop surfaces.

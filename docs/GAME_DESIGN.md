@@ -71,7 +71,12 @@ Angling Keepsakes share the Collection screen with the Fish Journal and commemor
 
 Every keepsake has a distinct symbolic motif and belongs to a shared material family: bronze for beginnings, silver for exploration, colored enamel for time and place, gold for mastery, and dark metal with restrained accents for hidden legendary stories. Locked hidden keepsakes conceal their motif until earned. These designs appear consistently in the Collection and the Angler's Lodge cabinet.
 
-Fishing Adventure does not use a separate tutorial quest or optional-goals system. Keepsakes provide broad lifetime milestones, while journal completion, preferred activity periods, personal records, Trophy specimens, legendary encounters, and destination trips create natural player-directed reasons to return. A dedicated goals layer would duplicate those systems, add interface pressure, and risk turning peaceful fishing into a checklist. If future playtesting reveals a genuine need for more direction, consider only a simple player-chosen journal pin with no reward, deadline, or generated task.
+Fishing Adventure avoids tutorial quests, streaks, mandatory goals, and expiring reward pressure. Keepsakes remain broad lifetime milestones, while journal completion, preferred activity periods, personal records, Trophy specimens, legendary encounters, and destination trips provide player-directed reasons to return. Tournament playtesting nevertheless showed value in two restrained, optional structures housed on Fishing Trips rather than the core water screen:
+
+- **Field Notes:** one small catch-based note appears per local calendar day, with at most three recent days retained. Ordinary catches progress notes automatically. Missing a day has no penalty, no streak resets, and no notification pressure. Notes never require premium content, rare exact species, paid relocation, or improbable Legendary/Trophy outcomes; their modest one-time coin awards merely recognize normal play.
+- **Personal Fishing Derbies:** the player may begin a twelve-cast scorecard at their current accessible water. A Derby pauses safely elsewhere and across restarts, charges no entry fee, awards no coins or exclusive items, and compares only with the player's saved best at that location. Scoring is disclosed in advance: 100 points per landed fish, 50 for each new species on that scorecard, and small Good/Great/Trophy specimen bonuses. The player can set a scorecard aside without penalty.
+
+Neither system changes fish odds, consumes real-world time, uses a server, publishes a leaderboard, or makes monetized content more powerful. They support replay without turning fishing into an obligation.
 
 ## Catch Sharing
 

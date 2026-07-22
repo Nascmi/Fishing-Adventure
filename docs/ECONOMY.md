@@ -10,6 +10,7 @@ The economy turns each catch into visible progress without turning fishing into 
 - Rare fish create memorable windfalls, not mandatory progression gates.
 - Rod upgrades should feel earned and noticeably improve opportunity.
 - Early progress should arrive quickly; later goals may take longer without becoming repetitive.
+- Optional Field Notes award a single modest 75, 100, or 125 coins for ordinary fishing objectives. They never multiply, require a streak, or depend on premium content. Personal Fishing Derbies award no currency or gameplay power.
 - Prices, value formulas, and probability tables belong in data or configuration files.
 - Real-money purchases must never sell gameplay power.
 - A catch's actual weight affects its sale value, so specimen-size frequency must be tuned alongside species rarity rather than treated as a purely cosmetic system.

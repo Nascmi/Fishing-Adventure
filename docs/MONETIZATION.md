@@ -11,6 +11,7 @@ Monetization preparation is now part of the Android release path. It must suppor
 - Artificial inconvenience sold back as a solution
 - Paid waivers or discounts for charter fees, coin prices, or other earned-currency costs
 - Expiring offers designed to create pressure
+- Paid Field Note access, Derby entry, score boosts, extra casts, or premium-only activity objectives
 
 ## Potentially Acceptable
 
