@@ -1,0 +1,8 @@
+{
+  "appId": "com.nathanmiller.fishingadventure",
+  "appName": "Fishing Adventure",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}

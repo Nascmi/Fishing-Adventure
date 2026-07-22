@@ -15,6 +15,10 @@ Use the remaining documents as focused references:
 
 - `PLAYTEST_WORKSHEET.md` - a lightweight tournament feedback form for balance and usability evidence
 - `ANDROID_IAP_RELEASE.md` - Google Play product IDs, billing-adapter contract, and release testing checklist
+- `BRANDING.md` - official identity, palette, copyright treatment, and Android/Play asset locations
+- `GOOGLE_PLAY_LISTING.md` - approved Play Console copy, graphic uploads, screenshot plan, alt text, and initial release notes
+- `PRIVACY_POLICY.md` and `GOOGLE_PLAY_DATA_SAFETY.md` - public privacy disclosures and the matching Play Console declaration guide
+- `LANDING_PAGE.md` - public `/landing` content, routing separation, release transition, and validation
 
 - `THE_SOUL_OF_THE_GAME.md` — the emotional north star
 - `ART_DIRECTION.md` and `UI_GUIDELINES.md` — presentation
@@ -31,7 +35,8 @@ When documents conflict, follow them in the order above and update the outdated 
 
 - React, Vite, JavaScript, and CSS
 - `localStorage` for current saves
-- Capacitor for future Android and iOS packaging
+- Capacitor 8 for the active Android shell and future iOS packaging
+- Direct Google Play Billing 9.1.0 bridge for Internal testing; secure backend verification remains required before production
 - No backend for the core offline experience
 
 ## Current Development Status
@@ -47,6 +52,8 @@ npm install
 npm run dev
 npm run test:run
 npm run build
+npm run android:sync
+npm run android:open
 ```
 
 ## Working Principle

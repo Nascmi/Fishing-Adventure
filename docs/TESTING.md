@@ -1,5 +1,11 @@
 # Automated Testing
 
+The Android brand check covers the launcher icon under square, circle, rounded-square, and themed monochrome masks. Portrait and landscape splash screens must retain safe margins, keep `© 2026 Nathan Miller` legible, and never delay startup.
+
+The privacy check confirms `/privacy.html` is present in the production build, publicly reachable without authentication after deployment, and linked from Journey & Settings. Compare its claims against the final manifest, dependencies, billing implementation, and Data Safety answers before every store submission.
+
+The landing-page check loads and refreshes `/landing` independently, verifies its feature/water/cabin imagery and all navigation links, confirms responsive and reduced-motion behavior, and ensures the landing route does not mount `GameProvider`, read or write the fishing save, or initialize Google Play commerce.
+
 The Grand Trophy Room regression confirms its permanent entitlement gate, twelve unique mount selectors, two painting/frame hooks, persistence across reloads, and safe removal of invalid or unpreserved fish IDs during save validation.
 
 Fishing Adventure uses Vitest for deterministic rule and persistence tests. The suite runs in a Node environment through Vite's normal module pipeline; browser emulation is not required for the current rules layer.
@@ -55,6 +61,8 @@ Browser-level navigation, touch interaction, visual regression, and device stora
 Google Play Billing requires an Internal testing build installed through Play. Follow `ANDROID_IAP_RELEASE.md` for success, cancellation, failure, pending-payment, interruption, offline-cache, reinstall, cross-device restoration, and already-owned cases.
 
 ## Device and Offline Smoke Test
+
+The Android shell must pass `:app:compileDebugJavaWithJavac` or an Android Studio build after every native billing change. Google Play Billing must be exercised from a Play-delivered Internal testing build; an ordinary sideload cannot validate the full product and purchase lifecycle. Test localized products, successful purchase, cancellation, pending completion, already-owned restoration, app-resume refresh, reinstall restoration, acknowledgement retry, offline cached access, and ownership removal after a refund/revocation backend is added.
 
 Before a release, load the game once while connected, make one catch, then reload and confirm the save survives. Disable the connection without clearing site data and confirm the already-loaded session can continue using bundled art and rules; reconnect before expecting a fresh Firebase-hosted page load because the project does not currently install a service worker. Also verify portrait and short-landscape layouts, bottom safe-area clearance, scene transitions, and both confirmation/settings dialogs.
 

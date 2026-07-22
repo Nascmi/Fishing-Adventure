@@ -103,6 +103,6 @@ A polished, accessible, offline-friendly fishing game ready for public Android a
 ### Android commerce preparation
 
 - The provider-independent Cabin Store, three completed non-consumable products, development sandbox, entitlement gating, and restoration UI are implemented.
-- Remaining work requires the final Android application ID, Capacitor shell, chosen native billing provider, Play Console product setup, signed Internal testing build, license testing, verification/acknowledgement validation, and store-policy completion.
+- The Capacitor 8 Android shell, final `com.nathanmiller.fishingadventure` application ID, and direct Google Play Billing 9.1.0 client bridge are implemented. Remaining work requires Play Console product setup, release signing, a signed Internal testing bundle, license testing, secure backend token verification and revocation handling, final acknowledgement validation, icons/splash/listing assets, and store-policy completion.
 
 Unapproved concepts remain in `FUTURE_IDEAS.md` until deliberately promoted here.

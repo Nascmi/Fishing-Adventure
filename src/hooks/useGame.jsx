@@ -5,6 +5,8 @@ import { getPreferredPhases } from '../utils/fishingEngine'
 import { unlockLocationCosmetics } from '../data/locationPaintings'
 import { chooseBoatCosmetic, chooseCabinDecor, chooseCabinStyle, chooseFishingSetup, endActiveTrip, equipOwnedRod, preserveCabinSpecimen, purchaseBoat, purchaseCoinStoreItem, purchaseLure, purchaseRod, skipTimePhase, startTrip, tickGameTime } from '../game/gameRules'
 import { initializeCommerce, purchaseStoreProduct, restoreStorePurchases } from '../services/commerceService'
+import { App } from '@capacitor/app'
+import { Capacitor } from '@capacitor/core'
 
 const GameContext = createContext(null)
 export function GameProvider({ children }) {
@@ -29,6 +31,24 @@ export function GameProvider({ children }) {
       if (active) setCommerce((current) => ({ ...current, status: 'error', message: 'The store could not connect. Your saved game is safe.' }))
     })
     return () => { active = false }
+  }, [])
+
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) return undefined
+    let active = true
+    let listener
+    App.addListener('appStateChange', async ({ isActive }) => {
+      if (!isActive) return
+      try {
+        const result = await initializeCommerce()
+        if (!active) return
+        setCommerce((current) => ({ ...current, ...result, status: 'ready', pendingProductId: null }))
+        setGame((current) => ({ ...current, commerce: { entitlementIds: result.entitlementIds } }))
+      } catch {
+        if (active) setCommerce((current) => ({ ...current, status: 'error', message: 'Google Play ownership could not refresh. Your saved game is safe.' }))
+      }
+    }).then((handle) => { listener = handle })
+    return () => { active = false; listener?.remove() }
   }, [])
 
   useEffect(() => {
@@ -190,6 +210,10 @@ export function GameProvider({ children }) {
             setCommerce((current) => ({ ...current, pendingProductId: null, message: 'Purchase pending approval. It will unlock after Google Play confirms payment.' }))
             return result
           }
+          if (result.status === 'cancelled') {
+            setCommerce((current) => ({ ...current, pendingProductId: null, message: 'Purchase cancelled. You were not charged.' }))
+            return result
+          }
           setGame((current) => ({ ...current, commerce: { entitlementIds: result.entitlementIds } }))
           setCommerce((current) => ({ ...current, ownedProductIds: result.ownedProductIds, pendingProductId: null, message: 'Purchase complete. Your cabin is permanently unlocked.' }))
           return result
@@ -211,7 +235,6 @@ export function GameProvider({ children }) {
         }
       },
       dismissNotice: () => setNotice(null),
-      completeWalletGesture: () => setGame((current) => ({ ...current, coins: current.coins + 10000 })),
       reset: () => {
         clearGame()
         knownAchievements.current.clear()

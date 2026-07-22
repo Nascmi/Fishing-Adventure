@@ -120,6 +120,7 @@ export default function App() {
 
         {futureLocations.length > 0 && <h3>Future waters</h3>}
         <div className="locked-list">{futureLocations.map((name) => <span key={name}>{name} · Locked</span>)}</div>
+        <p className="app-copyright">Fishing Adventure<br/><small>© 2026 Nathan Miller. All rights reserved.</small><br/><a href="/privacy.html" target="_blank" rel="noreferrer">Privacy Policy</a></p>
         <button className="danger-button" onClick={reset}>Reset progress</button>
       </section>
     </div>}

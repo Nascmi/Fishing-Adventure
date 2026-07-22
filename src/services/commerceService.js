@@ -1,7 +1,9 @@
 import { getEntitlementsForProducts, preparedStoreProducts, storeProductIds } from '../data/storeCatalog'
+import { Capacitor, registerPlugin } from '@capacitor/core'
 
 const MOCK_KEY = 'fishing-adventure-iap-mock-v1'
-const nativeBridge = () => globalThis.FishingAdventurePurchases
+const capacitorPurchases = registerPlugin('FishingAdventurePurchases')
+const nativeBridge = () => globalThis.FishingAdventurePurchases || (Capacitor.getPlatform() === 'android' ? capacitorPurchases : null)
 const useMock = () => import.meta.env.DEV && import.meta.env.VITE_IAP_MOCK !== 'false'
 
 const normalizeProducts = (products = []) => preparedStoreProducts.map((catalogProduct) => {
