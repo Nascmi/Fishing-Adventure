@@ -1,5 +1,18 @@
 # Changelog
 
+- Made `View cabin` available from every fishing location as a non-travel collection interlude; leaving the cabin now returns to the exact active water instead of forcing the player back to Backyard Pond.
+- Replaced the Workshop cabinet's colored text stand-ins with transparent, room-ready Brass Reel, Painted Bobber, and Weathered Tackle Tin artwork, and reduced rod-rack overlay scale for cleaner peg alignment.
+
+- Settled the Coastal Shack boat halfway between its last two vertical positions and moved the five dockside decor hooks halfway back toward their original row for finer alignment with the table and painted pegs.
+- Lifted the resized Coastal Shack boats onto the tabletop and shifted all five dockside decor hooks left by one peg interval to match the painted hardware.
+- Reduced Coastal Shack model boats from the oversized first tabletop pass to a restrained 58% hook scale, preserving their raised placement while making them read as actual miniatures.
+- Raised and rescaled all Coastal Shack model boats onto their intended tabletop in live and shared cabins, and switched legendary miniatures to contained rendering so Old Whiskers and other wide silhouettes are not cropped.
+- Added a temporary, one-time 1,000,000-coin grant restricted to localhost browser saves for cabin and economy testing; deployed builds do not activate it.
+- Realigned Grand Trophy Room fish within smaller centered hero and side-plaque safe areas, removed the mismatched Trophy oval, matched share-image scaling, and moved `Return to cabin` from the water artwork into the home-water setup header.
+- Clarified included cabin-style compatibility in the visible preview: each group now says whether the active room supports it, and pieces without an authored slot are visibly muted instead of appearing universally usable.
+- Moved the included cabin-style previews into the visible decor customizer, gave displays, frames, and finishes recognizable preview treatments, and strengthened timber finishes from 20% to 36% opacity in rooms and share images.
+- Reduced Trophy-photograph fish artwork inside every cabin frame with a consistent 16% mat and matching contained scaling in generated cabin share images.
+- Removed interchangeable cabin rugs, their Trading Post listings, authored floor hooks, included styles, rendering paths, and obsolete artwork; existing saves safely discard retired rug ownership and selections while preserving all unrelated progress.
 - Added a branded public `/landing` page modeled on Bible Companion's separate marketing route, using real Fishing Adventure waters and cabin art, browser-play navigation, FAQ, fair-monetization promises, copyright, privacy, and contact links without initializing saves or commerce.
 - Added a public and in-app Fishing Adventure privacy policy, named Nathan Miller and the privacy contact, documented local saves, user-directed sharing, Google Play purchase handling, retention/deletion, and created the matching Google Play Data Safety guide.
 - Established the official Fishing Adventure heritage-outfitter identity, added `© 2026 Nathan Miller` attribution, and prepared Android launcher/adaptive/monochrome/splash resources plus Google Play icon and feature graphic masters.
@@ -16,7 +29,7 @@
 - Migrated saves to version 24 with a bounded offline cache of verified cosmetic entitlements; older saves receive no automatic purchase grants, and premium cabins remain gated by platform-derived ownership.
 - Added six commerce regressions covering storefront visibility, permanent restoration, hidden concept rejection, entitlement validation, and premium-cabin equipment rules.
 - Added an Android IAP release checklist defining exact product IDs, native bridge behavior, Google Play testing, verification, acknowledgement, and remaining provider decisions.
-- Replaced dormant premium-cabin capacity regions with 26 functional artwork-aligned customization hooks: 12 Workshop, 4 Lakeside Cottage, and 10 Coastal Shack anchors.
+- Replaced dormant premium-cabin capacity regions with 25 functional artwork-aligned customization hooks: 12 Workshop, 3 Lakeside Cottage, and 10 Coastal Shack anchors.
 - Added three included display pieces so premium cabin customization works immediately without another purchase, plus automated hook-bound and compatibility coverage.
 - Added three permanent earned-coin cabin models—a Freshwater Skiff, Bay Skiff, and offshore Charter Boat—with transparent handcrafted artwork and contained live/share rendering.
 - Added two tentative $0.99 permanent hull-color packs with two finishes each, gated behind ownership of the corresponding coin-earned boat and carrying no gameplay benefit.
@@ -61,7 +74,6 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 
 ## Unreleased
 
-- Rebuilt the purchased cabin rugs as isolated room-ready artwork so they fit authored floor spaces without stretched catalog walls or tabletops.
 - Rebuilt the Antique Fishing Creel, Hand-Carved Fish Decoy, and Hundred-Thousand Coin Club Plaque as complete transparent cutouts, and removed the generic framed backing from physical display objects.
 - Unified decor fitting between all live cabin types and generated cabin share images so contained objects are no longer cropped.
 - Moved the Master Catch seal to the upper-left of Fish Collection artwork so it no longer covers right-facing fish heads.
@@ -73,7 +85,7 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 - Unified the live Angler's Lodge and generated share card around shared percentage-based anchor zones, enlarged fish and keepsakes on phones, and replaced rectangular share-card Trophy outlines with plaque-shaped rings.
 - Corrected the Angler's Lodge keepsake cabinet from four-row sizing to five fitted rows, then shifted the overlay up and left so all 20 keepsakes remain centered and visible on Galaxy S20 FE-sized screens and cabin share images.
 - Established a repository-wide requirement that every project change update the appropriate documentation during the same task.
-- Realigned every live cabin customization hook to its painted frame, shelf, or rug; corrected decor fitting by hook type; and removed Starter Cabin overlays that conflicted with purchased-cabin displays.
+- Realigned every live cabin customization hook to its painted frame or shelf, corrected decor fitting by hook type, and removed Starter Cabin overlays that conflicted with purchased-cabin displays.
 - Removed the pale card background behind Angler's Lodge fish so preserved specimens sit naturally within their authored plaques.
 - Consolidated rarity order, labels, value multipliers, and reeling difficulty into one validated catalog shared by fish selection, catch values, and gameplay tuning.
 - Tightened the reeling safe zone and added recoverable high-tension line strain and stronger slack-line progress loss, making hold-and-release decisions meaningful for larger fish.
@@ -102,12 +114,12 @@ Record player-facing changes under Unreleased, then archive them beneath a dated
 
 - Added an earned-coin Trading Post alongside the Rod Shop with three permanent cabin purchases and no gameplay power.
 - Added the 25,000-coin Riverstone Cabin, 50,000-coin Cedar Hideaway, and 75,000-coin Captain's Retreat with original interiors and share-card support.
-- Added authored customization-hook counts to every purchasable cabin listing: three for Riverstone, four for Cedar Hideaway, and seven for Captain's Retreat.
+- Added authored customization-hook counts to every purchasable cabin listing, now two for Riverstone, three for Cedar Hideaway, and six for Captain's Retreat after retiring interchangeable floor-covering hooks.
 - Restored twelve planned decor items to the Trading Post as clearly disabled previews until cabin placement controls are implemented.
 - Migrated saves to version 17 with validated permanent Trading Post ownership and equipped-cabin recovery.
 - Prepared a dormant eight-product cosmetic storefront catalog with stable IDs, tentative planning prices, permanent entitlements, and explicit no-gameplay-power policy.
 - Added permanent earned location paintings for full Backyard Pond discovery and completed destination charters, plus gold Master Angler frames for Great-or-better catches of every local species.
-- Added upgraded travel souvenirs for completed location journals, Trophy-catch photographs, legendary fish miniatures, full-equipment-family plaques, and nine included rug, frame, and timber-finish options.
+- Added upgraded travel souvenirs for completed location journals, Trophy-catch photographs, legendary fish miniatures, full-equipment-family plaques, and nine included display, frame, and timber-finish options.
 - Migrated saves to version 16 with bounded painting and Master Angler frame ownership, including retroactive unlocks from existing records.
 - Added quiet collection-card recognition: a gold frame at ten catches and a Master Catch seal for Trophy-sized records.
 - Added locally generated cabin share cards with native mobile sharing and an image-download fallback for the Starter Cabin and Angler's Lodge.

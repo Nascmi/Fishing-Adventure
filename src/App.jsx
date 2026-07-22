@@ -25,7 +25,7 @@ export default function App() {
   const rainActive = game.weather.rainRemainingMs > 0
   const pages = {
     fishing: <FishingPage locationId={locationId} onLocationChange={setLocationId} onOpenCabin={() => setPage('cabin')}/>,
-    cabin: <CabinPage onGoFishing={() => { setLocationId('willow-pond'); setPage('fishing') }}/>,
+    cabin: <CabinPage returnLocationName={getLocation(locationId).name} onGoFishing={() => setPage('fishing')}/>,
     inventory: <InventoryPage />,
     shop: <ShopPage location={getLocation(locationId)} />,
     collection: <CollectionPage />,

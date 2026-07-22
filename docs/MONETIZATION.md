@@ -58,7 +58,7 @@ Two tentative $0.99 non-consumable packs provide two alternate hull finishes eac
 
 ## Earned-Coin Trading Post
 
-The in-game Trading Post is a separate department of the existing shop using only coins earned through fishing. Its cabin catalog follows a clear 25,000, 50,000, and 75,000-coin progression, providing visible goals for players who have completed their equipment progression while preserving the 100,000 Coin Club plaque as the first six-figure prestige purchase. Cabin listings disclose their authored customization-hook counts. Twelve rugs, display frames, timber finishes, small cabin objects, and the prestige plaque are permanent purchases for compatible cabin hooks.
+The in-game Trading Post is a separate department of the existing shop using only coins earned through fishing. Its cabin catalog follows a clear 25,000, 50,000, and 75,000-coin progression, providing visible goals for players who have completed their equipment progression while preserving the 100,000 Coin Club plaque as the first six-figure prestige purchase. Cabin listings disclose their authored customization-hook counts. Its twelve permanent decor purchases comprise three display frames, three timber finishes, two small cabin objects, three model boats, and the prestige plaque for compatible hooks.
 
 The initial stock does not rotate, and owned items remain permanent. A future rotation may only be introduced with a predictable return schedule. The Trading Post never sells fish, catch odds, equipment power, charter progress, keepsakes, earned location art, trophies, or real-money currency. Included cosmetics and accomplishment rewards remain distinct. Prices require continued playtesting against late-game income.
 

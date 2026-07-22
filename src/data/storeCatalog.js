@@ -128,7 +128,7 @@ export const storeProducts = [
     productType: 'non-consumable',
     status: 'concept',
     suggestedUsd: 0.99,
-    description: 'Additional authored rug, display-frame, and timber-finish choices for compatible cabins.',
+    description: 'Additional authored display-frame and timber-finish choices for compatible cabins.',
     entitlements: ['style-pack:cabin-palette'],
   },
   {

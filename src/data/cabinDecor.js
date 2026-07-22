@@ -17,7 +17,7 @@ const displayTagsById = {
 const included = Object.entries(includedCabinCosmetics).flatMap(([group, items]) => items.map((item) => ({
   ...item,
   source: 'included',
-  hookType: group === 'displays' ? 'display' : group === 'rugs' ? 'rug' : group === 'frames' ? 'frame' : 'finish',
+  hookType: group === 'displays' ? 'display' : group === 'frames' ? 'frame' : 'finish',
   frameRole: group === 'frames' ? 'treatment' : undefined,
   displayTags: displayTagsById[item.id] || [],
 })))
@@ -38,7 +38,7 @@ export const getCabinDecor = (state) => [
   ...locations.filter((location) => state.achievementProgress.upgradedSouvenirs.includes(location.id)).map((location) => ({ id: `earned.souvenir.${location.id}`, name: `${location.name} Souvenir`, hookType: 'display', source: 'earned', artwork: location.image, colors: ['#57756d', '#d4c18e'], displayTags: ['souvenir', 'nautical'] })),
   ...locations.filter((location) => state.achievementProgress.equipmentPlaques.includes(location.id)).map((location) => ({ id: `earned.plaque.${location.id}`, name: `${location.name} Equipment Plaque`, hookType: 'display', source: 'earned', colors: ['#735633', '#d0ae5c'], displayTags: ['plaque'] })),
   ...fish.filter((item) => state.achievementProgress.amazingPhotos.includes(item.id)).map((item) => ({ id: `earned.photo.${item.id}`, name: `${item.name} Photograph`, hookType: 'frame', frameRole: 'artwork', source: 'earned', artwork: item.image, colors: ['#335e60', '#e7d5a5'] })),
-  ...fish.filter((item) => state.achievementProgress.legendaryMiniatures.includes(item.id)).map((item) => ({ id: `earned.miniature.${item.id}`, name: `${item.name} Miniature`, hookType: 'display', source: 'earned', artwork: item.image, colors: ['#284c4d', '#c4a450'], displayTags: ['miniature', 'nautical'] })),
+  ...fish.filter((item) => state.achievementProgress.legendaryMiniatures.includes(item.id)).map((item) => ({ id: `earned.miniature.${item.id}`, name: `${item.name} Miniature`, hookType: 'display', source: 'earned', artwork: item.image, fit: 'contain', colors: ['#284c4d', '#c4a450'], displayTags: ['miniature', 'nautical'] })),
 ]
 
 export const isDecorOwned = (state, item) => item.source !== 'trading-post' || state.coinStore.ownedItemIds.includes(item.id)

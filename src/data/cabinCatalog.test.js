@@ -1,15 +1,17 @@
 import { describe, expect, it } from 'vitest'
-import { cabinCatalog } from './cabinCatalog'
+import { cabinCatalog, includedCabinCosmetics } from './cabinCatalog'
 import { coinStoreItems } from './coinStoreCatalog'
 
 const premiumCabins = cabinCatalog.filter((cabin) => cabin.acquisition.type === 'store' && cabin.customizationHooks)
 
 describe('premium cabin decoration hooks', () => {
   it('uses room-ready artwork and contained presentation for physical decor', () => {
-    const rugs = coinStoreItems.filter((item) => item.hookType === 'rug')
     const objects = coinStoreItems.filter((item) => ['trading-post.decor-antique-creel', 'trading-post.decor-hand-carved-decoy', 'trading-post.plaque-100k-club'].includes(item.id))
-    expect(rugs.every((item) => item.artwork.endsWith('.webp') && item.fit === 'fill')).toBe(true)
     expect(objects.every((item) => item.artwork.endsWith('.webp') && item.fit === 'contain' && item.presentation)).toBe(true)
+  })
+
+  it('gives every included tackle display room-ready transparent artwork', () => {
+    expect(includedCabinCosmetics.displays.every((item) => item.artwork?.endsWith('.png') && item.fit === 'contain')).toBe(true)
   })
 
   it('gives every cabin at least one painting-compatible frame hook', () => {
@@ -19,7 +21,7 @@ describe('premium cabin decoration hooks', () => {
   it('uses functional individual hooks instead of dormant capacity slots', () => {
     expect(premiumCabins.map((cabin) => [cabin.id, cabin.customizationHooks.length])).toEqual([
       ['workshop-cabin', 12],
-      ['lakeside-cottage', 4],
+      ['lakeside-cottage', 3],
       ['coastal-shack', 10],
       ['trophy-room', 2],
     ])
@@ -31,7 +33,7 @@ describe('premium cabin decoration hooks', () => {
       const ids = cabin.customizationHooks.map((hook) => hook.id)
       expect(new Set(ids).size).toBe(ids.length)
       cabin.customizationHooks.forEach(({ type, bounds }) => {
-        expect(['display', 'frame', 'rug', 'finish']).toContain(type)
+        expect(['display', 'frame', 'finish']).toContain(type)
         expect(bounds.x).toBeGreaterThanOrEqual(0)
         expect(bounds.y).toBeGreaterThanOrEqual(0)
         expect(bounds.width).toBeGreaterThan(0)

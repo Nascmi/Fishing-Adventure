@@ -73,14 +73,10 @@ export async function createCabinShareImage({ background, cabinName, fishDisplay
     gradient.addColorStop(0, item.colors?.[0] || '#496d67')
     gradient.addColorStop(1, item.colors?.[1] || '#d5bd79')
     context.save()
-    context.globalAlpha = hook.type === 'finish' ? .22 : .92
+    context.globalAlpha = hook.type === 'finish' ? .36 : .92
     context.fillStyle = gradient
-    const artworkOnly = Boolean(item.artwork && (hook.type === 'display' || hook.type === 'rug'))
-    if (hook.type === 'rug' && !artworkOnly) {
-      context.beginPath()
-      context.ellipse(left + drawWidth / 2, top + drawHeight / 2, drawWidth / 2, drawHeight / 2, 0, 0, Math.PI * 2)
-      context.fill()
-    } else if (!artworkOnly) {
+    const artworkOnly = Boolean(item.artwork && hook.type === 'display')
+    if (!artworkOnly) {
       context.fillRect(left, top, drawWidth, drawHeight)
       if (hook.type === 'frame') {
         context.strokeStyle = item.colors?.[1] || '#d5bd79'
@@ -94,8 +90,14 @@ export async function createCabinShareImage({ background, cabinName, fishDisplay
         context.translate(left + drawWidth / 2, top + drawHeight / 2)
         context.rotate(Math.PI / 2)
         drawContained(context, artwork, -drawHeight / 2, -drawWidth / 2, drawHeight, drawWidth)
+      } else if (item.displayTags?.includes('model-boat')) {
+        drawContained(context, artwork, left + drawWidth * .21, top - drawHeight * .1525, drawWidth * .58, drawHeight * .58)
       } else if (item.fit === 'contain') drawContained(context, artwork, left, top, drawWidth, drawHeight)
-      else if (hook.type === 'frame' || hook.type === 'rug') context.drawImage(artwork, left, top, drawWidth, drawHeight)
+      else if (hook.type === 'frame' && item.artworkKind === 'fish') {
+        const insetX = drawWidth * .16
+        const insetY = drawHeight * .16
+        drawContained(context, artwork, left + insetX, top + insetY, drawWidth - insetX * 2, drawHeight - insetY * 2)
+      } else if (hook.type === 'frame') context.drawImage(artwork, left, top, drawWidth, drawHeight)
       else drawCovered(context, artwork, left, top, drawWidth, drawHeight)
     }
     context.restore()
@@ -115,13 +117,18 @@ export async function createCabinShareImage({ background, cabinName, fishDisplay
     context.shadowColor = '#130b0777'
     context.shadowBlur = 12
     context.shadowOffsetY = 6
-    if (isLodge || isTrophyRoom) drawContained(context, fishImage, slot.x + slot.width * .06, slot.y + slot.height * .18, slot.width * .88, slot.height * .64)
+    if (isTrophyRoom) {
+      const hero = index < 4
+      const widthRatio = hero ? .82 : .76
+      const heightRatio = hero ? .60 : .56
+      drawContained(context, fishImage, slot.x + slot.width * (1 - widthRatio) / 2, slot.y + slot.height * (1 - heightRatio) / 2, slot.width * widthRatio, slot.height * heightRatio)
+    } else if (isLodge) drawContained(context, fishImage, slot.x + slot.width * .06, slot.y + slot.height * .18, slot.width * .88, slot.height * .64)
     else drawContained(context, fishImage, slot.x, slot.y, slot.width, slot.height)
     context.restore()
     if (display.specimen?.sizeTier === 'trophy') {
       context.strokeStyle = '#dfbd62'
       context.lineWidth = 3
-      if (isLodge || isTrophyRoom) {
+      if (isLodge) {
         context.beginPath()
         context.ellipse(slot.x + slot.width / 2, slot.y + slot.height / 2, slot.width * .45, slot.height * .45, 0, 0, Math.PI * 2)
         context.stroke()

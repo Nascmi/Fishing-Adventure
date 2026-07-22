@@ -50,14 +50,14 @@ const cabinArtwork = {
 }
 
 const DecorOverlay = ({ hook, item }) => <div
-  className={`cabin-decor-overlay decor-${hook.type}${item.displayTags?.includes('rod') ? ' decor-tag-rod' : ''}${item.presentation ? ` decor-presentation-${item.presentation}` : ''}`}
+  className={`cabin-decor-overlay decor-${hook.type}${item.artworkKind ? ` decor-art-${item.artworkKind}` : ''}${item.displayTags?.includes('rod') ? ' decor-tag-rod' : ''}${item.displayTags?.includes('model-boat') ? ' decor-tag-model-boat' : ''}${item.displayTags?.includes('miniature') ? ' decor-tag-miniature' : ''}${item.presentation ? ` decor-presentation-${item.presentation}` : ''}`}
   style={{ '--decor-x': `${hook.bounds.x}%`, '--decor-y': `${hook.bounds.y}%`, '--decor-width': `${hook.bounds.width}%`, '--decor-height': `${hook.bounds.height}%`, '--decor-a': item.colors?.[0], '--decor-b': item.colors?.[1] }}
   title={`${hook.name}: ${item.name}`}
 >
   {item.artwork && <img src={item.artwork} alt="" style={item.fit ? { objectFit: item.fit } : undefined}/>}<span>{hook.type === 'display' && !item.artwork ? item.name : ''}</span>
 </div>
 
-export default function CabinPage({ onGoFishing }) {
+export default function CabinPage({ onGoFishing, returnLocationName = 'Backyard Pond' }) {
   const { game, actions } = useGame()
   const cabin = game.cabin
   const specimens = fish.map((item) => ({ fish: item, record: cabin.specimens[item.id] })).filter(({ record }) => record)
@@ -95,7 +95,7 @@ export default function CabinPage({ onGoFishing }) {
       const artwork = ownedDecor.find((entry) => entry.id === selection?.artworkId && entry.frameRole === 'artwork')
       const frame = ownedDecor.find((entry) => entry.id === selection?.frameId && entry.frameRole === 'treatment')
       if (!artwork && !frame) return null
-      return { hook, item: { ...(frame || artwork), artwork: artwork?.artwork || null, colors: frame?.colors || artwork?.colors } }
+      return { hook, item: { ...(frame || artwork), artwork: artwork?.artwork || null, artworkKind: artwork?.id.startsWith('earned.photo.') ? 'fish' : 'painting', colors: frame?.colors || artwork?.colors } }
     }
     const item = ownedDecor.find((entry) => entry.id === selection)
     return item ? { hook, item } : null
@@ -164,8 +164,8 @@ export default function CabinPage({ onGoFishing }) {
 
   return <main className="cabin-page">
     <div className="cabin-heading">
-      <div><span className="eyebrow">Backyard Pond</span><h2>{activeCabin.name}</h2><p>{activeCabin.description}</p></div>
-      <div className="cabin-heading-actions"><button type="button" className="cabin-share-button" disabled={!shareImage} onClick={shareCabin}><Icon name="share" size={17}/>{shareImage ? 'Share cabin' : 'Preparing…'}</button><button type="button" className="secondary-button" onClick={onGoFishing}>Go fishing</button></div>
+      <div><span className="eyebrow">A look back home</span><h2>{activeCabin.name}</h2><p>{activeCabin.description}</p></div>
+      <div className="cabin-heading-actions"><button type="button" className="cabin-share-button" disabled={!shareImage} onClick={shareCabin}><Icon name="share" size={17}/>{shareImage ? 'Share cabin' : 'Preparing…'}</button><button type="button" className="secondary-button" onClick={onGoFishing}>Return to {returnLocationName}</button></div>
     </div>
     {shareStatus && <p className="cabin-share-status" role="status">{shareStatus}</p>}
 
@@ -207,7 +207,7 @@ export default function CabinPage({ onGoFishing }) {
           const mountedFish = getFish(fishId)
           const mounted = cabin.specimens[fishId]?.mounted
           const bounds = trophyRoomLayout.specimenMounts[index]
-          return <div className={`trophy-room-mount ${mounted?.sizeTier === 'trophy' ? 'size-amazing' : ''}`} style={{ left: `${bounds.x}%`, top: `${bounds.y}%`, width: `${bounds.width}%`, height: `${bounds.height}%` }} key={index} aria-label={mountedFish ? `Preserved catch: ${mountedFish.name}` : `Empty trophy room mount ${index + 1}`}>
+          return <div className={`trophy-room-mount ${index < 4 ? 'mount-hero' : 'mount-support'} ${mounted?.sizeTier === 'trophy' ? 'size-amazing' : ''}`} style={{ left: `${bounds.x}%`, top: `${bounds.y}%`, width: `${bounds.width}%`, height: `${bounds.height}%` }} key={index} aria-label={mountedFish ? `Preserved catch: ${mountedFish.name}` : `Empty trophy room mount ${index + 1}`}>
             {mountedFish && <FishArtwork fishId={mountedFish.id} name={mountedFish.name} className="trophy-room-fish-art"/>}
           </div>
         })}
@@ -225,6 +225,17 @@ export default function CabinPage({ onGoFishing }) {
 
     {!!activeCabin.customizationHooks?.length && <section className="cabin-customizer decor-customizer" aria-labelledby="decor-customizer-title">
       <div><span className="eyebrow">Authored placement</span><h3 id="decor-customizer-title">Cabin decor</h3><p>{activeCabin.customizationHooks.length} fixed hooks keep every choice aligned with this room. Included, earned, owned-equipment, and Trading Post pieces appear only where they fit.</p></div>
+      <aside className="included-style-preview" aria-label="Included cabin styles">
+        <div><strong>Included cabin collection</strong><span>Free to use wherever this room has a compatible slot</span></div>
+        <div className="included-style-groups">{Object.entries(includedCabinCosmetics).map(([group, options]) => {
+          const previewItems = options.map((option) => ({ option, decor: ownedDecor.find((item) => item.id === option.id) }))
+          const groupAvailable = previewItems.some(({ decor }) => activeCabin.customizationHooks.some((hook) => isDecorCompatible(hook, decor)))
+          return <section className={groupAvailable ? '' : 'unavailable'} key={group}><span>{group}<small>{groupAvailable ? 'Available here' : `No slot in ${activeCabin.name}`}</small></span>{previewItems.map(({ option, decor }) => {
+            const available = activeCabin.customizationHooks.some((hook) => isDecorCompatible(hook, decor))
+            return <article className={available ? '' : 'unavailable'} key={option.id}><i className={`included-preview-${group}`} style={{ '--preview-a': option.colors[0], '--preview-b': option.colors[1], '--preview-c': option.colors[2] || option.colors[1] }}/><strong>{option.name}</strong></article>
+          })}</section>
+        })}</div>
+      </aside>
       {activeCabin.customizationHooks.map((hook) => {
         const compatible = ownedDecor.filter((item) => isDecorCompatible(hook, item))
         if (hook.type === 'frame') return <fieldset className="cabin-frame-controls" key={hook.id}><legend>{hook.name}</legend><label>Artwork<select value={activeDecorSelections[hook.id]?.artworkId || ''} onChange={(event) => actions.setCabinDecor(activeCabin.id, hook.id, event.target.value || null, 'artwork')}><option value="">No artwork</option>{frameArtwork.map((item) => <option value={item.id} key={item.id}>{item.name} · Earned</option>)}</select></label><label>Frame style<select value={activeDecorSelections[hook.id]?.frameId || ''} onChange={(event) => actions.setCabinDecor(activeCabin.id, hook.id, event.target.value || null, 'treatment')}><option value="">Cabin frame</option>{frameTreatments.map((item) => <option value={item.id} key={item.id}>{item.name} · {item.source === 'included' ? 'Included' : 'Trading Post'}</option>)}</select></label></fieldset>
@@ -261,7 +272,6 @@ export default function CabinPage({ onGoFishing }) {
 
         <section><h4>Location-mastery equipment plaques</h4><p>Own every rod in a location's equipment family to earn its plaque.</p><div className="plaque-grid">{locations.map((location) => { const earned = game.achievementProgress.equipmentPlaques.includes(location.id); return <article className={earned ? 'earned' : 'locked'} key={location.id}><Icon name="fishing" size={25}/><div><span>{earned ? 'Equipment family complete' : 'Still outfitting'}</span><strong>{location.name}</strong></div></article> })}</div></section>
 
-        <section><h4>Included style collection</h4><p>These foundational rugs, frames, and timber finishes are always available in cabins with compatible authored hooks.</p><div className="included-style-groups">{Object.entries(includedCabinCosmetics).map(([group, options]) => <div key={group}><span>{group}</span>{options.map((option) => <article key={option.id}><i style={{ background: `linear-gradient(135deg,${option.colors.join(',')})` }}/><strong>{option.name}</strong></article>)}</div>)}</div></section>
       </div>
     </details>
 

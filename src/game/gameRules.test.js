@@ -137,13 +137,10 @@ describe('Trading Post purchases and cabin selection', () => {
     expect(chooseCabinStyle(lodgeReady, 'angler-lodge').cabin.styleId).toBe('angler-lodge')
   })
 
-  it('purchases decor permanently and equips it only on a compatible hook', () => {
-    const state = purchaseCoinStoreItem(withCoins(10000), 'trading-post.rug-deep-water')
-    expect(state.coins).toBe(2500)
-    expect(state.coinStore.ownedItemIds).toContain('trading-post.rug-deep-water')
-    const equipped = chooseCabinDecor(state, 'riverstone-cabin', 'braided-rug', 'trading-post.rug-deep-water')
-    expect(equipped.cabin.decorByCabin['riverstone-cabin']['braided-rug']).toBe('trading-post.rug-deep-water')
-    expect(chooseCabinDecor(state, 'riverstone-cabin', 'hearth-frame', 'trading-post.rug-deep-water')).toBe(state)
+  it('rejects retired rug products and removed rug hooks', () => {
+    const state = withCoins(10000)
+    expect(purchaseCoinStoreItem(state, 'trading-post.rug-deep-water')).toBe(state)
+    expect(chooseCabinDecor(state, 'riverstone-cabin', 'braided-rug', 'frame-walnut')).toBe(state)
   })
 
   it('supports included decor, clearing a hook, and independent cabin setups', () => {

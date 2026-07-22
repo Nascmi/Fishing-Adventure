@@ -30,7 +30,6 @@ const cabinArtwork = {
 
 const categoryNames = {
   cabin: 'Cabin',
-  rug: 'Cabin rug',
   frame: 'Display frame',
   finish: 'Timber finish',
   'cabin-decor': 'Cabin detail',

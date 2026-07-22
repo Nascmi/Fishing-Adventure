@@ -74,16 +74,17 @@ describe('save migrations and validation', () => {
   it('migrates version 17 with independent empty cabin decor selections', () => {
     const state = validateSave({ version: 17, coinStore: { ownedItemIds: ['trading-post.cabin-riverstone'] }, cabin: { styleId: 'riverstone-cabin' } })
     expect(state.version).toBe(27)
-    expect(state.cabin.decorByCabin['riverstone-cabin']).toEqual({ 'hearth-frame': { artworkId: null, frameId: null }, 'river-shelf': null, 'braided-rug': null })
+    expect(state.cabin.decorByCabin['riverstone-cabin']).toEqual({ 'hearth-frame': { artworkId: null, frameId: null }, 'river-shelf': null })
   })
 
-  it('preserves compatible owned decor and rejects incompatible or unowned selections', () => {
+  it('removes retired rug ownership and selections while rejecting incompatible decor', () => {
     const state = validateSave({
       version: 18,
       coinStore: { ownedItemIds: ['trading-post.cabin-riverstone', 'trading-post.rug-deep-water'] },
       cabin: { styleId: 'riverstone-cabin', decorByCabin: { 'riverstone-cabin': { 'braided-rug': 'trading-post.rug-deep-water', 'hearth-frame': 'trading-post.rug-deep-water', 'river-shelf': 'trading-post.decor-antique-creel' } } },
     })
-    expect(state.cabin.decorByCabin['riverstone-cabin']).toEqual({ 'hearth-frame': { artworkId: null, frameId: null }, 'river-shelf': null, 'braided-rug': 'trading-post.rug-deep-water' })
+    expect(state.coinStore.ownedItemIds).toEqual(['trading-post.cabin-riverstone'])
+    expect(state.cabin.decorByCabin['riverstone-cabin']).toEqual({ 'hearth-frame': { artworkId: null, frameId: null }, 'river-shelf': null })
   })
 
   it('preserves a complete version 18 journey across the version 19 migration', () => {
@@ -117,12 +118,12 @@ describe('save migrations and validation', () => {
     expect(state.dayCycle.activeTrip).toEqual({ locationId: 'pine-river', elapsedMs: 60000, remainingMs: 120000 })
     expect(state.achievements['gone-fishing']).toEqual({ unlockedAt: 123 })
     expect(state.achievementProgress.locationsFished).toContain('pine-river')
-    expect(state.coinStore.ownedItemIds).toEqual(['trading-post.cabin-riverstone', 'trading-post.rug-deep-water'])
+    expect(state.coinStore.ownedItemIds).toEqual(['trading-post.cabin-riverstone'])
     expect(state.cabin.styleId).toBe('riverstone-cabin')
     expect(state.cabin.specimens.bluegill).toMatchObject({ fishId: 'bluegill', weight: 1.8, sizeTier: 'trophy' })
     expect(state.cabin.specimens.bluegill.mounted).toMatchObject({ weight: 1.8, sizeTier: 'trophy', preservedAt: 123456 })
     expect(state.cabin.featuredFishId).toBe('bluegill')
-    expect(state.cabin.decorByCabin['riverstone-cabin']['braided-rug']).toBe('trading-post.rug-deep-water')
+    expect(state.cabin.decorByCabin['riverstone-cabin']).not.toHaveProperty('braided-rug')
   })
 
   it('adds safe Phase 4 defaults to version 19 saves and preserves valid version 20 setup', () => {
@@ -245,6 +246,21 @@ describe('save migrations and validation', () => {
     expect(loaded.game.version).toBe(27)
     expect(loaded.notice).toMatch(/could not read/i)
     expect([...writes.values()]).toContain('{not-json')
+  })
+
+  it('grants one million test coins once on localhost only', () => {
+    const values = new Map([['fishing-adventure-save-v1', JSON.stringify({ version: 27, coins: 125 })]])
+    globalThis.localStorage = {
+      getItem: (key) => values.get(key) || null,
+      setItem: (key, value) => values.set(key, value),
+      removeItem: (key) => values.delete(key),
+    }
+    const originalLocation = globalThis.location
+    Object.defineProperty(globalThis, 'location', { configurable: true, value: { hostname: 'localhost' } })
+    expect(loadGame().game.coins).toBe(1000125)
+    expect(loadGame().game.coins).toBe(1000125)
+    if (originalLocation === undefined) delete globalThis.location
+    else Object.defineProperty(globalThis, 'location', { configurable: true, value: originalLocation })
   })
 
   it('reports unavailable storage instead of throwing while saving', () => {

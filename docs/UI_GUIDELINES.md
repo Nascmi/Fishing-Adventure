@@ -24,6 +24,7 @@ The interface should become quiet enough for the player to focus on fishing.
 - Show specialty lures in a location-aware shop department with their named target, 20% relative affinity, permanent ownership, price, and equipped state visible before purchase.
 - Show affordable target tackle in the same department with all targeted species, its 5% relative affinity, permanent price, and a marker silhouette distinct from included and legendary tackle.
 - Size framed fish artwork intrinsically within explicit safe-area padding so fins and tails never touch or clip against the frame edge.
+- Show the global included cabin collection directly in the decor customizer with recognizable display, frame, and timber previews. Mark which groups are usable in the active room and mute pieces that have no compatible authored slot; never imply every included piece fits every cabin.
 - Present discovered Fish Collection artwork directly on the warm journal card without a colored inner panel. Preserve transparent breathing room around each silhouette; use the outer card for ten-catch recognition and retain a distinct muted frame only for undiscovered fish.
 - Anchor the Master Catch seal at the upper-left of collection artwork so it reads as card recognition without covering the fish's head or mouth.
 
@@ -38,6 +39,7 @@ The interface should become quiet enough for the player to focus on fishing.
 - Place time-sensitive status and meters above the active thumb, even when that temporarily covers scenery. Never hide critical feedback beneath the player's hand.
 - Prefer one-thumb interactions for the core fishing loop.
 - Keep destination selection on the dedicated Fishing Trips page so the active fishing scene stays calm and focused.
+- Keep the universal `View cabin` action in the setup header beside the other non-casting controls; it must not float over or obscure the authored fishing scene. Treat it as a paused look back home rather than travel: the cabin return action names and restores the active fishing location.
 - Offer catch sharing only after a Trophy catch, never as a persistent fishing-screen control or social prompt.
 - Use the cabin style picker only for owned and earned cabin choices. Keep locked-cabin prices and acquisition prompts in their appropriate progression or shop surfaces.
 

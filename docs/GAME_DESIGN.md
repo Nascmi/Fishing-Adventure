@@ -101,6 +101,8 @@ Locations are immediately understandable. Backyard Pond is the player's permanen
 
 Fishing Trips is a dedicated main-navigation destination immediately after Collection. It owns location selection, new bookings, active-trip status, and returning home so the fishing scene remains focused on the water and current interaction.
 
+The cabin remains viewable from every fishing location as a collection interlude. Opening it does not end a charter, move the angler to Backyard Pond, advance trip time, or change the selected area, lure, or boat. Its return action names the active water and resumes that same fishing setup.
+
 Species have preferred activity periods that improve their relative chance within a selected rarity tier without ever making them unavailable. This makes time useful knowledge rather than a pressure mechanic. Discovered journal entries reveal each species' most active periods.
 
 Rod progression is local to each fishing location while coins remain shared across the full journey. Every new water provides an appropriate starter rod and its own equipment family. Upgrades must be purchased in sequence, preventing a large saved coin balance from skipping the equipment path entirely while still rewarding earlier play. Backyard Pond uses conventional fishing rods and a bobber; Pine River uses fly rods and a drifting dry fly; Great Lake uses spinning rods and a retrieved lure; Gulf Coast uses saltwater inshore rods and a popping cork; Open Gulf uses heavy offshore rods and a deep jig. Location-specific presentation and language preserve the same one-touch core interaction.

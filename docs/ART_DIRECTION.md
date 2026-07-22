@@ -2,7 +2,7 @@
 
 The Grand Trophy Room uses a symmetrical walnut-and-stone gallery: four large central hero plaques and eight smaller side plaques remain readable as the player's preserved collection fills the room. Two lower landscape-oriented gallery positions give earned paintings and frame treatments room to breathe without competing with the trophy wall.
 
-Workshop equipment displays reuse the player's real rod artwork and a handcrafted walnut lure board. Coastal peg decor uses salt-weathered rope, faded painted wood, cork, and aged brass. Both remain transparent cutouts and must scale as believable physical objects in their authored spaces.
+Workshop equipment displays reuse the player's real rod artwork alongside transparent, photorealistic cutouts for the included antique brass reel, painted cork bobber, weathered blue-green tackle tin, and handcrafted walnut lure board. Rod artwork is held to 135% of its authored peg box so neighboring pieces remain distinct. Coastal peg decor uses salt-weathered rope, faded painted wood, cork, and aged brass. Both remain transparent cutouts and must scale as believable physical objects in their authored spaces.
 
 ## Boat Models and Hull Finishes
 
@@ -55,7 +55,8 @@ Affordable target tackle uses the same compact marker system with recognizable f
 ## Asset Quality Checks
 
 - Cabin decor used as a physical object must be exported as a transparent, fully visible cutout; catalog walls, tabletops, and photo backdrops may not appear in room overlays.
-- Replacement rugs must use isolated overhead artwork and fill only the authored rug footprint without importing scenery from the catalog image.
+- Trophy-catch fish artwork inside cabin frames keeps a generous 16% mat on every side and uses contained scaling in both live rooms and share images so large frames do not make the fish feel oversized.
+- Model boats must read as small objects resting on the Coastal Shack table, never as full-size hulls on the floor. Legendary-fish miniatures must use contained scaling with clear space around tails, fins, and whiskers.
 - Validate decor at its smallest live cabin hook and in the generated share image; no object may be cropped or placed inside an unintended generic frame.
 
 - Inspect each exported fish independently at its in-game size, not only on a multi-species source sheet.

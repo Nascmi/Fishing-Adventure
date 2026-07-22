@@ -1,3 +1,7 @@
+import brassReelArtwork from '../assets/decor/included-brass-reel.png'
+import paintedBobberArtwork from '../assets/decor/included-painted-bobber.png'
+import weatheredTackleTinArtwork from '../assets/decor/included-weathered-tackle-tin.png'
+
 const hook = (id, name, type, bounds) => ({ id, name, type, bounds })
 
 // Bounds are percentages of each authored cabin scene. They intentionally belong
@@ -27,7 +31,6 @@ export const cabinCatalog = [
     customizationHooks: [
       hook('hearth-frame', 'Hearth frame', 'frame', { x: 38.7, y: 17.2, width: 18.2, height: 20.2 }),
       hook('river-shelf', 'River shelf', 'display', { x: 63.2, y: 24.2, width: 19, height: 11.2 }),
-      hook('braided-rug', 'Hearth rug', 'rug', { x: 20.8, y: 76, width: 53.5, height: 21.5 }),
     ],
   },
   {
@@ -38,7 +41,6 @@ export const cabinCatalog = [
       hook('left-gallery-frame', 'Left gallery frame', 'frame', { x: 18.4, y: 39.6, width: 17, height: 18 }),
       hook('hearth-gallery-frame', 'Hearth gallery frame', 'frame', { x: 39.4, y: 9.2, width: 21.2, height: 27.5 }),
       hook('right-gallery-frame', 'Right gallery frame', 'frame', { x: 64.6, y: 39.4, width: 15.5, height: 19.5 }),
-      hook('forest-rug', 'Forest rug', 'rug', { x: 13.2, y: 74.8, width: 73, height: 24.5 }),
     ],
   },
   {
@@ -51,7 +53,6 @@ export const cabinCatalog = [
       hook('left-lower-shelf', 'Left lower shelf', 'display', { x: 23, y: 34, width: 15, height: 10 }),
       hook('right-upper-shelf', 'Right upper shelf', 'display', { x: 69.8, y: 17.5, width: 14.5, height: 10 }),
       hook('right-lower-shelf', 'Right lower shelf', 'display', { x: 69.8, y: 34, width: 14.5, height: 10 }),
-      hook('navy-rug', 'Navy rug', 'rug', { x: 8, y: 74.8, width: 86.3, height: 23.5 }),
       hook('mahogany-finish', 'Timber finish', 'finish', { x: 3, y: 4, width: 94, height: 92 }),
     ],
   },
@@ -81,7 +82,6 @@ export const cabinCatalog = [
     customizationHooks: [
       hook('left-gallery-frame', 'Left gallery frame', 'frame', { x: 47.4, y: 13.5, width: 9.8, height: 20.1 }),
       hook('right-gallery-frame', 'Right gallery frame', 'frame', { x: 58.8, y: 13.5, width: 9.8, height: 20.1 }),
-      hook('cottage-rug', 'Cottage rug', 'rug', { x: 18.3, y: 72, width: 57.5, height: 27.2 }),
       hook('sideboard-display', 'Sideboard display', 'display', { x: 75.5, y: 46.7, width: 15.7, height: 15.5 }),
     ],
   },
@@ -94,12 +94,12 @@ export const cabinCatalog = [
       { ...hook('upper-shelf-center', 'Upper shelf center', 'display', { x: 47.3, y: 15.2, width: 8.4, height: 15.8 }), accepts: ['nautical', 'souvenir', 'miniature'] },
       { ...hook('upper-shelf-right', 'Upper shelf right', 'display', { x: 57.5, y: 15.2, width: 8.4, height: 15.8 }), accepts: ['nautical', 'souvenir', 'miniature'] },
       hook('nautical-shadowbox', 'Nautical shadowbox', 'frame', { x: 40.2, y: 37.2, width: 24.6, height: 20.6 }),
-      { ...hook('model-boat-table', 'Model boat table', 'display', { x: 36, y: 61.7, width: 36, height: 13.8 }), accepts: ['model-boat'] },
-      { ...hook('dock-peg-1', 'Dock peg 1', 'display', { x: 67, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
-      { ...hook('dock-peg-2', 'Dock peg 2', 'display', { x: 70.7, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
-      { ...hook('dock-peg-3', 'Dock peg 3', 'display', { x: 74.4, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
-      { ...hook('dock-peg-4', 'Dock peg 4', 'display', { x: 78.1, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
-      { ...hook('dock-peg-5', 'Dock peg 5', 'display', { x: 81.8, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
+      { ...hook('model-boat-table', 'Model boat table', 'display', { x: 36, y: 57.5, width: 36, height: 13.8 }), accepts: ['model-boat'] },
+      { ...hook('dock-peg-1', 'Dock peg 1', 'display', { x: 65.15, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
+      { ...hook('dock-peg-2', 'Dock peg 2', 'display', { x: 68.85, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
+      { ...hook('dock-peg-3', 'Dock peg 3', 'display', { x: 72.55, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
+      { ...hook('dock-peg-4', 'Dock peg 4', 'display', { x: 76.25, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
+      { ...hook('dock-peg-5', 'Dock peg 5', 'display', { x: 79.95, y: 36.1, width: 3, height: 10.2 }), accepts: ['nautical-peg'] },
     ],
   },
   {
@@ -118,14 +118,9 @@ export const getCabinDefinition = (id) => cabinCatalog.find((cabin) => cabin.id 
 
 export const includedCabinCosmetics = {
   displays: [
-    { id: 'display-brass-reel', name: 'Brass Reel', colors: ['#75522d', '#d8b665'] },
-    { id: 'display-painted-bobber', name: 'Painted Bobber', colors: ['#315f59', '#d87855'] },
-    { id: 'display-weathered-tackle-tin', name: 'Weathered Tackle Tin', colors: ['#405d57', '#a99169'] },
-  ],
-  rugs: [
-    { id: 'rug-braided-earth', name: 'Braided Earth', colors: ['#765238', '#b58a5b', '#4d6a57'] },
-    { id: 'rug-river-blue', name: 'River Blue', colors: ['#496d76', '#9bb5ae', '#d8c99d'] },
-    { id: 'rug-pine-needle', name: 'Pine Needle', colors: ['#355847', '#74866a', '#bd9b63'] },
+    { id: 'display-brass-reel', name: 'Brass Reel', artwork: brassReelArtwork, fit: 'contain', colors: ['#75522d', '#d8b665'] },
+    { id: 'display-painted-bobber', name: 'Painted Bobber', artwork: paintedBobberArtwork, fit: 'contain', colors: ['#315f59', '#d87855'] },
+    { id: 'display-weathered-tackle-tin', name: 'Weathered Tackle Tin', artwork: weatheredTackleTinArtwork, fit: 'contain', colors: ['#405d57', '#a99169'] },
   ],
   frames: [
     { id: 'frame-walnut', name: 'Dark Walnut', colors: ['#4a2f20', '#8b6040'] },

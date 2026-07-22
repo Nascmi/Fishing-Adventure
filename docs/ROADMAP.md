@@ -74,7 +74,7 @@ Phase 3 deepens atmosphere and gives players a peaceful sense of ownership throu
 - Added five earned location paintings and permanent Master Angler frames for Great-or-better mastery of every species in a location.
 - Added upgraded souvenirs, Trophy photographs, legendary miniatures, equipment plaques, and included authored-slot palettes.
 - Prepared a dormant non-consumable store catalog with stable product IDs, tentative prices, restoration requirements, and no live storefront integration.
-- Added an earned-coin Trading Post with three complete permanent cabins and twelve functional decor purchases as a late-game economy sink.
+- Added an earned-coin Trading Post with three complete permanent cabins and twelve functional decor purchases as a late-game economy sink: three frames, three finishes, two small objects, three model boats, and one prestige plaque.
 - Added fixed cabin-specific hooks, compatible-item filtering, independent per-cabin setups, included and earned choices, and decor-aware cabin sharing.
 
 ### Phase Status
