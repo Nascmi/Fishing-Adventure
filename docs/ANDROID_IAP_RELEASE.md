@@ -74,6 +74,8 @@ The compiled client bridge is appropriate for Google Play Internal testing, not 
 8. Confirm the earned-coin Trading Post, fishing balance, and save recovery work without store availability.
 9. Complete Play Data safety, Families/target-audience, content rating, privacy-policy, billing, and support disclosures before production review.
 
+Before every bundle upload, confirm a clean Android app-data install starts with exactly 50 coins. Capacitor serves packaged content from a localhost origin, so browser-development grants must never use hostname alone as a development-build check.
+
 Official Android launcher, splash, Play icon, and feature-graphic assets are prepared under `android/app/src/main/res/` and `branding/play-store/`. See `BRANDING.md` for ownership, palette, regeneration, and usage rules.
 
 The public privacy policy is built from `public/privacy.html` and appears at `/privacy.html` on the deployed site. The in-app Journey & Settings panel links to it. Use that final HTTPS URL in Play Console and complete Data Safety using `GOOGLE_PLAY_DATA_SAFETY.md`; re-audit both documents whenever data handling or SDKs change.

@@ -256,7 +256,7 @@ describe('save migrations and validation', () => {
     expect([...writes.values()]).toContain('{not-json')
   })
 
-  it('grants one million test coins once on localhost only', () => {
+  it('never changes saved coins based on the runtime hostname', () => {
     const values = new Map([['fishing-adventure-save-v1', JSON.stringify({ version: 27, coins: 125 })]])
     globalThis.localStorage = {
       getItem: (key) => values.get(key) || null,
@@ -265,8 +265,8 @@ describe('save migrations and validation', () => {
     }
     const originalLocation = globalThis.location
     Object.defineProperty(globalThis, 'location', { configurable: true, value: { hostname: 'localhost' } })
-    expect(loadGame().game.coins).toBe(1000125)
-    expect(loadGame().game.coins).toBe(1000125)
+    expect(loadGame().game.coins).toBe(125)
+    expect(loadGame().game.coins).toBe(125)
     if (originalLocation === undefined) delete globalThis.location
     else Object.defineProperty(globalThis, 'location', { configurable: true, value: originalLocation })
   })

@@ -12,7 +12,7 @@ Fishing Adventure uses Vitest for deterministic rule and persistence tests. The 
 
 Optional-activity regressions cover deterministic one-per-day Field Note generation, three-day pruning, one-time ordinary-catch rewards, fixed twelve-cast Derby completion, location-aware pausing, consequence-free abandonment, personal-best retention, and malformed-save bounds.
 
-The current local browser test profile receives a one-time 1,000,000-coin grant on `localhost` or `127.0.0.1`. A separate local marker prevents repeat grants on reload, and deployed hosts never receive it. Remove the localhost grant and its marker key after the cabin/economy testing pass.
+Localhost uses the same starting balance and save behavior as deployed web and Android builds. Development helpers must not infer a safe testing environment from the hostname because Capacitor serves packaged Android content from `https://localhost`.
 
 ## Commands
 
@@ -49,7 +49,7 @@ npm run build
 - Charter booking, completion, paintings, and keepsake evaluation
 - Trading Post ownership, duplicate rejection, cabin eligibility, and compatible per-cabin decor selections
 - Retired rug ownership and selections are removed during validation without changing cabin ownership or unrelated progress
-- The localhost-only million-coin grant is additive, persists immediately, and cannot repeat after its separate marker is written
+- Runtime hostname changes never alter a new or existing save's coin balance
 - Specimen preservation costs and free heavier upgrades
 - Angler's Lodge specimen and keepsake anchor-zone capacity and artwork bounds
 - Keepsakes, location paintings, Master Angler frames, photographs, miniatures, and equipment plaques

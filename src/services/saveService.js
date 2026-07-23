@@ -15,7 +15,6 @@ import { defaultActivities, validateActivities } from '../game/activityRules'
 
 const SAVE_KEY = 'fishing-adventure-save-v1'
 const RECOVERY_KEY = 'fishing-adventure-recovery-v1'
-const LOCALHOST_COIN_GRANT_KEY = 'fishing-adventure-localhost-million-v1'
 const CURRENT_VERSION = 28
 const defaultFishingSetups = () => Object.fromEntries(rodLocationIds.map((locationId) => [locationId, {
   areaId: getAreasForLocation(locationId)[0]?.id || null,
@@ -511,21 +510,12 @@ export function validateSave(input) {
   return unlockAchievements(unlockLocationCosmetics(validated)).state
 }
 
-const applyLocalhostCoinGrant = (game) => {
-  const hostname = globalThis.location?.hostname
-  if (!['localhost', '127.0.0.1'].includes(hostname) || localStorage.getItem(LOCALHOST_COIN_GRANT_KEY)) return game
-  const granted = { ...game, coins: game.coins + 1000000 }
-  localStorage.setItem(LOCALHOST_COIN_GRANT_KEY, 'granted')
-  localStorage.setItem(SAVE_KEY, JSON.stringify(granted))
-  return granted
-}
-
 export function loadGame() {
   const serialized = localStorage.getItem(SAVE_KEY)
-  if (!serialized) return { game: applyLocalhostCoinGrant(newGame()), notice: null }
+  if (!serialized) return { game: newGame(), notice: null }
 
   try {
-    return { game: applyLocalhostCoinGrant(validateSave(JSON.parse(serialized))), notice: null }
+    return { game: validateSave(JSON.parse(serialized)), notice: null }
   } catch {
     try {
       localStorage.setItem(RECOVERY_KEY, serialized)
