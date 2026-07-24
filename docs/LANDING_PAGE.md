@@ -5,7 +5,7 @@ Fishing Adventure's public discovery page lives at `/landing`. It follows the sa
 ## Content
 
 - Official fish-and-hook identity and sunrise feature artwork
-- Browser-play call to action while Google Play remains in preparation
+- Direct Google Play testing call to action alongside browser play
 - Three core feature pillars: fishing, collection, and cabin personalization
 - All five current fishing destinations using real authored game scenery
 - Angler's Lodge presentation using real cabin artwork
@@ -17,13 +17,13 @@ Fishing Adventure's public discovery page lives at `/landing`. It follows the sa
 
 `src/main.jsx` renders the landing page directly for `/landing` and `/landing/`. It does not mount `GameProvider`, load a save, or initialize Google Play commerce. Every other route continues into the normal game. Firebase's existing single-page rewrite serves the route after deployment.
 
-## Release Transition
+## Google Play Testing
 
-The current landing page says that the Android release is in preparation. Once a real Play listing or testing URL exists, add a direct Google Play call to action without removing the browser-play option. Do not invent review scores, download counts, awards, or time-limited claims.
+The header, hero, and closing call to action link to the official Fishing Adventure Google Play listing at `https://play.google.com/store/apps/details?id=com.nathanmiller.fishingadventure`. The page describes the Android build as being in testing and retains browser play as an equal fallback. Do not invent review scores, download counts, awards, or time-limited claims.
 
 ## Testing
 
 - Load `/landing` directly and refresh it on Firebase Hosting.
 - Confirm `/` still opens the game and `/privacy.html` opens the static policy.
-- Check header anchors, browser-play links, privacy, email, keyboard focus, phone layout, reduced motion, and real image loading.
+- Check the header, hero, and closing Google Play links; browser-play links; header anchors; privacy; email; keyboard focus; phone layout; reduced motion; and real image loading.
 - Confirm opening `/landing` does not touch the Fishing Adventure save or initialize commerce.

@@ -1,0 +1,152 @@
+# Codemagic CI/CD configuration for Fishing Adventure.
+# The workflow structure intentionally mirrors the proven Bible Companion setup:
+# install, web build, Capacitor sync, native build, and artifact publishing.
+workflows:
+  # Production Android workflow. Run this for signed Google Play releases.
+  fishing-adventure-android:
+    name: Fishing Adventure Android
+    instance_type: linux
+    max_build_duration: 60
+
+    # Codemagic injects the uploaded Android keystore as CM_KEYSTORE_* variables.
+    # The google_play group must contain the secret Play service-account JSON.
+    environment:
+      android_signing:
+        - fishing-adventure-upload
+      groups:
+        - google_play
+      node: 22
+      vars:
+        PACKAGE_NAME: com.nathanmiller.fishingadventure
+        GOOGLE_PLAY_TRACK: internal
+
+    # Reuse dependency and Gradle downloads without caching generated web/native output.
+    cache:
+      cache_paths:
+        - node_modules
+        - ~/.npm
+        - ~/.gradle/caches
+        - ~/.gradle/wrapper
+
+    # Each script is deliberately separate so failures identify the affected layer.
+    scripts:
+      - name: Install dependencies
+        script: npm ci
+
+      - name: Run deterministic tests
+        script: npm run test:run
+
+      - name: Build Fishing Adventure web app
+        script: npm run build
+
+      - name: Sync Capacitor Android
+        script: npx cap sync android
+
+      - name: Build signed Android App Bundle
+        script: |
+          # Google Play requires every uploaded versionCode to increase.
+          # Prefer the highest code already on Play; use a safe offset above the
+          # repository's current versionCode 3 if this is the first API-visible build.
+          LATEST_GOOGLE_PLAY_BUILD_NUMBER="$(google-play get-latest-build-number --package-name "$PACKAGE_NAME" 2>/dev/null || true)"
+          if [ -z "$LATEST_GOOGLE_PLAY_BUILD_NUMBER" ]; then
+            UPDATED_BUILD_NUMBER=$((PROJECT_BUILD_NUMBER + 3))
+          else
+            UPDATED_BUILD_NUMBER=$((LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
+          fi
+
+          cd android
+          chmod +x gradlew
+          ./gradlew bundleRelease -PversionCode="$UPDATED_BUILD_NUMBER"
+
+    # Retain the signed bundle and useful native diagnostics after every build.
+    artifacts:
+      - android/app/build/outputs/bundle/release/*.aab
+      - android/app/build/outputs/**/*.apk
+      - android/app/build/outputs/**/*.txt
+      - android/app/build/reports/**
+
+    # Publish successful signed bundles to Google Play Internal testing.
+    # Change GOOGLE_PLAY_TRACK in Codemagic when deliberately promoting elsewhere.
+    publishing:
+      google_play:
+        credentials: $GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS
+        track: $GOOGLE_PLAY_TRACK
+
+  # Future iOS workflow, patterned after Bible Companion.
+  # It becomes runnable only after the Capacitor iOS shell and Apple signing
+  # identities named below have been created; see docs/CODEMAGIC_RELEASE.md.
+  fishing-adventure-ios-future:
+    name: Fishing Adventure iOS (Future)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+
+    # Apple credentials stay in Codemagic Code Signing Identities and the named
+    # App Store Connect integration; no certificate or API key enters Git.
+    integrations:
+      app_store_connect: Fishing Adventure CI
+
+    environment:
+      ios_signing:
+        certificates:
+          - fishing-adventure-distribution
+        provisioning_profiles:
+          - fishing-adventure-app-store
+      xcode: latest
+      node: 22
+      vars:
+        BUNDLE_ID: com.nathanmiller.fishingadventure
+        XCODE_PROJECT: ios/App/App.xcodeproj
+        XCODE_SCHEME: App
+
+    # Cache JavaScript dependencies and CocoaPods downloads for future iOS builds.
+    cache:
+      cache_paths:
+        - node_modules
+        - ~/.npm
+        - ~/Library/Caches/CocoaPods
+
+    # Match Android's verified web build before syncing and archiving the iOS shell.
+    scripts:
+      - name: Verify iOS shell exists
+        script: |
+          if [ ! -d ios/App ]; then
+            echo "The iOS shell is not committed yet. Follow docs/CODEMAGIC_RELEASE.md before running this workflow."
+            exit 1
+          fi
+
+      - name: Install dependencies
+        script: npm ci
+
+      - name: Run deterministic tests
+        script: npm run test:run
+
+      - name: Build Fishing Adventure web app
+        script: npm run build
+
+      - name: Sync Capacitor iOS
+        script: npx cap sync ios
+
+      - name: Apply App Store signing profiles
+        script: xcode-project use-profiles
+
+      - name: Build signed App Store archive and IPA
+        script: |
+          xcode-project build-ipa \
+            --project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME" \
+            --archive-directory "$CM_BUILD_DIR/build/ios/archive" \
+            --ipa-directory "$CM_BUILD_DIR/build/ios/ipa" \
+            --archive-xcargs "CURRENT_PROJECT_VERSION=$PROJECT_BUILD_NUMBER"
+
+    # Preserve the distributable IPA, archive, symbols, and Xcode logs.
+    artifacts:
+      - build/ios/archive/*.xcarchive
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+
+    # Future iOS releases publish to TestFlight through the named integration.
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true

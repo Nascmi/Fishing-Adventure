@@ -59,7 +59,7 @@ Cabins are specialized authored spaces rather than linear room upgrades. The hum
 
 The Angler's Lodge is the central earned cabin unlock. Catching a legendary fish at four distinct locations opens its multiple fish displays and Angling Keepsake cabinet. The requirement represents mastery of most current waters while leaving the player one location of choice. A bounded set of legendary-catch location IDs preserves this progress regardless of inventory or sales.
 
-Future Workshop, Lakeside Cottage, and Coastal Shack styles may specialize in equipment, domestic customization and location paintings, or nautical and boat décor. These cabins expand expression without replacing the Angler's Lodge as the earned culmination of the current journey. A Master Angler's Lodge remains only a future possibility if the game grows to roughly ten or more locations.
+The Workshop, Lakeside Cottage, and Coastal Shack specialize in equipment, domestic customization and location paintings, or nautical and boat décor. The Grand Trophy Room adds a twelve-mount specimen gallery. These premium cabins expand expression without replacing the Angler's Lodge as the earned culmination of the current journey. A Master Angler's Lodge remains only a future possibility if the game grows to roughly ten or more locations.
 
 ## Passing Rain
 

@@ -20,26 +20,22 @@ Monetization preparation is now part of the Android release path. It must suppor
 - Clearly described cosmetic bundles
 - A straightforward supporter pack
 
-Prices, purchase restoration, parental considerations, platform requirements, and offline behavior must be designed deliberately before commerce is implemented.
+Prices, purchase restoration, parental considerations, platform requirements, and offline behavior must remain deliberate as commerce moves through testing and release.
 
 Boat cosmetics may exist only for boats already justified by the fishing location and visibly owned in normal play. Monetization must never cause a boat, access gate, or redundant water area to be added where the location fantasy does not support one. Pine River, Open Gulf, and the current Backyard Pond therefore receive no personal boat merely to create something saleable.
 
-## Initial Real-Money Cabin Store
+## Initial Real-Money Store
 
-The live app now exposes the three completed cabin products through a provider-independent storefront with localized-price, owned, pending, failure, unavailable, and restore states. Local development uses a clearly labeled no-money sandbox. Production grants require authoritative platform ownership; no real transaction can occur until the Android billing adapter and matching Play Console products are configured.
+The live app exposes nine prepared non-consumable products through a provider-independent storefront with localized-price, owned, pending, failure, unavailable, and restore states: four premium cabins, three equal-recognition supporter levels, and two earned-boat hull-color packs. Local development uses a clearly labeled no-money sandbox. Android builds use the direct Google Play Billing bridge, while public production approval still requires secure backend verification and revocation handling.
 
 Each premium cabin has functional artwork-specific decoration hooks and included display choices. A cabin purchase must feel complete on its own; it may not require a second real-money or earned-coin purchase merely to make its advertised customization usable.
 
 - Workshop Cabin — tentative $1.99
 - Lakeside Cottage — tentative $1.99
 - Coastal Shack — tentative $1.99
-- Workshop Details — tentative $0.99
-- Cottage Comforts — tentative $0.99
-- Coastal Memories — tentative $0.99
-- Cabin Palette Collection — tentative $0.99
-- Cabin Collection bundle — tentative $4.99
+- Grand Trophy Room — tentative $2.99
 
-Prices are planning targets only; platform tiers, taxes, and regional pricing may change them. Every product is permanent and non-consumable. The three cabin products buy complete authored rooms. Detail and palette packs may only fill compatible cosmetic slots. The bundle grants the same cabin entitlements as the three individual cabin products and no exclusive gameplay content.
+Prices are planning targets only; platform tiers, taxes, and regional pricing may change them. Every prepared product is permanent and non-consumable. The four cabin products buy complete authored rooms. Workshop Details, Cottage Comforts, Coastal Memories, Cabin Palette Collection, and the Cabin Collection bundle remain hidden concepts; they must not enter the storefront until their authored content and ownership rules are approved.
 
 Before production release, the native adapter must provide authoritative platform entitlements, secure verification, transaction acknowledgement, purchase restoration, regional product availability, and failure-safe handling. Parental and age-rating review remains a release requirement. No product may grant fish, coins, rods, keepsakes, paintings, trophies, Master Angler frames, progress, or improved fishing odds. See `ANDROID_IAP_RELEASE.md`.
 
@@ -49,7 +45,7 @@ The store offers three honest, permanent contribution levels: Campfire Supporter
 
 Supporter messaging must remain appreciative rather than urgent. The app may not use timers, scarcity, repeated interruptions, guilt, progression gates, or degrading labels for free players. Fishing Adventure remains a complete ad-free game at the free tier.
 
-## Boat Cosmetics
+## Trophy Room and Boat Cosmetics
 
 The **Grand Trophy Room** is a tentative **$2.99 one-time purchase**. It is a permanent premium cabin with twelve authored mounts for the player's own preserved Great and Trophy specimens plus two gallery hooks compatible with earned paintings and the existing frame collection. It grants display capacity only—never fish, paintings, frames, coins, catch odds, or progression.
 
@@ -63,16 +59,6 @@ The in-game Trading Post is a separate department of the existing shop using onl
 
 The initial stock does not rotate, and owned items remain permanent. A future rotation may only be introduced with a predictable return schedule. The Trading Post never sells fish, catch odds, equipment power, charter progress, keepsakes, earned location art, trophies, or real-money currency. Included cosmetics and accomplishment rewards remain distinct. Prices require continued playtesting against late-game income.
 
-## Addendum — July 20, 2026
+## Longer-Term Direction
 
-> The catalog now contains nine purely cosmetic products. I also added an explicit rule prohibiting real-money waivers or discounts for charter fees and other coin costs. Validation and production build pass.
->
-> For sustainable monetization, I’d favor:
->
-> - Permanent premium cabins and decor
-> - A clearly labeled Supporter Pack
-> - Cosmetic boat and tackle appearances
-> - The optional Trophy Room
-> - Paid expansion destinations after the complete five-water base game—World Waters could be substantial, honest content worth purchasing
->
-> That last option may be your strongest long-term model: players receive a complete game, while major authored destinations can help fund continued development without selling luck, power, currency, or relief from frustration.
+Substantial paid destination expansions may be considered only after the complete five-water base game and deliberate roadmap approval. They must sell authored content rather than luck, power, currency, urgency, or relief from frustration.

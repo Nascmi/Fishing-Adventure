@@ -8,6 +8,8 @@ import gulfImage from '../assets/locations/open-gulf.png'
 import lodgeImage from '../assets/locations/angler-lodge.png'
 import '../styles/landing.css'
 
+const googlePlayUrl = 'https://play.google.com/store/apps/details?id=com.nathanmiller.fishingadventure'
+
 const waters = [
   ['Backyard Pond', 'A familiar place to begin.', pondImage],
   ['Pine River', 'Wade into cool moving water.', riverImage],
@@ -54,7 +56,7 @@ export default function Landing() {
         <a href="#cabins">Cabins</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <a className="fa-header-action" href="/">Play now</a>
+      <a className="fa-header-action" href={googlePlayUrl} target="_blank" rel="noreferrer">Join testing</a>
     </header>
 
     <main id="top">
@@ -65,8 +67,8 @@ export default function Landing() {
           <h1>One more cast.</h1>
           <p>Explore peaceful waters, learn where fish gather, build a lasting collection, and return to a cabin filled with the story of your journey.</p>
           <div className="fa-actions">
-            <a className="fa-button fa-button-primary" href="/">Play in your browser</a>
-            <a className="fa-button fa-button-secondary" href="#preview">See the adventure</a>
+            <a className="fa-button fa-button-primary" href={googlePlayUrl} target="_blank" rel="noreferrer">Join testing on Google Play</a>
+            <a className="fa-button fa-button-secondary" href="/">Play in your browser</a>
           </div>
           <div className="fa-trust" aria-label="Game promises"><span>No ads</span><span>No energy timers</span><span>No pay to win</span></div>
         </div>
@@ -108,7 +110,7 @@ export default function Landing() {
       </section>
 
       <section className="fa-cta">
-        <div className="fa-landing-shell"><img src="/brand/fishing-adventure-icon.png" alt=""/><p className="fa-kicker">Android release in preparation</p><h2>The lake is already open.</h2><p>Play the current game in your browser while Fishing Adventure gets ready for Google Play.</p><a className="fa-button fa-button-light" href="/">Start fishing</a></div>
+        <div className="fa-landing-shell"><img src="/brand/fishing-adventure-icon.png" alt=""/><p className="fa-kicker">Now testing on Android</p><h2>Help shape the adventure.</h2><p>Join the Fishing Adventure test on Google Play, or cast a line right now in your browser.</p><div className="fa-actions fa-cta-actions"><a className="fa-button fa-button-light" href={googlePlayUrl} target="_blank" rel="noreferrer">Join Google Play testing</a><a className="fa-button fa-button-secondary" href="/">Play in your browser</a></div></div>
       </section>
     </main>
 

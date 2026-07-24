@@ -36,6 +36,8 @@ npm run android:run
 
 Android Studio's bundled JDK is supported. Machine-specific JDK and Android SDK paths are not committed.
 
+Production bundles can also be created by the `fishing-adventure-android` workflow in `codemagic.yaml`. It builds and tests the web app, syncs Capacitor, injects the protected upload keystore, creates a signed `.aab`, retains native artifacts, and publishes to Google Play Internal testing. See `CODEMAGIC_RELEASE.md` for required Codemagic configuration and versioning.
+
 ## Native Bridge Contract
 
 The web app expects a Capacitor billing adapter at `globalThis.FishingAdventurePurchases` with three asynchronous methods:
@@ -65,12 +67,12 @@ The compiled client bridge is appropriate for Google Play Internal testing, not 
 ## Play Console and Test Track
 
 1. The final Android application ID is `com.nathanmiller.fishingadventure`; do not change it after the first Play upload.
-2. Create and activate the three one-time products above with descriptions, regional pricing, and required tax information.
+2. Create and activate all nine one-time products above with descriptions, regional pricing, and required tax information.
 3. Upload a signed Android App Bundle to Internal testing; Play Billing cannot be fully tested from an ordinary sideloaded development APK.
 4. Add license testers and install the Play-delivered internal build with a tester account.
 5. Test successful, cancelled, failed, already-owned, offline, interrupted, and delayed/pending purchases.
 6. Test Restore purchases after clearing app data and after installing on another device with the same Google account.
-7. Confirm cabin purchases unlock exactly one cabin and supporter purchases grant only the shared Community Supporter recognition; all purchases must persist offline and remain cosmetic.
+7. Confirm each of the four cabin purchases unlocks exactly its named cabin, supporter purchases grant only the shared Community Supporter recognition, and boat-style purchases remain unavailable until the matching earned boat is owned; all purchases must persist offline and remain cosmetic.
 8. Confirm the earned-coin Trading Post, fishing balance, and save recovery work without store availability.
 9. Complete Play Data safety, Families/target-audience, content rating, privacy-policy, billing, and support disclosures before production review.
 

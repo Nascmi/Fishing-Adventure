@@ -31,7 +31,7 @@ Great Lake is the proving ground because its existing spinning presentation and 
 - **Marsh Bank:** included with every Gulf Coast trip and favors Atlantic Croaker, Sand Seatrout, and Spotted Seatrout.
 - **Oyster Reef:** reached by Bay Skiff and favors Sheepshead, Black Drum, and Red Drum around shell and pilings.
 - **Tidal Channel:** reached by Bay Skiff and favors Southern Flounder, Red Drum, and cruising Cobia in deeper moving water.
-- **Bay Skiff:** a permanent 12,500-coin unlock with no fuel, upkeep, steering, or performance advantage. Its separate deep-teal hull layer is reserved for future cosmetic finishes.
+- **Bay Skiff:** a permanent 12,500-coin unlock with no fuel, upkeep, steering, or performance advantage. Its separate deep-teal hull layer supports the included Coastal Teal finish and the optional Sunset Coral and Deep Ocean finishes.
 
 ## Charter Positions: Open Gulf
 
@@ -40,7 +40,7 @@ Great Lake is the proving ground because its existing spinning presentation and 
 - **Reef Edge:** a submerged current seam favoring Vermilion Snapper, Gray Triggerfish, Red Snapper, and Greater Amberjack.
 - **Relocation fee:** changing to any different position costs 250 coins each time, including returning to Blue Water. Remaining at the current position is free. Before coins are spent, a confirmation names the destination, explains the fuel charge, and offers `Stay here` or `Accept and relocate`. This represents charter fuel and captain time, not personal boat ownership.
 
-Each authored area uses a distinct viewpoint. Great Lake moves from granite shoreline to sheltered weeds and deep rock structure; Gulf Coast moves from a marsh bank to exposed oyster shell and a broader tidal channel. Each skiff is visibly composited into boat-access scenery rather than baked into it. Broad hull panels provide stable future cosmetic slots, and cosmetics must not change fishing performance. The cast marker also changes silhouette and color with the equipped lure so setup choices remain visible during the fishing loop.
+Each authored area uses a distinct viewpoint. Great Lake moves from granite shoreline to sheltered weeds and deep rock structure; Gulf Coast moves from a marsh bank to exposed oyster shell and a broader tidal channel. Each skiff is visibly composited into boat-access scenery rather than baked into it. Broad hull panels provide stable cosmetic surfaces for the implemented finish packs, and cosmetics do not change fishing performance. The cast marker also changes silhouette and color with the equipped lure so setup choices remain visible during the fishing loop.
 
 The equipped rod establishes the dominant rarity-weight profile. Area strengths and lure affinities then modify individual species weights in the complete encounter pool. This means a specialty lure can modestly improve the real encounter chance for a location's sole legendary fish, but the 1.2× relative modifier is far smaller than the rod progression and never guarantees a catch. Matching an included lure to a Great Lake area gives the clearest broad habitat preference; mismatched setups remain valid and can still catch every local species.
 

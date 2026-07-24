@@ -4,7 +4,7 @@ The Android brand check covers the launcher icon under square, circle, rounded-s
 
 The privacy check confirms `/privacy.html` is present in the production build, publicly reachable without authentication after deployment, and linked from Journey & Settings. Compare its claims against the final manifest, dependencies, billing implementation, and Data Safety answers before every store submission.
 
-The landing-page check loads and refreshes `/landing` independently, verifies its feature/water/cabin imagery and all navigation links, confirms responsive and reduced-motion behavior, and ensures the landing route does not mount `GameProvider`, read or write the fishing save, or initialize Google Play commerce.
+The landing-page check loads and refreshes `/landing` independently, verifies its feature/water/cabin imagery, Google Play testing calls to action, browser-play fallback, and all navigation links, confirms responsive and reduced-motion behavior, and ensures the landing route does not mount `GameProvider`, read or write the fishing save, or initialize Google Play commerce.
 
 The Grand Trophy Room regression confirms its permanent entitlement gate, twelve unique mount selectors, two painting/frame hooks, persistence across reloads, and safe removal of invalid or unpreserved fish IDs during save validation.
 
@@ -23,6 +23,8 @@ npm run build
 ```
 
 `npm test` watches affected files during development. `npm run test:run` executes the complete suite once and is the required verification command before a handoff or commit that changes game behavior.
+
+The Codemagic Android workflow runs the deterministic suite before the production web build, Capacitor sync, signed bundle task, and Google Play publishing. A failed test, web build, sync, or Gradle task must prevent publishing. See `CODEMAGIC_RELEASE.md`.
 
 ## Covered Systems
 

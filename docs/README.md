@@ -15,10 +15,11 @@ Use the remaining documents as focused references:
 
 - `PLAYTEST_WORKSHEET.md` - a lightweight tournament feedback form for balance and usability evidence
 - `ANDROID_IAP_RELEASE.md` - Google Play product IDs, billing-adapter contract, and release testing checklist
+- `CODEMAGIC_RELEASE.md` - signed Android CI/CD, Google Play publishing, secrets, artifacts, and future iOS preparation
 - `BRANDING.md` - official identity, palette, copyright treatment, and Android/Play asset locations
 - `GOOGLE_PLAY_LISTING.md` - approved Play Console copy, graphic uploads, screenshot plan, alt text, and initial release notes
 - `PRIVACY_POLICY.md` and `GOOGLE_PLAY_DATA_SAFETY.md` - public privacy disclosures and the matching Play Console declaration guide
-- `LANDING_PAGE.md` - public `/landing` content, routing separation, release transition, and validation
+- `LANDING_PAGE.md` - public `/landing` content, routing separation, Google Play testing links, and validation
 
 - `THE_SOUL_OF_THE_GAME.md` — the emotional north star
 - `ART_DIRECTION.md` and `UI_GUIDELINES.md` — presentation

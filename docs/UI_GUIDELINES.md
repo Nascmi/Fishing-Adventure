@@ -17,7 +17,7 @@ The interface should become quiet enough for the player to focus on fishing.
 - House Journey & Settings under the Inventory screen's `Angler profile` action. Do not float global utility controls over authored fishing or cabin artwork.
 - Use consistent spacing, rounded surfaces, and restrained shadows.
 - Keep essential status visible without filling every open area.
-- Reflect the selected lure in the in-water strike marker, and show an owned boat in boat-access scenes so equipment and future cosmetics have a visible home.
+- Reflect the selected lure in the in-water strike marker, and show an owned boat with its equipped finish in boat-access scenes so equipment and cosmetics have a visible home.
 - Use the same compact area/lure selector and one-time boat purchase language at Great Lake and Gulf Coast; locked areas name the location's required boat rather than using generic access copy.
 - Label Open Gulf choices as charter positions. Show the 250-coin move cost within every unselected option, disable unaffordable moves with the exact shortfall, and never imply another boat purchase. Selecting an affordable destination opens a focused confirmation naming the destination and making clear that the Captain charges 250 coins for fuel; `Stay here` is the initial focus and no coins are spent until `Accept and relocate` is chosen.
 - Give each authored fishing area a materially different viewpoint and structure silhouette; area selection should be visually apparent without rereading its label.

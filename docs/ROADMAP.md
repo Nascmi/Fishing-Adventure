@@ -71,16 +71,16 @@ Phase 3 deepens atmosphere and gives players a peaceful sense of ownership throu
 - Migrated saves to version 13 with a bounded, persistent weather schedule that pauses outside active fishing.
 - Added specimen preservation that remembers the best eligible specimen per species, charges 100 coins for a first mount, and offers heavier upgrades for free.
 - Added the gameplay-earned Angler's Lodge with three preserved-fish displays and an automatic Angling Keepsake cabinet.
-- Prepared authored artwork, fixed-slot contracts, and deferred storefront IDs for the Workshop Cabin, Lakeside Cottage, and Coastal Shack.
+- Added authored artwork and fixed-slot contracts for the Workshop Cabin, Lakeside Cottage, Coastal Shack, and Grand Trophy Room.
 - Added five earned location paintings and permanent Master Angler frames for Great-or-better mastery of every species in a location.
 - Added upgraded souvenirs, Trophy photographs, legendary miniatures, equipment plaques, and included authored-slot palettes.
-- Prepared a dormant non-consumable store catalog with stable product IDs, tentative prices, restoration requirements, and no live storefront integration.
+- Added a provider-independent non-consumable store catalog with stable product IDs, tentative planning prices, restoration requirements, and nine prepared cosmetic/supporter products.
 - Added an earned-coin Trading Post with three complete permanent cabins and twelve functional decor purchases as a late-game economy sink: three frames, three finishes, two small objects, three model boats, and one prestige plaque.
 - Added fixed cabin-specific hooks, compatible-item filtering, independent per-cabin setups, included and earned choices, and decor-aware cabin sharing.
 
 ### Phase Status
 
-Phase 3 is complete. Future real-money commerce work is platform integration rather than additional Phase 3 game design: configure platform products, implement authoritative ownership and restoration, connect prepared purchases to compatible slots, and complete platform review. The earned-coin Trading Post is live; its prices and catalog breadth should continue to be tuned from playtest income.
+Phase 3 is complete. The provider-independent storefront, Android billing bridge, prepared product catalog, ownership cache, entitlement gating, and restoration flow are implemented. Remaining commerce work is release infrastructure and validation: Play Console configuration, Play-delivered testing, secure backend verification and revocation handling, and platform review. The earned-coin Trading Post is live; its prices and catalog breadth should continue to be tuned from playtest income.
 
 ## Phase 4 — On the Water
 
@@ -103,7 +103,7 @@ A polished, accessible, offline-friendly fishing game ready for public Android a
 
 ### Android commerce preparation
 
-- The provider-independent Cabin Store, three completed non-consumable products, development sandbox, entitlement gating, and restoration UI are implemented.
-- The Capacitor 8 Android shell, final `com.nathanmiller.fishingadventure` application ID, and direct Google Play Billing 9.1.0 client bridge are implemented. Remaining work requires Play Console product setup, release signing, a signed Internal testing bundle, license testing, secure backend token verification and revocation handling, final acknowledgement validation, icons/splash/listing assets, and store-policy completion.
+- The provider-independent Cabin Store, nine prepared non-consumable products, development sandbox, entitlement gating, and restoration UI are implemented.
+- The Capacitor 8 Android shell, final `com.nathanmiller.fishingadventure` application ID, direct Google Play Billing 9.1.0 client bridge, and Android/Play branding assets are implemented. Remaining release work includes confirming all Play Console products and policy declarations, completing Play-delivered license testing, adding secure backend token verification and revocation handling, and validating acknowledgement and restoration behavior before public production approval.
 
 Unapproved concepts remain in `FUTURE_IDEAS.md` until deliberately promoted here.

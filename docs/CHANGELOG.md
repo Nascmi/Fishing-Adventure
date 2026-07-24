@@ -1,5 +1,8 @@
 # Changelog
 
+- Added a Codemagic CI/CD configuration patterned after Bible Companion, including tests, production web builds, Capacitor sync, environment-only Android signing, automatic Play-safe build numbering, signed `.aab` artifacts, Google Play Internal publishing, and a gated future iOS/TestFlight workflow.
+- Reconciled the active documentation with the current nine-product commerce catalog, four premium cabins, implemented Android billing and brand assets, hidden concept packs, Google Play testing calls to action, and completed Phase 3 commerce foundation.
+- Added the official Google Play listing to the landing-page header, hero, and closing call to action so Android players can join testing directly while browser play remains available.
 - Removed the temporary localhost million-coin testing grant after discovering that Capacitor Android also uses a localhost origin; new Google Play installs now begin with the intended 50 coins, existing save balances are left unchanged, and the corrected Android release uses version code 3.
 - Moved Journey & Settings from the floating scenic overlay into a labeled `Angler profile` action on Inventory, keeping fishing and cabin screenshots clear while preserving accessible dialog focus restoration.
 - Added optional offline Field Notes with a forgiving three-day backlog and three ordinary-fishing objectives, plus personal twelve-cast Fishing Derbies with transparent scoring, pause/resume behavior, consequence-free abandonment, and per-location personal bests. Neither system uses streaks, entry fees, online rankings, paid advantages, or exclusive rewards; save schema advanced to version 28.

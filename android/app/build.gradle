@@ -1,5 +1,15 @@
 apply plugin: 'com.android.application'
 
+// Codemagic supplies an increasing versionCode with -PversionCode.
+// Local builds retain the checked-in release values when that property is absent.
+def releaseVersionCode = project.hasProperty('versionCode') ? project.property('versionCode').toInteger() : 3
+def releaseVersionName = project.hasProperty('versionName') ? project.property('versionName').toString() : "2.1"
+def ciKeystorePath = System.getenv("CM_KEYSTORE_PATH")
+def ciKeystorePassword = System.getenv("CM_KEYSTORE_PASSWORD")
+def ciKeyAlias = System.getenv("CM_KEY_ALIAS")
+def ciKeyPassword = System.getenv("CM_KEY_PASSWORD")
+def hasCiSigning = [ciKeystorePath, ciKeystorePassword, ciKeyAlias, ciKeyPassword].every { it }
+
 android {
     namespace = "com.nathanmiller.fishingadventure"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -7,8 +17,8 @@ android {
         applicationId "com.nathanmiller.fishingadventure"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "2.0"
+        versionCode releaseVersionCode
+        versionName releaseVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -16,10 +26,25 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        // Secrets are injected by Codemagic's Android signing identity and never
+        // stored in this repository. Local builds remain unsigned by default.
+        if (hasCiSigning) {
+            release {
+                storeFile file(ciKeystorePath)
+                storePassword ciKeystorePassword
+                keyAlias ciKeyAlias
+                keyPassword ciKeyPassword
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (hasCiSigning) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 }
